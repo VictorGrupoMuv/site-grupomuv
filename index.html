@@ -2825,6 +2825,181 @@ a.home-cta__contact-item:hover { color: var(--accent); }
   outline-offset: 4px;
 }
 
+/* ═════════════════════════════════════════════════════════════════════════════
+   HUB · módulos clicáveis na overview + grid 2x2
+   ═════════════════════════════════════════════════════════════════════════════ */
+.grid-2-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(20px, 2.5vw, 32px);
+}
+@media (max-width: 720px) {
+  .grid-2-2 { grid-template-columns: 1fr; }
+}
+
+.module--link {
+  cursor: pointer;
+  transition: transform 0.3s var(--ease), border-color 0.25s ease;
+  position: relative;
+}
+.module--link:hover { transform: translateY(-3px); border-color: var(--accent); }
+.module--link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.module__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 24px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.7;
+  transition: opacity 0.2s ease, transform 0.25s ease;
+}
+.module--link:hover .module__cta { opacity: 1; transform: translateX(4px); }
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   HUB sub-páginas — nav voltar + galeria + specs + planos + CTA
+   ═════════════════════════════════════════════════════════════════════════════ */
+.hub-sub__nav {
+  padding: clamp(80px, 10vw, 120px) clamp(24px, 5vw, 64px) 0;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Locadora — catálogo */
+.hub-locadora-cat .section-head { margin-bottom: 32px; }
+.hub-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.hub-cat-card {
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(0,0,0,0.015);
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+.hub-cat-card:hover { border-color: var(--accent); background: rgba(222,78,43,0.03); }
+.hub-cat-card__head { margin-bottom: 18px; }
+.hub-cat-card__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin-top: 8px;
+  color: var(--ink);
+}
+.hub-cat-card__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hub-cat-card__list li {
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.5;
+  padding-left: 16px;
+  position: relative;
+}
+.hub-cat-card__list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+/* Studio + Cowork — galeria */
+.hub-studio-gallery {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+.hub-studio-gallery .cine { max-width: none !important; width: 100% !important; height: 100%; }
+@media (max-width: 768px) {
+  .hub-studio-gallery { grid-template-columns: 1fr; }
+}
+
+/* Specs (Studio + Cowork) */
+.hub-specs {
+  max-width: 880px;
+  margin: 0 auto;
+  border-top: 1px solid var(--dark-line);
+}
+.hub-specs__row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 32px;
+  padding: 18px 4px;
+  border-bottom: 1px solid var(--dark-line);
+  align-items: baseline;
+}
+.hub-specs__label {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--dark-ink-2);
+}
+.hub-specs__value {
+  color: var(--dark-ink);
+  font-size: 15px;
+  line-height: 1.5;
+}
+@media (max-width: 600px) {
+  .hub-specs__row { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* Planos (Studio + Cowork) */
+.hub-plans { margin-top: 32px; }
+.hub-plan-card {
+  padding: 32px 28px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  min-height: 240px;
+  background: rgba(0,0,0,0.015);
+  transition: border-color 0.25s ease, transform 0.3s var(--ease);
+}
+.hub-plan-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+.hub-plan-card__price {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+/* Como funciona (Locadora) */
+.hub-process { margin-top: 24px; }
+.hub-process__step {
+  padding: 32px 24px;
+  border-top: 1px solid rgba(245,240,235,0.12);
+  min-height: 220px;
+}
+.hub-process__step h3 { color: var(--dark-ink); margin-top: 24px; }
+.hub-process__step p { color: var(--dark-ink-2); font-size: 14px; line-height: 1.55; margin-top: 12px; }
+
+/* Cards Comunidade */
+.hub-comm-card {
+  padding: 32px 28px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(0,0,0,0.015);
+  transition: border-color 0.25s ease;
+}
+.hub-comm-card:hover { border-color: var(--accent); }
+
+/* CTA bloco dos sub-hubs */
+.hub-cta { text-align: center; padding-top: clamp(80px, 10vw, 128px); padding-bottom: clamp(80px, 10vw, 128px); }
+.hub-cta__inner { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
   </style>
 
   <!-- JSON-LD Organization Schema -->
@@ -3014,6 +3189,10 @@ const NAV_ITEMS = [
 { id: "trabalhos", label: "Trabalhos" },
 { id: "sobre", label: "Sobre" },
 { id: "hub", label: "MUV Hub" },
+{ id: "hub-locadora", label: "Hub · Locadora", hideFromHeader: true, hideFromFooter: true },
+{ id: "hub-studio", label: "Hub · Studio", hideFromHeader: true, hideFromFooter: true },
+{ id: "hub-comunidade", label: "Hub · Comunidade", hideFromHeader: true, hideFromFooter: true },
+{ id: "hub-cowork", label: "Hub · Cowork", hideFromHeader: true, hideFromFooter: true },
 { id: "blog", label: "Blog" },
 { id: "faq", label: "FAQ", hideFromHeader: true }];
 
@@ -3161,7 +3340,7 @@ function Footer({ setCurrent }) {
         <div className="footer__col">
           <p className="footer__col-title">Navegação</p>
           <ul>
-            {NAV_ITEMS.slice(1).map((n) =>
+            {NAV_ITEMS.slice(1).filter((n) => !n.hideFromFooter).map((n) =>
             <li key={n.id}><a href="#" onClick={go(n.id)}>{n.label} <ArrowDiag size={10} /></a></li>
             )}
             <li><a href="#" onClick={go("contato")}>Contato <ArrowDiag size={10} /></a></li>
@@ -4540,11 +4719,12 @@ function MuvHub({ setCurrent }) {
       </section>
 
       <section className="section section--ink">
-        <SectionHead num="01" eyebrow="Três módulos · Uma plataforma" title="Tudo num só ecossistema." />
-        <div className="grid-3">
-          <Module tag="LOCADORA" title="Equipamento profissional sob demanda." items={["Sony FX6, FX3", "Drones DJI", "Iluminação completa", "Reserva online", "Retirada na MUV"]} icon="A" />
-          <Module tag="STUDIO" title="Espaço pra criar, gravar, produzir." items={["Ciclorama", "Iluminação inclusa", "Equipamento básico", "Reserva por turno", "Café & wifi"]} icon="B" />
-          <Module tag="COMUNIDADE" title="Hub criativo de filmmakers e marcas." items={["Feed & networking", "Agenda de eventos", "Conteúdos exclusivos", "Cursos & mentorias", "Conexão com marcas"]} icon="C" />
+        <SectionHead num="01" eyebrow="Quatro módulos · Uma plataforma" title="Tudo num só ecossistema." sub="Cada módulo tem página própria com catálogo, especificações e formas de reservar." />
+        <div className="grid-2-2">
+          <Module tag="LOCADORA" title="Equipamento profissional sob demanda." items={["Sony FX6, FX3", "Drones DJI", "Iluminação completa", "Reserva online", "Retirada na MUV"]} icon="A" onClick={() => setCurrent("hub-locadora")} />
+          <Module tag="STUDIO" title="Espaço pra criar, gravar, produzir." items={["Ciclorama", "Iluminação inclusa", "Equipamento básico", "Reserva por turno", "Café & wifi"]} icon="B" onClick={() => setCurrent("hub-studio")} />
+          <Module tag="COMUNIDADE" title="Hub criativo de filmmakers e marcas." items={["Feed & networking", "Agenda de eventos", "Conteúdos exclusivos", "Cursos & mentorias", "Conexão com marcas"]} icon="C" onClick={() => setCurrent("hub-comunidade")} />
+          <Module tag="COWORK" title="Espaço pra trabalhar entre projetos." items={["Mesas compartilhadas", "Salas de reunião", "Internet 1Gbps", "Café & impressão", "Acesso 24/7"]} icon="D" onClick={() => setCurrent("hub-cowork")} />
         </div>
       </section>
 
@@ -4586,9 +4766,352 @@ function MuvHub({ setCurrent }) {
 
 }
 
-function Module({ tag, title, items, icon }) {
+// ═════════════════════════════════════════════════════════════════════════════
+// HUB · LOCADORA
+// ═════════════════════════════════════════════════════════════════════════════
+const LOCADORA_CATEGORIAS = [
+  {
+    cat: "Câmeras",
+    code: "CAM",
+    items: ["Sony FX6 — cinema 4K", "Sony FX3 — full-frame 4K", "Sony A7CII — compacta full-frame", "Sony A7 IV — híbrida foto/vídeo", "Sony A73 — segunda câmera"]
+  },
+  {
+    cat: "Lentes",
+    code: "LENS",
+    items: ["Sony GMaster 16-35 f/2.8", "Sony GMaster 24-70 f/2.8", "Sony GMaster 70-200 f/2.8", "Sony FE 200-600", "Cine 7Artisans T2 35/50/85mm", "Laowa 10mm ultra wide"]
+  },
+  {
+    cat: "Drones & FPV",
+    code: "DRONE",
+    items: ["DJI Mini 4 Pro — aéreo urbano", "DJI Avata — FPV cinemático", "DJI Mavic 3 Pro — pacote completo", "Avata Goggles 2 + RC Motion 2"]
+  },
+  {
+    cat: "Iluminação",
+    code: "LIGHT",
+    items: ["Aputure Amaran F22c — painel flexível", "Aputure Amaran F21c", "Aputure T2C tube light", "Aputure 600D — chave principal", "Flash Godox AD200/AD400"]
+  },
+  {
+    cat: "Áudio",
+    code: "SOUND",
+    items: ["Rode VideoMic NTG", "Rode Wireless Pro", "Hollyland Lark150 — lapela", "Mixer Zoom F3", "Boom pole + cabos XLR"]
+  },
+  {
+    cat: "Estabilização & rigging",
+    code: "GRIP",
+    items: ["DJI Ronin RS3 Mini", "Zhiyun Weebill-S", "Glidecam HD-2000", "Tripés Manfrotto vídeo", "Monopés, easyrigs, follow focus"]
+  }
+];
+
+function HubLocadora({ setCurrent }) {
   return (
-    <div className="module">
+    <div className="page" data-screen-label="HubLocadora">
+      <div className="hub-sub__nav">
+        <button className="link-arrow link-arrow--back" onClick={() => { setCurrent("hub"); window.scrollTo({ top: 0, behavior: "instant" }); }}>
+          <span style={{ transform: "rotate(180deg)", display: "inline-block" }}><Arrow /></span> Voltar pro Hub
+        </button>
+      </div>
+      <PageHead crumb="06.A · Hub Locadora" title={"Equipamento profissional\nsob demanda."} lead="Câmeras Sony cinema, lentes GMaster, drones DJI, iluminação Aputure, áudio Hollyland. Reserva online, contrato digital, retirada no estúdio em São Paulo." accent="profissional" meta="6 categorias · +60 itens · Reserva online" compact />
+
+      <section className="section hub-locadora-cat">
+        <SectionHead num="01" eyebrow="Catálogo" title="O que tem na locadora." sub="Lista parcial — peça por WhatsApp o que não encontrar aqui que a gente confere disponibilidade." />
+        <div className="hub-cat-grid">
+          {LOCADORA_CATEGORIAS.map((c) =>
+            <div key={c.code} className="hub-cat-card">
+              <div className="hub-cat-card__head">
+                <span className="mono" style={{ color: "var(--accent)" }}>// {c.code}</span>
+                <h3 className="hub-cat-card__title">{c.cat}</h3>
+              </div>
+              <ul className="hub-cat-card__list">
+                {c.items.map((it, i) => <li key={i}>{it}</li>)}
+              </ul>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="section section--ink">
+        <SectionHead num="02" eyebrow="Como funciona" title="Reservar é simples." />
+        <div className="grid-3 hub-process">
+          {[
+            { n: "01", t: "Confere disponibilidade", d: "Manda mensagem com data, equipamento e duração. A gente responde em ≤ 1 dia útil com orçamento + disponibilidade." },
+            { n: "02", t: "Confirma com contrato digital", d: "Contrato curto, transparente. Sinal de 50% via PIX confirma a reserva." },
+            { n: "03", t: "Retira no estúdio", d: "Alameda Santos 211, sala 1507. Checklist de saída assinado. Devolução no horário combinado." }
+          ].map((s) =>
+            <div key={s.n} className="hub-process__step">
+              <p className="mono" style={{ color: "var(--accent)" }}>// {s.n}</p>
+              <h3 className="h3">{s.t}</h3>
+              <p>{s.d}</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="section section--dark hub-cta">
+        <div className="hub-cta__inner">
+          <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>Próximo projeto</p>
+          <h2 className="h1" style={{ marginTop: 16, color: "var(--dark-ink)" }}>
+            Precisa de equipamento<br />pra <span style={{ color: "var(--accent)" }}>essa semana?</span>
+          </h2>
+          <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <a className="btn btn--primary" href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer">Conferir no WhatsApp <Arrow /></a>
+            <button className="btn btn--ghost-dark" onClick={() => setCurrent("contato")}>Briefing completo <Arrow /></button>
+          </div>
+        </div>
+      </section>
+    </div>);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// HUB · STUDIO
+// ═════════════════════════════════════════════════════════════════════════════
+const STUDIO_SPECS = [
+  { label: "Área útil", value: "60 m²" },
+  { label: "Pé direito", value: "3,2 m" },
+  { label: "Ciclorama", value: "L-shape branco infinito" },
+  { label: "Iluminação inclusa", value: "Aputure 600D + 2x Amaran F22c" },
+  { label: "Tomadas", value: "16 pontos · 110V/220V" },
+  { label: "Climatização", value: "Ar central · controle por turno" },
+  { label: "Internet", value: "1 Gbps cabo + Wi-Fi 6" },
+  { label: "Áudio", value: "Tratamento acústico básico" }
+];
+
+function HubStudio({ setCurrent }) {
+  return (
+    <div className="page" data-screen-label="HubStudio">
+      <div className="hub-sub__nav">
+        <button className="link-arrow link-arrow--back" onClick={() => { setCurrent("hub"); window.scrollTo({ top: 0, behavior: "instant" }); }}>
+          <span style={{ transform: "rotate(180deg)", display: "inline-block" }}><Arrow /></span> Voltar pro Hub
+        </button>
+      </div>
+      <PageHead crumb="06.B · Hub Studio" title={"Espaço pronto\npra produzir."} lead="60m² com ciclorama, iluminação profissional inclusa e equipamento básico de captação. Reserva por turno (4h) ou diária. Localização central em São Paulo." accent="produzir" meta="60 m² · Ciclorama L-shape · Reserva por turno" compact />
+
+      <section className="section">
+        <SectionHead num="01" eyebrow="Estúdio em fotos" title="Como é o espaço." />
+        <div className="hub-studio-gallery">
+          <Cine label="CICLORAMA · L-SHAPE" code="STUDIO.01" aspect="16/9" variant="dark" />
+          <Cine label="MESA DE PRODUÇÃO" code="STUDIO.02" aspect="4/3" variant="accent" />
+          <Cine label="ILUMINAÇÃO MONTADA" code="STUDIO.03" aspect="4/3" />
+        </div>
+      </section>
+
+      <section className="section section--ink">
+        <SectionHead num="02" eyebrow="Especificações" title="O que vem incluso." />
+        <div className="hub-specs">
+          {STUDIO_SPECS.map((s, i) =>
+            <div key={i} className="hub-specs__row">
+              <span className="mono hub-specs__label">// {s.label}</span>
+              <span className="hub-specs__value">{s.value}</span>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="section">
+        <SectionHead num="03" eyebrow="Reserva" title="Por turno ou diária." sub="Turno de 4h, diária de 8h. Equipamento extra (drones, gimbals, áudio especial) pode ser somado da locadora no mesmo contrato." />
+        <div className="grid-3 hub-plans">
+          {[
+            { n: "01", t: "Turno", d: "4 horas corridas. Inclui ciclorama, iluminação base, ar e internet.", price: "Sob consulta" },
+            { n: "02", t: "Diária", d: "8 horas + 1 turno de cortesia pra montagem/desmontagem.", price: "Desconto vs turno" },
+            { n: "03", t: "Pacote semanal", d: "5 diárias seguidas com desconto progressivo. Ideal pra séries.", price: "Sob proposta" }
+          ].map((p) =>
+            <div key={p.n} className="hub-plan-card">
+              <p className="mono" style={{ color: "var(--accent)" }}>// {p.n}</p>
+              <h3 className="h3" style={{ marginTop: 16 }}>{p.t}</h3>
+              <p style={{ color: "var(--ink-2)", marginTop: 8 }}>{p.d}</p>
+              <p className="hub-plan-card__price">{p.price}</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="section section--dark hub-cta">
+        <div className="hub-cta__inner">
+          <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>Reservar studio</p>
+          <h2 className="h1" style={{ marginTop: 16, color: "var(--dark-ink)" }}>
+            Vem ver o espaço<br /><span style={{ color: "var(--accent)" }}>antes de fechar.</span>
+          </h2>
+          <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 16, maxWidth: 540 }}>
+            Agenda uma visita pra ver o ciclorama, conhecer o equipamento incluso e bater papo sobre o projeto. Sem compromisso.
+          </p>
+          <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <a className="btn btn--primary" href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer">Agendar visita <Arrow /></a>
+            <button className="btn btn--ghost-dark" onClick={() => setCurrent("contato")}>Briefing completo <Arrow /></button>
+          </div>
+        </div>
+      </section>
+    </div>);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// HUB · COMUNIDADE
+// ═════════════════════════════════════════════════════════════════════════════
+function HubComunidade({ setCurrent }) {
+  return (
+    <div className="page" data-screen-label="HubComunidade">
+      <div className="hub-sub__nav">
+        <button className="link-arrow link-arrow--back" onClick={() => { setCurrent("hub"); window.scrollTo({ top: 0, behavior: "instant" }); }}>
+          <span style={{ transform: "rotate(180deg)", display: "inline-block" }}><Arrow /></span> Voltar pro Hub
+        </button>
+      </div>
+      <PageHead crumb="06.C · Hub Comunidade" title={"Filmmakers, marcas\ne cultura."} lead="Hub criativo pra quem produz audiovisual e quem precisa contratar. Feed de oportunidades, agenda de eventos, conteúdo educativo e conexão direta entre criadores e marcas parceiras." accent="cultura" meta="Em construção · Lançamento 2026" compact />
+
+      <section className="section">
+        <SectionHead num="01" eyebrow="O que tem na comunidade" title="Quatro camadas vivas." sub="Cresce com quem entra. Quanto mais gente certa, mais útil pra todo mundo." />
+        <div className="grid-2-2">
+          <div className="hub-comm-card">
+            <p className="mono" style={{ color: "var(--accent)" }}>// FEED</p>
+            <h3 className="h3" style={{ marginTop: 12 }}>Oportunidades & vagas</h3>
+            <p style={{ color: "var(--ink-2)", marginTop: 8 }}>
+              Marcas e produtoras parceiras postam projetos abertos, vagas pontuais e captações com data marcada. Filmmakers respondem com portfolio.
+            </p>
+          </div>
+          <div className="hub-comm-card">
+            <p className="mono" style={{ color: "var(--accent)" }}>// AGENDA</p>
+            <h3 className="h3" style={{ marginTop: 12 }}>Eventos & encontros</h3>
+            <p style={{ color: "var(--ink-2)", marginTop: 8 }}>
+              Mostras, screenings, painéis de discussão, sessões de portfolio review. Presencial em SP e online pro Brasil inteiro.
+            </p>
+          </div>
+          <div className="hub-comm-card">
+            <p className="mono" style={{ color: "var(--accent)" }}>// CONTEÚDO</p>
+            <h3 className="h3" style={{ marginTop: 12 }}>Cursos & ensaios</h3>
+            <p style={{ color: "var(--ink-2)", marginTop: 8 }}>
+              Conteúdo educativo curto e denso. Direção, fotografia, edição, color, produção. Quem ensina é quem entrega projeto de verdade.
+            </p>
+          </div>
+          <div className="hub-comm-card">
+            <p className="mono" style={{ color: "var(--accent)" }}>// REDE</p>
+            <h3 className="h3" style={{ marginTop: 12 }}>Networking direto</h3>
+            <p style={{ color: "var(--ink-2)", marginTop: 8 }}>
+              Perfil curado, portfolio visível, mensagem direta. Sem intermediário, sem agência cobrando 30% no meio.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section--ink">
+        <SectionHead num="02" eyebrow="Pra quem é" title="Três tipos de membro." />
+        <div className="grid-3 hub-members">
+          {[
+            { tag: "FILMMAKERS", desc: "DOP, editor, color, diretor, produtor. Quem cria. Conta gratuita com portfolio público e acesso ao feed de oportunidades." },
+            { tag: "MARCAS", desc: "Marcas e produtoras que contratam recorrente. Conta pro acessa filtros avançados, posta vagas e mensagem direta." },
+            { tag: "AGÊNCIAS", desc: "Casas de criação que distribuem briefings. Acesso intermediário com posting limitado e visibilidade pro time." }
+          ].map((m, i) =>
+            <div key={i} style={{ padding: "32px 24px", borderTop: "1px solid rgba(245,240,235,0.1)" }}>
+              <p className="mono" style={{ color: "var(--accent)" }}>// 0{i + 1}</p>
+              <h3 className="h3" style={{ marginTop: 24 }}>{m.tag}</h3>
+              <p style={{ color: "var(--dark-ink-2)", marginTop: 12, fontSize: 14 }}>{m.desc}</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="section section--dark hub-cta">
+        <div className="hub-cta__inner">
+          <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>Lista de espera</p>
+          <h2 className="h1" style={{ marginTop: 16, color: "var(--dark-ink)" }}>
+            Entra agora,<br /><span style={{ color: "var(--accent)" }}>vira fundador.</span>
+          </h2>
+          <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 16, maxWidth: 540 }}>
+            Quem entra antes do lançamento tem perfil destaque, acesso antecipado às vagas e condição vitalícia de membro fundador.
+          </p>
+          <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <a className="btn btn--primary" href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer">Entrar na lista <Arrow /></a>
+            <button className="btn btn--ghost-dark" onClick={() => setCurrent("contato")}>Saber mais <Arrow /></button>
+          </div>
+        </div>
+      </section>
+    </div>);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// HUB · COWORK
+// ═════════════════════════════════════════════════════════════════════════════
+const COWORK_BENEFITS = [
+  { label: "Mesas compartilhadas", value: "12 estações ergonômicas + monitores externos por demanda" },
+  { label: "Salas de reunião", value: "2 salas privativas (4 e 8 pessoas) com TV + videoconferência" },
+  { label: "Internet", value: "1 Gbps cabo · Wi-Fi 6 dedicado · backup 4G" },
+  { label: "Café & impressão", value: "Café espresso, máquina de chá, impressora A3 colorida inclusa" },
+  { label: "Acesso", value: "24/7 com chave digital · sem horário de portaria" },
+  { label: "Lockers", value: "Armário individual com chave inteligente" }
+];
+
+function HubCowork({ setCurrent }) {
+  return (
+    <div className="page" data-screen-label="HubCowork">
+      <div className="hub-sub__nav">
+        <button className="link-arrow link-arrow--back" onClick={() => { setCurrent("hub"); window.scrollTo({ top: 0, behavior: "instant" }); }}>
+          <span style={{ transform: "rotate(180deg)", display: "inline-block" }}><Arrow /></span> Voltar pro Hub
+        </button>
+      </div>
+      <PageHead crumb="06.D · Hub Cowork" title={"Espaço pra editar,\nplanejar, trabalhar."} lead="Coworking criativo dentro do estúdio. Mesa, internet rápida, café decente e gente boa por perto. Diária, mensal ou pacote por turno." accent="trabalhar" meta="12 mesas · 2 salas · Acesso 24/7" compact />
+
+      <section className="section">
+        <SectionHead num="01" eyebrow="O espaço" title="Como é o cowork." />
+        <div className="hub-studio-gallery">
+          <Cine label="MESAS COMPARTILHADAS" code="COW.01" aspect="16/9" variant="accent" />
+          <Cine label="SALA DE REUNIÃO" code="COW.02" aspect="4/3" />
+          <Cine label="LOUNGE & CAFÉ" code="COW.03" aspect="4/3" variant="dark" />
+        </div>
+      </section>
+
+      <section className="section section--ink">
+        <SectionHead num="02" eyebrow="O que tá incluso" title="Sem letra miúda." />
+        <div className="hub-specs">
+          {COWORK_BENEFITS.map((b, i) =>
+            <div key={i} className="hub-specs__row">
+              <span className="mono hub-specs__label">// {b.label}</span>
+              <span className="hub-specs__value">{b.value}</span>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="section">
+        <SectionHead num="03" eyebrow="Planos" title="Conforme você usa." />
+        <div className="grid-3 hub-plans">
+          {[
+            { n: "01", t: "Day pass", d: "Um dia, sem compromisso. Mesa, café, internet, acesso ao lounge.", price: "R$ 80 / dia" },
+            { n: "02", t: "Mensal flex", d: "10 diárias no mês pra usar quando precisar. Salas de reunião por demanda.", price: "R$ 580 / mês" },
+            { n: "03", t: "Mensal fixo", d: "Mesa garantida, acesso 24/7, locker individual, 8h grátis em salas.", price: "R$ 980 / mês" }
+          ].map((p) =>
+            <div key={p.n} className="hub-plan-card">
+              <p className="mono" style={{ color: "var(--accent)" }}>// {p.n}</p>
+              <h3 className="h3" style={{ marginTop: 16 }}>{p.t}</h3>
+              <p style={{ color: "var(--ink-2)", marginTop: 8 }}>{p.d}</p>
+              <p className="hub-plan-card__price">{p.price}</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="section section--dark hub-cta">
+        <div className="hub-cta__inner">
+          <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>Experimenta antes</p>
+          <h2 className="h1" style={{ marginTop: 16, color: "var(--dark-ink)" }}>
+            Primeiro day pass<br />é por <span style={{ color: "var(--accent)" }}>nossa conta.</span>
+          </h2>
+          <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 16, maxWidth: 540 }}>
+            Marca um dia pra trabalhar no espaço, conhecer a galera e sentir o ritmo. Se rolar, a gente fecha plano. Se não, ficou o café.
+          </p>
+          <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <a className="btn btn--primary" href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer">Reservar day pass <Arrow /></a>
+            <button className="btn btn--ghost-dark" onClick={() => setCurrent("contato")}>Saber mais <Arrow /></button>
+          </div>
+        </div>
+      </section>
+    </div>);
+}
+
+function Module({ tag, title, items, icon, onClick }) {
+  const clickable = typeof onClick === "function";
+  return (
+    <div
+      className={`module ${clickable ? "module--link" : ""}`}
+      role={clickable ? "button" : undefined}
+      tabIndex={clickable ? 0 : undefined}
+      onClick={onClick}
+      onKeyDown={clickable ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick(); }} : undefined}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div className="module__icon">{icon}</div>
         <span className="pill pill--accent" style={{ background: "transparent", borderColor: "rgba(222,78,43,0.4)" }}>{tag}</span>
@@ -4597,6 +5120,7 @@ function Module({ tag, title, items, icon }) {
       <ul className="module__features">
         {items.map((it, i) => <li key={i}>{it}</li>)}
       </ul>
+      {clickable && <span className="module__cta">Ver módulo <Arrow /></span>}
     </div>);
 
 }
@@ -4929,7 +5453,7 @@ function Faq({ setCurrent }) {
 }
 
 // ───── Export ────────────────────────────────────────────────────────────────
-Object.assign(window, { Home, Servicos, Processo, Trabalhos, Sobre, MuvHub, Blog, Contato, Faq });
+Object.assign(window, { Home, Servicos, Processo, Trabalhos, Sobre, MuvHub, HubLocadora, HubStudio, HubComunidade, HubCowork, Blog, Contato, Faq });
   </script>
 
   <script type="text/babel" data-file="app.jsx">
@@ -4994,10 +5518,14 @@ function App() {
   else if (current === "processo")  Page = Processo;
   else if (current === "trabalhos") Page = Trabalhos;
   else if (current === "sobre")     Page = Sobre;
-  else if (current === "hub")       Page = MuvHub;
-  else if (current === "blog")      Page = Blog;
-  else if (current === "faq")       Page = Faq;
-  else if (current === "contato")   Page = Contato;
+  else if (current === "hub")             Page = MuvHub;
+  else if (current === "hub-locadora")    Page = HubLocadora;
+  else if (current === "hub-studio")      Page = HubStudio;
+  else if (current === "hub-comunidade")  Page = HubComunidade;
+  else if (current === "hub-cowork")      Page = HubCowork;
+  else if (current === "blog")            Page = Blog;
+  else if (current === "faq")             Page = Faq;
+  else if (current === "contato")         Page = Contato;
 
   return (
     <React.Fragment>

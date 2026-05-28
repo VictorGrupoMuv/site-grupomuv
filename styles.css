@@ -2776,3 +2776,178 @@ a.home-cta__contact-item:hover { color: var(--accent); }
   outline: 2px solid var(--accent);
   outline-offset: 4px;
 }
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   HUB · módulos clicáveis na overview + grid 2x2
+   ═════════════════════════════════════════════════════════════════════════════ */
+.grid-2-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(20px, 2.5vw, 32px);
+}
+@media (max-width: 720px) {
+  .grid-2-2 { grid-template-columns: 1fr; }
+}
+
+.module--link {
+  cursor: pointer;
+  transition: transform 0.3s var(--ease), border-color 0.25s ease;
+  position: relative;
+}
+.module--link:hover { transform: translateY(-3px); border-color: var(--accent); }
+.module--link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.module__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 24px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.7;
+  transition: opacity 0.2s ease, transform 0.25s ease;
+}
+.module--link:hover .module__cta { opacity: 1; transform: translateX(4px); }
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   HUB sub-páginas — nav voltar + galeria + specs + planos + CTA
+   ═════════════════════════════════════════════════════════════════════════════ */
+.hub-sub__nav {
+  padding: clamp(80px, 10vw, 120px) clamp(24px, 5vw, 64px) 0;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Locadora — catálogo */
+.hub-locadora-cat .section-head { margin-bottom: 32px; }
+.hub-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.hub-cat-card {
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(0,0,0,0.015);
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+.hub-cat-card:hover { border-color: var(--accent); background: rgba(222,78,43,0.03); }
+.hub-cat-card__head { margin-bottom: 18px; }
+.hub-cat-card__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin-top: 8px;
+  color: var(--ink);
+}
+.hub-cat-card__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hub-cat-card__list li {
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.5;
+  padding-left: 16px;
+  position: relative;
+}
+.hub-cat-card__list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+/* Studio + Cowork — galeria */
+.hub-studio-gallery {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+.hub-studio-gallery .cine { max-width: none !important; width: 100% !important; height: 100%; }
+@media (max-width: 768px) {
+  .hub-studio-gallery { grid-template-columns: 1fr; }
+}
+
+/* Specs (Studio + Cowork) */
+.hub-specs {
+  max-width: 880px;
+  margin: 0 auto;
+  border-top: 1px solid var(--dark-line);
+}
+.hub-specs__row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 32px;
+  padding: 18px 4px;
+  border-bottom: 1px solid var(--dark-line);
+  align-items: baseline;
+}
+.hub-specs__label {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--dark-ink-2);
+}
+.hub-specs__value {
+  color: var(--dark-ink);
+  font-size: 15px;
+  line-height: 1.5;
+}
+@media (max-width: 600px) {
+  .hub-specs__row { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* Planos (Studio + Cowork) */
+.hub-plans { margin-top: 32px; }
+.hub-plan-card {
+  padding: 32px 28px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  min-height: 240px;
+  background: rgba(0,0,0,0.015);
+  transition: border-color 0.25s ease, transform 0.3s var(--ease);
+}
+.hub-plan-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+.hub-plan-card__price {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+/* Como funciona (Locadora) */
+.hub-process { margin-top: 24px; }
+.hub-process__step {
+  padding: 32px 24px;
+  border-top: 1px solid rgba(245,240,235,0.12);
+  min-height: 220px;
+}
+.hub-process__step h3 { color: var(--dark-ink); margin-top: 24px; }
+.hub-process__step p { color: var(--dark-ink-2); font-size: 14px; line-height: 1.55; margin-top: 12px; }
+
+/* Cards Comunidade */
+.hub-comm-card {
+  padding: 32px 28px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(0,0,0,0.015);
+  transition: border-color 0.25s ease;
+}
+.hub-comm-card:hover { border-color: var(--accent); }
+
+/* CTA bloco dos sub-hubs */
+.hub-cta { text-align: center; padding-top: clamp(80px, 10vw, 128px); padding-bottom: clamp(80px, 10vw, 128px); }
+.hub-cta__inner { max-width: 720px; margin: 0 auto; padding: 0 24px; }

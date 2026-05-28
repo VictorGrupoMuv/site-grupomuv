@@ -50,6 +50,10 @@ const NAV_ITEMS = [
 { id: "trabalhos", label: "Trabalhos" },
 { id: "sobre", label: "Sobre" },
 { id: "hub", label: "MUV Hub" },
+{ id: "hub-locadora", label: "Hub · Locadora", hideFromHeader: true, hideFromFooter: true },
+{ id: "hub-studio", label: "Hub · Studio", hideFromHeader: true, hideFromFooter: true },
+{ id: "hub-comunidade", label: "Hub · Comunidade", hideFromHeader: true, hideFromFooter: true },
+{ id: "hub-cowork", label: "Hub · Cowork", hideFromHeader: true, hideFromFooter: true },
 { id: "blog", label: "Blog" },
 { id: "faq", label: "FAQ", hideFromHeader: true }];
 
@@ -197,7 +201,7 @@ function Footer({ setCurrent }) {
         <div className="footer__col">
           <p className="footer__col-title">Navegação</p>
           <ul>
-            {NAV_ITEMS.slice(1).map((n) =>
+            {NAV_ITEMS.slice(1).filter((n) => !n.hideFromFooter).map((n) =>
             <li key={n.id}><a href="#" onClick={go(n.id)}>{n.label} <ArrowDiag size={10} /></a></li>
             )}
             <li><a href="#" onClick={go("contato")}>Contato <ArrowDiag size={10} /></a></li>

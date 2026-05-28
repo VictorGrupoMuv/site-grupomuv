@@ -59,10 +59,14 @@ function App() {
   else if (current === "processo")  Page = Processo;
   else if (current === "trabalhos") Page = Trabalhos;
   else if (current === "sobre")     Page = Sobre;
-  else if (current === "hub")       Page = MuvHub;
-  else if (current === "blog")      Page = Blog;
-  else if (current === "faq")       Page = Faq;
-  else if (current === "contato")   Page = Contato;
+  else if (current === "hub")             Page = MuvHub;
+  else if (current === "hub-locadora")    Page = HubLocadora;
+  else if (current === "hub-studio")      Page = HubStudio;
+  else if (current === "hub-comunidade")  Page = HubComunidade;
+  else if (current === "hub-cowork")      Page = HubCowork;
+  else if (current === "blog")            Page = Blog;
+  else if (current === "faq")             Page = Faq;
+  else if (current === "contato")         Page = Contato;
 
   return (
     <React.Fragment>

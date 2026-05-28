@@ -29,3 +29,8 @@ _backup*/
 # Node (caso vire build com bundler depois)
 node_modules/
 package-lock.json.bak
+
+# Documentação interna (não vai pro repo público)
+ROADMAP.md
+TODO.md
+NOTES.md
