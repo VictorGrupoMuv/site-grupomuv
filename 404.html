@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Grupo MUV</title>
+  <meta name="description" content="Página não encontrada. Volte para o site do Grupo MUV." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{margin:0;padding:0;height:100%;background:#0D0D0D;color:#F5F0EB;font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+    .wrap{min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:7vw;max-width:1200px;margin:0 auto;gap:32px;position:relative;overflow:hidden}
+    .grain{position:absolute;inset:0;pointer-events:none;opacity:.06;background-image:radial-gradient(circle at 30% 20%,#DE4E2B,transparent 55%),radial-gradient(circle at 70% 80%,#1B57AD,transparent 55%);mix-blend-mode:screen}
+    .eyebrow{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#A8A8B2;display:flex;align-items:center;gap:10px}
+    .eyebrow::before{content:"";width:6px;height:6px;background:#DE4E2B;display:inline-block}
+    h1{font-family:"Archivo Black","Anton",sans-serif;font-weight:400;font-size:clamp(96px,18vw,260px);line-height:.88;letter-spacing:-.03em;margin:0;text-wrap:balance}
+    h1 .accent{color:#DE4E2B}
+    .lead{font-size:clamp(17px,1.5vw,22px);line-height:1.5;max-width:600px;color:#E6E6EF;margin:0}
+    .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border:1px solid transparent;border-radius:999px;font-size:14px;font-weight:500;letter-spacing:.01em;transition:all .3s cubic-bezier(0.65,0,0.35,1);text-decoration:none;font-family:inherit}
+    .btn--primary{background:#DE4E2B;color:#fff;border-color:#DE4E2B}
+    .btn--primary:hover{background:#C9421F;border-color:#C9421F;transform:translateY(-1px)}
+    .btn--ghost{border-color:rgba(245,240,235,.25);color:#F5F0EB}
+    .btn--ghost:hover{background:#F5F0EB;color:#0D0D0D;border-color:#F5F0EB}
+    .mono{font-family:"JetBrains Mono",monospace;font-size:12px;color:#7A7A7A;letter-spacing:.02em;margin-top:24px}
+    .arrow{display:inline-block;transition:transform .3s ease}
+    .btn:hover .arrow{transform:translateX(4px)}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="grain" aria-hidden="true"></div>
+    <p class="eyebrow">ERROR · 404 · CENA NÃO ENCONTRADA</p>
+    <h1>404<span class="accent">.</span></h1>
+    <p class="lead">Essa cena saiu do master. Ou nunca esteve no roteiro. De qualquer jeito, a gente te leva de volta pro filme principal.</p>
+    <div class="actions">
+      <a class="btn btn--primary" href="/">Voltar pra home <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg></a>
+      <a class="btn btn--ghost" href="/#trabalhos">Ver portfolio <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg></a>
+    </div>
+    <p class="mono">GRUPO MUV · CONTEÚDO QUE MOVE · 2026</p>
+  </main>
+</body>
+</html>

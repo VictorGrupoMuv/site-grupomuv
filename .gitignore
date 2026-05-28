@@ -1,0 +1,31 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# Claude Code
+.claude/
+
+# Logs
+*.log
+
+# Temp
+*.tmp
+.tmp/
+
+# Build artifacts (zips temporários)
+*.zip
+!**/*.png.zip  # negação no caso de algum zip de assets futuro
+
+# Backups locais
+_backup*/
+
+# Node (caso vire build com bundler depois)
+node_modules/
+package-lock.json.bak
