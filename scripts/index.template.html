@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary -->
-  <title>Grupo MUV — Conteúdo que move</title>
+  <title>Grupo MUV, Conteúdo que move</title>
   <meta name="description" content="Ecossistema criativo de audiovisual, estratégia e conteúdo em São Paulo. Cinematográfico, no prazo, impossível de ignorar." />
   <meta name="author" content="Grupo MUV" />
   <link rel="canonical" href="https://grupomuv.com.br/" />
@@ -21,18 +21,18 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Grupo MUV" />
-  <meta property="og:title" content="Grupo MUV — Conteúdo que move" />
+  <meta property="og:title" content="Grupo MUV, Conteúdo que move" />
   <meta property="og:description" content="Ecossistema criativo de audiovisual, estratégia e conteúdo. Cinematográfico, no prazo, impossível de ignorar." />
   <meta property="og:url" content="https://grupomuv.com.br/" />
   <meta property="og:image" content="https://grupomuv.com.br/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Grupo MUV — Conteúdo que move" />
+  <meta property="og:image:alt" content="Grupo MUV, Conteúdo que move" />
   <meta property="og:locale" content="pt_BR" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Grupo MUV — Conteúdo que move" />
+  <meta name="twitter:title" content="Grupo MUV, Conteúdo que move" />
   <meta name="twitter:description" content="Ecossistema criativo de audiovisual, estratégia e conteúdo. Cinematográfico, no prazo, impossível de ignorar." />
   <meta name="twitter:image" content="https://grupomuv.com.br/og-image.png" />
 
@@ -65,7 +65,7 @@
     "taxID": "46.941.289/0001-44",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Alameda Santos, 211, 15º andar, Sala 1507 — Edif. Paulista Boulevard",
+      "streetAddress": "Alameda Santos, 211, 15º andar, Sala 1507, Edif. Paulista Boulevard",
       "addressLocality": "São Paulo",
       "addressRegion": "SP",
       "postalCode": "01419-000",
@@ -158,6 +158,8 @@
       z-index:9999; flex-wrap:wrap;
       animation: muvCookieIn .5s cubic-bezier(0.16, 1, 0.3, 1);
     }
+    /* Bugfix: o display:flex acima sobrepõe o atributo [hidden] do HTML — precisa do !important */
+    #muv-cookie[hidden]{ display:none !important; }
     @keyframes muvCookieIn { from{opacity:0; transform:translateX(-50%) translateY(20px)} to{opacity:1; transform:translateX(-50%) translateY(0)} }
     .muv-cookie__text{font-size:13.5px; line-height:1.5; flex:1; min-width:260px}
     .muv-cookie__text a{color:#DE4E2B; font-weight:500; text-decoration:none; border-bottom:1px solid rgba(222,78,43,.4)}
@@ -190,7 +192,7 @@
         if (!consent) {
           var el = document.getElementById('muv-cookie');
           if (el) {
-            // Mostra só depois do hero — pra não competir com a entrada cinemática
+            // Mostra só depois do hero, pra não competir com a entrada cinemática
             setTimeout(function(){ el.hidden = false; }, 4200);
           }
         }

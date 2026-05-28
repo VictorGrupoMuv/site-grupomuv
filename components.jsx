@@ -51,10 +51,12 @@ const NAV_ITEMS = [
 { id: "sobre", label: "Sobre" },
 { id: "hub", label: "MUV Hub" },
 { id: "blog", label: "Blog" },
-{ id: "faq", label: "FAQ" }];
+{ id: "faq", label: "FAQ", hideFromHeader: true }];
 
 
-const DRAWER_ITEMS = NAV_ITEMS.filter((n) => n.id !== "home");
+// Header e Drawer escondem itens marcados hideFromHeader (ex: FAQ vai só no Footer)
+const HEADER_ITEMS = NAV_ITEMS.filter((n) => !n.hideFromHeader);
+const DRAWER_ITEMS = HEADER_ITEMS.filter((n) => n.id !== "home");
 const DRAWER_SOCIALS = [
   { label: "Instagram", href: "https://instagram.com/grupomuv" },
   { label: "LinkedIn", href: "#" },
@@ -89,12 +91,14 @@ function Nav({ current, setCurrent, isDark }) {
   return (
     <React.Fragment>
       <nav className={`nav ${isDark ? "nav--dark" : ""} ${menuOpen ? "nav--open" : ""}`}>
-        <a className="nav__logo" onClick={(e) => {e.preventDefault();setCurrent("home");}} href="#">
-          <span className="nav__logo-mark">M</span>
-          <span>GRUPO MUV</span>
+        <a className="nav__logo" onClick={(e) => {e.preventDefault();setCurrent("home");}} href="#" aria-label="Grupo MUV — ir para home">
+          <img
+            src={isDark ? "/assets/logo-muv-branco.png" : "/assets/logo-horizontal-preto.png"}
+            alt="Grupo MUV"
+            className="nav__logo-img" />
         </a>
         <ul className="nav__links">
-          {NAV_ITEMS.map((n) =>
+          {HEADER_ITEMS.map((n) =>
           <li key={n.id}>
               <button
               className={`nav__link ${current === n.id ? "nav__link--active" : ""}`}
@@ -287,10 +291,27 @@ function SectionHead({ eyebrow, title, sub, num }) {
 }
 
 // ───── Page Head ─────────────────────────────────────────────────────────────
-function PageHead({ crumb, title, lead, accent, meta }) {
-  const titleNode = accent ?
-  <>{title.split(accent)[0]}<span style={{ color: "var(--accent)" }}>{accent}</span>{title.split(accent)[1]}</> :
-  title;
+function PageHead({ crumb, title, lead, accent, meta, compact }) {
+  // Suporta quebra de linha via "\n" no título, mantendo a destaque do accent.
+  const renderLineWithAccent = (line, key) => {
+    if (!accent || !line.includes(accent)) return <span key={key}>{line}</span>;
+    const [before, after] = line.split(accent);
+    return (
+      <span key={key}>
+        {before}<span style={{ color: "var(--accent)" }}>{accent}</span>{after}
+      </span>);
+  };
+
+  const lines = title.split("\n");
+  const titleNode = lines.length > 1 ?
+    lines.map((line, i) => (
+      <React.Fragment key={i}>
+        {renderLineWithAccent(line, i)}
+        {i < lines.length - 1 && <br />}
+      </React.Fragment>
+    )) :
+    renderLineWithAccent(title, 0);
+
   return (
     <header className="page-head">
       <div className="page-head__top">
@@ -298,7 +319,7 @@ function PageHead({ crumb, title, lead, accent, meta }) {
         <span className="page-head__top-right">{meta || "Ed. 01 · 2026"}</span>
       </div>
       <div className="page-head__body">
-        <h1 className="page-head__title">{titleNode}</h1>
+        <h1 className={`page-head__title ${compact ? "page-head__title--compact" : ""}`}>{titleNode}</h1>
         <p className="page-head__lead">{lead}</p>
       </div>
     </header>);

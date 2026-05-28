@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary -->
-  <title>Grupo MUV — Conteúdo que move</title>
+  <title>Grupo MUV, Conteúdo que move</title>
   <meta name="description" content="Ecossistema criativo de audiovisual, estratégia e conteúdo em São Paulo. Cinematográfico, no prazo, impossível de ignorar." />
   <meta name="author" content="Grupo MUV" />
   <link rel="canonical" href="https://grupomuv.com.br/" />
@@ -21,18 +21,18 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Grupo MUV" />
-  <meta property="og:title" content="Grupo MUV — Conteúdo que move" />
+  <meta property="og:title" content="Grupo MUV, Conteúdo que move" />
   <meta property="og:description" content="Ecossistema criativo de audiovisual, estratégia e conteúdo. Cinematográfico, no prazo, impossível de ignorar." />
   <meta property="og:url" content="https://grupomuv.com.br/" />
   <meta property="og:image" content="https://grupomuv.com.br/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Grupo MUV — Conteúdo que move" />
+  <meta property="og:image:alt" content="Grupo MUV, Conteúdo que move" />
   <meta property="og:locale" content="pt_BR" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Grupo MUV — Conteúdo que move" />
+  <meta name="twitter:title" content="Grupo MUV, Conteúdo que move" />
   <meta name="twitter:description" content="Ecossistema criativo de audiovisual, estratégia e conteúdo. Cinematográfico, no prazo, impossível de ignorar." />
   <meta name="twitter:image" content="https://grupomuv.com.br/og-image.png" />
 
@@ -401,14 +401,19 @@ img { display: block; max-width: 100%; }
   border-bottom-color: var(--dark-line);
 }
 .nav__logo {
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  font-size: 18px;
   display: flex;
   align-items: center;
   gap: 10px;
+  text-decoration: none;
 }
+.nav__logo-img {
+  height: 28px;
+  width: auto;
+  display: block;
+  transition: opacity 0.3s var(--ease);
+}
+.nav__logo:hover .nav__logo-img { opacity: 0.75; }
+/* Legacy mark — mantido caso queiramos voltar pra letter mark */
 .nav__logo-mark {
   width: 28px; height: 28px;
   background: var(--ink);
@@ -815,14 +820,14 @@ body.drawer-active #muv-whatsapp {
 .marquee__item {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(32px, 4.5vw, 80px);
+  font-size: clamp(11px, 1.5vw, 26px);
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--ink-3);
   white-space: nowrap;
   display: flex;
   align-items: center;
-  gap: 64px;
+  gap: 32px;
 }
 .marquee__item::after {
   content: "✦";
@@ -838,13 +843,17 @@ body.drawer-active #muv-whatsapp {
 .case {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
   cursor: pointer;
 }
 .case__media {
   aspect-ratio: 4 / 3;
   overflow: hidden;
   position: relative;
+}
+.case__media .cine {
+  max-width: none !important;
+  width: 100% !important;
 }
 .case__meta {
   display: flex;
@@ -945,6 +954,10 @@ body.drawer-active #muv-whatsapp {
   line-height: 1.1;
   letter-spacing: -0.015em;
   text-wrap: balance;
+}
+.manifesto-text--sm {
+  font-size: clamp(16px, 2.3vw, 32px);
+  line-height: 1.25;
 }
 .manifesto-text em {
   color: var(--accent);
@@ -1161,6 +1174,16 @@ body.drawer-active #muv-whatsapp {
   max-width: 720px;
 }
 
+/* Home Blog preview — versão compacta pra caber em 1 viewport */
+.home-blog-preview .section-head { margin-bottom: 24px; }
+.home-blog-preview .post {
+  gap: 6px;
+  padding: 14px 0;
+}
+.home-blog-preview .post__title { font-size: clamp(17px, 1.5vw, 22px); }
+.home-blog-preview .post__excerpt { font-size: 14px; line-height: 1.4; max-width: 880px; }
+.home-blog-preview .post .link-arrow { font-size: 12px; margin-top: 2px; }
+
 /* Form */
 .field {
   display: flex;
@@ -1242,6 +1265,10 @@ body.drawer-active #muv-whatsapp {
   margin: 0;
   text-wrap: balance;
 }
+.page-head__title--compact {
+  font-size: clamp(40px, 5.4vw, 84px);
+  letter-spacing: -0.025em;
+}
 .page-head__lead {
   font-family: var(--font-body);
   font-size: 19px;
@@ -1305,6 +1332,12 @@ body.drawer-active #muv-whatsapp {
 /* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
+  /* Exceção: marquees são puramente horizontais e essenciais ao design — não causam mal-estar */
+  .brand-marquee__track,
+  .marquee__track {
+    animation: brand-marquee 50s linear infinite !important;
+  }
+  .marquee__track { animation-name: marquee !important; }
 }
 
 /* ============================================================
@@ -1313,16 +1346,32 @@ body.drawer-active #muv-whatsapp {
 .home-cta { padding: var(--section-y) var(--gutter); }
 .home-cta__grid {
   display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: clamp(48px, 8vw, 128px);
-  align-items: center;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(32px, 4vw, 64px);
+  align-items: start;
 }
 @media (max-width: 900px) {
-  .home-cta__grid { grid-template-columns: 1fr; gap: 64px; }
+  .home-cta__grid { grid-template-columns: 1fr; gap: 48px; }
   .home-cta__hero { text-align: left; }
 }
-.home-cta__form { max-width: 480px; }
-.home-cta__hero { }
+.home-cta__form { max-width: 640px; width: 100%; }
+.home-cta__hero { padding-top: 16px; }
+
+/* Compactar internamente o formulário (sem mexer no bloco do lado) */
+.home-cta__form .quote-card { padding: 22px 24px; }
+.home-cta__form .quote-card__title { font-size: clamp(18px, 1.5vw, 22px); margin-bottom: 4px; }
+.home-cta__form .quote-card__sub { margin-bottom: 12px; font-size: 12px; }
+.home-cta__form .quote-card__row { gap: 10px; margin-bottom: 10px; }
+.home-cta__form .field--solid { margin-bottom: 10px; }
+.home-cta__form .field--solid label { margin-bottom: 2px; font-size: 11px; }
+.home-cta__form .field--solid input,
+.home-cta__form .field--solid textarea,
+.home-cta__form .field--solid select { padding: 6px 10px; font-size: 13px; }
+.home-cta__form .field--solid textarea { min-height: 48px; }
+.home-cta__form .budget-grid { gap: 5px; }
+.home-cta__form .budget-chip { padding: 5px 10px; font-size: 11px; }
+.home-cta__form .quote-submit { margin-top: 4px; padding-top: 10px; padding-bottom: 10px; }
+.home-cta__form .quote-card__disclaimer { margin-top: 8px; font-size: 11px; }
 
 /* Dark field variant */
 .field--dark label { color: var(--dark-ink-2); }
@@ -1509,6 +1558,10 @@ a.home-cta__contact-item:hover { color: var(--accent); }
   align-items: start;
   padding: clamp(48px, 6vw, 96px) 0;
   border-top: 1px solid var(--line);
+}
+.svc-row__main .cine {
+  max-width: 420px !important;
+  width: 100% !important;
 }
 .svc-row:first-child { border-top: 0; padding-top: clamp(24px, 3vw, 48px); }
 
@@ -2153,7 +2206,11 @@ a.home-cta__contact-item:hover { color: var(--accent); }
   cursor: pointer;
 }
 .work-card--wide { grid-column: 1 / -1; }
-.work-card .cine { transition: transform 0.4s var(--ease); }
+.work-card .cine {
+  transition: transform 0.4s var(--ease);
+  max-width: none !important;
+  width: 100% !important;
+}
 .work-card:hover .cine { transform: scale(1.02); }
 .work-card__meta {
   display: flex;
@@ -2465,6 +2522,24 @@ a.home-cta__contact-item:hover { color: var(--accent); }
 }
 
 /* ═════════════════════════════════════════════════════════════════════════════
+   MUV Hub teaser (Home) — grid 2x2 com 4º quadrado cowork
+   ═════════════════════════════════════════════════════════════════════════════ */
+.hub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+  max-width: 720px;
+}
+.hub-grid .cine {
+  max-width: none !important;
+  width: 100% !important;
+}
+@media (max-width: 900px) {
+  .hub-grid { grid-template-columns: 1fr 1fr; max-width: 100%; gap: 12px; }
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
    FAQ
    ═════════════════════════════════════════════════════════════════════════════ */
 .faq-section { padding-top: 56px; padding-bottom: 96px; }
@@ -2770,7 +2845,7 @@ a.home-cta__contact-item:hover { color: var(--accent); }
     "taxID": "46.941.289/0001-44",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Alameda Santos, 211, 15º andar, Sala 1507 — Edif. Paulista Boulevard",
+      "streetAddress": "Alameda Santos, 211, 15º andar, Sala 1507, Edif. Paulista Boulevard",
       "addressLocality": "São Paulo",
       "addressRegion": "SP",
       "postalCode": "01419-000",
@@ -2863,6 +2938,8 @@ a.home-cta__contact-item:hover { color: var(--accent); }
       z-index:9999; flex-wrap:wrap;
       animation: muvCookieIn .5s cubic-bezier(0.16, 1, 0.3, 1);
     }
+    /* Bugfix: o display:flex acima sobrepõe o atributo [hidden] do HTML — precisa do !important */
+    #muv-cookie[hidden]{ display:none !important; }
     @keyframes muvCookieIn { from{opacity:0; transform:translateX(-50%) translateY(20px)} to{opacity:1; transform:translateX(-50%) translateY(0)} }
     .muv-cookie__text{font-size:13.5px; line-height:1.5; flex:1; min-width:260px}
     .muv-cookie__text a{color:#DE4E2B; font-weight:500; text-decoration:none; border-bottom:1px solid rgba(222,78,43,.4)}
@@ -2938,10 +3015,12 @@ const NAV_ITEMS = [
 { id: "sobre", label: "Sobre" },
 { id: "hub", label: "MUV Hub" },
 { id: "blog", label: "Blog" },
-{ id: "faq", label: "FAQ" }];
+{ id: "faq", label: "FAQ", hideFromHeader: true }];
 
 
-const DRAWER_ITEMS = NAV_ITEMS.filter((n) => n.id !== "home");
+// Header e Drawer escondem itens marcados hideFromHeader (ex: FAQ vai só no Footer)
+const HEADER_ITEMS = NAV_ITEMS.filter((n) => !n.hideFromHeader);
+const DRAWER_ITEMS = HEADER_ITEMS.filter((n) => n.id !== "home");
 const DRAWER_SOCIALS = [
   { label: "Instagram", href: "https://instagram.com/grupomuv" },
   { label: "LinkedIn", href: "#" },
@@ -2976,12 +3055,14 @@ function Nav({ current, setCurrent, isDark }) {
   return (
     <React.Fragment>
       <nav className={`nav ${isDark ? "nav--dark" : ""} ${menuOpen ? "nav--open" : ""}`}>
-        <a className="nav__logo" onClick={(e) => {e.preventDefault();setCurrent("home");}} href="#">
-          <span className="nav__logo-mark">M</span>
-          <span>GRUPO MUV</span>
+        <a className="nav__logo" onClick={(e) => {e.preventDefault();setCurrent("home");}} href="#" aria-label="Grupo MUV — ir para home">
+          <img
+            src={isDark ? "/assets/logo-muv-branco.png" : "/assets/logo-horizontal-preto.png"}
+            alt="Grupo MUV"
+            className="nav__logo-img" />
         </a>
         <ul className="nav__links">
-          {NAV_ITEMS.map((n) =>
+          {HEADER_ITEMS.map((n) =>
           <li key={n.id}>
               <button
               className={`nav__link ${current === n.id ? "nav__link--active" : ""}`}
@@ -3174,10 +3255,27 @@ function SectionHead({ eyebrow, title, sub, num }) {
 }
 
 // ───── Page Head ─────────────────────────────────────────────────────────────
-function PageHead({ crumb, title, lead, accent, meta }) {
-  const titleNode = accent ?
-  <>{title.split(accent)[0]}<span style={{ color: "var(--accent)" }}>{accent}</span>{title.split(accent)[1]}</> :
-  title;
+function PageHead({ crumb, title, lead, accent, meta, compact }) {
+  // Suporta quebra de linha via "\n" no título, mantendo a destaque do accent.
+  const renderLineWithAccent = (line, key) => {
+    if (!accent || !line.includes(accent)) return <span key={key}>{line}</span>;
+    const [before, after] = line.split(accent);
+    return (
+      <span key={key}>
+        {before}<span style={{ color: "var(--accent)" }}>{accent}</span>{after}
+      </span>);
+  };
+
+  const lines = title.split("\n");
+  const titleNode = lines.length > 1 ?
+    lines.map((line, i) => (
+      <React.Fragment key={i}>
+        {renderLineWithAccent(line, i)}
+        {i < lines.length - 1 && <br />}
+      </React.Fragment>
+    )) :
+    renderLineWithAccent(title, 0);
+
   return (
     <header className="page-head">
       <div className="page-head__top">
@@ -3185,7 +3283,7 @@ function PageHead({ crumb, title, lead, accent, meta }) {
         <span className="page-head__top-right">{meta || "Ed. 01 · 2026"}</span>
       </div>
       <div className="page-head__body">
-        <h1 className="page-head__title">{titleNode}</h1>
+        <h1 className={`page-head__title ${compact ? "page-head__title--compact" : ""}`}>{titleNode}</h1>
         <p className="page-head__lead">{lead}</p>
       </div>
     </header>);
@@ -3219,7 +3317,7 @@ Object.assign(window, {
   </script>
 
   <script type="text/babel" data-file="pages.jsx">
-// pages.jsx — todas as páginas do site MUV
+// pages.jsx, todas as páginas do site MUV
 const { useState, useEffect, useRef } = React;
 
 // ───── Dados ─────────────────────────────────────────────────────────────────
@@ -3272,14 +3370,14 @@ const TRABALHOS = [
   year: "2026",
   category: "Brand film",
   format: "Case film publicitário (cobertura de ação OOH)",
-  team: "4 pessoas — filmmaker D1+D2, filmmaker parceiro, piloto de drone, editor",
+  team: "4 pessoas, filmmaker D1+D2, filmmaker parceiro, piloto de drone, editor",
   gear: "Sony FX3 · A7CII · GMaster 16-35 / 24-70 / 35mm · Sony 70-200 · DJI Mini 4 Pro / Avata",
   summary: "Ação OOH publicitária real-time pra convocação da Seleção Brasileira. Quatro fases na Paulista, 24h pra edição.",
   body: [
-    { h: "Contexto", p: "A África Creative trouxe uma ação do Itaú pra cima do calendário esportivo mais carregado do ano: o dia da convocação da Seleção Brasileira. O conceito era CONVOCASSO — uma ativação OOH viva, com quatro fases na cidade de São Paulo: peça \"ansioso pré\", peça pré-convocação 30 minutos antes do anúncio, OOH com transmissão ao vivo nos pontos físicos da Avenida Paulista (171 e 1912), e peça conceito pós-convocação. Faltavam três dias quando o briefing entrou de forma definitiva." },
-    { h: "Desafio", p: "Capturar uma ação publicitária que só existe enquanto ela acontece — e transformar isso num case film entregue em 24h pra começar a rodar em mídia. Janela de captação de basicamente um dia, com pré-captação no dia anterior e edição no dia seguinte. Operação multi-ponto numa Paulista cheia, sem poder ensaiar, sem poder repetir. Direitos de uso comercial nacional por dois meses já contratados." },
+    { h: "Contexto", p: "A África Creative trouxe uma ação do Itaú pra cima do calendário esportivo mais carregado do ano: o dia da convocação da Seleção Brasileira. O conceito era CONVOCASSO, uma ativação OOH viva, com quatro fases na cidade de São Paulo: peça \"ansioso pré\", peça pré-convocação 30 minutos antes do anúncio, OOH com transmissão ao vivo nos pontos físicos da Avenida Paulista (171 e 1912), e peça conceito pós-convocação. Faltavam três dias quando o briefing entrou de forma definitiva." },
+    { h: "Desafio", p: "Capturar uma ação publicitária que só existe enquanto ela acontece, e transformar isso num case film entregue em 24h pra começar a rodar em mídia. Janela de captação de basicamente um dia, com pré-captação no dia anterior e edição no dia seguinte. Operação multi-ponto numa Paulista cheia, sem poder ensaiar, sem poder repetir. Direitos de uso comercial nacional por dois meses já contratados." },
     { h: "Abordagem MUV", p: "A gente entrou na pré sabendo que o segredo do projeto era logística. Mapeamos a Paulista em quatro pontos com tempo de deslocamento entre eles, alinhamos com a África quem era o representante de set pra alinhamento real-time, e desenhamos uma operação de guerrilha multi-ponto com agilidade e cobertura simultânea. FX3 e A7CII como dupla, lentes GMaster 16-35 pra contexto urbano amplo, 70-200 pra cobertura distante das reações nas calçadas, 35mm pra estética de rua. Tudo gravando em S-Log3, com color base aplicada na edição." },
-    { h: "Resultado", p: "Entrega rodou no prazo contratado. O case film entrou em circulação comercial nos dois formatos (9x16 e 16x9), em mídia nacional, dentro da janela de dois meses prevista no contrato. Primeira entrega pra África Creative numa ação de marca dessa relevância — projeto que valida a MUV como produtora que opera com agilidade publicitária sem perder camada cinematográfica." }
+    { h: "Resultado", p: "Entrega rodou no prazo contratado. O case film entrou em circulação comercial nos dois formatos (9x16 e 16x9), em mídia nacional, dentro da janela de dois meses prevista no contrato. Primeira entrega pra África Creative numa ação de marca dessa relevância, projeto que valida a MUV como produtora que opera com agilidade publicitária sem perder camada cinematográfica." }
   ]
 },
 {
@@ -3290,14 +3388,14 @@ const TRABALHOS = [
   year: "2026",
   category: "Documentário",
   format: "Footage institucional + publicitário (captação internacional)",
-  team: "3 filmmakers — DOP, operador de câmera, assistente",
+  team: "3 filmmakers, DOP, operador de câmera, assistente",
   gear: "Sony FX6 · 2x FX3 · GMaster 16-35 / 24-70 / 35 · Sony FE 70-200 / 200-600 · Cine 7Artisans · Laowa 10mm · Ronin RS3 Mini",
   summary: "Captação da Seleção Brasileira no Camping World Stadium pra alimentar o banco audiovisual da Gatorade.",
   body: [
-    { h: "Contexto", p: "A ISLA chegou com um pedido que carregava peso simbólico grande: captar footage da Seleção Brasileira em Orlando, no Camping World Stadium, pra alimentar o banco audiovisual da Gatorade em parceria com a CBF. Material que ia virar publicidade, institucional e ativação — captação pensada pra ter vida longa, virar peça de campanha, aparecer recortada num comercial seis meses depois." },
+    { h: "Contexto", p: "A ISLA chegou com um pedido que carregava peso simbólico grande: captar footage da Seleção Brasileira em Orlando, no Camping World Stadium, pra alimentar o banco audiovisual da Gatorade em parceria com a CBF. Material que ia virar publicidade, institucional e ativação, captação pensada pra ter vida longa, virar peça de campanha, aparecer recortada num comercial seis meses depois." },
     { h: "Desafio", p: "Operar em ambiente de acesso controlado, com equipe enxuta, em outro país, em duas diárias (27/03 e 31/03), entregando material bruto com qualidade de cinema. Discrição, mobilidade, qualidade técnica consistente entre as duas câmeras principais, versatilidade do plano fechado de atleta ao plano geral de estádio com 600mm. Logística internacional embutida: passagens, transporte local, estadia, seguros, contingência." },
-    { h: "Abordagem MUV", p: "Operação desenhada em torno de três funções específicas — DOP, operador de câmera e assistente — todos habilitados pra captar simultaneamente. Equipe lateral: três pessoas podendo virar três câmeras ao mesmo tempo, ou se concentrar em uma cena maior. FX6 como câmera principal pra cinema-look, duas FX3 pra mobilidade, todas rodando S-Log3 com mesmo padrão de exposição. Backup duplo em SSDs (1TB e 2TB Sandisk), loggagem em campo, color grading básico já aplicado na entrega." },
-    { h: "Resultado", p: "Materiais brutos organizados e com color grade básico entregues no prazo. A operação rodou sem ruído logístico, equipamento voltou inteiro, e o material entrou no banco da Gatorade pronto pra desdobramentos futuros. Marco de operação internacional com equipe reduzida e setup cinematográfico — modelo que a MUV quer expandir pra outras captações fora do Brasil." }
+    { h: "Abordagem MUV", p: "Operação desenhada em torno de três funções específicas, DOP, operador de câmera e assistente, todos habilitados pra captar simultaneamente. Equipe lateral: três pessoas podendo virar três câmeras ao mesmo tempo, ou se concentrar em uma cena maior. FX6 como câmera principal pra cinema-look, duas FX3 pra mobilidade, todas rodando S-Log3 com mesmo padrão de exposição. Backup duplo em SSDs (1TB e 2TB Sandisk), loggagem em campo, color grading básico já aplicado na entrega." },
+    { h: "Resultado", p: "Materiais brutos organizados e com color grade básico entregues no prazo. A operação rodou sem ruído logístico, equipamento voltou inteiro, e o material entrou no banco da Gatorade pronto pra desdobramentos futuros. Marco de operação internacional com equipe reduzida e setup cinematográfico, modelo que a MUV quer expandir pra outras captações fora do Brasil." }
   ]
 },
 {
@@ -3308,14 +3406,14 @@ const TRABALHOS = [
   year: "2026",
   category: "Cobertura",
   format: "Cobertura de evento + branded social",
-  team: "3 pessoas — fotógrafo, filmmaker, assistente — operação multi-ponto",
+  team: "3 pessoas, fotógrafo, filmmaker, assistente, operação multi-ponto",
   gear: "Sony A7III, A7IV, FX3 · GMaster 16-35 / 24-70 / 35mm · Laowa 10mm · LED Aputure · Flash Godox · Intercom",
   summary: "Dois dias, dois contextos: evento fechado em Alphaville com entrega real-time + treinão aberto no Ibirapuera.",
   body: [
-    { h: "Contexto", p: "A Adidas estava reposicionando peso na comunidade de running brasileira. Acabava de assumir parcerias que historicamente eram de outra marca, e o desafio do time não era mais \"ter produto bom\" — era recuperar pertencimento na cena. O briefing chegou via Valiant, agência que cuida da parte de relacionamento estratégico com assessorias, atletas, influenciadores e os Adidas Runners." },
-    { h: "Desafio", p: "Dois dias seguidos, dois contextos completamente diferentes. Dia 1: evento fechado no escritório de Alphaville, formato instagramável, até 100 convidados — influência, AR, atletas, palestras e ambientação de marca, com entrega parcial em real-time pro time poder postar enquanto o evento ainda rolava. Dia 2: treinão aberto no Ibirapuera, captação documental, sem pressão de feed mas com o peso simbólico de marcar a chegada da marca naquele território." },
-    { h: "Abordagem MUV", p: "Em Alphaville: operação dupla — fotógrafo dedicado ao registro de marca, filmmaker em segunda câmera capturando interação real, assistente fazendo backup e enviando primeiras fotos pro time da agência durante o evento. A cada 30-40 minutos um lote de fotos selecionadas saía pro WhatsApp do cliente, já com tratamento da Adidas em LUT no Lightroom. No Ibirapuera: foco em narrativa — corredor real, comunidade real, luz natural da manhã, lente 35mm pra ficar próximo sem ser invasivo, Laowa 10mm pra capturar o coletivo em movimento." },
-    { h: "Resultado", p: "Time da Valiant validou as fotos do Dia 1 durante a captação, cliente começou a postar antes do evento terminar. Material do Dia 2 entrou em circulação interna como bank pra desdobramentos futuros. Mais importante: o trabalho abriu relação. Na sequência fechamos cobertura da Kings Nation no Allianz Parque, também pra Adidas, com a mesma equipe — sinal claro de que o primeiro entregável funcionou." }
+    { h: "Contexto", p: "A Adidas estava reposicionando peso na comunidade de running brasileira. Acabava de assumir parcerias que historicamente eram de outra marca, e o desafio do time não era mais \"ter produto bom\", era recuperar pertencimento na cena. O briefing chegou via Valiant, agência que cuida da parte de relacionamento estratégico com assessorias, atletas, influenciadores e os Adidas Runners." },
+    { h: "Desafio", p: "Dois dias seguidos, dois contextos completamente diferentes. Dia 1: evento fechado no escritório de Alphaville, formato instagramável, até 100 convidados, influência, AR, atletas, palestras e ambientação de marca, com entrega parcial em real-time pro time poder postar enquanto o evento ainda rolava. Dia 2: treinão aberto no Ibirapuera, captação documental, sem pressão de feed mas com o peso simbólico de marcar a chegada da marca naquele território." },
+    { h: "Abordagem MUV", p: "Em Alphaville: operação dupla, fotógrafo dedicado ao registro de marca, filmmaker em segunda câmera capturando interação real, assistente fazendo backup e enviando primeiras fotos pro time da agência durante o evento. A cada 30-40 minutos um lote de fotos selecionadas saía pro WhatsApp do cliente, já com tratamento da Adidas em LUT no Lightroom. No Ibirapuera: foco em narrativa, corredor real, comunidade real, luz natural da manhã, lente 35mm pra ficar próximo sem ser invasivo, Laowa 10mm pra capturar o coletivo em movimento." },
+    { h: "Resultado", p: "Time da Valiant validou as fotos do Dia 1 durante a captação, cliente começou a postar antes do evento terminar. Material do Dia 2 entrou em circulação interna como bank pra desdobramentos futuros. Mais importante: o trabalho abriu relação. Na sequência fechamos cobertura da Kings Nation no Allianz Parque, também pra Adidas, com a mesma equipe, sinal claro de que o primeiro entregável funcionou." }
   ]
 },
 {
@@ -3326,13 +3424,13 @@ const TRABALHOS = [
   year: "2025",
   category: "Brand film",
   format: "Branded content (6 verticais + 12 fotos + backstage)",
-  team: "Equipe enxuta — filmmaker, fotógrafo, assistente",
+  team: "Equipe enxuta, filmmaker, fotógrafo, assistente",
   gear: "Sony FX3 · A73 · Insta 360 · GMaster 16-35 / 24-70 / 35 / 70-200mm · Cine 7Artisans T2 35/50/85mm · Aputure F22c/F21c · DJI Avata",
   summary: "Social-first pros quatro pilares do Kicks: conforto, tecnologia, dirigibilidade, segurança.",
   body: [
-    { h: "Contexto", p: "A Nissan chegou via Suba com o briefing do Kicks. O carro já tem campanha consolidada, mas a marca queria social-first — conteúdo nativo de feed, vertical, com cara de criador e cabeça de cliente. A ideia era cobrir os quatro pilares de comunicação do veículo (conforto, tecnologia, dirigibilidade, segurança) em peças curtas, com edição dinâmica, sem cara de comercial antigo." },
-    { h: "Desafio", p: "Traduzir uma narrativa institucional automotiva — historicamente pesada, com aprovação longa e muito controle — num formato leve, vertical e cabível em 30 segundos. Em paralelo, entregar um banco de 12 fotos com a mesma cobertura conceitual. E entregar conteúdo extra de backstage como diferencial, com pré-aprovação dupla pela agência e pela marca. Vídeo em 7 dias, fotos em 7 dias, pagamento em 60." },
-    { h: "Abordagem MUV", p: "Entramos na pré com um roteiro proprietário — base do diálogo com a Suba. Captação em torno do que cada pilar pedia visualmente: conforto exige interno em luz controlada e detalhe; tecnologia exige plano fechado de painel, gestual de toque, transições rápidas; dirigibilidade exige movimento, drone, FPV; segurança exige plano amplo, contexto, presença do carro no ambiente. FX3 pra cinema, A73 pra fotografia em paralelo, Insta 360 pra POV de motorista, drone Avata pra dirigibilidade. Iluminação com painéis Amaran F22c e F21c pra controlar reflexo na lataria. Lentes Cine 7Artisans T2 pra os planos preparados de close." },
+    { h: "Contexto", p: "A Nissan chegou via Suba com o briefing do Kicks. O carro já tem campanha consolidada, mas a marca queria social-first, conteúdo nativo de feed, vertical, com cara de criador e cabeça de cliente. A ideia era cobrir os quatro pilares de comunicação do veículo (conforto, tecnologia, dirigibilidade, segurança) em peças curtas, com edição dinâmica, sem cara de comercial antigo." },
+    { h: "Desafio", p: "Traduzir uma narrativa institucional automotiva, historicamente pesada, com aprovação longa e muito controle, num formato leve, vertical e cabível em 30 segundos. Em paralelo, entregar um banco de 12 fotos com a mesma cobertura conceitual. E entregar conteúdo extra de backstage como diferencial, com pré-aprovação dupla pela agência e pela marca. Vídeo em 7 dias, fotos em 7 dias, pagamento em 60." },
+    { h: "Abordagem MUV", p: "Entramos na pré com um roteiro proprietário, base do diálogo com a Suba. Captação em torno do que cada pilar pedia visualmente: conforto exige interno em luz controlada e detalhe; tecnologia exige plano fechado de painel, gestual de toque, transições rápidas; dirigibilidade exige movimento, drone, FPV; segurança exige plano amplo, contexto, presença do carro no ambiente. FX3 pra cinema, A73 pra fotografia em paralelo, Insta 360 pra POV de motorista, drone Avata pra dirigibilidade. Iluminação com painéis Amaran F22c e F21c pra controlar reflexo na lataria. Lentes Cine 7Artisans T2 pra os planos preparados de close." },
     { h: "Resultado", p: "Seis verticais entregues, 12 fotos editadas, banco de backstage usado como conteúdo orgânico pra alimentar o canal nas semanas seguintes ao lançamento. Mais relevante: o trabalho gerou base pra renovação dos direitos de uso com a Nissan, num segundo aditivo que estendeu a presença das peças além da janela inicial." }
   ]
 },
@@ -3344,14 +3442,14 @@ const TRABALHOS = [
   year: "2023",
   category: "Social",
   format: "Sete reels de até 1 min (banco de produto)",
-  team: "3 pessoas — videomaker, assistente, editor",
+  team: "3 pessoas, videomaker, assistente, editor",
   gear: "Sony FX3 · A73 · GMaster 16-35 / 24-70 / 70-200mm · Rode direcional · Hollyland lapela · MacBook Pro",
-  summary: "Sete reels mostrando sete serviços diferentes — tudo captado numa única diária.",
+  summary: "Sete reels mostrando sete serviços diferentes, tudo captado numa única diária.",
   body: [
-    { h: "Contexto", p: "A Pop-Comm é integradora de comunicação corporativa — vende serviços que, no fundo, são intangíveis: estratégia, operação, mídia. Esse é o tipo de cliente que mais sofre na hora de virar conteúdo, porque o produto não é um objeto. É processo, é gente, é decisão. Fernando, à frente, queria uma forma de mostrar o que a Pop vende sem cair no discurso institucional cansado." },
-    { h: "Desafio", p: "Sete reels, cada um mostrando um serviço diferente, todos captados em uma única diária. Equipe enxuta, prazo curto, e a barra alta: o conteúdo precisava parecer feito pra plataforma, não adaptado pra ela. Reel de 1 minuto não é vídeo institucional cortado — é estrutura própria, gancho nos primeiros 3 segundos, ritmo que segura o dedo." },
-    { h: "Abordagem MUV", p: "Pré-produção condensada. Mapeamos com o Fernando os sete serviços, definimos qual seria a virada visual de cada um (entrevista direta, bastidor, metáfora visual?), e desenhamos uma ordem de captação que minimizava troca de setup — o que economizou hora e permitiu entregar os sete sem perder energia no último. FX3 como câmera principal em S-Log3, A73 como segunda câmera. Lentes GMaster cobrindo de 16-35 a 70-200. Áudio em duas vias — Rode direcional como referência ambiente, Hollyland de lapela como áudio principal." },
-    { h: "Resultado", p: "Os sete reels viraram a base do feed da Pop-Comm naquele ciclo, com cadência de postagem espaçada por algumas semanas. Mais importante, o trabalho mostrou um modelo que repetimos até hoje com clientes B2B — uma diária densa, sete peças, custo unitário enxuto. O case da Pop-Comm ainda é referência interna pra projetos onde o orçamento pede eficiência sem cair na perda de qualidade." }
+    { h: "Contexto", p: "A Pop-Comm é integradora de comunicação corporativa, vende serviços que, no fundo, são intangíveis: estratégia, operação, mídia. Esse é o tipo de cliente que mais sofre na hora de virar conteúdo, porque o produto não é um objeto. É processo, é gente, é decisão. Fernando, à frente, queria uma forma de mostrar o que a Pop vende sem cair no discurso institucional cansado." },
+    { h: "Desafio", p: "Sete reels, cada um mostrando um serviço diferente, todos captados em uma única diária. Equipe enxuta, prazo curto, e a barra alta: o conteúdo precisava parecer feito pra plataforma, não adaptado pra ela. Reel de 1 minuto não é vídeo institucional cortado, é estrutura própria, gancho nos primeiros 3 segundos, ritmo que segura o dedo." },
+    { h: "Abordagem MUV", p: "Pré-produção condensada. Mapeamos com o Fernando os sete serviços, definimos qual seria a virada visual de cada um (entrevista direta, bastidor, metáfora visual?), e desenhamos uma ordem de captação que minimizava troca de setup, o que economizou hora e permitiu entregar os sete sem perder energia no último. FX3 como câmera principal em S-Log3, A73 como segunda câmera. Lentes GMaster cobrindo de 16-35 a 70-200. Áudio em duas vias, Rode direcional como referência ambiente, Hollyland de lapela como áudio principal." },
+    { h: "Resultado", p: "Os sete reels viraram a base do feed da Pop-Comm naquele ciclo, com cadência de postagem espaçada por algumas semanas. Mais importante, o trabalho mostrou um modelo que repetimos até hoje com clientes B2B, uma diária densa, sete peças, custo unitário enxuto. O case da Pop-Comm ainda é referência interna pra projetos onde o orçamento pede eficiência sem cair na perda de qualidade." }
   ]
 }];
 
@@ -3372,40 +3470,40 @@ const POSTS = [
   read: "8 min",
   category: "Framework",
   body: [
-    { p: "O segundo dia de um festival grande começa às 13h. Às 19h, antes do headliner subir, a marca patrocinadora já quer um corte de 30 segundos no story, um carrossel com três frames e uma versão de 60s pronta pro YouTube. A captação ainda não acabou. É exatamente esse o jogo da cobertura em tempo real de evento — e é um jogo que se ganha no pipeline, não no equipamento." },
+    { p: "O segundo dia de um festival grande começa às 13h. Às 19h, antes do headliner subir, a marca patrocinadora já quer um corte de 30 segundos no story, um carrossel com três frames e uma versão de 60s pronta pro YouTube. A captação ainda não acabou. É exatamente esse o jogo da cobertura em tempo real de evento, e é um jogo que se ganha no pipeline, não no equipamento." },
     { p: "O equipamento ajuda. Mas o que separa quem entrega de quem promete é o desenho do fluxo entre o que entra pelo sensor e o que sai pra timeline do cliente." },
     { h: "O que é \"tempo real\" na prática" },
-    { p: "Tempo real em festival não é live streaming. É turnaround de horas — às vezes de minutos. O conteúdo capturado às 16h precisa estar revisado, cortado, com som tratado e cor batida pra entrar no feed antes das 21h, enquanto o público ainda está dentro do evento e a conversa ainda está acontecendo." },
+    { p: "Tempo real em festival não é live streaming. É turnaround de horas, às vezes de minutos. O conteúdo capturado às 16h precisa estar revisado, cortado, com som tratado e cor batida pra entrar no feed antes das 21h, enquanto o público ainda está dentro do evento e a conversa ainda está acontecendo." },
     { p: "Isso muda tudo na operação. Não dá pra esperar terminar o festival pra \"começar a editar\". A edição começa no terceiro frame capturado. E o aftermovie de uma semana depois é só consequência de um workflow que já vinha cortando desde o dia um." },
     { h: "Pipeline: captação, ingest, edit, aprovação" },
-    { p: "O fluxo enxuto tem quatro camadas rodando em paralelo. Captação: câmera principal em FX6 ou FX3, segunda A7S III ou A7 IV, drone quando autorizado, mic direcional + lav nos pontos quentes, tudo em proxy nativo. Ingest: DIT no festival, não no escritório. Cartão sai da câmera, vai pro DIT, backup duplo em SSD rápido, proxy liberado pra edit station em segundos. Edit station no local: MacBook potente, monitor extra, Resolve ou Premiere com projeto montado, LUTs prontos, templates de social na timeline. Aprovação ágil: Frame.io, WeTransfer, qualquer ferramenta — desde que cliente esteja no mesmo canal e decisão venha em minutos." },
+    { p: "O fluxo enxuto tem quatro camadas rodando em paralelo. Captação: câmera principal em FX6 ou FX3, segunda A7S III ou A7 IV, drone quando autorizado, mic direcional + lav nos pontos quentes, tudo em proxy nativo. Ingest: DIT no festival, não no escritório. Cartão sai da câmera, vai pro DIT, backup duplo em SSD rápido, proxy liberado pra edit station em segundos. Edit station no local: MacBook potente, monitor extra, Resolve ou Premiere com projeto montado, LUTs prontos, templates de social na timeline. Aprovação ágil: Frame.io, WeTransfer, qualquer ferramenta, desde que cliente esteja no mesmo canal e decisão venha em minutos." },
     { h: "Equipe mínima, função clara" },
-    { p: "Cobertura em tempo real não pede crew gigante. Pede crew certa. Pra festival de porte médio: 1 DOP (câmera A), 1 cinegrafista de apoio (câmera B), 1 drone op, 1 DIT/assistente, 1 editor no local, 1 produtor. Seis pessoas. Em festival grande dobra time de câmera, mantém DIT e edit station — não vira 20 pessoas, vira duas células de seis rodando em paralelo." },
+    { p: "Cobertura em tempo real não pede crew gigante. Pede crew certa. Pra festival de porte médio: 1 DOP (câmera A), 1 cinegrafista de apoio (câmera B), 1 drone op, 1 DIT/assistente, 1 editor no local, 1 produtor. Seis pessoas. Em festival grande dobra time de câmera, mantém DIT e edit station, não vira 20 pessoas, vira duas células de seis rodando em paralelo." },
     { h: "O que dá pra entregar (e quando)" },
-    { p: "Stories e reels do dia: 2 a 4 horas depois da captação. Carrossel de fotos selecionadas: mesmo dia, fim de noite. Teaser do dia seguinte: sai na manhã. Recap diário (30s a 60s): final do dia ou primeira hora do dia seguinte. Aftermovie principal (90s a 3min): 5 a 10 dias depois. Versões extras pra parceiros: duas semanas seguintes. Tudo sai do mesmo material bruto — o segredo é capturar pensando nas múltiplas entregas." },
+    { p: "Stories e reels do dia: 2 a 4 horas depois da captação. Carrossel de fotos selecionadas: mesmo dia, fim de noite. Teaser do dia seguinte: sai na manhã. Recap diário (30s a 60s): final do dia ou primeira hora do dia seguinte. Aftermovie principal (90s a 3min): 5 a 10 dias depois. Versões extras pra parceiros: duas semanas seguintes. Tudo sai do mesmo material bruto, o segredo é capturar pensando nas múltiplas entregas." },
     { h: "Conclusão" },
-    { p: "Cobertura em tempo real é técnica + logística + decisão. O equipamento é commodity — quem tem FX6 hoje tem FX6 amanhã. O diferencial está no desenho do pipeline, no tamanho certo da equipe e na maturidade de aprovação do cliente. Quando essas três variáveis estão alinhadas, entregar conteúdo enquanto o show ainda acontece deixa de ser exceção e vira parte do produto." }
+    { p: "Cobertura em tempo real é técnica + logística + decisão. O equipamento é commodity, quem tem FX6 hoje tem FX6 amanhã. O diferencial está no desenho do pipeline, no tamanho certo da equipe e na maturidade de aprovação do cliente. Quando essas três variáveis estão alinhadas, entregar conteúdo enquanto o show ainda acontece deixa de ser exceção e vira parte do produto." }
   ]
 },
 {
   slug: "branded-vs-publicidade",
   date: "2026 · MAI",
   title: "Branded content vs publicidade tradicional: a diferença que multiplica resultado.",
-  excerpt: "Publicidade tradicional interrompe. Branded é procurado. A frase de efeito é meio verdadeira e meio mentira — a diferença real está nos quatro critérios que ninguém quer rodar.",
+  excerpt: "Publicidade tradicional interrompe. Branded é procurado. A frase de efeito é meio verdadeira e meio mentira, a diferença real está nos quatro critérios que ninguém quer rodar.",
   read: "7 min",
   category: "Ensaio",
   body: [
-    { p: "Publicidade tradicional interrompe. Branded content é procurado. Essa é a frase de efeito que circula em todo deck de agência desde 2015 — e como toda frase de efeito, ela é meio verdadeira e meio mentira." },
+    { p: "Publicidade tradicional interrompe. Branded content é procurado. Essa é a frase de efeito que circula em todo deck de agência desde 2015, e como toda frase de efeito, ela é meio verdadeira e meio mentira." },
     { p: "A verdade é que branded content só funciona quando é construído como conteúdo de verdade, com ponto de vista, e não como \"comercial com história\". A mentira é fingir que basta colocar uma narrativa em volta do produto pra deixar de ser publicidade. Não basta. E o público sente em três segundos." },
     { h: "A diferença que importa" },
-    { p: "Publicidade tradicional tem uma promessa clara com o espectador: você me dá 30 segundos da sua atenção em troca do conteúdo que você veio consumir. É um pedágio. Funciona dentro desse contrato — alcance, frequência, top of mind. Branded content tem outra promessa: eu te entrego algo que você assistiria de graça, e a marca paga essa conta. O custo dela é fazer um conteúdo bom o bastante pra justificar a presença." },
+    { p: "Publicidade tradicional tem uma promessa clara com o espectador: você me dá 30 segundos da sua atenção em troca do conteúdo que você veio consumir. É um pedágio. Funciona dentro desse contrato, alcance, frequência, top of mind. Branded content tem outra promessa: eu te entrego algo que você assistiria de graça, e a marca paga essa conta. O custo dela é fazer um conteúdo bom o bastante pra justificar a presença." },
     { p: "Publicidade é pulada, branded é salvo. Publicidade gera lembrança, branded gera percepção. Publicidade tem CTR, branded tem reescuta. Publicidade é medida em GRP, branded é medida em conversa." },
     { h: "Os quatro critérios" },
-    { p: "1. Tem POV? Um ponto de vista que pertence à marca e não é genérico? \"Celebrar a diversidade\" não é POV. POV é arriscado, divide, posiciona. 2. Sobrevive sem o logo? Se cortar os 2 segundos finais e o filme continuar interessante, é branded. 3. Gera salvamento? Ninguém salva propaganda. 4. Gera conversa? Conversa de tema, não de marketing — se o filme faz as pessoas falarem do tema, e não da marca, o branded funcionou. Quatro sins: é branded. Dois ou três: tá no meio. Zero ou um: é publicidade — e tudo bem assumir." },
+    { p: "1. Tem POV? Um ponto de vista que pertence à marca e não é genérico? \"Celebrar a diversidade\" não é POV. POV é arriscado, divide, posiciona. 2. Sobrevive sem o logo? Se cortar os 2 segundos finais e o filme continuar interessante, é branded. 3. Gera salvamento? Ninguém salva propaganda. 4. Gera conversa? Conversa de tema, não de marketing, se o filme faz as pessoas falarem do tema, e não da marca, o branded funcionou. Quatro sins: é branded. Dois ou três: tá no meio. Zero ou um: é publicidade, e tudo bem assumir." },
     { h: "Quando branded NÃO faz sentido" },
     { p: "Lançamento com janela curta (ciclo de 30 dias não dá tempo de fermentar). Performance pura (anúncio direto com oferta clara performa mais). Categoria ultracomoditizada (decisão 100% preço). Marca sem maturidade narrativa (resolve o discurso primeiro, faz branded depois). A pergunta honesta: a marca tem o que dizer, ou tá pagando pra parecer que tem?" },
     { h: "ROI percebido" },
-    { p: "Branded bom roda por anos, não por trimestres. Mídia paga menor por reach orgânico maior. Associação de marca mais profunda — lembrança você compra, percepção você constrói. ROI raramente cabe num dashboard de campanha. Mora em pesquisa de marca, share of voice, brand lift. Quem só olha CPM e CTR não vai entender o investimento." },
+    { p: "Branded bom roda por anos, não por trimestres. Mídia paga menor por reach orgânico maior. Associação de marca mais profunda, lembrança você compra, percepção você constrói. ROI raramente cabe num dashboard de campanha. Mora em pesquisa de marca, share of voice, brand lift. Quem só olha CPM e CTR não vai entender o investimento." },
     { h: "Conclusão" },
     { p: "A pergunta certa não é \"branded ou publicidade\". É: o que esse problema de marketing precisa, neste momento? Algumas vezes é interrupção bem feita. Outras vezes é uma narrativa que mereça atenção voluntária. Quem trata os dois como ferramentas distintas, com KPIs próprios, multiplica o resultado das duas." }
   ]
@@ -3418,11 +3516,11 @@ const POSTS = [
   read: "9 min",
   category: "Framework",
   body: [
-    { p: "Todo mundo tem aquela pasta. Vídeos salvos no Vimeo, links no Notion, prints no celular. Sempre os mesmos nomes aparecem nas reuniões de referência. A pergunta interessante não é \"por que esses?\". É: o que esses têm em comum que os outros não têm? A resposta tá em cinco ingredientes que ninguém vê quando assiste — mas que o sistema todo sente." },
+    { p: "Todo mundo tem aquela pasta. Vídeos salvos no Vimeo, links no Notion, prints no celular. Sempre os mesmos nomes aparecem nas reuniões de referência. A pergunta interessante não é \"por que esses?\". É: o que esses têm em comum que os outros não têm? A resposta tá em cinco ingredientes que ninguém vê quando assiste, mas que o sistema todo sente." },
     { h: "1. POV claro" },
-    { p: "Ponto de vista é a coisa mais subestimada do audiovisual brasileiro. POV não é \"a marca acredita em pessoas\". POV é uma posição específica sobre alguma coisa específica. \"Dream Crazy\" da Nike não é sobre esporte — é sobre acreditar em si mesmo a ponto de incomodar os outros. \"Shot on iPhone\" não é sobre câmera — é sobre democratizar a produção de imagem premium. Sem POV, o filme vira voo cego. Aplicação: antes de qualquer pré-produção, escreva em UMA frase o que o filme defende." },
+    { p: "Ponto de vista é a coisa mais subestimada do audiovisual brasileiro. POV não é \"a marca acredita em pessoas\". POV é uma posição específica sobre alguma coisa específica. \"Dream Crazy\" da Nike não é sobre esporte, é sobre acreditar em si mesmo a ponto de incomodar os outros. \"Shot on iPhone\" não é sobre câmera, é sobre democratizar a produção de imagem premium. Sem POV, o filme vira voo cego. Aplicação: antes de qualquer pré-produção, escreva em UMA frase o que o filme defende." },
     { h: "2. Ritmo invisível (cortes no respiro)" },
-    { p: "Boa edição é a edição que ninguém percebe. O corte entra exatamente no frame em que o espectador já tava pedindo pra trocar. Editores chamam de \"cortar no respiro\": o ritmo segue a respiração de quem assiste, não a métrica da trilha. Aplicação: cortar com som mudo na primeira passada. Se o ritmo funciona sem áudio, vai funcionar muito melhor com áudio. Se só funciona com a trilha, ela tá carregando o filme — e o filme não vira referência." },
+    { p: "Boa edição é a edição que ninguém percebe. O corte entra exatamente no frame em que o espectador já tava pedindo pra trocar. Editores chamam de \"cortar no respiro\": o ritmo segue a respiração de quem assiste, não a métrica da trilha. Aplicação: cortar com som mudo na primeira passada. Se o ritmo funciona sem áudio, vai funcionar muito melhor com áudio. Se só funciona com a trilha, ela tá carregando o filme, e o filme não vira referência." },
     { h: "3. Sound design (som faz 50%)" },
     { p: "Por que uma cena ruim com som excelente é melhor que uma cena ótima com som ruim? Porque som carrega emoção que a imagem sozinha não carrega. A imagem fala com o olho. O som fala direto com o sistema nervoso. Esse é o gap mais visível do mercado brasileiro. Sobra investimento em câmera e direção, falta em som. Aplicação: orçar sound design como item separado, contratar designer de som dedicado. A diferença de custo é marginal. A diferença de resultado é estrutural." },
     { h: "4. Tipografia e grafismo coerente" },
@@ -3443,15 +3541,15 @@ const POSTS = [
   body: [
     { p: "Sexta-feira, 9h da manhã. A van já tá carregada na frente do escritório. Quatro câmeras, dois drones (um titular, um reserva), três notebooks, dez SSDs, dois monitores portáteis, duas tendas, cabos pra cobrir um quarteirão, lentes de 14 a 200, monopés, gimbals, um par de walkie-talkies que ainda funcionam desde 2019. A próxima vez que esse equipamento vai parar é segunda à tarde. O que segue é o relato honesto de uma operação de cobertura de Lollapalooza pela equipe MUV." },
     { h: "Pré-festival: a semana que define os três dias" },
-    { p: "A coisa mais importante de uma cobertura de festival não acontece no festival. Acontece nos sete dias anteriores. Briefing fechado uma semana antes. Mapa do evento marcado: onde fica cada palco, camarote do cliente, ativações. Lista de artistas com prioridade — quem é must, quem é nice to have. Credenciamento resolvido três semanas antes. O briefing de entrega também sai antes: stories e reels durante o evento, recap diário, aftermovie em janela combinada, cortes pra parceiros, banco de fotos pra deck do ano seguinte. Cada entrega vira uma coluna no spreadsheet, cada coluna vira uma timeline na edit station." },
+    { p: "A coisa mais importante de uma cobertura de festival não acontece no festival. Acontece nos sete dias anteriores. Briefing fechado uma semana antes. Mapa do evento marcado: onde fica cada palco, camarote do cliente, ativações. Lista de artistas com prioridade, quem é must, quem é nice to have. Credenciamento resolvido três semanas antes. O briefing de entrega também sai antes: stories e reels durante o evento, recap diário, aftermovie em janela combinada, cortes pra parceiros, banco de fotos pra deck do ano seguinte. Cada entrega vira uma coluna no spreadsheet, cada coluna vira uma timeline na edit station." },
     { h: "Dia 1: abrindo a operação" },
-    { p: "11h, chegada no Autódromo de Interlagos. Montagem da base — tenda 3x3 com mesa, duas cadeiras, energia em nobreak, internet via 5G dedicado (internet do festival não serve pra subir nada). Edit station: MacBook Pro M3 Max, monitor portátil 16\", fone de referência, dois SSDs Samsung T9 espelhados. 12h primeira reunião. Câmera A (FX6 + 24-70 + 70-200) cobre palco principal. Câmera B (A7S III + 16-35 + 50mm prime) cobre bastidor. Câmera C (A7 IV) fica de apoio. 14h primeiro show. 17h primeira leva chega na edit. 19h primeiro story no celular do cliente. Aprovação volta em 12 minutos. Sobe." },
+    { p: "11h, chegada no Autódromo de Interlagos. Montagem da base, tenda 3x3 com mesa, duas cadeiras, energia em nobreak, internet via 5G dedicado (internet do festival não serve pra subir nada). Edit station: MacBook Pro M3 Max, monitor portátil 16\", fone de referência, dois SSDs Samsung T9 espelhados. 12h primeira reunião. Câmera A (FX6 + 24-70 + 70-200) cobre palco principal. Câmera B (A7S III + 16-35 + 50mm prime) cobre bastidor. Câmera C (A7 IV) fica de apoio. 14h primeiro show. 17h primeira leva chega na edit. 19h primeiro story no celular do cliente. Aprovação volta em 12 minutos. Sobe." },
     { h: "Dia 2: o ritmo se consolida" },
-    { p: "Sábado é o dia que separa quem aguenta de quem não aguenta. O entusiasmo do dia 1 já passou. O cansaço do dia 3 ainda não chegou. Reforço de rotina: almoço marcado, trocas de operador entre câmeras pra evitar exaustão da mesma posição, editor com descanso de 90 minutos no meio da tarde. Aprovação no dia 2 é o teste real do pipeline — se na sexta saiu em 12 minutos, no sábado costuma demorar mais. Criamos fluxo paralelo: enquanto material principal espera aprovação, editor adianta recortes secundários pra patrocinadores menores." },
+    { p: "Sábado é o dia que separa quem aguenta de quem não aguenta. O entusiasmo do dia 1 já passou. O cansaço do dia 3 ainda não chegou. Reforço de rotina: almoço marcado, trocas de operador entre câmeras pra evitar exaustão da mesma posição, editor com descanso de 90 minutos no meio da tarde. Aprovação no dia 2 é o teste real do pipeline, se na sexta saiu em 12 minutos, no sábado costuma demorar mais. Criamos fluxo paralelo: enquanto material principal espera aprovação, editor adianta recortes secundários pra patrocinadores menores." },
     { h: "Dia 3: a colheita" },
     { p: "Domingo é colheita. O grosso do material bruto já tá capturado. Operação mais cirúrgica: completar o que faltou, capturar planos de cobertura específicos, garantir que o último headliner tem captação à altura. Editor adianta o máximo possível do aftermovie no domingo à tarde, durante shows secundários. Recap final sai na madrugada. Equipe desmonta às 04h. Volta pro escritório segunda à tarde pra descarga completa e início da pós pesada." },
     { h: "Aprendizados" },
-    { p: "Backup espelho não-negociável (um cartão deu pau no dia 2, backup salvou). Editor no campo > editor remoto (já testamos, não rola). Aprovação humana presencial vale ouro. Sobrar tempo no dia 3 > correr no dia 3. Sound design separado — o ruído ambiente de festival é hostil, áudio de qualidade pra entrevistas só sai com captação dedicada." },
+    { p: "Backup espelho não-negociável (um cartão deu pau no dia 2, backup salvou). Editor no campo > editor remoto (já testamos, não rola). Aprovação humana presencial vale ouro. Sobrar tempo no dia 3 > correr no dia 3. Sound design separado, o ruído ambiente de festival é hostil, áudio de qualidade pra entrevistas só sai com captação dedicada." },
     { h: "Conclusão" },
     { p: "Cobertura de festival como o Lollapalooza não é heroísmo. É processo. É a soma de cem decisões pequenas tomadas em ordem certa, antes, durante e depois. Quem chega no dia 1 sem o pré-festival resolvido, perde. Quem chega na pós sem material capturado pensando em todas as entregas, perde." }
   ]
@@ -3464,18 +3562,18 @@ const POSTS = [
   read: "8 min",
   category: "Ensaio",
   body: [
-    { p: "Existe uma confusão antiga no mercado audiovisual brasileiro: a ideia de que produção premium pede produtora grande. Crew de 30, três níveis de assistente, departamento de arte com cinco pessoas. Quanto mais nome na call sheet, mais \"premium\" o projeto pareceria. A prática mostra o contrário. Os projetos audiovisuais mais admirados da última década — A24, Stink, Boiler, Highsnobiety, Arc'teryx — operam com equipe pequena. Não por restrição de orçamento. Por escolha estratégica." },
-    { p: "A tese é simples: premium não é headcount, é densidade. E densidade não escala com gente nova entrando no projeto — escala com gente certa fazendo a coisa certa." },
+    { p: "Existe uma confusão antiga no mercado audiovisual brasileiro: a ideia de que produção premium pede produtora grande. Crew de 30, três níveis de assistente, departamento de arte com cinco pessoas. Quanto mais nome na call sheet, mais \"premium\" o projeto pareceria. A prática mostra o contrário. Os projetos audiovisuais mais admirados da última década, A24, Stink, Boiler, Highsnobiety, Arc'teryx, operam com equipe pequena. Não por restrição de orçamento. Por escolha estratégica." },
+    { p: "A tese é simples: premium não é headcount, é densidade. E densidade não escala com gente nova entrando no projeto, escala com gente certa fazendo a coisa certa." },
     { h: "O problema da equipe grande" },
     { p: "Primeiro: dilui POV. Cada pessoa nova traz uma opinião. Em dose grande vira ruído. Quando 15 pessoas têm voz sobre uma decisão criativa, o resultado tende ao denominador comum mais baixo. Ninguém defende o risco. Todo mundo entrega a versão segura. A versão segura nunca vira referência." },
-    { p: "Segundo: atrasa decisão. Em equipe pequena, alguém propõe, alguém defende, alguém aprova — em uma manhã. Em equipe grande, a mesma decisão vira pauta de reunião, ata, aprovação por e-mail, nova rodada de ajuste. Duas semanas pra resolver o que resolveria em duas horas." },
-    { p: "Terceiro: encarece sem entregar mais qualidade. Equipe grande tem custo fixo alto — honorários, estrutura, hierarquia, processo. O dinheiro extra vai pra administração, não pra tela. O cliente paga 30% a mais pra ver o mesmo filme que entregaria com equipe 40% menor." },
+    { p: "Segundo: atrasa decisão. Em equipe pequena, alguém propõe, alguém defende, alguém aprova, em uma manhã. Em equipe grande, a mesma decisão vira pauta de reunião, ata, aprovação por e-mail, nova rodada de ajuste. Duas semanas pra resolver o que resolveria em duas horas." },
+    { p: "Terceiro: encarece sem entregar mais qualidade. Equipe grande tem custo fixo alto, honorários, estrutura, hierarquia, processo. O dinheiro extra vai pra administração, não pra tela. O cliente paga 30% a mais pra ver o mesmo filme que entregaria com equipe 40% menor." },
     { h: "A24 como caso de estudo" },
-    { p: "Vale olhar pra A24 como referência prática. Os filmes ganham Oscar com crew menor que produções similares dos grandes estúdios. Não é pobreza — é escolha de modelo. Equipe enxuta, diretores autorais com poder real, pós verticalizada, marketing inteligente. Cada filme tem assinatura. Replicar em branded content brasileiro é não só possível como, na prática, o caminho que os melhores projetos brasileiros já seguem." },
+    { p: "Vale olhar pra A24 como referência prática. Os filmes ganham Oscar com crew menor que produções similares dos grandes estúdios. Não é pobreza, é escolha de modelo. Equipe enxuta, diretores autorais com poder real, pós verticalizada, marketing inteligente. Cada filme tem assinatura. Replicar em branded content brasileiro é não só possível como, na prática, o caminho que os melhores projetos brasileiros já seguem." },
     { h: "Quando equipe grande faz sentido" },
-    { p: "Escala industrial (novela, série de TV com 100 episódios, longa grande). Operação multi-praça simultânea (campanha em cinco capitais ao mesmo tempo). Formato com volume de elenco/figuração (200 figurantes, três locações). Pós com VFX pesado (40s de efeitos complexos). Pra todo o resto — branded content, série digital, cobertura, conteúdo institucional premium, campanha até 90s — equipe pequena entrega mais." },
+    { p: "Escala industrial (novela, série de TV com 100 episódios, longa grande). Operação multi-praça simultânea (campanha em cinco capitais ao mesmo tempo). Formato com volume de elenco/figuração (200 figurantes, três locações). Pós com VFX pesado (40s de efeitos complexos). Pra todo o resto, branded content, série digital, cobertura, conteúdo institucional premium, campanha até 90s, equipe pequena entrega mais." },
     { h: "Como o MUV opera" },
-    { p: "Direção criativa próxima do cliente, sem intermediário. Diretor envolvido desde a primeira conversa. Crew dimensionada por projeto — núcleo pequeno fixo, expansão pontual com freelas certos. Pós-produção integrada — editor e finalizador conversam com diretor durante captação. Aprovação rápida, menos camadas internas. Consequência prática: projetos saem do briefing à entrega em ciclos menores, com mais densidade criativa, e custo total geralmente menor — não porque a equipe seja barata, porque o overhead não pesa." },
+    { p: "Direção criativa próxima do cliente, sem intermediário. Diretor envolvido desde a primeira conversa. Crew dimensionada por projeto, núcleo pequeno fixo, expansão pontual com freelas certos. Pós-produção integrada, editor e finalizador conversam com diretor durante captação. Aprovação rápida, menos camadas internas. Consequência prática: projetos saem do briefing à entrega em ciclos menores, com mais densidade criativa, e custo total geralmente menor, não porque a equipe seja barata, porque o overhead não pesa." },
     { h: "Conclusão" },
     { p: "Headcount é vaidade. Densidade é resultado. O melhor sinal de que uma produção tá bem dimensionada não é quantas pessoas estão no set, mas quanto cada pessoa do set tá efetivamente decidindo, criando, executando." }
   ]
@@ -3490,42 +3588,42 @@ const FAQ_ITEMS = [
   {
     cat: "Prazos & escopo",
     q: "Quais prazos vocês conseguem entregar?",
-    a: "Depende do formato. Pra social — reel, story, corte vertical de evento — a gente roda em ciclo de 7 dias entre captação e entrega final, com primeira versão saindo em 2 a 7 dias úteis e ajuste final em 2 dias após aprovação. Branded film completo (com roteiro, captação, edição refinada, sound design e color grade dedicado) é ciclo de 3 a 6 semanas, dependendo da complexidade. Cobertura de evento em real-time entrega cortes durante o próprio dia. E projeto-relâmpago — tipo case film publicitário em 24h — a gente faz quando o briefing exige, desde que esteja na agenda. Em todos os casos, prazo é combinado por escrito no orçamento."
+    a: "Depende do formato. Pra social, reel, story, corte vertical de evento, a gente roda em ciclo de 7 dias entre captação e entrega final, com primeira versão saindo em 2 a 7 dias úteis e ajuste final em 2 dias após aprovação. Branded film completo (com roteiro, captação, edição refinada, sound design e color grade dedicado) é ciclo de 3 a 6 semanas, dependendo da complexidade. Cobertura de evento em real-time entrega cortes durante o próprio dia. E projeto-relâmpago, tipo case film publicitário em 24h, a gente faz quando o briefing exige, desde que esteja na agenda. Em todos os casos, prazo é combinado por escrito no orçamento."
   },
   {
     cat: "Orçamento",
     q: "Como funciona o orçamento? Vocês trabalham com tabela fixa?",
-    a: "Não — e a gente acha que tabela fixa atrapalha mais do que ajuda. Cada projeto tem variáveis próprias: número de diárias, tamanho da equipe, equipamento envolvido, complexidade da edição, direitos de uso, prazo. O que a gente faz é montar proposta customizada com escopo, equipe, equipamento e investimento detalhados — assim você sabe exatamente onde cada real vai parar. Pra ter referência: branded social mensal começa em torno de R$ 3.300, captação branded de meio porte fica entre R$ 8 mil e R$ 30 mil, case film publicitário com direitos de uso comerciais varia conforme veiculação. Valor sob proposta, sempre."
+    a: "Não, e a gente acha que tabela fixa atrapalha mais do que ajuda. Cada projeto tem variáveis próprias: número de diárias, tamanho da equipe, equipamento envolvido, complexidade da edição, direitos de uso, prazo. O que a gente faz é montar proposta customizada com escopo, equipe, equipamento e investimento detalhados, assim você sabe exatamente onde cada real vai parar. Pra ter referência: branded social mensal começa em torno de R$ 3.300, captação branded de meio porte fica entre R$ 8 mil e R$ 30 mil, case film publicitário com direitos de uso comerciais varia conforme veiculação. Valor sob proposta, sempre."
   },
   {
     cat: "Locação",
     q: "Vocês têm locação de equipamento? Posso alugar avulso?",
-    a: "Sim. O Grupo MUV é hub criativo, e o parque de equipamentos (FX6, FX3, A7CII, A7IV, drones DJI, lentes GMaster e Cine 7Artisans, iluminação Aputure e Amaran, áudio Hollyland e Rode) fica disponível pra locação avulsa quando não está em projeto interno. Funciona melhor pra parceiros recorrentes — produtoras parceiras, freelancers de confiança, projetos com alinhamento prévio. Fala com a equipe pelo WhatsApp pra checar disponibilidade da data e fechar valor."
+    a: "Sim. O Grupo MUV é hub criativo, e o parque de equipamentos (FX6, FX3, A7CII, A7IV, drones DJI, lentes GMaster e Cine 7Artisans, iluminação Aputure e Amaran, áudio Hollyland e Rode) fica disponível pra locação avulsa quando não está em projeto interno. Funciona melhor pra parceiros recorrentes, produtoras parceiras, freelancers de confiança, projetos com alinhamento prévio. Fala com a equipe pelo WhatsApp pra checar disponibilidade da data e fechar valor."
   },
   {
     cat: "Direitos",
     q: "Quais direitos de uso ficam com a marca depois da entrega?",
-    a: "Direitos são contratados separadamente do valor de produção, e variam conforme três eixos: canal (internet/intranet, OOH, mídia exterior, indoormídia, onboard TV, painéis eletrônicos, mobile, PDV, brinde, e-mail mkt, broadcast), duração (períodos típicos de 2 meses, 6 meses, 12 meses, ou perpetuidade) e território (nacional, regional, internacional). O padrão das nossas propostas é cessão limitada a canais e prazo definidos — se a marca quiser estender, faz aditivo. Tudo descrito por escrito no orçamento e no contrato, sem zona cinzenta."
+    a: "Direitos são contratados separadamente do valor de produção, e variam conforme três eixos: canal (internet/intranet, OOH, mídia exterior, indoormídia, onboard TV, painéis eletrônicos, mobile, PDV, brinde, e-mail mkt, broadcast), duração (períodos típicos de 2 meses, 6 meses, 12 meses, ou perpetuidade) e território (nacional, regional, internacional). O padrão das nossas propostas é cessão limitada a canais e prazo definidos, se a marca quiser estender, faz aditivo. Tudo descrito por escrito no orçamento e no contrato, sem zona cinzenta."
   },
   {
     cat: "Equipamento",
     q: "Quais equipamentos vocês usam?",
-    a: "Câmeras Sony — FX6 e FX3 da linha cinema, A7CII, A7IV e A73 pra captação fotográfica e segunda câmera. Lentes GMaster (16-35, 24-70, 35mm, 70-200) e Sony FE (200-600 quando precisa de distância), além de Cine 7Artisans T2 (35, 50, 85mm) pra plano preparado. Drones DJI Mini 4 Pro e Avata, dependendo do espaço aéreo e do estilo. Estabilização com Ronin RS3 Mini, Weebill-S e Glidecam. Iluminação Aputure (Amaran F22c, F21c, T2C) e flash Godox. Áudio com Rode direcional e Hollyland Lark150 de lapela. Workflow em S-Log3 com ingest em proxy + RAW e backup duplo em SSD Sandisk."
+    a: "Câmeras Sony, FX6 e FX3 da linha cinema, A7CII, A7IV e A73 pra captação fotográfica e segunda câmera. Lentes GMaster (16-35, 24-70, 35mm, 70-200) e Sony FE (200-600 quando precisa de distância), além de Cine 7Artisans T2 (35, 50, 85mm) pra plano preparado. Drones DJI Mini 4 Pro e Avata, dependendo do espaço aéreo e do estilo. Estabilização com Ronin RS3 Mini, Weebill-S e Glidecam. Iluminação Aputure (Amaran F22c, F21c, T2C) e flash Godox. Áudio com Rode direcional e Hollyland Lark150 de lapela. Workflow em S-Log3 com ingest em proxy + RAW e backup duplo em SSD Sandisk."
   },
   {
     cat: "Posicionamento",
     q: "Vocês são produtora ou agência?",
-    a: "Os dois e nenhum dos dois. A gente se posiciona como ecossistema criativo — produção audiovisual no coração, estratégia de conteúdo em volta, comunidade e relacionamento com criadores como camada lateral. A gente roteiriza, capta, edita e entrega. A gente também ajuda a pensar o que postar, em qual ordem, em qual formato. O que a gente não faz é compra de mídia paga — pra isso indicamos parceiros. Se você precisa de produtora pura, atende. Se precisa de pacote estratégico mais amplo, também."
+    a: "Os dois e nenhum dos dois. A gente se posiciona como ecossistema criativo, produção audiovisual no coração, estratégia de conteúdo em volta, comunidade e relacionamento com criadores como camada lateral. A gente roteiriza, capta, edita e entrega. A gente também ajuda a pensar o que postar, em qual ordem, em qual formato. O que a gente não faz é compra de mídia paga, pra isso indicamos parceiros. Se você precisa de produtora pura, atende. Se precisa de pacote estratégico mais amplo, também."
   },
   {
     cat: "Equipe",
     q: "Qual o tamanho típico da equipe num projeto?",
-    a: "Varia muito conforme o formato. Branded film completo: 6 a 12 pessoas (direção, DOP, operador de câmera, assistente, áudio, gaffer, produção, editor, finalizador). Cobertura de evento ou ação real-time: 3 a 6 pessoas (filmmaker principal, filmmaker secundário, piloto de drone, DIT/assistente, editor no local). Branded social ou pacote mensal: 2 a 4 pessoas. A regra interna é densidade alta por pessoa — gente que executa mais de uma função e entrega no padrão. Não somos crew gigante por princípio."
+    a: "Varia muito conforme o formato. Branded film completo: 6 a 12 pessoas (direção, DOP, operador de câmera, assistente, áudio, gaffer, produção, editor, finalizador). Cobertura de evento ou ação real-time: 3 a 6 pessoas (filmmaker principal, filmmaker secundário, piloto de drone, DIT/assistente, editor no local). Branded social ou pacote mensal: 2 a 4 pessoas. A regra interna é densidade alta por pessoa, gente que executa mais de uma função e entrega no padrão. Não somos crew gigante por princípio."
   },
   {
     cat: "Entregas",
     q: "Quais formatos vocês entregam?",
-    a: "Por padrão a entrega vem em master + cortes adaptados. Branded film sai em 16:9 (horizontal) como master, com cortes 9:16 (vertical pra reels e stories), 4:5 (feed quadrado-vertical) e 1:1 (feed clássico) quando o briefing pede. Cobertura de evento normalmente entrega versão 9:16 prioritária + 16:9 institucional. Fotografia entrega em RAW + JPEG editado, com tratamento alinhado ao manual da marca. Tudo nomeado e organizado em pastas estruturadas — não chega ao cliente solto."
+    a: "Por padrão a entrega vem em master + cortes adaptados. Branded film sai em 16:9 (horizontal) como master, com cortes 9:16 (vertical pra reels e stories), 4:5 (feed quadrado-vertical) e 1:1 (feed clássico) quando o briefing pede. Cobertura de evento normalmente entrega versão 9:16 prioritária + 16:9 institucional. Fotografia entrega em RAW + JPEG editado, com tratamento alinhado ao manual da marca. Tudo nomeado e organizado em pastas estruturadas, não chega ao cliente solto."
   },
   {
     cat: "Revisões",
@@ -3540,16 +3638,16 @@ const FAQ_ITEMS = [
   {
     cat: "Pagamento",
     q: "Quais formas de pagamento?",
-    a: "PIX e TED são os preferidos, simplesmente porque são instantâneos e sem custo. Padrão pra projetos pontuais: 50% sinal na assinatura, 50% na entrega final. Pra projetos longos ou em pacote mensal, a gente parcela conforme cronograma de produção — por exemplo, 30% sinal, 30% no meio do projeto, 40% na entrega. Pagamento à vista tem desconto negociável. Cartão e boleto a gente faz quando é exigência do financeiro do cliente, mas avisa: dá menos margem pra negociar prazo."
+    a: "PIX e TED são os preferidos, simplesmente porque são instantâneos e sem custo. Padrão pra projetos pontuais: 50% sinal na assinatura, 50% na entrega final. Pra projetos longos ou em pacote mensal, a gente parcela conforme cronograma de produção, por exemplo, 30% sinal, 30% no meio do projeto, 40% na entrega. Pagamento à vista tem desconto negociável. Cartão e boleto a gente faz quando é exigência do financeiro do cliente, mas avisa: dá menos margem pra negociar prazo."
   },
   {
     cat: "Logística",
     q: "Vocês atendem fora de São Paulo?",
-    a: "Sim. A base é São Paulo, mas a equipe viaja sempre que o projeto pede — Brasil inteiro, e em alguns casos internacional (já captamos em Orlando pra Gatorade + CBF, viajamos pela América Latina pra Shell). Pra projetos fora de SP, a logística (passagem, transporte local, estadia, alimentação, seguro de equipamento e viagem, contingência) entra no orçamento de forma transparente, item por item. A gente também tem rede de parceiros confiáveis em outras praças — quando faz mais sentido operar com equipe local, indica e coordena à distância."
+    a: "Sim. A base é São Paulo, mas a equipe viaja sempre que o projeto pede, Brasil inteiro, e em alguns casos internacional (já captamos em Orlando pra Gatorade + CBF, viajamos pela América Latina pra Shell). Pra projetos fora de SP, a logística (passagem, transporte local, estadia, alimentação, seguro de equipamento e viagem, contingência) entra no orçamento de forma transparente, item por item. A gente também tem rede de parceiros confiáveis em outras praças, quando faz mais sentido operar com equipe local, indica e coordena à distância."
   }
 ];
 
-// ───── Showreel BG — placeholder cinematográfico com cenas em loop ───────────
+// ───── Showreel BG, placeholder cinematográfico com cenas em loop ───────────
 const SHOWREEL_SCENES = [
 { label: "INT. SET · MARCA DE MODA", code: "01/06", grad: "radial-gradient(ellipse at 35% 60%, rgba(222,78,43,0.55), transparent 55%), radial-gradient(ellipse at 75% 30%, rgba(27,87,173,0.25), transparent 60%), linear-gradient(135deg, #2a1410 0%, #1B1B1F 60%, #0d0d12 100%)" },
 { label: "EXT. NOITE · FESTIVAL", code: "02/06", grad: "radial-gradient(ellipse at 20% 30%, rgba(27,87,173,0.55), transparent 55%), radial-gradient(ellipse at 80% 80%, rgba(222,78,43,0.3), transparent 50%), linear-gradient(225deg, #0e1a2a 0%, #1B1B1F 55%, #0d0d12 100%)" },
@@ -3618,6 +3716,55 @@ function ShowreelBG() {
 
 }
 
+// ───── StatCounter ─ count-up animado quando entra no viewport ──────────────
+function StatCounter({ target, prefix = "", suffix = "", pad = 0, label, accent = false }) {
+  const ref = useRef(null);
+  const [value, setValue] = useState(1);
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current || started) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !started) {
+          setStarted(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.4 }
+    );
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, [started]);
+
+  useEffect(() => {
+    if (!started) return;
+    // Anima 1 → target em ~1.6s, easing easeOutCubic pra desacelerar no fim
+    const duration = Math.min(1600, 600 + target * 8);
+    const start = performance.now();
+    let raf;
+    const tick = (now) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const v = Math.max(1, Math.round(1 + (target - 1) * eased));
+      setValue(v);
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [started, target]);
+
+  const displayValue = pad > 0 ? String(value).padStart(pad, "0") : String(value);
+
+  return (
+    <div className="stat" ref={ref}>
+      <span className="stat__num" style={accent ? { color: "var(--accent)" } : undefined}>
+        {prefix}{displayValue}{suffix}
+      </span>
+      <span className="stat__label">{label}</span>
+    </div>);
+}
+
 // ═════════════════════════════════════════════════════════════════════════════
 // HOME
 // ═════════════════════════════════════════════════════════════════════════════
@@ -3672,7 +3819,7 @@ function Home({ setCurrent, density }) {
 
   return (
     <div className="page page--no-top" data-screen-label="Home">
-      {/* HERO CINEMÁTICO — letterbox intro + showreel + headline reveal */}
+      {/* HERO CINEMÁTICO, letterbox intro + showreel + headline reveal */}
       <section className={`hero-cine intro-${intro}`}>
         <div className="hero-cine__media">
           <ShowreelBG />
@@ -3695,20 +3842,20 @@ function Home({ setCurrent, density }) {
               <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>Edição 01 · 2026 · Ecossistema criativo</p>
               <p className="mono" style={{ color: "var(--dark-ink-2)", marginTop: 12 }}>SP · BR · 23.5505° S · 46.6333° W</p>
             </div>
-            <p className="mono hero-cine__rec" style={{ color: "var(--dark-ink-2)" }}>REEL 2026 — V01 · LIVE</p>
+            <p className="mono hero-cine__rec" style={{ color: "var(--dark-ink-2)" }}>REEL 2026, V01 · LIVE</p>
           </div>
 
           <div className="hero-cine__mid">
             <h1 className="hero-cine__display" data-comment-anchor="03f73c495c-h1-88-9">
               <span className="reveal-word"><span>Conteúdo</span></span><br />
-              <span className="reveal-word"><span className="italic" style={{ fontFamily: "\"Archivo Black\"", width: "284px" }}>que </span></span>
+              <span className="reveal-word"><span style={{ fontFamily: "\"Archivo Black\"", fontStyle: "normal", marginRight: "0.3em" }}>que</span></span>
               <span className="reveal-word"><span className="accent">move.</span></span>
             </h1>
           </div>
 
           <div className="hero-cine__bottom">
             <p className="hero-cine__sub">
-              A gente não entrega vídeo. Entrega estratégia em formato audiovisual — cinematográfica, no prazo, e impossível de ignorar.
+              A gente não entrega vídeo. Entrega estratégia em formato audiovisual, cinematográfica, no prazo, e impossível de ignorar.
             </p>
             <div className="hero-cine__actions">
               <button className="btn btn--primary" onClick={() => setCurrent("contato")}>Começar um projeto <Arrow /></button>
@@ -3721,10 +3868,10 @@ function Home({ setCurrent, density }) {
       {/* STATS */}
       <section className="hero-stats">
         <div className="hero-stats__inner">
-          <div className="stat"><span className="stat__num">+120</span><span className="stat__label">Produções entregues</span></div>
-          <div className="stat"><span className="stat__num">+30</span><span className="stat__label">Marcas parceiras</span></div>
-          <div className="stat"><span className="stat__num">7 dias</span><span className="stat__label">Ciclo médio captação→entrega</span></div>
-          <div className="stat"><span className="stat__num" style={{ color: "var(--accent)" }}>01</span><span className="stat__label">Ecossistema, três pilares</span></div>
+          <StatCounter prefix="+" target={120} label="Produções entregues" />
+          <StatCounter prefix="+" target={30} label="Marcas parceiras" />
+          <StatCounter target={7} suffix=" dias" label="Ciclo médio captação, entrega" />
+          <StatCounter target={1} pad={2} label="Ecossistema, três pilares" accent />
         </div>
       </section>
 
@@ -3738,10 +3885,10 @@ function Home({ setCurrent, density }) {
             <p className="mono" style={{ color: "var(--ink-3)" }}>// 01</p>
             <p className="eyebrow eyebrow-dot" style={{ marginTop: 12 }}>Manifesto</p>
           </div>
-          <p className="manifesto-text" style={{ fontFamily: "\"Archivo Black\"" }}>
-            Mudafilms virou MUV. Produtora virou <em style={{ fontFamily: "\"Archivo Black\"", fontWeight: "100" }}>ecossistema</em> criativo
-            que entrega <span className="blue">resultado</span>, estética e verdade. Criatividade com direção.
-            Estética com propósito. <em style={{ fontFamily: "\"Archivo Black\"", fontWeight: "100" }}>Conteúdo que move.</em>
+          <p className="manifesto-text manifesto-text--sm" style={{ fontFamily: "\"Archivo Black\"" }}>
+            Criatividade sem <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>estratégia</span> é arte.<br />
+            Criatividade com <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>estratégia</span> é <span className="blue">resultado</span>.<br />
+            A gente faz os dois mas cobra pelo segundo.
           </p>
         </div>
       </section>
@@ -3752,7 +3899,7 @@ function Home({ setCurrent, density }) {
           num="02"
           eyebrow="Serviços · 4 pilares"
           title="Estratégia, produção, conteúdo, comunidade."
-          sub="Um ecossistema, quatro frentes integradas. Você fala com uma equipe — entrega no nível de quatro produtoras." />
+          sub="Um ecossistema, quatro frentes integradas. Você fala com uma equipe, entrega no nível de quatro produtoras." />
         
         <div className="grid-2">
           {SERVICOS.map((s, i) =>
@@ -3765,13 +3912,13 @@ function Home({ setCurrent, density }) {
       </section>
 
       {/* PROCESSO (preview clicável) */}
-      <section className="section" style={{ padding: "134px 98px 70px" }}>
+      <section className="section" style={{ padding: "96px 98px 32px" }}>
         <SectionHead
           num="03"
           eyebrow="Processo"
           title={"Da ideia ao master.\nEm seis passos."}
           sub="Sem improviso, sem surpresa no orçamento. Toda etapa tem entregável, prazo e aprovação." />
-        
+
         <div>
           {PROCESSO.slice(0, 3).map((p) =>
           <StepRow key={p.num} {...p} onClick={() => setCurrent("processo")} linkable />
@@ -3781,7 +3928,7 @@ function Home({ setCurrent, density }) {
       </section>
 
       {/* TRABALHOS PREVIEW */}
-      <section className="section">
+      <section className="section" style={{ padding: "32px 98px 64px" }}>
         <SectionHead
           num="04"
           eyebrow="Trabalhos selecionados"
@@ -3796,7 +3943,7 @@ function Home({ setCurrent, density }) {
         </div>
       </section>
 
-      {/* MARCAS — esteira */}
+      {/* MARCAS, esteira */}
       <section className="section section--tight" data-comment-anchor="5fa0ad7c32-section-186-7">
         <SectionHead num="05" eyebrow="Confiança" title="Marcas que confiam na gente." />
         <BrandMarquee brands={BRANDS} />
@@ -3804,16 +3951,18 @@ function Home({ setCurrent, density }) {
       </section>
 
       {/* MUV HUB TEASER */}
-      <section className="section section--ink" style={{ position: "relative", overflow: "hidden", padding: "122px 98px 123px 35px" }}>
+      <section className="section section--ink" style={{ position: "relative", overflow: "hidden", padding: "96px 98px 96px 35px" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
           <div>
             <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>06 · Em breve · 2026</p>
-            <h2 className="display" style={{ color: "var(--bg)", marginTop: 24, fontSize: "106px", margin: "24px 0px 88px", letterSpacing: "-5px", width: "563px", height: "126px" }}>
-              MUV <span style={{ color: "var(--accent)", fontSize: "63px", margin: "0px 0px 0px -29px" }}>Hub.</span><br />
-              <span style={{ fontStyle: "italic", textAlign: "left", fontFamily: "\"Archivo Black\"", fontWeight: "100", lineHeight: "0", borderStyle: "solid", letterSpacing: "-1.9px", fontSize: "52px", borderWidth: "0px", margin: "0px", padding: "0px" }}>O ecossistema vivo.</span>
+            <h2 className="display" style={{ color: "var(--bg)", marginTop: 24, fontSize: "106px", margin: "24px 0 24px", letterSpacing: "-5px", lineHeight: "1" }}>
+              MUV <span style={{ color: "var(--accent)" }}>Hub.</span>
             </h2>
+            <p style={{ color: "var(--bg)", fontFamily: "\"Archivo Black\"", fontWeight: "100", fontStyle: "normal", letterSpacing: "-1.9px", fontSize: "52px", lineHeight: "1", margin: "0 0 32px" }}>
+              O ecossistema vivo.
+            </p>
             <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 24, maxWidth: 480, fontWeight: "100" }}>
-              Locadora de equipamentos, reserva de studio e comunidade criativa
+              Locadora de equipamentos, reserva de studio, comunidade criativa e cowork
               num só lugar. Exclusivo pra filmmakers, agências e marcas parceiras.
             </p>
             <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
@@ -3821,23 +3970,22 @@ function Home({ setCurrent, density }) {
               <button className="btn btn--ghost-dark">Entrar na lista <Arrow /></button>
             </div>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, width: "808px", height: "740px", padding: "0px", borderWidth: "0px", borderStyle: "solid" }}>
-            <Cine label="LOCADORA · CATÁLOGO" code="HUB.A" variant="dark" aspect="4/5" />
-            <div style={{ display: "flex", flexDirection: "column", gap: 16, paddingTop: 48 }}>
-              <Cine label="STUDIO · CICLORAMA" code="HUB.B" variant="accent" aspect="1/1" />
-              <Cine label="COMUNIDADE" code="HUB.C" variant="dark" aspect="4/3" />
-            </div>
+          <div className="hub-grid">
+            <Cine label="LOCADORA · CATÁLOGO" code="HUB.A" variant="dark" aspect="1/1" />
+            <Cine label="STUDIO · CICLORAMA" code="HUB.B" variant="accent" aspect="1/1" />
+            <Cine label="COMUNIDADE" code="HUB.C" variant="dark" aspect="1/1" />
+            <Cine label="COWORK · ESPAÇO" code="HUB.D" variant="accent" aspect="1/1" />
           </div>
         </div>
       </section>
 
       {/* BLOG PREVIEW */}
-      <section className="section" style={{ padding: "106px 98px 118px" }}>
+      <section className="section home-blog-preview" style={{ padding: "64px 98px 64px" }}>
         <SectionHead num="07" eyebrow="Diário MUV" title="Conteúdo sobre conteúdo." sub="Bastidor, ensaio, frameworks. O que a gente aprende, a gente compartilha." />
         <div>
           {POSTS.slice(0, 3).map((p, i) => <PostRow key={i} {...p} />)}
         </div>
-        <div style={{ marginTop: 32, display: "flex", justifyContent: "flex-end" }}>
+        <div style={{ marginTop: 16, display: "flex", justifyContent: "flex-end" }}>
           <button className="btn btn--ghost" onClick={() => setCurrent("blog")}>Ver todos os posts <Arrow /></button>
         </div>
       </section>
@@ -3860,7 +4008,7 @@ function HomeCTA({ setCurrent }) {
   };
 
   return (
-    <section className="section section--ink home-cta" style={{ fontSize: "46px", padding: "128px 98px 225px" }}>
+    <section className="section section--ink home-cta" style={{ fontSize: "46px", padding: "96px 98px 128px" }}>
       <div className="home-cta__grid">
         {/* LEFT: form card */}
         <div className="home-cta__form">
@@ -3957,7 +4105,7 @@ function HomeCTA({ setCurrent }) {
             Vamos contar<br />sua <span style={{ color: "var(--accent)", fontStyle: "italic", fontWeight: 400 }}>história?</span>
           </h2>
           <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 32, maxWidth: 420, fontFamily: "Inter", fontWeight: "200" }}>
-            Conta o que você quer fazer. Em 24h a gente volta com diagnóstico, escopo e timeline — sem proposta genérica.
+            Conta o que você quer fazer. Em 24h a gente volta com diagnóstico, escopo e timeline, sem proposta genérica.
           </p>
           <div style={{ marginTop: 40, display: "flex", gap: 12, flexWrap: "wrap" }}>
             <button className="btn btn--ghost-dark" onClick={() => setCurrent("trabalhos")}>Ver portfolio <Arrow /></button>
@@ -4024,7 +4172,7 @@ function CaseCard({ title, client, tag, year, idx, variant }) {
   const v = variant || variants[idx % variants.length];
   return (
     <div className="case">
-      <div className="case__media" style={{ fontSize: "10px", width: "412px" }}>
+      <div className="case__media" style={{ fontSize: "10px", width: "100%" }}>
         <Cine label={title.toUpperCase()} code={`CASE.${String(idx + 1).padStart(2, "0")}`} aspect="4/3" variant={v} center={v === "accent" ? "▶ PREVIEW" : null} />
       </div>
       <div className="case__meta">
@@ -4060,7 +4208,7 @@ function PostRow({ date, title, excerpt, read }) {
 function Servicos({ setCurrent }) {
   return (
     <div className="page" data-screen-label="Servicos">
-      <PageHead crumb="01 · Serviços" title="Quatro frentes. Um ecossistema." lead="A gente integra estratégia, produção, conteúdo e comunidade num único parceiro. Sem terceirizar o que importa." accent="ecossistema" meta="04 pilares · 01 ecossistema" />
+      <PageHead crumb="01 · Serviços" title={"Quatro Frentes.\nUm ecossistema."} lead="A gente integra estratégia, produção, conteúdo e comunidade num único parceiro. Sem terceirizar o que importa." accent="ecossistema" meta="04 pilares · 01 ecossistema" compact />
 
       <section className="section">
         <div className="svc-stack">
@@ -4105,7 +4253,7 @@ function Servicos({ setCurrent }) {
 function Processo({ setCurrent }) {
   return (
     <div className="page" data-screen-label="Processo">
-      <PageHead crumb="02 · Processo" title="Da ideia ao master." lead="Seis passos. Cada um com entregável, prazo e aprovação. Sem improviso, sem surpresa no orçamento — claro do dia zero." accent="master" meta="06 etapas · Workflow MUV" />
+      <PageHead crumb="02 · Processo" title="Da ideia ao master." lead="Seis passos. Cada um com entregável, prazo e aprovação. Sem improviso, sem surpresa no orçamento, claro do dia zero." accent="master" meta="06 etapas · Workflow MUV" />
 
       <section className="section">
         <div>
@@ -4239,7 +4387,7 @@ function Trabalhos({ setCurrent }) {
             return (
               <article
                 key={t.slug}
-                className={`work-card work-card--${i % 3 === 0 ? "wide" : "regular"} work-card--link`}
+                className={`work-card work-card--regular work-card--link`}
                 role="button"
                 tabIndex={0}
                 onClick={() => { setSelected(realIdx); window.scrollTo({ top: 0, behavior: "instant" }); }}
@@ -4247,9 +4395,9 @@ function Trabalhos({ setCurrent }) {
                 <Cine
                   label={t.title.toUpperCase().replace(/\n/g, " ")}
                   code={`CASE.${String(realIdx + 1).padStart(2, "0")}`}
-                  aspect={i % 3 === 0 ? "16/9" : "4/3"}
-                  variant={i % 4 === 0 ? "accent" : i % 4 === 2 ? "dark" : "default"}
-                  play={i % 3 === 0} />
+                  aspect="4/3"
+                  variant={realIdx % 4 === 0 ? "accent" : realIdx % 4 === 2 ? "dark" : "default"}
+                  play={realIdx % 3 === 0} />
                 <div className="work-card__meta">
                   <div className="work-card__left">
                     <p className="case__tag">{t.client}</p>
@@ -4286,7 +4434,7 @@ function Trabalhos({ setCurrent }) {
 function Sobre({ setCurrent }) {
   return (
     <div className="page" data-screen-label="Sobre">
-      <PageHead crumb="04 · Sobre" title="A gente é um hub. Não uma produtora." lead="Nascemos na rua, nos eventos, nas madrugadas de edição. E levamos essa energia pra marcas que querem ser lembradas." accent="hub" meta="Equipe · Manifesto · Pilares" />
+      <PageHead crumb="04 · Sobre" title={"A gente é um Hub.\nNão uma produtora."} lead="Nascemos na rua, nos eventos, nas madrugadas de edição. E levamos essa energia pra marcas que querem ser lembradas." accent="Hub" meta="Equipe · Manifesto · Pilares" />
 
       {/* MANIFESTO */}
       <section className="section about-manifesto">
@@ -4295,10 +4443,10 @@ function Sobre({ setCurrent }) {
             <p className="mono" style={{ color: "var(--ink-3)" }}>// MANIFESTO</p>
             <p className="eyebrow eyebrow-dot" style={{ marginTop: 12 }}>O que define a gente</p>
           </div>
-          <p className="manifesto-text">
-            Criatividade com <em>direção.</em><br />
-            Estética com <em>propósito.</em><br />
-            <span className="blue">Conteúdo</span> que <em>move.</em>
+          <p className="manifesto-text" style={{ fontFamily: "\"Archivo Black\"" }}>
+            Criatividade com <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>direção.</span><br />
+            Estética com <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>propósito.</span><br />
+            <span className="blue">Conteúdo</span> que <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>move.</span>
           </p>
         </div>
       </section>
@@ -4326,7 +4474,7 @@ function Sobre({ setCurrent }) {
         <div className="about-pilares__grid">
           {[
           { tag: "Autêntico", desc: "Não encenamos. A verdade é a base de tudo que produzimos." },
-          { tag: "Sofisticado", desc: "Imagem e som no nível de grandes marcas globais — com calor humano." },
+          { tag: "Sofisticado", desc: "Imagem e som no nível de grandes marcas globais, com calor humano." },
           { tag: "Estratégico", desc: "Cada frame tem intenção. Pensamos posicionamento antes da câmera." },
           { tag: "Veloz", desc: "Entrega rápida sem sacrificar qualidade. Edição overnight quando precisa." }].
           map((p, i) =>
@@ -4768,7 +4916,7 @@ function Faq({ setCurrent }) {
             A gente responde<br />no <span style={{ color: "var(--accent)", fontStyle: "italic", fontWeight: 400 }}>mesmo dia útil.</span>
           </h2>
           <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 24, maxWidth: 540 }}>
-            Provavelmente sua dúvida tá no nível mais específico — orçamento de um projeto real, equipamento pra uma necessidade exata, alinhamento de prazo apertado. Esse tipo de coisa a gente resolve em conversa.
+            Provavelmente sua dúvida tá no nível mais específico, orçamento de um projeto real, equipamento pra uma necessidade exata, alinhamento de prazo apertado. Esse tipo de coisa a gente resolve em conversa.
           </p>
           <div style={{ marginTop: 40, display: "flex", gap: 12, flexWrap: "wrap" }}>
             <a className="btn btn--primary" href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer">WhatsApp <Arrow /></a>
@@ -4877,7 +5025,7 @@ setTimeout(() => {
         if (!consent) {
           var el = document.getElementById('muv-cookie');
           if (el) {
-            // Mostra só depois do hero — pra não competir com a entrada cinemática
+            // Mostra só depois do hero, pra não competir com a entrada cinemática
             setTimeout(function(){ el.hidden = false; }, 4200);
           }
         }

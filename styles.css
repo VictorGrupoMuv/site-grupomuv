@@ -353,14 +353,19 @@ img { display: block; max-width: 100%; }
   border-bottom-color: var(--dark-line);
 }
 .nav__logo {
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  font-size: 18px;
   display: flex;
   align-items: center;
   gap: 10px;
+  text-decoration: none;
 }
+.nav__logo-img {
+  height: 28px;
+  width: auto;
+  display: block;
+  transition: opacity 0.3s var(--ease);
+}
+.nav__logo:hover .nav__logo-img { opacity: 0.75; }
+/* Legacy mark — mantido caso queiramos voltar pra letter mark */
 .nav__logo-mark {
   width: 28px; height: 28px;
   background: var(--ink);
@@ -767,14 +772,14 @@ body.drawer-active #muv-whatsapp {
 .marquee__item {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(32px, 4.5vw, 80px);
+  font-size: clamp(11px, 1.5vw, 26px);
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--ink-3);
   white-space: nowrap;
   display: flex;
   align-items: center;
-  gap: 64px;
+  gap: 32px;
 }
 .marquee__item::after {
   content: "✦";
@@ -790,13 +795,17 @@ body.drawer-active #muv-whatsapp {
 .case {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
   cursor: pointer;
 }
 .case__media {
   aspect-ratio: 4 / 3;
   overflow: hidden;
   position: relative;
+}
+.case__media .cine {
+  max-width: none !important;
+  width: 100% !important;
 }
 .case__meta {
   display: flex;
@@ -897,6 +906,10 @@ body.drawer-active #muv-whatsapp {
   line-height: 1.1;
   letter-spacing: -0.015em;
   text-wrap: balance;
+}
+.manifesto-text--sm {
+  font-size: clamp(16px, 2.3vw, 32px);
+  line-height: 1.25;
 }
 .manifesto-text em {
   color: var(--accent);
@@ -1113,6 +1126,16 @@ body.drawer-active #muv-whatsapp {
   max-width: 720px;
 }
 
+/* Home Blog preview — versão compacta pra caber em 1 viewport */
+.home-blog-preview .section-head { margin-bottom: 24px; }
+.home-blog-preview .post {
+  gap: 6px;
+  padding: 14px 0;
+}
+.home-blog-preview .post__title { font-size: clamp(17px, 1.5vw, 22px); }
+.home-blog-preview .post__excerpt { font-size: 14px; line-height: 1.4; max-width: 880px; }
+.home-blog-preview .post .link-arrow { font-size: 12px; margin-top: 2px; }
+
 /* Form */
 .field {
   display: flex;
@@ -1194,6 +1217,10 @@ body.drawer-active #muv-whatsapp {
   margin: 0;
   text-wrap: balance;
 }
+.page-head__title--compact {
+  font-size: clamp(40px, 5.4vw, 84px);
+  letter-spacing: -0.025em;
+}
 .page-head__lead {
   font-family: var(--font-body);
   font-size: 19px;
@@ -1257,6 +1284,12 @@ body.drawer-active #muv-whatsapp {
 /* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
+  /* Exceção: marquees são puramente horizontais e essenciais ao design — não causam mal-estar */
+  .brand-marquee__track,
+  .marquee__track {
+    animation: brand-marquee 50s linear infinite !important;
+  }
+  .marquee__track { animation-name: marquee !important; }
 }
 
 /* ============================================================
@@ -1265,16 +1298,32 @@ body.drawer-active #muv-whatsapp {
 .home-cta { padding: var(--section-y) var(--gutter); }
 .home-cta__grid {
   display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: clamp(48px, 8vw, 128px);
-  align-items: center;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(32px, 4vw, 64px);
+  align-items: start;
 }
 @media (max-width: 900px) {
-  .home-cta__grid { grid-template-columns: 1fr; gap: 64px; }
+  .home-cta__grid { grid-template-columns: 1fr; gap: 48px; }
   .home-cta__hero { text-align: left; }
 }
-.home-cta__form { max-width: 480px; }
-.home-cta__hero { }
+.home-cta__form { max-width: 640px; width: 100%; }
+.home-cta__hero { padding-top: 16px; }
+
+/* Compactar internamente o formulário (sem mexer no bloco do lado) */
+.home-cta__form .quote-card { padding: 22px 24px; }
+.home-cta__form .quote-card__title { font-size: clamp(18px, 1.5vw, 22px); margin-bottom: 4px; }
+.home-cta__form .quote-card__sub { margin-bottom: 12px; font-size: 12px; }
+.home-cta__form .quote-card__row { gap: 10px; margin-bottom: 10px; }
+.home-cta__form .field--solid { margin-bottom: 10px; }
+.home-cta__form .field--solid label { margin-bottom: 2px; font-size: 11px; }
+.home-cta__form .field--solid input,
+.home-cta__form .field--solid textarea,
+.home-cta__form .field--solid select { padding: 6px 10px; font-size: 13px; }
+.home-cta__form .field--solid textarea { min-height: 48px; }
+.home-cta__form .budget-grid { gap: 5px; }
+.home-cta__form .budget-chip { padding: 5px 10px; font-size: 11px; }
+.home-cta__form .quote-submit { margin-top: 4px; padding-top: 10px; padding-bottom: 10px; }
+.home-cta__form .quote-card__disclaimer { margin-top: 8px; font-size: 11px; }
 
 /* Dark field variant */
 .field--dark label { color: var(--dark-ink-2); }
@@ -1461,6 +1510,10 @@ a.home-cta__contact-item:hover { color: var(--accent); }
   align-items: start;
   padding: clamp(48px, 6vw, 96px) 0;
   border-top: 1px solid var(--line);
+}
+.svc-row__main .cine {
+  max-width: 420px !important;
+  width: 100% !important;
 }
 .svc-row:first-child { border-top: 0; padding-top: clamp(24px, 3vw, 48px); }
 
@@ -2105,7 +2158,11 @@ a.home-cta__contact-item:hover { color: var(--accent); }
   cursor: pointer;
 }
 .work-card--wide { grid-column: 1 / -1; }
-.work-card .cine { transition: transform 0.4s var(--ease); }
+.work-card .cine {
+  transition: transform 0.4s var(--ease);
+  max-width: none !important;
+  width: 100% !important;
+}
 .work-card:hover .cine { transform: scale(1.02); }
 .work-card__meta {
   display: flex;
@@ -2414,6 +2471,24 @@ a.home-cta__contact-item:hover { color: var(--accent); }
 @media (max-width: 768px) {
   .footer__bottom { grid-template-columns: 1fr; }
   .footer__bottom > div:last-child { justify-content: flex-start; gap: 16px; }
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   MUV Hub teaser (Home) — grid 2x2 com 4º quadrado cowork
+   ═════════════════════════════════════════════════════════════════════════════ */
+.hub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+  max-width: 720px;
+}
+.hub-grid .cine {
+  max-width: none !important;
+  width: 100% !important;
+}
+@media (max-width: 900px) {
+  .hub-grid { grid-template-columns: 1fr 1fr; max-width: 100%; gap: 12px; }
 }
 
 /* ═════════════════════════════════════════════════════════════════════════════
