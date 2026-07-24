@@ -14,27 +14,27 @@ const SERVICOS = [
   num: "02",
   tag: "Produção",
   title: "Captação\ncinematográfica.",
-  desc: "Câmeras Sony FX-series, drones DJI, iluminação profissional e direção criativa no set. Equipamento de cinema a serviço da sua marca.",
+  desc: "Equipamento de cinema. Direção criativa. Workflow que não improvisa.",
   items: ["Direção criativa", "Captação multi-câmera", "Drone & aéreo", "Iluminação & som"]
 },
 {
   num: "03",
   tag: "Conteúdo",
   title: "Pronto pra plataforma certa.",
-  desc: "Adaptação inteligente pra cada canal — não uma versão genérica cortada no tamanho errado.",
+  desc: "Produção que não termina no master. Vai até o clipe certo, no canal certo, com a linguagem que a audiência espera.",
   items: ["Edição & finalização", "Color grading", "Motion graphics", "Adaptação multi-formato"]
 },
 {
   num: "04",
-  tag: "Parceria",
-  title: "A relação não termina\nna entrega.",
-  desc: "Marcas que produzem com consistência precisam de um parceiro que entenda sua linguagem sem ser reapresentado a cada projeto. A gente estrutura relações de longo prazo.",
-  items: ["Retainer de produção", "Planejamento editorial", "Identidade audiovisual de marca", "Acesso direto à equipe"]
+  tag: "Presença",
+  title: "Conteúdo consistente\nconstrói marca.",
+  desc: "Não produzimos pra preencher calendário. Construímos com as marcas uma presença audiovisual coerente — com linguagem definida, evolução de projeto a projeto e estratégia que atravessa as entregas.",
+  items: ["Calendário editorial audiovisual", "Consistência de linguagem visual", "Produção recorrente", "Briefings que acumulam contexto"]
 }];
 
 
 const PROCESSO = [
-{ num: "01", title: "Ideia", desc: "Antes de qualquer roteiro, a gente entende posicionamento, público e objetivos de negócio. A proposta vem depois.", deliverables: "Briefing · Discovery · Diagnóstico" },
+{ num: "01", title: "Ideia", desc: "Início com diagnóstico, não com orçamento. Queremos entender onde a marca está antes de sugerir onde o audiovisual pode levá-la.", deliverables: "Briefing · Discovery · Diagnóstico" },
 { num: "02", title: "Roteiro", desc: "Estratégia narrativa traduzida em roteiro, storyboard, mood board e cronograma. Tudo aprovado antes da produção.", deliverables: "Roteiro · Storyboard · Mood" },
 { num: "03", title: "Direção", desc: "Pré-produção completa: casting, locação, decupagem, plano de produção. Sem improviso no set.", deliverables: "Plano · Casting · Locação" },
 { num: "04", title: "Captação", desc: "Equipe sênior, equipamento profissional, direção criativa no set. Backup de tudo, sempre.", deliverables: "Sony FX3/FX6 · Drone · Som" },
@@ -136,7 +136,7 @@ const TRABALHOS = [
 
 
 const TIME = [
-{ name: "Victor Almeida", role: "Founder & Director", short: "Direção criativa e estratégia." },
+{ name: "Victor França", role: "Founder & Director", short: "Direção criativa e estratégia." },
 { name: "Equipe Direção", role: "Direção & Roteiro", short: "Narrativa e direção de conteúdo." },
 { name: "Equipe DOP", role: "Direção de Fotografia", short: "Imagem e linguagem cinematográfica." },
 { name: "Equipe Pós", role: "Edição & Color", short: "Pós-produção e finalização." }];
@@ -536,7 +536,7 @@ function Home({ setCurrent, density }) {
 
           <div className="hero-cine__bottom">
             <p className="hero-cine__sub">
-              A gente não entrega vídeo. Entrega estratégia em formato audiovisual: cinematográfica, no prazo e impossível de ignorar.
+              Produção audiovisual estratégica. Do briefing à entrega, cada frame tem intenção e cada prazo tem compromisso.
             </p>
             <div className="hero-cine__actions">
               <button className="btn btn--primary" onClick={() => setCurrent("contato")}>Começar um projeto <Arrow /></button>
@@ -567,9 +567,9 @@ function Home({ setCurrent, density }) {
             <p className="eyebrow eyebrow-dot" style={{ marginTop: 12 }}>Manifesto</p>
           </div>
           <p className="manifesto-text manifesto-text--sm" style={{ fontFamily: "\"Archivo Black\"" }}>
-            Criatividade sem <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>estratégia</span> é arte.<br />
-            Criatividade com <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>estratégia</span> é <span className="blue">resultado</span>.<br />
-            A gente faz os dois mas cobra pelo segundo.
+            Imagem tem poder quando tem <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>direção</span>.<br />
+            A gente trabalha na interseção entre <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>criatividade</span> e <span className="blue">estratégia</span>,<br />
+            porque é lá que o audiovisual gera valor de verdade.
           </p>
         </div>
       </section>
@@ -579,7 +579,7 @@ function Home({ setCurrent, density }) {
         <SectionHead
           num="02"
           eyebrow="Serviços · 4 pilares"
-          title="Estratégia, produção, conteúdo, parceria."
+          title="Estratégia, produção, conteúdo, presença."
           sub="Você não contrata quatro fornecedores. Contrata uma equipe integrada que pensa, produz e entrega com consistência." />
         
         <div className="grid-2">
@@ -943,7 +943,7 @@ function Processo({ setCurrent }) {
       </section>
 
       <section className="section section--dark">
-        <SectionHead num="*" eyebrow="Como medimos" title="O que define uma entrega bem-feita." sub="Imagem bem fotografada é ponto de partida, não de chegada. A gente mede retenção, adequação de plataforma e consistência com o posicionamento da marca." />
+        <SectionHead num="*" eyebrow="Como medimos" title="Não medimos só o que fica bonito." sub="Imagem bem fotografada é ponto de partida, não de chegada. A gente mede retenção, adequação de plataforma e consistência com o posicionamento da marca." />
         <div className="grid-3">
           <Metric num="01" label="Direção" desc="Cada decisão estética tem motivo estratégico. Não filmamos por filmar." />
           <Metric num="02" label="Prazo" desc="Cronograma respeitado. Atraso é exceção justificada, nunca padrão." />
