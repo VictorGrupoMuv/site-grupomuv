@@ -1,0 +1,64 @@
+{
+  "items": [
+    {
+      "cat": "Prazos & escopo",
+      "q": "Quais prazos vocês conseguem entregar?",
+      "a": "Depende do formato. Pra social, reel, story, corte vertical de evento, a gente roda em ciclo de 7 dias entre captação e entrega final, com primeira versão saindo em 2 a 7 dias úteis e ajuste final em 2 dias após aprovação. Branded film completo (com roteiro, captação, edição refinada, sound design e color grade dedicado) é ciclo de 3 a 6 semanas, dependendo da complexidade. Cobertura de evento em real-time entrega cortes durante o próprio dia. E projeto-relâmpago, tipo case film publicitário em 24h, a gente faz quando o briefing exige, desde que esteja na agenda. Em todos os casos, prazo é combinado por escrito no orçamento."
+    },
+    {
+      "cat": "Orçamento",
+      "q": "Como funciona o orçamento? Vocês trabalham com tabela fixa?",
+      "a": "Não, e a gente acha que tabela fixa atrapalha mais do que ajuda. Cada projeto tem variáveis próprias: número de diárias, tamanho da equipe, equipamento envolvido, complexidade da edição, direitos de uso, prazo. O que a gente faz é montar proposta customizada com escopo, equipe, equipamento e investimento detalhados, assim você sabe exatamente onde cada real vai parar. Pra ter referência: branded social mensal começa em torno de R$ 3.300, captação branded de meio porte fica entre R$ 8 mil e R$ 30 mil, case film publicitário com direitos de uso comerciais varia conforme veiculação. Valor sob proposta, sempre."
+    },
+    {
+      "cat": "Locação",
+      "q": "Vocês têm locação de equipamento? Posso alugar avulso?",
+      "a": "Sim. O Grupo MUV é hub criativo, e o parque de equipamentos (FX6, FX3, A7CII, A7IV, drones DJI, lentes GMaster e Cine 7Artisans, iluminação Aputure e Amaran, áudio Hollyland e Rode) fica disponível pra locação avulsa quando não está em projeto interno. Funciona melhor pra parceiros recorrentes, produtoras parceiras, freelancers de confiança, projetos com alinhamento prévio. Fala com a equipe pelo WhatsApp pra checar disponibilidade da data e fechar valor."
+    },
+    {
+      "cat": "Direitos",
+      "q": "Quais direitos de uso ficam com a marca depois da entrega?",
+      "a": "Direitos são contratados separadamente do valor de produção, e variam conforme três eixos: canal (internet/intranet, OOH, mídia exterior, indoormídia, onboard TV, painéis eletrônicos, mobile, PDV, brinde, e-mail mkt, broadcast), duração (períodos típicos de 2 meses, 6 meses, 12 meses, ou perpetuidade) e território (nacional, regional, internacional). O padrão das nossas propostas é cessão limitada a canais e prazo definidos, se a marca quiser estender, faz aditivo. Tudo descrito por escrito no orçamento e no contrato, sem zona cinzenta."
+    },
+    {
+      "cat": "Equipamento",
+      "q": "Quais equipamentos vocês usam?",
+      "a": "Câmeras Sony, FX6 e FX3 da linha cinema, A7CII, A7IV e A73 pra captação fotográfica e segunda câmera. Lentes GMaster (16-35, 24-70, 35mm, 70-200) e Sony FE (200-600 quando precisa de distância), além de Cine 7Artisans T2 (35, 50, 85mm) pra plano preparado. Drones DJI Mini 4 Pro e Avata, dependendo do espaço aéreo e do estilo. Estabilização com Ronin RS3 Mini, Weebill-S e Glidecam. Iluminação Aputure (Amaran F22c, F21c, T2C) e flash Godox. Áudio com Rode direcional e Hollyland Lark150 de lapela. Workflow em S-Log3 com ingest em proxy + RAW e backup duplo em SSD Sandisk."
+    },
+    {
+      "cat": "Posicionamento",
+      "q": "Vocês são produtora ou agência?",
+      "a": "Os dois e nenhum dos dois. A gente se posiciona como ecossistema criativo, produção audiovisual no coração, estratégia de conteúdo em volta, comunidade e relacionamento com criadores como camada lateral. A gente roteiriza, capta, edita e entrega. A gente também ajuda a pensar o que postar, em qual ordem, em qual formato. O que a gente não faz é compra de mídia paga, pra isso indicamos parceiros. Se você precisa de produtora pura, atende. Se precisa de pacote estratégico mais amplo, também."
+    },
+    {
+      "cat": "Equipe",
+      "q": "Qual o tamanho típico da equipe num projeto?",
+      "a": "Varia muito conforme o formato. Branded film completo: 6 a 12 pessoas (direção, DOP, operador de câmera, assistente, áudio, gaffer, produção, editor, finalizador). Cobertura de evento ou ação real-time: 3 a 6 pessoas (filmmaker principal, filmmaker secundário, piloto de drone, DIT/assistente, editor no local). Branded social ou pacote mensal: 2 a 4 pessoas. A regra interna é densidade alta por pessoa, gente que executa mais de uma função e entrega no padrão. Não somos crew gigante por princípio."
+    },
+    {
+      "cat": "Entregas",
+      "q": "Quais formatos vocês entregam?",
+      "a": "Por padrão a entrega vem em master + cortes adaptados. Branded film sai em 16:9 (horizontal) como master, com cortes 9:16 (vertical pra reels e stories), 4:5 (feed quadrado-vertical) e 1:1 (feed clássico) quando o briefing pede. Cobertura de evento normalmente entrega versão 9:16 prioritária + 16:9 institucional. Fotografia entrega em RAW + JPEG editado, com tratamento alinhado ao manual da marca. Tudo nomeado e organizado em pastas estruturadas, não chega ao cliente solto."
+    },
+    {
+      "cat": "Revisões",
+      "q": "Quantas rodadas de revisão estão inclusas?",
+      "a": "Duas rodadas por padrão, sem mudar a estrutura principal do material. Os alinhamentos contínuos durante a produção rolam via WhatsApp em tempo real, então geralmente a primeira versão já chega bem afinada. Alterações que mudam a estrutura ou pedem nova captação são tratadas como escopo adicional. Pra pacotes mensais (tipo Importek), o padrão é 2 alterações por vídeo sem custo extra, e ajustes adicionais a partir de R$ 110 por alteração. Tudo combinado por escrito."
+    },
+    {
+      "cat": "Fiscal",
+      "q": "Vocês emitem nota fiscal?",
+      "a": "Sim. CNPJ Mudafilms LTDA, 46.941.289/0001-44, regime Simples Nacional. NF emitida em São Paulo, com prestação de serviço descrita conforme o escopo do projeto (produção audiovisual, captação, edição, direitos de uso, etc.). O prazo de pagamento padrão é 30 dias após emissão da NF, mas a gente trabalha com prazos maiores quando o cliente exige (60 ou 90 dias, mediante combinação prévia). Toda documentação fiscal fica organizada e disponível pra auditoria da contabilidade da marca."
+    },
+    {
+      "cat": "Pagamento",
+      "q": "Quais formas de pagamento?",
+      "a": "PIX e TED são os preferidos, simplesmente porque são instantâneos e sem custo. Padrão pra projetos pontuais: 50% sinal na assinatura, 50% na entrega final. Pra projetos longos ou em pacote mensal, a gente parcela conforme cronograma de produção, por exemplo, 30% sinal, 30% no meio do projeto, 40% na entrega. Pagamento à vista tem desconto negociável. Cartão e boleto a gente faz quando é exigência do financeiro do cliente, mas avisa: dá menos margem pra negociar prazo."
+    },
+    {
+      "cat": "Logística",
+      "q": "Vocês atendem fora de São Paulo?",
+      "a": "Sim. A base é São Paulo, mas a equipe viaja sempre que o projeto pede, Brasil inteiro, e em alguns casos internacional (já captamos em Orlando pra Gatorade + CBF, viajamos pela América Latina pra Shell). Pra projetos fora de SP, a logística (passagem, transporte local, estadia, alimentação, seguro de equipamento e viagem, contingência) entra no orçamento de forma transparente, item por item. A gente também tem rede de parceiros confiáveis em outras praças, quando faz mais sentido operar com equipe local, indica e coordena à distância."
+    }
+  ]
+}

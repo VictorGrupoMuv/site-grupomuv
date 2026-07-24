@@ -1,44 +1,11 @@
 [build]
-  # Roda o unify.py antes de publicar — gera index.html a partir dos sources
-  command = "python3 scripts/unify.py"
-  # Publica a raiz (onde o unify.py escreve o index.html)
-  publish = "."
+  command = "npm run build"
+  publish = "out"
 
 [build.environment]
-  PYTHON_VERSION = "3.11"
+  NODE_VERSION = "20"
 
-# Headers — defaults sensatos
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
-
-# Cache longo pros assets estáticos
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/*.png"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/*.ico"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# index.html nunca cacheia agressivamente — quer ver a última versão
-[[headers]]
-  for = "/index.html"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
-
-[[headers]]
-  for = "/"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"

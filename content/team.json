@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "name": "Victor França",
+      "role": "Founder & Director",
+      "short": "Direção criativa e estratégia."
+    },
+    {
+      "name": "Equipe Direção",
+      "role": "Direção & Roteiro",
+      "short": "Narrativa e direção de conteúdo."
+    },
+    {
+      "name": "Equipe DOP",
+      "role": "Direção de Fotografia",
+      "short": "Imagem e linguagem cinematográfica."
+    },
+    {
+      "name": "Equipe Pós",
+      "role": "Edição & Color",
+      "short": "Pós-produção e finalização."
+    }
+  ]
+}

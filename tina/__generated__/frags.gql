@@ -1,0 +1,92 @@
+fragment ServicesParts on Services {
+  __typename
+  items {
+    __typename
+    num
+    tag
+    title
+    desc
+    items
+  }
+}
+
+fragment ProcessParts on Process {
+  __typename
+  items {
+    __typename
+    num
+    title
+    desc
+    deliverables
+  }
+}
+
+fragment WorksParts on Works {
+  __typename
+  items {
+    __typename
+    slug
+    title
+    client
+    tag
+    year
+    category
+    format
+    team
+    gear
+    summary
+    body {
+      __typename
+      h
+      p
+    }
+  }
+}
+
+fragment TeamParts on Team {
+  __typename
+  items {
+    __typename
+    name
+    role
+    short
+  }
+}
+
+fragment PostsParts on Posts {
+  __typename
+  items {
+    __typename
+    slug
+    date
+    title
+    excerpt
+    read
+    category
+    body {
+      __typename
+      h
+      p
+    }
+  }
+}
+
+fragment FaqParts on Faq {
+  __typename
+  items {
+    __typename
+    cat
+    q
+    a
+  }
+}
+
+fragment BrandsParts on Brands {
+  __typename
+  items
+}
+
+fragment MarqueeParts on Marquee {
+  __typename
+  items
+}

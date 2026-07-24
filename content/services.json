@@ -1,0 +1,52 @@
+{
+  "items": [
+    {
+      "num": "01",
+      "tag": "Estratégia",
+      "title": "Pensamos antes de ligar a câmera.",
+      "desc": "Briefing, posicionamento, narrativa e distribuição fazem parte do escopo. Cada frame tem intenção.",
+      "items": [
+        "Discovery & briefing",
+        "Posicionamento de conteúdo",
+        "Roteiro & narrativa",
+        "Estratégia de distribuição"
+      ]
+    },
+    {
+      "num": "02",
+      "tag": "Produção",
+      "title": "Captação\ncinematográfica.",
+      "desc": "Equipamento de cinema. Direção criativa. Workflow que não improvisa.",
+      "items": [
+        "Direção criativa",
+        "Captação multi-câmera",
+        "Drone & aéreo",
+        "Iluminação & som"
+      ]
+    },
+    {
+      "num": "03",
+      "tag": "Conteúdo",
+      "title": "Pronto pra plataforma certa.",
+      "desc": "Produção que não termina no master. Vai até o clipe certo, no canal certo, com a linguagem que a audiência espera.",
+      "items": [
+        "Edição & finalização",
+        "Color grading",
+        "Motion graphics",
+        "Adaptação multi-formato"
+      ]
+    },
+    {
+      "num": "04",
+      "tag": "Presença",
+      "title": "Conteúdo consistente\nconstrói marca.",
+      "desc": "Não produzimos pra preencher calendário. Construímos com as marcas uma presença audiovisual coerente — com linguagem definida, evolução de projeto a projeto e estratégia que atravessa as entregas.",
+      "items": [
+        "Calendário editorial audiovisual",
+        "Consistência de linguagem visual",
+        "Produção recorrente",
+        "Briefings que acumulam contexto"
+      ]
+    }
+  ]
+}

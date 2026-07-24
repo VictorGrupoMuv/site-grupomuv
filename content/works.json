@@ -1,0 +1,154 @@
+{
+  "items": [
+    {
+      "slug": "convocasso-itau",
+      "title": "CONVOCASSO\nItaú",
+      "client": "Itaú × África Creative",
+      "tag": "CASE FILM · 60s",
+      "year": "2026",
+      "category": "Brand film",
+      "format": "Case film publicitário (cobertura de ação OOH)",
+      "team": "4 pessoas, filmmaker D1+D2, filmmaker parceiro, piloto de drone, editor",
+      "gear": "Sony FX3 · A7CII · GMaster 16-35 / 24-70 / 35mm · Sony 70-200 · DJI Mini 4 Pro / Avata",
+      "summary": "Ação OOH publicitária real-time pra convocação da Seleção Brasileira. Quatro fases na Paulista, 24h pra edição.",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "A África Creative trouxe uma ação do Itaú pra cima do calendário esportivo mais carregado do ano: o dia da convocação da Seleção Brasileira. O conceito era CONVOCASSO, uma ativação OOH viva, com quatro fases na cidade de São Paulo: peça \"ansioso pré\", peça pré-convocação 30 minutos antes do anúncio, OOH com transmissão ao vivo nos pontos físicos da Avenida Paulista (171 e 1912), e peça conceito pós-convocação. Faltavam três dias quando o briefing entrou de forma definitiva."
+        },
+        {
+          "h": "Desafio",
+          "p": "Capturar uma ação publicitária que só existe enquanto ela acontece, e transformar isso num case film entregue em 24h pra começar a rodar em mídia. Janela de captação de basicamente um dia, com pré-captação no dia anterior e edição no dia seguinte. Operação multi-ponto numa Paulista cheia, sem poder ensaiar, sem poder repetir. Direitos de uso comercial nacional por dois meses já contratados."
+        },
+        {
+          "h": "Abordagem MUV",
+          "p": "A gente entrou na pré sabendo que o segredo do projeto era logística. Mapeamos a Paulista em quatro pontos com tempo de deslocamento entre eles, alinhamos com a África quem era o representante de set pra alinhamento real-time, e desenhamos uma operação de guerrilha multi-ponto com agilidade e cobertura simultânea. FX3 e A7CII como dupla, lentes GMaster 16-35 pra contexto urbano amplo, 70-200 pra cobertura distante das reações nas calçadas, 35mm pra estética de rua. Tudo gravando em S-Log3, com color base aplicada na edição."
+        },
+        {
+          "h": "Resultado",
+          "p": "Entrega rodou no prazo contratado. O case film entrou em circulação comercial nos dois formatos (9x16 e 16x9), em mídia nacional, dentro da janela de dois meses prevista no contrato. Primeira entrega pra África Creative numa ação de marca dessa relevância, projeto que valida a MUV como produtora que opera com agilidade publicitária sem perder camada cinematográfica."
+        }
+      ]
+    },
+    {
+      "slug": "isla-gatorade-orlando",
+      "title": "Seleção em\nOrlando",
+      "client": "ISLA / Gatorade × CBF",
+      "tag": "FOOTAGE INSTITUCIONAL",
+      "year": "2026",
+      "category": "Documentário",
+      "format": "Footage institucional + publicitário (captação internacional)",
+      "team": "3 filmmakers, DOP, operador de câmera, assistente",
+      "gear": "Sony FX6 · 2x FX3 · GMaster 16-35 / 24-70 / 35 · Sony FE 70-200 / 200-600 · Cine 7Artisans · Laowa 10mm · Ronin RS3 Mini",
+      "summary": "Captação da Seleção Brasileira no Camping World Stadium pra alimentar o banco audiovisual da Gatorade.",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "A ISLA chegou com um pedido que carregava peso simbólico grande: captar footage da Seleção Brasileira em Orlando, no Camping World Stadium, pra alimentar o banco audiovisual da Gatorade em parceria com a CBF. Material que ia virar publicidade, institucional e ativação, captação pensada pra ter vida longa, virar peça de campanha, aparecer recortada num comercial seis meses depois."
+        },
+        {
+          "h": "Desafio",
+          "p": "Operar em ambiente de acesso controlado, com equipe enxuta, em outro país, em duas diárias (27/03 e 31/03), entregando material bruto com qualidade de cinema. Discrição, mobilidade, qualidade técnica consistente entre as duas câmeras principais, versatilidade do plano fechado de atleta ao plano geral de estádio com 600mm. Logística internacional embutida: passagens, transporte local, estadia, seguros, contingência."
+        },
+        {
+          "h": "Abordagem MUV",
+          "p": "Operação desenhada em torno de três funções específicas, DOP, operador de câmera e assistente, todos habilitados pra captar simultaneamente. Equipe lateral: três pessoas podendo virar três câmeras ao mesmo tempo, ou se concentrar em uma cena maior. FX6 como câmera principal pra cinema-look, duas FX3 pra mobilidade, todas rodando S-Log3 com mesmo padrão de exposição. Backup duplo em SSDs (1TB e 2TB Sandisk), loggagem em campo, color grading básico já aplicado na entrega."
+        },
+        {
+          "h": "Resultado",
+          "p": "Materiais brutos organizados e com color grade básico entregues no prazo. A operação rodou sem ruído logístico, equipamento voltou inteiro, e o material entrou no banco da Gatorade pronto pra desdobramentos futuros. Marco de operação internacional com equipe reduzida e setup cinematográfico, modelo que a MUV quer expandir pra outras captações fora do Brasil."
+        }
+      ]
+    },
+    {
+      "slug": "adidas-runners",
+      "title": "Adidas\nRunners",
+      "client": "Adidas × Valiant",
+      "tag": "EVENTO · SOCIAL · 2 DIAS",
+      "year": "2026",
+      "category": "Cobertura",
+      "format": "Cobertura de evento + branded social",
+      "team": "3 pessoas, fotógrafo, filmmaker, assistente, operação multi-ponto",
+      "gear": "Sony A7III, A7IV, FX3 · GMaster 16-35 / 24-70 / 35mm · Laowa 10mm · LED Aputure · Flash Godox · Intercom",
+      "summary": "Dois dias, dois contextos: evento fechado em Alphaville com entrega real-time + treinão aberto no Ibirapuera.",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "A Adidas estava reposicionando peso na comunidade de running brasileira. Acabava de assumir parcerias que historicamente eram de outra marca, e o desafio do time não era mais \"ter produto bom\", era recuperar pertencimento na cena. O briefing chegou via Valiant, agência que cuida da parte de relacionamento estratégico com assessorias, atletas, influenciadores e os Adidas Runners."
+        },
+        {
+          "h": "Desafio",
+          "p": "Dois dias seguidos, dois contextos completamente diferentes. Dia 1: evento fechado no escritório de Alphaville, formato instagramável, até 100 convidados, influência, AR, atletas, palestras e ambientação de marca, com entrega parcial em real-time pro time poder postar enquanto o evento ainda rolava. Dia 2: treinão aberto no Ibirapuera, captação documental, sem pressão de feed mas com o peso simbólico de marcar a chegada da marca naquele território."
+        },
+        {
+          "h": "Abordagem MUV",
+          "p": "Em Alphaville: operação dupla, fotógrafo dedicado ao registro de marca, filmmaker em segunda câmera capturando interação real, assistente fazendo backup e enviando primeiras fotos pro time da agência durante o evento. A cada 30-40 minutos um lote de fotos selecionadas saía pro WhatsApp do cliente, já com tratamento da Adidas em LUT no Lightroom. No Ibirapuera: foco em narrativa, corredor real, comunidade real, luz natural da manhã, lente 35mm pra ficar próximo sem ser invasivo, Laowa 10mm pra capturar o coletivo em movimento."
+        },
+        {
+          "h": "Resultado",
+          "p": "Time da Valiant validou as fotos do Dia 1 durante a captação, cliente começou a postar antes do evento terminar. Material do Dia 2 entrou em circulação interna como bank pra desdobramentos futuros. Mais importante: o trabalho abriu relação. Na sequência fechamos cobertura da Kings Nation no Allianz Parque, também pra Adidas, com a mesma equipe, sinal claro de que o primeiro entregável funcionou."
+        }
+      ]
+    },
+    {
+      "slug": "nissan-kicks-suba",
+      "title": "Nissan\nKicks",
+      "client": "Nissan × Suba",
+      "tag": "BRANDED · 6 VERTICAIS",
+      "year": "2025",
+      "category": "Brand film",
+      "format": "Branded content (6 verticais + 12 fotos + backstage)",
+      "team": "Equipe enxuta, filmmaker, fotógrafo, assistente",
+      "gear": "Sony FX3 · A73 · Insta 360 · GMaster 16-35 / 24-70 / 35 / 70-200mm · Cine 7Artisans T2 35/50/85mm · Aputure F22c/F21c · DJI Avata",
+      "summary": "Social-first pros quatro pilares do Kicks: conforto, tecnologia, dirigibilidade, segurança.",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "A Nissan chegou via Suba com o briefing do Kicks. O carro já tem campanha consolidada, mas a marca queria social-first, conteúdo nativo de feed, vertical, com cara de criador e cabeça de cliente. A ideia era cobrir os quatro pilares de comunicação do veículo (conforto, tecnologia, dirigibilidade, segurança) em peças curtas, com edição dinâmica, sem cara de comercial antigo."
+        },
+        {
+          "h": "Desafio",
+          "p": "Traduzir uma narrativa institucional automotiva, historicamente pesada, com aprovação longa e muito controle, num formato leve, vertical e cabível em 30 segundos. Em paralelo, entregar um banco de 12 fotos com a mesma cobertura conceitual. E entregar conteúdo extra de backstage como diferencial, com pré-aprovação dupla pela agência e pela marca. Vídeo em 7 dias, fotos em 7 dias, pagamento em 60."
+        },
+        {
+          "h": "Abordagem MUV",
+          "p": "Entramos na pré com um roteiro proprietário, base do diálogo com a Suba. Captação em torno do que cada pilar pedia visualmente: conforto exige interno em luz controlada e detalhe; tecnologia exige plano fechado de painel, gestual de toque, transições rápidas; dirigibilidade exige movimento, drone, FPV; segurança exige plano amplo, contexto, presença do carro no ambiente. FX3 pra cinema, A73 pra fotografia em paralelo, Insta 360 pra POV de motorista, drone Avata pra dirigibilidade. Iluminação com painéis Amaran F22c e F21c pra controlar reflexo na lataria. Lentes Cine 7Artisans T2 pra os planos preparados de close."
+        },
+        {
+          "h": "Resultado",
+          "p": "Seis verticais entregues, 12 fotos editadas, banco de backstage usado como conteúdo orgânico pra alimentar o canal nas semanas seguintes ao lançamento. Mais relevante: o trabalho gerou base pra renovação dos direitos de uso com a Nissan, num segundo aditivo que estendeu a presença das peças além da janela inicial."
+        }
+      ]
+    },
+    {
+      "slug": "pop-comm-bento",
+      "title": "Pop-Comm\nSerie de 7",
+      "client": "Pop-Comm · Fernando Bento",
+      "tag": "REELS · 7 PEÇAS · 1 DIA",
+      "year": "2023",
+      "category": "Social",
+      "format": "Sete reels de até 1 min (banco de produto)",
+      "team": "3 pessoas, videomaker, assistente, editor",
+      "gear": "Sony FX3 · A73 · GMaster 16-35 / 24-70 / 70-200mm · Rode direcional · Hollyland lapela · MacBook Pro",
+      "summary": "Sete reels mostrando sete serviços diferentes, tudo captado numa única diária.",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "A Pop-Comm é integradora de comunicação corporativa, vende serviços que, no fundo, são intangíveis: estratégia, operação, mídia. Esse é o tipo de cliente que mais sofre na hora de virar conteúdo, porque o produto não é um objeto. É processo, é gente, é decisão. Fernando, à frente, queria uma forma de mostrar o que a Pop vende sem cair no discurso institucional cansado."
+        },
+        {
+          "h": "Desafio",
+          "p": "Sete reels, cada um mostrando um serviço diferente, todos captados em uma única diária. Equipe enxuta, prazo curto, e a barra alta: o conteúdo precisava parecer feito pra plataforma, não adaptado pra ela. Reel de 1 minuto não é vídeo institucional cortado, é estrutura própria, gancho nos primeiros 3 segundos, ritmo que segura o dedo."
+        },
+        {
+          "h": "Abordagem MUV",
+          "p": "Pré-produção condensada. Mapeamos com o Fernando os sete serviços, definimos qual seria a virada visual de cada um (entrevista direta, bastidor, metáfora visual?), e desenhamos uma ordem de captação que minimizava troca de setup, o que economizou hora e permitiu entregar os sete sem perder energia no último. FX3 como câmera principal em S-Log3, A73 como segunda câmera. Lentes GMaster cobrindo de 16-35 a 70-200. Áudio em duas vias, Rode direcional como referência ambiente, Hollyland de lapela como áudio principal."
+        },
+        {
+          "h": "Resultado",
+          "p": "Os sete reels viraram a base do feed da Pop-Comm naquele ciclo, com cadência de postagem espaçada por algumas semanas. Mais importante, o trabalho mostrou um modelo que repetimos até hoje com clientes B2B, uma diária densa, sete peças, custo unitário enxuto. O case da Pop-Comm ainda é referência interna pra projetos onde o orçamento pede eficiência sem cair na perda de qualidade."
+        }
+      ]
+    }
+  ]
+}

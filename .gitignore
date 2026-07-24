@@ -1,41 +1,8 @@
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Editor / IDE
-.vscode/
-.idea/
-*.swp
-*~
-
-# Claude Code
-.claude/
-
-# Logs
-*.log
-
-# Temp
-*.tmp
-.tmp/
-
-# Build artifacts (zips temporários)
-*.zip
-!**/*.png.zip  # negação no caso de algum zip de assets futuro
-
-# Backups locais
-_backup*/
-
-# Node (caso vire build com bundler depois)
 node_modules/
-package-lock.json.bak
-
-# Documentação interna (não vai pro repo público)
-ROADMAP.md
-TODO.md
-NOTES.md
-
-# Lixo de locks removidos (pode apagar)
+.next/
+out/
+*.log
+.DS_Store
 _git_locks_removidos/
-
 _lixo_git/
+tina/__generated__/*.cache

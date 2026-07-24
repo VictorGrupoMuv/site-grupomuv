@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "num": "01",
+      "title": "Ideia",
+      "desc": "Início com diagnóstico, não com orçamento. Queremos entender onde a marca está antes de sugerir onde o audiovisual pode levá-la.",
+      "deliverables": "Briefing · Discovery · Diagnóstico"
+    },
+    {
+      "num": "02",
+      "title": "Roteiro",
+      "desc": "Estratégia narrativa traduzida em roteiro, storyboard, mood board e cronograma. Tudo aprovado antes da produção.",
+      "deliverables": "Roteiro · Storyboard · Mood"
+    },
+    {
+      "num": "03",
+      "title": "Direção",
+      "desc": "Pré-produção completa: casting, locação, decupagem, plano de produção. Sem improviso no set.",
+      "deliverables": "Plano · Casting · Locação"
+    },
+    {
+      "num": "04",
+      "title": "Captação",
+      "desc": "Equipe sênior, equipamento profissional, direção criativa no set. Backup de tudo, sempre.",
+      "deliverables": "Sony FX3/FX6 · Drone · Som"
+    },
+    {
+      "num": "05",
+      "title": "Pós",
+      "desc": "Edição, color grade cinematográfico, sound design, motion graphics. Rounds de aprovação claros.",
+      "deliverables": "Edit · Color · Motion · Mix"
+    },
+    {
+      "num": "06",
+      "title": "Entrega",
+      "desc": "Versões pra cada plataforma, no formato certo. Pacote de assets organizado e arquivado.",
+      "deliverables": "Master · Cortes · Assets"
+    }
+  ]
+}

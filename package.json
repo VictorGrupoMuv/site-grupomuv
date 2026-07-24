@@ -1,0 +1,23 @@
+{
+  "name": "muv-site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tinacms dev -c \"next dev\"",
+    "build": "next build",
+    "start": "next start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tinacms/cli": "^2.5.6",
+    "next": "^14.2.35",
+    "playwright-core": "^1.61.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tinacms": "^3.11.0"
+  }
+}

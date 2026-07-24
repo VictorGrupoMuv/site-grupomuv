@@ -1,0 +1,252 @@
+{
+  "items": [
+    {
+      "slug": "cobertura-tempo-real-evento",
+      "date": "2026 · MAI",
+      "title": "Cobertura em tempo real evento: como entregar conteúdo enquanto o show acontece.",
+      "excerpt": "O segundo dia de um festival grande começa às 13h. Às 19h, antes do headliner subir, a marca já quer um corte no story. É no pipeline que se ganha, não no equipamento.",
+      "read": "8 min",
+      "category": "Framework",
+      "body": [
+        {
+          "p": "O segundo dia de um festival grande começa às 13h. Às 19h, antes do headliner subir, a marca patrocinadora já quer um corte de 30 segundos no story, um carrossel com três frames e uma versão de 60s pronta pro YouTube. A captação ainda não acabou. É exatamente esse o jogo da cobertura em tempo real de evento, e é um jogo que se ganha no pipeline, não no equipamento."
+        },
+        {
+          "p": "O equipamento ajuda. Mas o que separa quem entrega de quem promete é o desenho do fluxo entre o que entra pelo sensor e o que sai pra timeline do cliente."
+        },
+        {
+          "h": "O que é \"tempo real\" na prática"
+        },
+        {
+          "p": "Tempo real em festival não é live streaming. É turnaround de horas, às vezes de minutos. O conteúdo capturado às 16h precisa estar revisado, cortado, com som tratado e cor batida pra entrar no feed antes das 21h, enquanto o público ainda está dentro do evento e a conversa ainda está acontecendo."
+        },
+        {
+          "p": "Isso muda tudo na operação. Não dá pra esperar terminar o festival pra \"começar a editar\". A edição começa no terceiro frame capturado. E o aftermovie de uma semana depois é só consequência de um workflow que já vinha cortando desde o dia um."
+        },
+        {
+          "h": "Pipeline: captação, ingest, edit, aprovação"
+        },
+        {
+          "p": "O fluxo enxuto tem quatro camadas rodando em paralelo. Captação: câmera principal em FX6 ou FX3, segunda A7S III ou A7 IV, drone quando autorizado, mic direcional + lav nos pontos quentes, tudo em proxy nativo. Ingest: DIT no festival, não no escritório. Cartão sai da câmera, vai pro DIT, backup duplo em SSD rápido, proxy liberado pra edit station em segundos. Edit station no local: MacBook potente, monitor extra, Resolve ou Premiere com projeto montado, LUTs prontos, templates de social na timeline. Aprovação ágil: Frame.io, WeTransfer, qualquer ferramenta, desde que cliente esteja no mesmo canal e decisão venha em minutos."
+        },
+        {
+          "h": "Equipe mínima, função clara"
+        },
+        {
+          "p": "Cobertura em tempo real não pede crew gigante. Pede crew certa. Pra festival de porte médio: 1 DOP (câmera A), 1 cinegrafista de apoio (câmera B), 1 drone op, 1 DIT/assistente, 1 editor no local, 1 produtor. Seis pessoas. Em festival grande dobra time de câmera, mantém DIT e edit station, não vira 20 pessoas, vira duas células de seis rodando em paralelo."
+        },
+        {
+          "h": "O que dá pra entregar (e quando)"
+        },
+        {
+          "p": "Stories e reels do dia: 2 a 4 horas depois da captação. Carrossel de fotos selecionadas: mesmo dia, fim de noite. Teaser do dia seguinte: sai na manhã. Recap diário (30s a 60s): final do dia ou primeira hora do dia seguinte. Aftermovie principal (90s a 3min): 5 a 10 dias depois. Versões extras pra parceiros: duas semanas seguintes. Tudo sai do mesmo material bruto, o segredo é capturar pensando nas múltiplas entregas."
+        },
+        {
+          "h": "Conclusão"
+        },
+        {
+          "p": "Cobertura em tempo real é técnica + logística + decisão. O equipamento é commodity, quem tem FX6 hoje tem FX6 amanhã. O diferencial está no desenho do pipeline, no tamanho certo da equipe e na maturidade de aprovação do cliente. Quando essas três variáveis estão alinhadas, entregar conteúdo enquanto o show ainda acontece deixa de ser exceção e vira parte do produto."
+        }
+      ]
+    },
+    {
+      "slug": "branded-vs-publicidade",
+      "date": "2026 · MAI",
+      "title": "Branded content vs publicidade tradicional: a diferença que multiplica resultado.",
+      "excerpt": "Publicidade tradicional interrompe. Branded é procurado. A frase de efeito é meio verdadeira e meio mentira, a diferença real está nos quatro critérios que ninguém quer rodar.",
+      "read": "7 min",
+      "category": "Ensaio",
+      "body": [
+        {
+          "p": "Publicidade tradicional interrompe. Branded content é procurado. Essa é a frase de efeito que circula em todo deck de agência desde 2015, e como toda frase de efeito, ela é meio verdadeira e meio mentira."
+        },
+        {
+          "p": "A verdade é que branded content só funciona quando é construído como conteúdo de verdade, com ponto de vista, e não como \"comercial com história\". A mentira é fingir que basta colocar uma narrativa em volta do produto pra deixar de ser publicidade. Não basta. E o público sente em três segundos."
+        },
+        {
+          "h": "A diferença que importa"
+        },
+        {
+          "p": "Publicidade tradicional tem uma promessa clara com o espectador: você me dá 30 segundos da sua atenção em troca do conteúdo que você veio consumir. É um pedágio. Funciona dentro desse contrato, alcance, frequência, top of mind. Branded content tem outra promessa: eu te entrego algo que você assistiria de graça, e a marca paga essa conta. O custo dela é fazer um conteúdo bom o bastante pra justificar a presença."
+        },
+        {
+          "p": "Publicidade é pulada, branded é salvo. Publicidade gera lembrança, branded gera percepção. Publicidade tem CTR, branded tem reescuta. Publicidade é medida em GRP, branded é medida em conversa."
+        },
+        {
+          "h": "Os quatro critérios"
+        },
+        {
+          "p": "1. Tem POV? Um ponto de vista que pertence à marca e não é genérico? \"Celebrar a diversidade\" não é POV. POV é arriscado, divide, posiciona. 2. Sobrevive sem o logo? Se cortar os 2 segundos finais e o filme continuar interessante, é branded. 3. Gera salvamento? Ninguém salva propaganda. 4. Gera conversa? Conversa de tema, não de marketing, se o filme faz as pessoas falarem do tema, e não da marca, o branded funcionou. Quatro sins: é branded. Dois ou três: tá no meio. Zero ou um: é publicidade, e tudo bem assumir."
+        },
+        {
+          "h": "Quando branded NÃO faz sentido"
+        },
+        {
+          "p": "Lançamento com janela curta (ciclo de 30 dias não dá tempo de fermentar). Performance pura (anúncio direto com oferta clara performa mais). Categoria ultracomoditizada (decisão 100% preço). Marca sem maturidade narrativa (resolve o discurso primeiro, faz branded depois). A pergunta honesta: a marca tem o que dizer, ou tá pagando pra parecer que tem?"
+        },
+        {
+          "h": "ROI percebido"
+        },
+        {
+          "p": "Branded bom roda por anos, não por trimestres. Mídia paga menor por reach orgânico maior. Associação de marca mais profunda, lembrança você compra, percepção você constrói. ROI raramente cabe num dashboard de campanha. Mora em pesquisa de marca, share of voice, brand lift. Quem só olha CPM e CTR não vai entender o investimento."
+        },
+        {
+          "h": "Conclusão"
+        },
+        {
+          "p": "A pergunta certa não é \"branded ou publicidade\". É: o que esse problema de marketing precisa, neste momento? Algumas vezes é interrupção bem feita. Outras vezes é uma narrativa que mereça atenção voluntária. Quem trata os dois como ferramentas distintas, com KPIs próprios, multiplica o resultado das duas."
+        }
+      ]
+    },
+    {
+      "slug": "video-referencia-5-ingredientes",
+      "date": "2026 · MAI",
+      "title": "O que faz um vídeo virar referência: 5 ingredientes invisíveis.",
+      "excerpt": "Nike, A24, Arc'teryx, Apple. Sempre os mesmos nomes aparecem nas reuniões. A resposta não está no equipamento, nem no orçamento, nem no diretor famoso.",
+      "read": "9 min",
+      "category": "Framework",
+      "body": [
+        {
+          "p": "Todo mundo tem aquela pasta. Vídeos salvos no Vimeo, links no Notion, prints no celular. Sempre os mesmos nomes aparecem nas reuniões de referência. A pergunta interessante não é \"por que esses?\". É: o que esses têm em comum que os outros não têm? A resposta tá em cinco ingredientes que ninguém vê quando assiste, mas que o sistema todo sente."
+        },
+        {
+          "h": "1. POV claro"
+        },
+        {
+          "p": "Ponto de vista é a coisa mais subestimada do audiovisual brasileiro. POV não é \"a marca acredita em pessoas\". POV é uma posição específica sobre alguma coisa específica. \"Dream Crazy\" da Nike não é sobre esporte, é sobre acreditar em si mesmo a ponto de incomodar os outros. \"Shot on iPhone\" não é sobre câmera, é sobre democratizar a produção de imagem premium. Sem POV, o filme vira voo cego. Aplicação: antes de qualquer pré-produção, escreva em UMA frase o que o filme defende."
+        },
+        {
+          "h": "2. Ritmo invisível (cortes no respiro)"
+        },
+        {
+          "p": "Boa edição é a edição que ninguém percebe. O corte entra exatamente no frame em que o espectador já tava pedindo pra trocar. Editores chamam de \"cortar no respiro\": o ritmo segue a respiração de quem assiste, não a métrica da trilha. Aplicação: cortar com som mudo na primeira passada. Se o ritmo funciona sem áudio, vai funcionar muito melhor com áudio. Se só funciona com a trilha, ela tá carregando o filme, e o filme não vira referência."
+        },
+        {
+          "h": "3. Sound design (som faz 50%)"
+        },
+        {
+          "p": "Por que uma cena ruim com som excelente é melhor que uma cena ótima com som ruim? Porque som carrega emoção que a imagem sozinha não carrega. A imagem fala com o olho. O som fala direto com o sistema nervoso. Esse é o gap mais visível do mercado brasileiro. Sobra investimento em câmera e direção, falta em som. Aplicação: orçar sound design como item separado, contratar designer de som dedicado. A diferença de custo é marginal. A diferença de resultado é estrutural."
+        },
+        {
+          "h": "4. Tipografia e grafismo coerente"
+        },
+        {
+          "p": "Lettering aparece em frações de segundo, mas define muito do que o espectador sente. Apple usa San Francisco. Nike usa Futura quando quer força. A24 usa Romana pra parecer cinema clássico de autor. Cada escolha é coerência. Aplicação: definir tipografia na pré-produção, não na pós. Testar em telas reais, em movimento, em legibilidade vertical pra social."
+        },
+        {
+          "h": "5. Ousadia controlada"
+        },
+        {
+          "p": "Nike arriscou em escalar Colin Kaepernick. Apple em mostrar fotos amadoras como capa de campanha global. A24 em deixar trailer com mais silêncio do que diálogo. Risco bem dosado. Não é \"vamos quebrar tudo pra chamar atenção\". É: \"vamos fazer uma escolha que a maioria das marcas não faria, mas que faz sentido pro que a nossa marca defende\". Ousadia descontrolada vira polêmica vazia. Ousadia controlada vira posicionamento."
+        },
+        {
+          "h": "Checklist do próximo projeto"
+        },
+        {
+          "p": "POV em uma frase, aprovado pelo cliente. Plano de ritmo, editor envolvido desde a decupagem. Briefing de sound design, designer contratado, não terceirizado. Sistema de grafismo, tipografia testada. A decisão corajosa, identificada e defendida. Filmes que cumprem cinco viram referência. Três viram bons. Um ou dois cumprem tabela."
+        }
+      ]
+    },
+    {
+      "slug": "bastidores-lollapalooza-72h",
+      "date": "2026 · MAI",
+      "title": "Bastidores cobertura Lollapalooza: 72 horas de captação, edição e entrega em tempo real.",
+      "excerpt": "Sexta-feira, 9h da manhã. A van já tá carregada. Quatro câmeras, dois drones, três notebooks. A próxima vez que esse equipamento vai parar é segunda à tarde.",
+      "read": "10 min",
+      "category": "Bastidor",
+      "body": [
+        {
+          "p": "Sexta-feira, 9h da manhã. A van já tá carregada na frente do escritório. Quatro câmeras, dois drones (um titular, um reserva), três notebooks, dez SSDs, dois monitores portáteis, duas tendas, cabos pra cobrir um quarteirão, lentes de 14 a 200, monopés, gimbals, um par de walkie-talkies que ainda funcionam desde 2019. A próxima vez que esse equipamento vai parar é segunda à tarde. O que segue é o relato honesto de uma operação de cobertura de Lollapalooza pela equipe MUV."
+        },
+        {
+          "h": "Pré-festival: a semana que define os três dias"
+        },
+        {
+          "p": "A coisa mais importante de uma cobertura de festival não acontece no festival. Acontece nos sete dias anteriores. Briefing fechado uma semana antes. Mapa do evento marcado: onde fica cada palco, camarote do cliente, ativações. Lista de artistas com prioridade, quem é must, quem é nice to have. Credenciamento resolvido três semanas antes. O briefing de entrega também sai antes: stories e reels durante o evento, recap diário, aftermovie em janela combinada, cortes pra parceiros, banco de fotos pra deck do ano seguinte. Cada entrega vira uma coluna no spreadsheet, cada coluna vira uma timeline na edit station."
+        },
+        {
+          "h": "Dia 1: abrindo a operação"
+        },
+        {
+          "p": "11h, chegada no Autódromo de Interlagos. Montagem da base, tenda 3x3 com mesa, duas cadeiras, energia em nobreak, internet via 5G dedicado (internet do festival não serve pra subir nada). Edit station: MacBook Pro M3 Max, monitor portátil 16\", fone de referência, dois SSDs Samsung T9 espelhados. 12h primeira reunião. Câmera A (FX6 + 24-70 + 70-200) cobre palco principal. Câmera B (A7S III + 16-35 + 50mm prime) cobre bastidor. Câmera C (A7 IV) fica de apoio. 14h primeiro show. 17h primeira leva chega na edit. 19h primeiro story no celular do cliente. Aprovação volta em 12 minutos. Sobe."
+        },
+        {
+          "h": "Dia 2: o ritmo se consolida"
+        },
+        {
+          "p": "Sábado é o dia que separa quem aguenta de quem não aguenta. O entusiasmo do dia 1 já passou. O cansaço do dia 3 ainda não chegou. Reforço de rotina: almoço marcado, trocas de operador entre câmeras pra evitar exaustão da mesma posição, editor com descanso de 90 minutos no meio da tarde. Aprovação no dia 2 é o teste real do pipeline, se na sexta saiu em 12 minutos, no sábado costuma demorar mais. Criamos fluxo paralelo: enquanto material principal espera aprovação, editor adianta recortes secundários pra patrocinadores menores."
+        },
+        {
+          "h": "Dia 3: a colheita"
+        },
+        {
+          "p": "Domingo é colheita. O grosso do material bruto já tá capturado. Operação mais cirúrgica: completar o que faltou, capturar planos de cobertura específicos, garantir que o último headliner tem captação à altura. Editor adianta o máximo possível do aftermovie no domingo à tarde, durante shows secundários. Recap final sai na madrugada. Equipe desmonta às 04h. Volta pro escritório segunda à tarde pra descarga completa e início da pós pesada."
+        },
+        {
+          "h": "Aprendizados"
+        },
+        {
+          "p": "Backup espelho não-negociável (um cartão deu pau no dia 2, backup salvou). Editor no campo > editor remoto (já testamos, não rola). Aprovação humana presencial vale ouro. Sobrar tempo no dia 3 > correr no dia 3. Sound design separado, o ruído ambiente de festival é hostil, áudio de qualidade pra entrevistas só sai com captação dedicada."
+        },
+        {
+          "h": "Conclusão"
+        },
+        {
+          "p": "Cobertura de festival como o Lollapalooza não é heroísmo. É processo. É a soma de cem decisões pequenas tomadas em ordem certa, antes, durante e depois. Quem chega no dia 1 sem o pré-festival resolvido, perde. Quem chega na pós sem material capturado pensando em todas as entregas, perde."
+        }
+      ]
+    },
+    {
+      "slug": "equipe-pequena-premium",
+      "date": "2026 · MAI",
+      "title": "Produção audiovisual premium equipe pequena: por que menos gente entrega mais.",
+      "excerpt": "Existe uma confusão antiga: a ideia de que produção premium pede produtora grande. A prática mostra o contrário. Premium não é headcount, é densidade.",
+      "read": "8 min",
+      "category": "Ensaio",
+      "body": [
+        {
+          "p": "Existe uma confusão antiga no mercado audiovisual brasileiro: a ideia de que produção premium pede produtora grande. Crew de 30, três níveis de assistente, departamento de arte com cinco pessoas. Quanto mais nome na call sheet, mais \"premium\" o projeto pareceria. A prática mostra o contrário. Os projetos audiovisuais mais admirados da última década, A24, Stink, Boiler, Highsnobiety, Arc'teryx, operam com equipe pequena. Não por restrição de orçamento. Por escolha estratégica."
+        },
+        {
+          "p": "A tese é simples: premium não é headcount, é densidade. E densidade não escala com gente nova entrando no projeto, escala com gente certa fazendo a coisa certa."
+        },
+        {
+          "h": "O problema da equipe grande"
+        },
+        {
+          "p": "Primeiro: dilui POV. Cada pessoa nova traz uma opinião. Em dose grande vira ruído. Quando 15 pessoas têm voz sobre uma decisão criativa, o resultado tende ao denominador comum mais baixo. Ninguém defende o risco. Todo mundo entrega a versão segura. A versão segura nunca vira referência."
+        },
+        {
+          "p": "Segundo: atrasa decisão. Em equipe pequena, alguém propõe, alguém defende, alguém aprova, em uma manhã. Em equipe grande, a mesma decisão vira pauta de reunião, ata, aprovação por e-mail, nova rodada de ajuste. Duas semanas pra resolver o que resolveria em duas horas."
+        },
+        {
+          "p": "Terceiro: encarece sem entregar mais qualidade. Equipe grande tem custo fixo alto, honorários, estrutura, hierarquia, processo. O dinheiro extra vai pra administração, não pra tela. O cliente paga 30% a mais pra ver o mesmo filme que entregaria com equipe 40% menor."
+        },
+        {
+          "h": "A24 como caso de estudo"
+        },
+        {
+          "p": "Vale olhar pra A24 como referência prática. Os filmes ganham Oscar com crew menor que produções similares dos grandes estúdios. Não é pobreza, é escolha de modelo. Equipe enxuta, diretores autorais com poder real, pós verticalizada, marketing inteligente. Cada filme tem assinatura. Replicar em branded content brasileiro é não só possível como, na prática, o caminho que os melhores projetos brasileiros já seguem."
+        },
+        {
+          "h": "Quando equipe grande faz sentido"
+        },
+        {
+          "p": "Escala industrial (novela, série de TV com 100 episódios, longa grande). Operação multi-praça simultânea (campanha em cinco capitais ao mesmo tempo). Formato com volume de elenco/figuração (200 figurantes, três locações). Pós com VFX pesado (40s de efeitos complexos). Pra todo o resto, branded content, série digital, cobertura, conteúdo institucional premium, campanha até 90s, equipe pequena entrega mais."
+        },
+        {
+          "h": "Como o MUV opera"
+        },
+        {
+          "p": "Direção criativa próxima do cliente, sem intermediário. Diretor envolvido desde a primeira conversa. Crew dimensionada por projeto, núcleo pequeno fixo, expansão pontual com freelas certos. Pós-produção integrada, editor e finalizador conversam com diretor durante captação. Aprovação rápida, menos camadas internas. Consequência prática: projetos saem do briefing à entrega em ciclos menores, com mais densidade criativa, e custo total geralmente menor, não porque a equipe seja barata, porque o overhead não pesa."
+        },
+        {
+          "h": "Conclusão"
+        },
+        {
+          "p": "Headcount é vaidade. Densidade é resultado. O melhor sinal de que uma produção tá bem dimensionada não é quantas pessoas estão no set, mas quanto cada pessoa do set tá efetivamente decidindo, criando, executando."
+        }
+      ]
+    }
+  ]
+}
