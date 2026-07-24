@@ -192,7 +192,7 @@ function Footer({ setCurrent }) {
         <div>
           <p className="footer__col-title">/ ECOSSISTEMA</p>
           <p style={{ maxWidth: 340, color: "var(--dark-ink-2)", lineHeight: 1.5, marginBottom: 24 }}>
-            Hub criativo de audiovisual, estratégia e conteúdo. <span style={{ color: "var(--dark-ink)" }}>São Paulo, Brasil.</span>
+            Produtora audiovisual e hub criativo. Estratégia, produção e conteúdo. <span style={{ color: "var(--dark-ink)" }}>São Paulo, Brasil.</span>
           </p>
           <a className="btn btn--primary" href="#" onClick={go("contato")}>
             Começar um projeto <Arrow />

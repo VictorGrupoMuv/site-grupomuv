@@ -14,27 +14,27 @@ const SERVICOS = [
   num: "02",
   tag: "Produção",
   title: "Captação\ncinematográfica.",
-  desc: "Sony FX3/FX6, drones DJI, iluminação controlada, direção criativa e workflow otimizado.",
+  desc: "Câmeras Sony FX-series, drones DJI, iluminação profissional e direção criativa no set. Equipamento de cinema a serviço da sua marca.",
   items: ["Direção criativa", "Captação multi-câmera", "Drone & aéreo", "Iluminação & som"]
 },
 {
   num: "03",
   tag: "Conteúdo",
   title: "Pronto pra plataforma certa.",
-  desc: "Entregamos peças nos formatos certos, com a linguagem certa, pra distribuição que faz sentido.",
+  desc: "Adaptação inteligente pra cada canal — não uma versão genérica cortada no tamanho errado.",
   items: ["Edição & finalização", "Color grading", "Motion graphics", "Adaptação multi-formato"]
 },
 {
   num: "04",
-  tag: "Comunidade",
-  title: "Hub criativo, não fornecedor.",
-  desc: "Relações de longo prazo, troca, parceria. MUV Hub conecta filmmakers, marcas e cultura.",
-  items: ["Acesso a equipe sênior", "Studio & locadora", "Eventos & networking", "Mentorias & conteúdo"]
+  tag: "Parceria",
+  title: "A relação não termina\nna entrega.",
+  desc: "Marcas que produzem com consistência precisam de um parceiro que entenda sua linguagem sem ser reapresentado a cada projeto. A gente estrutura relações de longo prazo.",
+  items: ["Retainer de produção", "Planejamento editorial", "Identidade audiovisual de marca", "Acesso direto à equipe"]
 }];
 
 
 const PROCESSO = [
-{ num: "01", title: "Ideia", desc: "Briefing, escuta, mergulho no negócio. A gente quer entender o que move sua marca antes de propor qualquer coisa.", deliverables: "Briefing · Discovery · Diagnóstico" },
+{ num: "01", title: "Ideia", desc: "Antes de qualquer roteiro, a gente entende posicionamento, público e objetivos de negócio. A proposta vem depois.", deliverables: "Briefing · Discovery · Diagnóstico" },
 { num: "02", title: "Roteiro", desc: "Estratégia narrativa traduzida em roteiro, storyboard, mood board e cronograma. Tudo aprovado antes da produção.", deliverables: "Roteiro · Storyboard · Mood" },
 { num: "03", title: "Direção", desc: "Pré-produção completa: casting, locação, decupagem, plano de produção. Sem improviso no set.", deliverables: "Plano · Casting · Locação" },
 { num: "04", title: "Captação", desc: "Equipe sênior, equipamento profissional, direção criativa no set. Backup de tudo, sempre.", deliverables: "Sony FX3/FX6 · Drone · Som" },
@@ -510,7 +510,7 @@ function Home({ setCurrent, density }) {
         {/* Title card que aparece durante o boot */}
         <div className="hero-cine__bootcard">
           <p className="mono">GRUPO MUV</p>
-          <p className="mono hero-cine__bootcard-meta">EDIÇÃO 01 · 2026 · ECOSSISTEMA CRIATIVO</p>
+          <p className="mono hero-cine__bootcard-meta">EDIÇÃO 01 · 2026 · PRODUTORA & HUB CRIATIVO</p>
         </div>
 
         {/* Letterbox bars */}
@@ -520,7 +520,7 @@ function Home({ setCurrent, density }) {
         <div className="hero-cine__content" ref={heroRef}>
           <div className="hero-cine__top">
             <div>
-              <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>Edição 01 · 2026 · Ecossistema criativo</p>
+              <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>Edição 01 · 2026 · Produtora audiovisual & hub criativo</p>
               <p className="mono" style={{ color: "var(--dark-ink-2)", marginTop: 12 }}>SP · BR · 23.5505° S · 46.6333° W</p>
             </div>
             <p className="mono hero-cine__rec" style={{ color: "var(--dark-ink-2)" }}>REEL 2026, V01 · LIVE</p>
@@ -536,7 +536,7 @@ function Home({ setCurrent, density }) {
 
           <div className="hero-cine__bottom">
             <p className="hero-cine__sub">
-              A gente não entrega vídeo. Entrega estratégia em formato audiovisual, cinematográfica, no prazo, e impossível de ignorar.
+              A gente não entrega vídeo. Entrega estratégia em formato audiovisual: cinematográfica, no prazo e impossível de ignorar.
             </p>
             <div className="hero-cine__actions">
               <button className="btn btn--primary" onClick={() => setCurrent("contato")}>Começar um projeto <Arrow /></button>
@@ -552,7 +552,7 @@ function Home({ setCurrent, density }) {
           <StatCounter prefix="+" target={120} label="Produções entregues" />
           <StatCounter prefix="+" target={30} label="Marcas parceiras" />
           <StatCounter target={7} suffix=" dias" label="Ciclo médio captação, entrega" />
-          <StatCounter target={1} pad={2} label="Ecossistema, três pilares" accent />
+          <StatCounter target={1} pad={2} label="Hub criativo, quatro frentes" accent />
         </div>
       </section>
 
@@ -579,8 +579,8 @@ function Home({ setCurrent, density }) {
         <SectionHead
           num="02"
           eyebrow="Serviços · 4 pilares"
-          title="Estratégia, produção, conteúdo, comunidade."
-          sub="Um ecossistema, quatro frentes integradas. Você fala com uma equipe, entrega no nível de quatro produtoras." />
+          title="Estratégia, produção, conteúdo, parceria."
+          sub="Você não contrata quatro fornecedores. Contrata uma equipe integrada que pensa, produz e entrega com consistência." />
         
         <div className="grid-2">
           {SERVICOS.map((s, i) =>
@@ -640,7 +640,7 @@ function Home({ setCurrent, density }) {
               MUV <span style={{ color: "var(--accent)" }}>Hub.</span>
             </h2>
             <p style={{ color: "var(--bg)", fontFamily: "\"Archivo Black\"", fontWeight: "100", fontStyle: "normal", letterSpacing: "-1.9px", fontSize: "52px", lineHeight: "1", margin: "0 0 32px" }}>
-              O ecossistema vivo.
+              Onde a produção acontece. E onde a comunidade se encontra.
             </p>
             <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 24, maxWidth: 480, fontWeight: "100" }}>
               Locadora de equipamentos, reserva de studio, comunidade criativa e cowork
@@ -699,7 +699,7 @@ function HomeCTA({ setCurrent }) {
                 <p className="eyebrow eyebrow-dot" style={{ color: "var(--accent)" }}>Recebido ✓</p>
                 <h3 className="h3" style={{ marginTop: 16 }}>Obrigado, {form.name.split(" ")[0] || "parceiro"}.</h3>
                 <p className="body" style={{ color: "var(--ink-2)", marginTop: 16, lineHeight: 1.55 }}>
-                  Em até 24h a gente volta com diagnóstico, escopo e timeline. Enquanto isso, dá uma olhada nos trabalhos recentes.
+                  A gente vai ler com atenção e volta com diagnóstico, escopo e timeline. Enquanto isso, dá uma olhada nos trabalhos recentes.
                 </p>
                 <div style={{ display: "flex", gap: 12, marginTop: 24, flexWrap: "wrap" }}>
                   <button className="btn btn--ink" onClick={() => setCurrent("trabalhos")}>Ver portfolio <Arrow /></button>
@@ -771,7 +771,7 @@ function HomeCTA({ setCurrent }) {
                 </div>
 
                 <button type="submit" className="btn btn--ink quote-submit">
-                  ENVIAR SOLICITAÇÃO <Arrow />
+                  MANDAR BRIEFING <Arrow />
                 </button>
                 <p className="quote-card__disclaimer">Seus dados não serão compartilhados com terceiros.</p>
               </form>
@@ -783,10 +783,10 @@ function HomeCTA({ setCurrent }) {
         <div className="home-cta__hero">
           <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>Próximo passo</p>
           <h2 className="display" style={{ marginTop: 32, color: "var(--dark-ink)", fontSize: "67px" }}>
-            Vamos contar<br />sua <span style={{ color: "var(--accent)", fontStyle: "italic", fontWeight: 400 }}>história?</span>
+            Cada projeto<br />começa com <span style={{ color: "var(--accent)", fontStyle: "italic", fontWeight: 400 }}>escuta.</span>
           </h2>
           <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 32, maxWidth: 420, fontFamily: "Inter", fontWeight: "200" }}>
-            Conta o que você quer fazer. Em 24h a gente volta com diagnóstico, escopo e timeline, sem proposta genérica.
+            Conta o que você quer fazer. A gente volta com diagnóstico, escopo e timeline. Sem proposta genérica.
           </p>
           <div style={{ marginTop: 40, display: "flex", gap: 12, flexWrap: "wrap" }}>
             <button className="btn btn--ghost-dark" onClick={() => setCurrent("trabalhos")}>Ver portfolio <Arrow /></button>
@@ -889,7 +889,7 @@ function PostRow({ date, title, excerpt, read }) {
 function Servicos({ setCurrent }) {
   return (
     <div className="page" data-screen-label="Servicos">
-      <PageHead crumb="01 · Serviços" title={"Quatro Frentes.\nUm ecossistema."} lead="A gente integra estratégia, produção, conteúdo e comunidade num único parceiro. Sem terceirizar o que importa." accent="ecossistema" meta="04 pilares · 01 ecossistema" compact />
+      <PageHead crumb="01 · Serviços" title={"Do conceito à plataforma.\nTudo sob uma direção."} lead="Você não contrata quatro fornecedores. Contrata uma equipe integrada que pensa, produz e entrega com consistência." accent="direção" meta="04 frentes · 01 direção" compact />
 
       <section className="section">
         <div className="svc-stack">
@@ -943,7 +943,7 @@ function Processo({ setCurrent }) {
       </section>
 
       <section className="section section--dark">
-        <SectionHead num="*" eyebrow="Como medimos" title="O que conta como bom trabalho." sub="Estética é metade. A outra metade é como o conteúdo performa no mundo real." />
+        <SectionHead num="*" eyebrow="Como medimos" title="O que define uma entrega bem-feita." sub="Imagem bem fotografada é ponto de partida, não de chegada. A gente mede retenção, adequação de plataforma e consistência com o posicionamento da marca." />
         <div className="grid-3">
           <Metric num="01" label="Direção" desc="Cada decisão estética tem motivo estratégico. Não filmamos por filmar." />
           <Metric num="02" label="Prazo" desc="Cronograma respeitado. Atraso é exceção justificada, nunca padrão." />
@@ -1041,7 +1041,7 @@ function Trabalhos({ setCurrent }) {
 
   return (
     <div className="page" data-screen-label="Trabalhos">
-      <PageHead crumb="03 · Trabalhos" title="Cases selecionados." lead="Recortes de produções de 2023 a 2026. Cada projeto carrega uma marca real, um problema real e uma solução audiovisual com intenção." accent="Cases" meta={`${TRABALHOS.length} projetos · 2023–2026`} />
+      <PageHead crumb="03 · Trabalhos" title="Cases selecionados." lead="Produções de 2023 a 2026. Cada case tem uma marca, um contexto e uma decisão criativa que a gente pode explicar." accent="Cases" meta={`${TRABALHOS.length} projetos · 2023–2026`} />
 
       <div className="works-filter">
         <div className="works-filter__inner">
@@ -1115,7 +1115,7 @@ function Trabalhos({ setCurrent }) {
 function Sobre({ setCurrent }) {
   return (
     <div className="page" data-screen-label="Sobre">
-      <PageHead crumb="04 · Sobre" title={"A gente é um Hub.\nNão uma produtora."} lead="Nascemos na rua, nos eventos, nas madrugadas de edição. E levamos essa energia pra marcas que querem ser lembradas." accent="Hub" meta="Equipe · Manifesto · Pilares" />
+      <PageHead crumb="04 · Sobre" title={"Produtora audiovisual.\nEstrutura de hub criativo."} lead="Começamos produzindo pra eventos, marcas em crescimento e artistas independentes. Hoje operamos no nível de exigência dos grandes anunciantes — sem perder o que nos fez começar." accent="hub criativo" meta="Equipe · Manifesto · Pilares" />
 
       {/* MANIFESTO */}
       <section className="section about-manifesto">
@@ -1154,10 +1154,10 @@ function Sobre({ setCurrent }) {
         <SectionHead num="01" eyebrow="Pilares" title="O que move a gente." />
         <div className="about-pilares__grid">
           {[
-          { tag: "Autêntico", desc: "Não encenamos. A verdade é a base de tudo que produzimos." },
-          { tag: "Sofisticado", desc: "Imagem e som no nível de grandes marcas globais, com calor humano." },
-          { tag: "Estratégico", desc: "Cada frame tem intenção. Pensamos posicionamento antes da câmera." },
-          { tag: "Veloz", desc: "Entrega rápida sem sacrificar qualidade. Edição overnight quando precisa." }].
+          { tag: "Direção", desc: "Toda decisão criativa tem motivação estratégica. Cada escolha de enquadramento, luz e ritmo responde a um objetivo de comunicação." },
+          { tag: "Excelência", desc: "Padrão de imagem e som no nível de produções internacionais de referência. Sem concessão técnica, independente do escopo." },
+          { tag: "Método", desc: "Processo documentado, com aprovação em cada fase. Clareza de escopo do briefing até a entrega do master." },
+          { tag: "Precisão", desc: "Entrega no formato certo, no prazo acordado, sem revisão desnecessária. O processo existe pra isso não depender de sorte." }].
           map((p, i) =>
           <div key={i} className="pilar-card">
               <p className="mono pilar-card__num">// 0{i + 1}</p>
@@ -1187,7 +1187,7 @@ function Sobre({ setCurrent }) {
       <section className="section about-cta">
         <div className="about-cta__inner">
           <p className="eyebrow eyebrow-dot">Quer trabalhar com a gente?</p>
-          <h2 className="about-cta__title">A gente lê todo briefing.</h2>
+          <h2 className="about-cta__title">O primeiro passo é uma conversa. Sem compromisso, sem proposta padrão.</h2>
           <button className="btn btn--primary" onClick={() => setCurrent("contato")}>Falar com a gente <Arrow /></button>
         </div>
       </section>
@@ -1208,7 +1208,7 @@ function MuvHub({ setCurrent }) {
         </div>
         <h1 className="hero__display" style={{ letterSpacing: "0px", textAlign: "left" }}>
           MUV <span className="accent">Hub.</span><br />
-          <span className="italic" style={{ fontSize: "145px" }}>O ecossistema vivo.</span>
+          <span className="italic" style={{ fontSize: "145px" }}>Onde a produção acontece.</span>
         </h1>
         <p className="hero__sub" style={{ marginTop: 48 }}>
           Locadora de equipamentos, reserva de studio e comunidade criativa
@@ -1221,7 +1221,7 @@ function MuvHub({ setCurrent }) {
       </section>
 
       <section className="section section--ink">
-        <SectionHead num="01" eyebrow="Quatro módulos · Uma plataforma" title="Tudo num só ecossistema." sub="Cada módulo tem página própria com catálogo, especificações e formas de reservar." />
+        <SectionHead num="01" eyebrow="Quatro módulos · Uma plataforma" title="Tudo num só endereço." sub="Cada módulo tem página própria com catálogo, especificações e formas de reservar." />
         <div className="grid-2-2">
           <Module tag="LOCADORA" title="Equipamento profissional sob demanda." items={["Sony FX6, FX3", "Drones DJI", "Iluminação completa", "Reserva online", "Retirada na MUV"]} icon="A" onClick={() => setCurrent("hub-locadora")} />
           <Module tag="STUDIO" title="Espaço pra criar, gravar, produzir." items={["Ciclorama", "Iluminação inclusa", "Equipamento básico", "Reserva por turno", "Café & wifi"]} icon="B" onClick={() => setCurrent("hub-studio")} />
@@ -1762,7 +1762,7 @@ function Contato({ setCurrent }) {
 
   return (
     <div className="page" data-screen-label="Contato">
-      <PageHead crumb="06 · Contato" title="A gente lê todo briefing." lead="Conta o que você quer fazer. Em 24h a gente volta com diagnóstico, próximo passo e timeline. Sem proposta genérica." accent="briefing" meta="Resposta em 24h" />
+      <PageHead crumb="06 · Contato" title="A gente lê todo briefing." lead="Conta o que você quer fazer. A gente volta com diagnóstico, próximo passo e timeline. Sem proposta genérica." accent="briefing" meta="Briefing · Diagnóstico · Escopo" />
 
       <section className="section">
         <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 64 }}>
@@ -1877,7 +1877,7 @@ function Contato({ setCurrent }) {
                 <p className="eyebrow eyebrow-dot" style={{ color: "var(--accent)" }}>Recebido</p>
                 <h2 className="h1" style={{ marginTop: 24 }}>Obrigado, {data.name.split(" ")[0] || "parceiro"}.</h2>
                 <p className="body-l" style={{ color: "var(--ink-2)", marginTop: 24, maxWidth: 540 }}>
-                  Em até 24h a gente volta com diagnóstico, próximo passo e timeline.
+                  A gente vai ler com atenção e volta com diagnóstico, próximo passo e timeline.
                   Enquanto isso, dá uma olhada nos cases mais recentes.
                 </p>
                 <div style={{ display: "flex", gap: 12, marginTop: 32, flexWrap: "wrap" }}>
