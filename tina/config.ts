@@ -68,7 +68,7 @@ export default defineConfig({
         match: { include: "brands" },
         fields: [{ type:"object", name:"items", label:"Marcas", list:true,
           ui:{ itemProps:(i:any)=>({label:i?.name}) },
-          fields:[ S("name","Nome"), { type:"image" as const, name:"logo", label:"Logo (imagem)" } ] }],
+          fields:[ S("name","Nome"), S("logo","Logo — caminho da imagem (ex: /assets/brands/meta.png)") ] }],
       },
       {
         name: "marquee", label: "Palavras (esteira)", path: "content", format: "json",
