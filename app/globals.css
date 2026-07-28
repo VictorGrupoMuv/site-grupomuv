@@ -1605,13 +1605,13 @@ a.home-cta__contact-item:hover { color: var(--accent); }
 }
 .brand-marquee__item:hover { color: var(--ink); }
 .brand-marquee__item img {
-  height: 30px; width: auto; max-width: 150px;
+  height: 48px; width: auto; max-width: 210px;
   object-fit: contain; display: block;
   filter: grayscale(1); opacity: 0.62;
   transition: filter .3s, opacity .3s;
 }
 .brand-marquee__item:hover img { filter: grayscale(0); opacity: 1; }
-@media (max-width: 600px){ .brand-marquee__item img { height: 24px; max-width: 120px; } }
+@media (max-width: 600px){ .brand-marquee__item img { height: 36px; max-width: 150px; } }
 .brand-marquee--dark .brand-marquee__item { color: var(--dark-ink-2); }
 .brand-marquee--dark .brand-marquee__item:hover { color: var(--dark-ink); }
 .brand-marquee__sep {
