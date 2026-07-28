@@ -1,76 +1,22 @@
 {
   "items": [
-    {
-      "name": "Meta",
-      "logo": "/assets/brands/meta.png"
-    },
-    {
-      "name": "Corona",
-      "logo": "/assets/brands/corona-extra.png"
-    },
-    {
-      "name": "Ambev",
-      "logo": "/assets/brands/ambev.png"
-    },
-    {
-      "name": "Adidas",
-      "logo": "/assets/brands/adidas.png"
-    },
-    {
-      "name": "Volvo",
-      "logo": "/assets/brands/volvo.png"
-    },
-    {
-      "name": "Heinz",
-      "logo": "/assets/brands/heinz.png"
-    },
-    {
-      "name": "Burger King",
-      "logo": "/assets/brands/burger-king.png"
-    },
-    {
-      "name": "Nissan",
-      "logo": "/assets/brands/nissan.png"
-    },
-    {
-      "name": "Spotify",
-      "logo": "/assets/brands/spotify.png"
-    },
-    {
-      "name": "Too Faced",
-      "logo": "/assets/brands/too-faced.png"
-    },
-    {
-      "name": "Brastemp",
-      "logo": "/assets/brands/brastemp.png"
-    },
-    {
-      "name": "Consul",
-      "logo": "/assets/brands/consul.png"
-    },
-    {
-      "name": "Itaú",
-      "logo": "/assets/brands/itau.png"
-    },
-    {
-      "name": "Lollapalooza",
-      "logo": "/assets/brands/lollapalooza.png"
-    },
-    {
-      "name": "Primavera Sound",
-      "logo": "/assets/brands/primavera-sound.png"
-    },
-    {
-      "name": "Numanice",
-      "logo": "/assets/brands/numanice.png"
-    },
-    {
-      "name": "Stock Car",
-      "logo": "/assets/brands/stock-car.png"
-    },
-    {
-      "name": "Kings League",
-      "logo": "/assets/brands/kings-league.png"
-    }
+    "Meta",
+    "Corona",
+    "Ambev",
+    "Adidas",
+    "Volvo",
+    "Heinz",
+    "Burger King",
+    "Nissan",
+    "Spotify",
+    "Too Faced",
+    "Brastemp",
+    "Consul",
+    "Itaú",
+    "Lollapalooza",
+    "Primavera Sound",
+    "Numanice",
+    "Stock Car",
+    "Kings League"
   ]
 }

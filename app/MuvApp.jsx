@@ -12,6 +12,7 @@ import _posts from "../content/posts.json";
 const POSTS = _posts.items;
 import _brands from "../content/brands.json";
 const BRANDS = _brands.items;
+const BRAND_LOGOS = {"Meta": "/assets/brands/meta.png", "Corona": "/assets/brands/corona-extra.png", "Ambev": "/assets/brands/ambev.png", "Adidas": "/assets/brands/adidas.png", "Volvo": "/assets/brands/volvo.png", "Heinz": "/assets/brands/heinz.png", "Burger King": "/assets/brands/burger-king.png", "Nissan": "/assets/brands/nissan.png", "Spotify": "/assets/brands/spotify.png", "Too Faced": "/assets/brands/too-faced.png", "Brastemp": "/assets/brands/brastemp.png", "Consul": "/assets/brands/consul.png", "Itaú": "/assets/brands/itau.png", "Lollapalooza": "/assets/brands/lollapalooza.png", "Primavera Sound": "/assets/brands/primavera-sound.png", "Numanice": "/assets/brands/numanice.png", "Stock Car": "/assets/brands/stock-car.png", "Kings League": "/assets/brands/kings-league.png"};
 import _marquee from "../content/marquee.json";
 const MARQUEE_WORDS = _marquee.items;
 import _faq from "../content/faq.json";
@@ -274,7 +275,7 @@ function BrandStrip({ brands }) {
   return (
     <div className="brands">
       {brands.map((b, i) =>
-      <div key={i} className="brand-cell">{b?.logo ? <img src={b.logo} alt={b.name} /> : (b?.name || b)}</div>
+      <div key={i} className="brand-cell">{BRAND_LOGOS[b] ? <img src={BRAND_LOGOS[b]} alt={b} /> : b}</div>
       )}
     </div>);
 
@@ -287,7 +288,7 @@ function BrandMarquee({ brands, dark = false }) {
       <div className="brand-marquee__track">
         {[...brands, ...brands, ...brands].map((b, i) =>
         <React.Fragment key={i}>
-            <span className="brand-marquee__item">{b?.logo ? <img src={b.logo} alt={b.name} /> : (b?.name || b)}</span>
+            <span className="brand-marquee__item">{BRAND_LOGOS[b] ? <img src={BRAND_LOGOS[b]} alt={b} /> : b}</span>
             <span className="brand-marquee__sep">●</span>
           </React.Fragment>
         )}
