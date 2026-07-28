@@ -69,6 +69,18 @@ export default defineConfig({
         fields: [{ type:"string", name:"items", label:"Marcas (nomes)", list:true }],
       },
       {
+        name: "settings", label: "Configuracoes do Site", path: "content", format: "json",
+        match: { include: "settings" },
+        ui: { global: true, allowedActions: { create:false, delete:false } },
+        fields: [
+          { type:"string",  name:"accentColor",  label:"Cor de destaque (principal)", ui:{ component:"color" } },
+          { type:"string",  name:"accent2Color", label:"Cor secundaria (azul)",       ui:{ component:"color" } },
+          { type:"boolean", name:"showMarcas",   label:"Mostrar secao 'Marcas' (home)" },
+          { type:"boolean", name:"showHub",      label:"Mostrar secao 'MUV Hub' (home)" },
+          { type:"boolean", name:"showBlog",     label:"Mostrar secao 'Blog' (home)" },
+        ],
+      },
+      {
         name: "marquee", label: "Palavras (esteira)", path: "content", format: "json",
         match: { include: "marquee" }, ui:{ allowedActions:{create:false,delete:false} },
         fields: [{ type:"string", name:"items", label:"Palavras", list:true }],

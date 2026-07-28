@@ -15,6 +15,8 @@ import _brands from "../content/brands.json";
 const BRANDS = _brands.items;
 const BRAND_LOGOS = {"Meta": "/assets/brands/meta.png", "Corona": "/assets/brands/corona-extra.png", "Ambev": "/assets/brands/ambev.png", "Adidas": "/assets/brands/adidas.png", "Volvo": "/assets/brands/volvo.png", "Heinz": "/assets/brands/heinz.png", "Burger King": "/assets/brands/burger-king.png", "Nissan": "/assets/brands/nissan.png", "Spotify": "/assets/brands/spotify.png", "Too Faced": "/assets/brands/too-faced.png", "Brastemp": "/assets/brands/brastemp.png", "Consul": "/assets/brands/consul.png", "Itaú": "/assets/brands/itau.png", "Lollapalooza": "/assets/brands/lollapalooza.png", "Primavera Sound": "/assets/brands/primavera-sound.png", "Numanice": "/assets/brands/numanice.png", "Stock Car": "/assets/brands/stock-car.png", "Kings League": "/assets/brands/kings-league.png"};
 import _marquee from "../content/marquee.json";
+import _settings from "../content/settings.json";
+const SETTINGS = _settings;
 const MARQUEE_WORDS = _marquee.items;
 import _faq from "../content/faq.json";
 const FAQ_ITEMS = _faq.items;
@@ -693,13 +695,16 @@ function Home({ setCurrent, density }) {
       </section>
 
       {/* MARCAS, esteira */}
+      {SETTINGS.showMarcas !== false && (
       <section className="section section--tight">
         <SectionHead num="05" eyebrow="Confiança" title="Marcas que confiam na gente." />
         <BrandMarquee brands={BRANDS} />
         <p className="mono" style={{ marginTop: 24, color: "var(--ink-3)", textAlign: "center" }}>// + 30 marcas · 2019 → 2026</p>
       </section>
+      )}
 
       {/* MUV HUB TEASER */}
+      {SETTINGS.showHub !== false && (
       <section className="section section--ink" style={{ position: "relative", overflow: "hidden", paddingTop: 96, paddingBottom: 96 }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
           <div>
@@ -727,8 +732,10 @@ function Home({ setCurrent, density }) {
           </div>
         </div>
       </section>
+      )}
 
       {/* BLOG PREVIEW */}
+      {SETTINGS.showBlog !== false && (
       <section className="section home-blog-preview" style={{ paddingTop: 64, paddingBottom: 64 }}>
         <SectionHead num="07" eyebrow="Diário MUV" title="Conteúdo sobre conteúdo." sub="Bastidor, ensaio, frameworks. O que a gente aprende, a gente compartilha." />
         <div>
@@ -738,6 +745,7 @@ function Home({ setCurrent, density }) {
           <button className="btn btn--ghost" onClick={() => setCurrent("blog")}>Ver todos os posts <Arrow /></button>
         </div>
       </section>
+      )}
 
       {/* CTA FINAL */}
       <HomeCTA setCurrent={setCurrent} />
@@ -2104,8 +2112,8 @@ function App({ page = "home", slug = null }) {
     root.setAttribute("data-density", "regular");
     root.style.setProperty("--font-display", DISPLAY_FONT);
     root.style.setProperty("--font-body",    BODY_FONT);
-    root.style.setProperty("--accent",       "#DE4E2B");
-    root.style.setProperty("--accent-2",     "#1B57AD");
+    root.style.setProperty("--accent",       SETTINGS.accentColor  || "#DE4E2B");
+    root.style.setProperty("--accent-2",     SETTINGS.accent2Color || "#1B57AD");
   }, []);
 
   // Detect scroll past hero on Home for dynamic nav theming
