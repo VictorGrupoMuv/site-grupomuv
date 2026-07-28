@@ -12,7 +12,10 @@ export default function WhatsappCookie() {
     const onScroll = () => setShowWA(window.scrollY > 200);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => { window.removeEventListener("scroll", onScroll); if (t) clearTimeout(t); };
+    // Reabre o banner quando o usuário clica em "Preferências de cookies" no rodapé
+    const onPrefs = () => setShowCookie(true);
+    window.addEventListener("muv:cookie-prefs", onPrefs);
+    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("muv:cookie-prefs", onPrefs); if (t) clearTimeout(t); };
   }, []);
   const decide = (v) => {
     try { localStorage.setItem("muv-cookie-consent", v); localStorage.setItem("muv-cookie-consent-at", new Date().toISOString()); } catch (_) {}

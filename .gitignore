@@ -6,3 +6,13 @@ out/
 _git_locks_removidos/
 _lixo_git/
 tina/__generated__/*.cache
+
+# Segredos — NUNCA commitar (repo é público)
+.env
+.env.*
+*.pem
+*.key
+
+# Diagnósticos locais
+repo-diag*
+_to_delete/

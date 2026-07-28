@@ -41,6 +41,34 @@ export default function RootLayout({ children }) {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSONLD }} />
       </head>
       <body>
+        {/* Formulários estáticos ocultos — necessários pro Netlify Forms detectar os
+            forms no build (o app renderiza client-side, então eles precisam existir
+            no HTML pré-renderizado). Não remover. */}
+        <form name="orcamento" data-netlify="true" netlify-honeypot="bot-field" hidden>
+          <input type="text" name="bot-field" />
+          <input type="text" name="name" />
+          <input type="text" name="company" />
+          <input type="email" name="email" />
+          <input type="text" name="phone" />
+          <input type="text" name="type" />
+          <input type="text" name="budget" />
+          <textarea name="brief"></textarea>
+        </form>
+        <form name="briefing" data-netlify="true" netlify-honeypot="bot-field" hidden>
+          <input type="text" name="bot-field" />
+          <input type="text" name="name" />
+          <input type="text" name="company" />
+          <input type="email" name="email" />
+          <input type="text" name="phone" />
+          <input type="text" name="scope" />
+          <input type="text" name="budget" />
+          <input type="text" name="deadline" />
+          <textarea name="brief"></textarea>
+        </form>
+        <form name="newsletter" data-netlify="true" netlify-honeypot="bot-field" hidden>
+          <input type="text" name="bot-field" />
+          <input type="email" name="email" />
+        </form>
         {children}
         <WhatsappCookie />
       </body>

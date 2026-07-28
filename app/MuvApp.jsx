@@ -18,6 +18,16 @@ const MARQUEE_WORDS = _marquee.items;
 import _faq from "../content/faq.json";
 const FAQ_ITEMS = _faq.items;
 
+// ───── Netlify Forms ─────────────────────────────────────────────────────────
+// Envia os dados pro Netlify Forms (os forms ocultos de detecção ficam no layout.js).
+const postNetlifyForm = (formName, data) => {
+  const payload = { "form-name": formName, "bot-field": "", ...data };
+  const body = Object.keys(payload).
+  map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(payload[k] == null ? "" : payload[k])).
+  join("&");
+  return fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body });
+};
+
 // ===== components =====
 // components.jsx
 // Componentes compartilhados: Nav, Footer, primitivas, Placeholder, Marquee, BrandStrip.
@@ -201,6 +211,45 @@ function Nav({ current, setCurrent, isDark }) {
 
 }
 
+// ───── Newsletter (Netlify Forms) ────────────────────────────────────────────
+function NewsletterForm() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("idle"); // idle | sending | ok | error
+  const subscribe = async (e) => {
+    e.preventDefault();
+    if (!email || status === "sending") return;
+    setStatus("sending");
+    try {
+      const r = await postNetlifyForm("newsletter", { email });
+      if (!r.ok) throw new Error("send failed");
+      setStatus("ok");
+    } catch (_) {
+      setStatus("error");
+    }
+  };
+  if (status === "ok") {
+    return (
+      <div>
+        <p style={{ color: "var(--dark-ink)", fontSize: 18, margin: 0 }}>Pronto, você tá na lista. ✓</p>
+        <p style={{ color: "var(--dark-ink-2)", fontSize: 13, marginTop: 8 }}>1 texto por mês. Cancela quando quiser.</p>
+      </div>);
+  }
+  return (
+    <div>
+      <form className="blog-newsletter__form" onSubmit={subscribe}>
+        <input type="email" placeholder="seu@email.com" aria-label="Seu e-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <button type="submit" className="btn btn--primary" disabled={status === "sending"}>{status === "sending" ? "Enviando…" : <>Assinar <Arrow /></>}</button>
+      </form>
+      {status === "error" &&
+      <p style={{ color: "var(--accent)", fontSize: 13, marginTop: 12 }}>Não rolou agora. Tenta de novo em instantes.</p>
+      }
+      <p style={{ color: "var(--dark-ink-2)", fontSize: 12, marginTop: 12 }}>
+        Ao assinar, você concorda com a <a href="/politica-privacidade.html" style={{ color: "inherit", textDecoration: "underline" }}>Política de Privacidade</a>.
+      </p>
+    </div>);
+
+}
+
 // ───── Footer ────────────────────────────────────────────────────────────────
 function Footer({ setCurrent }) {
   const go = (id) => (e) => {e.preventDefault();setCurrent(id);window.scrollTo({ top: 0, behavior: "smooth" });};
@@ -248,6 +297,14 @@ function Footer({ setCurrent }) {
       <div className="footer__bottom">
         <div>© {new Date().getFullYear()} Grupo MUV. Conteúdo que move.</div>
         <div style={{ display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap" }}>
+          <a href="/politica-privacidade.html" style={{ color: "inherit", textDecoration: "none" }}>Privacidade</a>
+          <a href="/termos-de-uso.html" style={{ color: "inherit", textDecoration: "none" }}>Termos</a>
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event("muv:cookie-prefs"))}
+            style={{ background: "none", border: "none", padding: 0, color: "inherit", font: "inherit", cursor: "pointer" }}>
+            Cookies
+          </button>
           <span>contato@grupomuv.com.br</span>
           <span>+55 11 99108-7786</span>
           <span>São Paulo · SP</span>
@@ -724,12 +781,23 @@ function Home({ setCurrent, density }) {
 function HomeCTA({ setCurrent }) {
   const [form, setForm] = useState({ name: "", company: "", email: "", phone: "", type: "", budget: "", brief: "" });
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState(false);
   const types = ["Brand Film", "Campanha publicitária", "Cobertura de evento", "Conteúdo social", "Documentário", "Showreel / institucional", "Outro"];
   const budgets = ["R$ 5–10k", "R$ 10–25k", "R$ 25–50k", "R$ 50–100k", "R$ 100k+", "A definir"];
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.phone || !form.type) return;
-    setSent(true);
+    if (!form.name || !form.email || !form.phone || !form.type || sending) return;
+    setSending(true);
+    setError(false);
+    try {
+      const r = await postNetlifyForm("orcamento", form);
+      if (!r.ok) throw new Error("send failed");
+      setSent(true);
+    } catch (_) {
+      setError(true);
+    }
+    setSending(false);
   };
 
   return (
@@ -814,10 +882,17 @@ function HomeCTA({ setCurrent }) {
                 
                 </div>
 
-                <button type="submit" className="btn btn--ink quote-submit">
-                  MANDAR BRIEFING <Arrow />
+                <button type="submit" className="btn btn--ink quote-submit" disabled={sending}>
+                  {sending ? "ENVIANDO…" : <>MANDAR BRIEFING <Arrow /></>}
                 </button>
-                <p className="quote-card__disclaimer">Seus dados não serão compartilhados com terceiros.</p>
+                {error &&
+              <p className="quote-card__disclaimer" style={{ color: "var(--accent)" }}>
+                    Não conseguimos enviar agora. Tenta de novo ou chama no <a href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)", textDecoration: "underline" }}>WhatsApp</a>.
+                  </p>
+              }
+                <p className="quote-card__disclaimer">
+                  Ao enviar, você concorda que a gente use esses dados só pra responder seu contato, conforme a <a href="/politica-privacidade.html" style={{ color: "inherit", textDecoration: "underline" }}>Política de Privacidade</a>. Sem spam, sem repassar a terceiros.
+                </p>
               </form>
             }
           </div>
@@ -1783,10 +1858,7 @@ function Blog({ setCurrent }) {
             <h2 className="blog-newsletter__title">Recebe os textos no e-mail.</h2>
             <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 16, maxWidth: 420 }}>1 texto por mês. Sem spam. Cancela quando quiser.</p>
           </div>
-          <form className="blog-newsletter__form" onSubmit={(e) => e.preventDefault()}>
-            <input type="email" placeholder="seu@email.com" />
-            <button type="submit" className="btn btn--primary">Assinar <Arrow /></button>
-          </form>
+          <NewsletterForm />
         </div>
       </section>
     </div>);
@@ -1799,10 +1871,24 @@ function Blog({ setCurrent }) {
 function Contato({ setCurrent }) {
   const [step, setStep] = useState(1);
   const [data, setData] = useState({ name: "", company: "", email: "", phone: "", scope: [], budget: "", deadline: "", brief: "" });
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState(false);
   const SCOPES = ["Brand Film", "Campanha", "Cobertura de Evento", "Conteúdo Social", "Documentário", "Showreel"];
   const BUDGETS = ["< R$30k", "R$30k – 80k", "R$80k – 200k", "+ R$200k"];
 
-  const submit = () => setStep(4);
+  const submit = async () => {
+    if (sending) return;
+    setSending(true);
+    setError(false);
+    try {
+      const r = await postNetlifyForm("briefing", { ...data, scope: data.scope.join(", ") });
+      if (!r.ok) throw new Error("send failed");
+      setStep(4);
+    } catch (_) {
+      setError(true);
+    }
+    setSending(false);
+  };
 
   return (
     <div className="page" data-screen-label="Contato">
@@ -1909,9 +1995,17 @@ function Contato({ setCurrent }) {
                   onChange={(e) => setData({ ...data, brief: e.target.value })} />
                 
                 </div>
+                {error &&
+              <p style={{ color: "var(--accent)", fontSize: 14 }}>
+                    Não conseguimos enviar agora. Tenta de novo ou chama no <a href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)", textDecoration: "underline" }}>WhatsApp</a>.
+                  </p>
+              }
+                <p style={{ color: "var(--ink-3)", fontSize: 13, lineHeight: 1.5 }}>
+                  Ao enviar, você concorda que a gente use esses dados só pra responder seu contato, conforme a <a href="/politica-privacidade.html" style={{ color: "inherit", textDecoration: "underline" }}>Política de Privacidade</a>.
+                </p>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <button className="btn btn--ghost" onClick={() => setStep(2)}>← Voltar</button>
-                  <button className="btn btn--primary" onClick={submit} disabled={!data.brief.trim()}>Enviar briefing <Arrow /></button>
+                  <button className="btn btn--primary" onClick={submit} disabled={!data.brief.trim() || sending}>{sending ? "Enviando…" : <>Enviar briefing <Arrow /></>}</button>
                 </div>
               </div>
             }
