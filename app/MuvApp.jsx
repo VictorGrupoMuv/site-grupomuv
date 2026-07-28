@@ -274,7 +274,7 @@ function BrandStrip({ brands }) {
   return (
     <div className="brands">
       {brands.map((b, i) =>
-      <div key={i} className="brand-cell">{b}</div>
+      <div key={i} className="brand-cell">{b?.logo ? <img src={b.logo} alt={b.name} /> : (b?.name || b)}</div>
       )}
     </div>);
 
@@ -287,7 +287,7 @@ function BrandMarquee({ brands, dark = false }) {
       <div className="brand-marquee__track">
         {[...brands, ...brands, ...brands].map((b, i) =>
         <React.Fragment key={i}>
-            <span className="brand-marquee__item">{b}</span>
+            <span className="brand-marquee__item">{b?.logo ? <img src={b.logo} alt={b.name} /> : (b?.name || b)}</span>
             <span className="brand-marquee__sep">●</span>
           </React.Fragment>
         )}
