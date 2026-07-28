@@ -2,61 +2,151 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://grupomuv.com.br/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://grupomuv.com.br/#servicos</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://grupomuv.com.br/servicos/</loc>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://grupomuv.com.br/#processo</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://grupomuv.com.br/processo/</loc>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://grupomuv.com.br/#trabalhos</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://grupomuv.com.br/trabalhos/</loc>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://grupomuv.com.br/#sobre</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://grupomuv.com.br/sobre/</loc>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://grupomuv.com.br/#hub</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://grupomuv.com.br/hub/</loc>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://grupomuv.com.br/#blog</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://grupomuv.com.br/hub/locadora/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://grupomuv.com.br/hub/studio/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://grupomuv.com.br/hub/comunidade/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://grupomuv.com.br/hub/cowork/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://grupomuv.com.br/blog/</loc>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://grupomuv.com.br/#contato</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://grupomuv.com.br/faq/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://grupomuv.com.br/contato/</loc>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://grupomuv.com.br/trabalhos/convocasso-itau/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://grupomuv.com.br/trabalhos/isla-gatorade-orlando/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://grupomuv.com.br/trabalhos/adidas-runners/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://grupomuv.com.br/trabalhos/nissan-kicks-suba/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://grupomuv.com.br/trabalhos/pop-comm-bento/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://grupomuv.com.br/blog/cobertura-tempo-real-evento/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://grupomuv.com.br/blog/branded-vs-publicidade/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://grupomuv.com.br/blog/video-referencia-5-ingredientes/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://grupomuv.com.br/blog/bastidores-lollapalooza-72h/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://grupomuv.com.br/blog/equipe-pequena-premium/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
   </url>
   <url>
     <loc>https://grupomuv.com.br/politica-privacidade.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://grupomuv.com.br/termos-de-uso.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

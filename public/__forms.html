@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>Formulários — Grupo MUV</title><meta name="robots" content="noindex, nofollow"></head>
+<body>
+  <!--
+    Este arquivo existe só para o Netlify detectar os formulários no build.
+    O site é client-side, então o markup real não aparece no HTML exportado.
+    O app envia via fetch POST para /__forms.html (ver postToNetlify em app/MuvApp.jsx).
+    Leads: painel Netlify > Forms (notificação por e-mail + export CSV).
+  -->
+  <form name="orcamento" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="orcamento" />
+    <input type="text" name="bot-field" />
+    <input type="text" name="name" />
+    <input type="text" name="company" />
+    <input type="email" name="email" />
+    <input type="text" name="phone" />
+    <input type="text" name="type" />
+    <input type="text" name="scope" />
+    <input type="text" name="budget" />
+    <input type="text" name="deadline" />
+    <textarea name="brief"></textarea>
+    <input type="text" name="origem" />
+  </form>
+
+  <form name="newsletter" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="newsletter" />
+    <input type="text" name="bot-field" />
+    <input type="email" name="email" />
+  </form>
+
+  <form name="hub-waitlist" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="hub-waitlist" />
+    <input type="text" name="bot-field" />
+    <input type="email" name="email" />
+    <input type="text" name="origem" />
+  </form>
+</body>
+</html>

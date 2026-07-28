@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
 
+Disallow: /__forms.html
+
 Sitemap: https://grupomuv.com.br/sitemap.xml

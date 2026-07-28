@@ -1,13 +1,20 @@
 import "./globals.css";
 import WhatsappCookie from "./WhatsappCookie";
 
+
+const LEGACY_HASH_REDIRECT = `(function(){try{var m={servicos:"/servicos/",processo:"/processo/",trabalhos:"/trabalhos/",sobre:"/sobre/",hub:"/hub/","hub-locadora":"/hub/locadora/","hub-studio":"/hub/studio/","hub-comunidade":"/hub/comunidade/","hub-cowork":"/hub/cowork/",blog:"/blog/",faq:"/faq/",contato:"/contato/"};var h=(location.hash||"").replace("#","");if(h&&m[h]&&location.pathname==="/"){location.replace(m[h]);}}catch(e){}})();`;
+
+export const viewport = {
+  themeColor: "#0D0D0D",
+  width: "device-width",
+  initialScale: 1 };
+
 export const metadata = {
   metadataBase: new URL("https://grupomuv.com.br"),
   title: "Grupo MUV — Produtora Audiovisual em São Paulo",
   description: "Produtora audiovisual e hub criativo em São Paulo. Estratégia, produção e conteúdo. Cinematográfico, no prazo, impossível de ignorar.",
   authors: [{ name: "Grupo MUV" }],
   alternates: { canonical: "https://grupomuv.com.br/" },
-  themeColor: "#0D0D0D",
   manifest: "/manifest.json",
   icons: {
     icon: [{ url: "/favicon-32.png", sizes: "32x32", type: "image/png" }, { url: "/favicon-192.png", sizes: "192x192", type: "image/png" }],
@@ -37,38 +44,11 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Anton&family=Bebas+Neue&family=Big+Shoulders+Display:wght@500;700;800&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Anton&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSONLD }} />
+        <script dangerouslySetInnerHTML={{ __html: LEGACY_HASH_REDIRECT }} />
       </head>
       <body>
-        {/* Formulários estáticos ocultos — necessários pro Netlify Forms detectar os
-            forms no build (o app renderiza client-side, então eles precisam existir
-            no HTML pré-renderizado). Não remover. */}
-        <form name="orcamento" data-netlify="true" netlify-honeypot="bot-field" hidden>
-          <input type="text" name="bot-field" />
-          <input type="text" name="name" />
-          <input type="text" name="company" />
-          <input type="email" name="email" />
-          <input type="text" name="phone" />
-          <input type="text" name="type" />
-          <input type="text" name="budget" />
-          <textarea name="brief"></textarea>
-        </form>
-        <form name="briefing" data-netlify="true" netlify-honeypot="bot-field" hidden>
-          <input type="text" name="bot-field" />
-          <input type="text" name="name" />
-          <input type="text" name="company" />
-          <input type="email" name="email" />
-          <input type="text" name="phone" />
-          <input type="text" name="scope" />
-          <input type="text" name="budget" />
-          <input type="text" name="deadline" />
-          <textarea name="brief"></textarea>
-        </form>
-        <form name="newsletter" data-netlify="true" netlify-honeypot="bot-field" hidden>
-          <input type="text" name="bot-field" />
-          <input type="email" name="email" />
-        </form>
         {children}
         <WhatsappCookie />
       </body>

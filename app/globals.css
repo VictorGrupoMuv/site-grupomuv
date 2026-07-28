@@ -3014,3 +3014,54 @@ a.home-cta__contact-item:hover { color: var(--accent); }
     .muv-cookie__btn--ghost:hover{background:rgba(245,240,235,.08); border-color:rgba(245,240,235,.45)}
     @media (max-width:520px){ #muv-cookie{padding:16px; flex-direction:column; align-items:stretch; bottom:12px} .muv-cookie__actions{justify-content:flex-end} }
   
+/* ═══════════════════════════════════════════════════════════════════════════
+   CORREÇÕES 28/07/2026 — contraste, formulários e mídia
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Subtítulo de seção: era #333 inline e sumia em fundo escuro (contraste 1,36:1) */
+.section-head__sub { color: var(--ink-2); }
+.section--dark .section-head__sub,
+.section--ink  .section-head__sub { color: var(--dark-ink-2); }
+
+/* Eyebrow em fundo escuro — resolve os 8 remendos inline espalhados pelo JSX */
+.section--dark .eyebrow,
+.section--ink  .eyebrow { color: var(--dark-ink-2); }
+
+/* Placeholder de mídia: raio e largura definidos UMA vez, não por componente */
+.cine { border-radius: 2px; }
+
+/* Consentimento LGPD nos formulários */
+.quote-card__consent {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin: 4px 0 20px; cursor: pointer;
+  font-size: 12.5px; line-height: 1.5; color: var(--ink-2);
+}
+.quote-card__consent input { margin-top: 3px; accent-color: var(--accent); flex-shrink: 0; }
+.quote-card__consent a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+/* Estado de erro de envio — antes não existia nenhum feedback de falha */
+.quote-card__error {
+  margin-top: 14px; padding: 11px 14px;
+  border-left: 2px solid #e0503a; background: rgba(224, 80, 58, 0.07);
+  font-size: 12.5px; line-height: 1.5; color: #c4402c;
+}
+.section--ink .quote-card__error,
+.section--dark .quote-card__error { color: #ff8a72; background: rgba(224, 80, 58, 0.12); }
+
+/* Botão em envio */
+.quote-submit:disabled,
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* CTA de contato volta a existir no mobile (era display:none abaixo de 900px) */
+@media (max-width: 900px) {
+  .nav__cta { display: inline-flex; font-size: 11px; padding: 9px 14px; }
+}
+@media (max-width: 420px) {
+  .nav__cta { display: none; }
+}
+
+/* Página de Contato e blocos da Home: grids inline não tinham breakpoint */
+@media (max-width: 860px) {
+  .page section > div[style*="grid-template-columns: 1fr 2fr"],
+  .page section > div[style*="gridTemplateColumns"] { grid-template-columns: 1fr !important; }
+}

@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import _services from "../content/services.json";
 const SERVICOS = _services.items;
 import _process from "../content/process.json";
@@ -17,16 +18,6 @@ import _marquee from "../content/marquee.json";
 const MARQUEE_WORDS = _marquee.items;
 import _faq from "../content/faq.json";
 const FAQ_ITEMS = _faq.items;
-
-// ───── Netlify Forms ─────────────────────────────────────────────────────────
-// Envia os dados pro Netlify Forms (os forms ocultos de detecção ficam no layout.js).
-const postNetlifyForm = (formName, data) => {
-  const payload = { "form-name": formName, "bot-field": "", ...data };
-  const body = Object.keys(payload).
-  map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(payload[k] == null ? "" : payload[k])).
-  join("&");
-  return fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body });
-};
 
 // ===== components =====
 // components.jsx
@@ -54,7 +45,7 @@ function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = 
   return (
     <div
       className={`cine ${variantClass} ${className}`}
-      style={{ aspectRatio: aspect, ...style, borderRadius: "34px 0px 0px", fontSize: "10px", width: "100%", maxWidth: "398px" }}>
+      style={{ aspectRatio: aspect, ...style, fontSize: "10px", width: "100%" }}>
       
       <span className="cine__corner" style={{ position: "absolute", top: 16, left: 16 }}>// {code}</span>
       <span className="cine__corner" style={{ position: "absolute", top: 16, right: 16 }}>{aspect.replace("/", ":")}</span>
@@ -71,6 +62,42 @@ function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = 
 
 }
 
+// ───── Rotas reais ───────────────────────────────────────────────────────────
+// Cada página tem URL própria e HTML pré-renderizado no build.
+// Antes tudo vivia em "/" com #hash — o Google lê uma página só, e vazia.
+const ROUTES = {
+  home: "/",
+  servicos: "/servicos/",
+  processo: "/processo/",
+  trabalhos: "/trabalhos/",
+  sobre: "/sobre/",
+  hub: "/hub/",
+  "hub-locadora": "/hub/locadora/",
+  "hub-studio": "/hub/studio/",
+  "hub-comunidade": "/hub/comunidade/",
+  "hub-cowork": "/hub/cowork/",
+  blog: "/blog/",
+  faq: "/faq/",
+  contato: "/contato/" };
+
+const caseHref = (slug) => `/trabalhos/${slug}/`;
+const postHref = (slug) => `/blog/${slug}/`;
+
+// ───── Envio de formulários (Netlify Forms) ──────────────────────────────────
+// Os forms são declarados estaticamente em /public/__forms.html para que o
+// Netlify os detecte no build (o app é client-side e não expõe o markup).
+// Os leads ficam no painel Netlify > Forms, com notificação por e-mail e CSV.
+async function postToNetlify(formName, data) {
+  const body = new URLSearchParams({ "form-name": formName, ...data }).toString();
+  const res = await fetch("/__forms.html", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body });
+
+  if (!res.ok) throw new Error("Falha no envio (" + res.status + ")");
+  return true;
+}
+
 // ───── Nav ───────────────────────────────────────────────────────────────────
 const NAV_ITEMS = [
 { id: "home", label: "Home" },
@@ -84,17 +111,17 @@ const NAV_ITEMS = [
 { id: "hub-comunidade", label: "Hub · Comunidade", hideFromHeader: true, hideFromFooter: true },
 { id: "hub-cowork", label: "Hub · Cowork", hideFromHeader: true, hideFromFooter: true },
 { id: "blog", label: "Blog" },
-{ id: "faq", label: "FAQ", hideFromHeader: true }];
+{ id: "faq", label: "FAQ", hideFromHeader: true },
+{ id: "contato", label: "Contato", hideFromHeader: true }];
 
 
 // Header e Drawer escondem itens marcados hideFromHeader (ex: FAQ vai só no Footer)
 const HEADER_ITEMS = NAV_ITEMS.filter((n) => !n.hideFromHeader);
 const DRAWER_ITEMS = HEADER_ITEMS.filter((n) => n.id !== "home");
+// Só entram redes com URL real: href="#" lê como "empresa desativada".
 const DRAWER_SOCIALS = [
   { label: "Instagram", href: "https://instagram.com/grupomuv" },
-  { label: "LinkedIn", href: "#" },
-  { label: "YouTube", href: "#" },
-  { label: "TikTok", href: "#" }];
+  { label: "WhatsApp", href: "https://wa.me/message/D6LG7EUSTIR7C1" }];
 
 
 function Nav({ current, setCurrent, isDark }) {
@@ -124,7 +151,7 @@ function Nav({ current, setCurrent, isDark }) {
   return (
     <React.Fragment>
       <nav className={`nav ${isDark ? "nav--dark" : ""} ${menuOpen ? "nav--open" : ""}`}>
-        <a className="nav__logo" onClick={(e) => {e.preventDefault();setCurrent("home");}} href="#" aria-label="Grupo MUV — ir para home">
+        <a className="nav__logo" onClick={(e) => {e.preventDefault();setCurrent("home");}} href="/" aria-label="Grupo MUV — ir para home">
           <img
             src={isDark ? "/assets/logo-muv-branco.png" : "/assets/logo-horizontal-preto.png"}
             alt="Grupo MUV"
@@ -133,18 +160,19 @@ function Nav({ current, setCurrent, isDark }) {
         <ul className="nav__links">
           {HEADER_ITEMS.map((n) =>
           <li key={n.id}>
-              <button
+              <a
+              href={ROUTES[n.id]}
               className={`nav__link ${current === n.id ? "nav__link--active" : ""}`}
-              onClick={() => setCurrent(n.id)}>
-
+              aria-current={current === n.id ? "page" : undefined}
+              onClick={(e) => {e.preventDefault();setCurrent(n.id);}}>
                 {n.label}
-              </button>
+              </a>
             </li>
           )}
         </ul>
-        <button className={`btn ${isDark ? "btn--ghost-dark" : "btn--ink"} nav__cta`} onClick={() => setCurrent("contato")}>
+        <a href={ROUTES.contato} className={`btn ${isDark ? "btn--ghost-dark" : "btn--ink"} nav__cta`} onClick={(e) => {e.preventDefault();setCurrent("contato");}}>
           Falar com a gente <Arrow />
-        </button>
+        </a>
         <button
           className={`nav__burger ${menuOpen ? "nav__burger--open" : ""}`}
           aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
@@ -168,14 +196,15 @@ function Nav({ current, setCurrent, isDark }) {
           <ul className="drawer__list">
             {DRAWER_ITEMS.map((n, i) =>
             <li key={n.id} className="drawer__item" style={{ "--i": i }}>
-              <button
+              <a
                 ref={i === 0 ? firstLinkRef : null}
+                href={ROUTES[n.id]}
                 className={`drawer__link ${current === n.id ? "drawer__link--active" : ""}`}
                 tabIndex={menuOpen ? 0 : -1}
-                onClick={() => go(n.id)}>
+                onClick={(e) => {e.preventDefault();go(n.id);}}>
                 <span className="drawer__link-index">0{i + 1}</span>
                 <span className="drawer__link-label">{n.label}</span>
-              </button>
+              </a>
             </li>
             )}
           </ul>
@@ -211,58 +240,19 @@ function Nav({ current, setCurrent, isDark }) {
 
 }
 
-// ───── Newsletter (Netlify Forms) ────────────────────────────────────────────
-function NewsletterForm() {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState("idle"); // idle | sending | ok | error
-  const subscribe = async (e) => {
-    e.preventDefault();
-    if (!email || status === "sending") return;
-    setStatus("sending");
-    try {
-      const r = await postNetlifyForm("newsletter", { email });
-      if (!r.ok) throw new Error("send failed");
-      setStatus("ok");
-    } catch (_) {
-      setStatus("error");
-    }
-  };
-  if (status === "ok") {
-    return (
-      <div>
-        <p style={{ color: "var(--dark-ink)", fontSize: 18, margin: 0 }}>Pronto, você tá na lista. ✓</p>
-        <p style={{ color: "var(--dark-ink-2)", fontSize: 13, marginTop: 8 }}>1 texto por mês. Cancela quando quiser.</p>
-      </div>);
-  }
-  return (
-    <div>
-      <form className="blog-newsletter__form" onSubmit={subscribe}>
-        <input type="email" placeholder="seu@email.com" aria-label="Seu e-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <button type="submit" className="btn btn--primary" disabled={status === "sending"}>{status === "sending" ? "Enviando…" : <>Assinar <Arrow /></>}</button>
-      </form>
-      {status === "error" &&
-      <p style={{ color: "var(--accent)", fontSize: 13, marginTop: 12 }}>Não rolou agora. Tenta de novo em instantes.</p>
-      }
-      <p style={{ color: "var(--dark-ink-2)", fontSize: 12, marginTop: 12 }}>
-        Ao assinar, você concorda com a <a href="/politica-privacidade.html" style={{ color: "inherit", textDecoration: "underline" }}>Política de Privacidade</a>.
-      </p>
-    </div>);
-
-}
-
 // ───── Footer ────────────────────────────────────────────────────────────────
 function Footer({ setCurrent }) {
-  const go = (id) => (e) => {e.preventDefault();setCurrent(id);window.scrollTo({ top: 0, behavior: "smooth" });};
+  const go = (id) => (e) => {e.preventDefault();setCurrent(id);};
   return (
     <footer className="footer">
-      <div className="footer__giant" style={{ fontSize: "96px", fontWeight: "200", padding: "0px", margin: "-100px 0px 15px", width: "665px", height: "86px", letterSpacing: "-2px" }}>GRUPO MUV.</div>
+      <div className="footer__giant">GRUPO MUV.</div>
       <div className="footer__grid">
         <div>
           <p className="footer__col-title">/ ECOSSISTEMA</p>
           <p style={{ maxWidth: 340, color: "var(--dark-ink-2)", lineHeight: 1.5, marginBottom: 24 }}>
             Produtora audiovisual e hub criativo. Estratégia, produção e conteúdo. <span style={{ color: "var(--dark-ink)" }}>São Paulo, Brasil.</span>
           </p>
-          <a className="btn btn--primary" href="#" onClick={go("contato")}>
+          <a className="btn btn--primary" href={ROUTES.contato} onClick={go("contato")}>
             Começar um projeto <Arrow />
           </a>
         </div>
@@ -270,41 +260,35 @@ function Footer({ setCurrent }) {
           <p className="footer__col-title">Navegação</p>
           <ul>
             {NAV_ITEMS.slice(1).filter((n) => !n.hideFromFooter).map((n) =>
-            <li key={n.id}><a href="#" onClick={go(n.id)}>{n.label} <ArrowDiag size={10} /></a></li>
+            <li key={n.id}><a href={ROUTES[n.id]} onClick={go(n.id)}>{n.label} <ArrowDiag size={10} /></a></li>
             )}
-            <li><a href="#" onClick={go("contato")}>Contato <ArrowDiag size={10} /></a></li>
+            <li><a href={ROUTES.contato} onClick={go("contato")}>Contato <ArrowDiag size={10} /></a></li>
           </ul>
         </div>
         <div className="footer__col">
           <p className="footer__col-title">MUV Hub</p>
           <ul>
-            <li><a href="#" onClick={go("hub")}>Overview <ArrowDiag size={10} /></a></li>
-            <li><a href="#" onClick={go("hub")}>Locadora <ArrowDiag size={10} /></a></li>
-            <li><a href="#" onClick={go("hub")}>Studio <ArrowDiag size={10} /></a></li>
-            <li><a href="#" onClick={go("hub")}>Comunidade <ArrowDiag size={10} /></a></li>
+            <li><a href={ROUTES["hub"]} onClick={go("hub")}>Overview <ArrowDiag size={10} /></a></li>
+            <li><a href={ROUTES["hub-locadora"]} onClick={go("hub-locadora")}>Locadora <ArrowDiag size={10} /></a></li>
+            <li><a href={ROUTES["hub-studio"]} onClick={go("hub-studio")}>Studio <ArrowDiag size={10} /></a></li>
+            <li><a href={ROUTES["hub-comunidade"]} onClick={go("hub-comunidade")}>Comunidade <ArrowDiag size={10} /></a></li>
+            <li><a href={ROUTES["hub-cowork"]} onClick={go("hub-cowork")}>Cowork <ArrowDiag size={10} /></a></li>
           </ul>
         </div>
         <div className="footer__col">
           <p className="footer__col-title">Social</p>
           <ul>
-            <li><a href="#">Instagram <ArrowDiag size={10} /></a></li>
-            <li><a href="#">LinkedIn <ArrowDiag size={10} /></a></li>
-            <li><a href="#">YouTube <ArrowDiag size={10} /></a></li>
-            <li><a href="#">TikTok <ArrowDiag size={10} /></a></li>
+            <li><a href="https://instagram.com/grupomuv" target="_blank" rel="noopener noreferrer">Instagram <ArrowDiag size={10} /></a></li>
+            <li><a href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer">WhatsApp <ArrowDiag size={10} /></a></li>
+            <li><a href="mailto:contato@grupomuv.com.br">E-mail <ArrowDiag size={10} /></a></li>
+            <li><a href="/politica-privacidade.html">Privacidade <ArrowDiag size={10} /></a></li>
+            <li><a href="/termos-de-uso.html">Termos de uso <ArrowDiag size={10} /></a></li>
           </ul>
         </div>
       </div>
       <div className="footer__bottom">
         <div>© {new Date().getFullYear()} Grupo MUV. Conteúdo que move.</div>
         <div style={{ display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap" }}>
-          <a href="/politica-privacidade.html" style={{ color: "inherit", textDecoration: "none" }}>Privacidade</a>
-          <a href="/termos-de-uso.html" style={{ color: "inherit", textDecoration: "none" }}>Termos</a>
-          <button
-            type="button"
-            onClick={() => window.dispatchEvent(new Event("muv:cookie-prefs"))}
-            style={{ background: "none", border: "none", padding: 0, color: "inherit", font: "inherit", cursor: "pointer" }}>
-            Cookies
-          </button>
           <span>contato@grupomuv.com.br</span>
           <span>+55 11 99108-7786</span>
           <span>São Paulo · SP</span>
@@ -364,7 +348,7 @@ function SectionHead({ eyebrow, title, sub, num }) {
       </div>
       <div>
         <h2 className="h1 section-head__title" style={{ margin: 0 }}>{title}</h2>
-        {sub && <p className="body-l" style={{ color: "var(--ink-2)", maxWidth: 640, marginTop: 24 }}>{sub}</p>}
+        {sub && <p className="body-l section-head__sub" style={{ maxWidth: 640, marginTop: 24 }}>{sub}</p>}
       </div>
     </div>);
 
@@ -551,6 +535,7 @@ function StatCounter({ target, prefix = "", suffix = "", pad = 0, label, accent 
 // HOME
 // ═════════════════════════════════════════════════════════════════════════════
 function Home({ setCurrent, density }) {
+  const router = useRouter();
   const heroRef = useRef(null);
   const [intro, setIntro] = useState("boot"); // boot → open → title → done
 
@@ -562,41 +547,23 @@ function Home({ setCurrent, density }) {
     return () => {clearTimeout(t1);clearTimeout(t2);clearTimeout(t3);};
   }, []);
 
+  // Hero responde ao SCROLL apenas. (O auto-fade por tempo foi removido:
+  // apagava a headline e os CTAs 8s depois do load, mesmo sem o usuário rolar.)
   useEffect(() => {
-    let scrollProg = 0;
-    let autoFade = 0;
-    let rafId;
-
-    const apply = () => {
+    const apply = (t) => {
       if (!heroRef.current) return;
-      const t = Math.max(scrollProg, autoFade);
-      heroRef.current.style.opacity = String(Math.max(0.18, 1 - t));
+      heroRef.current.style.opacity = String(Math.max(0.35, 1 - t));
       heroRef.current.style.transform = `translateY(${-t * 32}px)`;
     };
 
     const onScroll = () => {
       const h = window.innerHeight;
-      scrollProg = Math.max(0, Math.min(1, window.scrollY / (h * 0.55)));
-      apply();
+      apply(Math.max(0, Math.min(1, window.scrollY / (h * 0.55))));
     };
-
-    // Auto-fade only AFTER intro finishes (4.5s total: 3.6s intro + 0.9s grace)
-    const start = performance.now() + 5500;
-    const tick = (now) => {
-      const elapsed = now - start;
-      if (elapsed >= 0) autoFade = Math.min(1, elapsed / 2500);else
-      autoFade = 0;
-      apply();
-      if (autoFade < 1) rafId = requestAnimationFrame(tick);
-    };
-    rafId = requestAnimationFrame(tick);
 
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (rafId) cancelAnimationFrame(rafId);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
@@ -628,7 +595,7 @@ function Home({ setCurrent, density }) {
           </div>
 
           <div className="hero-cine__mid">
-            <h1 className="hero-cine__display" data-comment-anchor="03f73c495c-h1-88-9">
+            <h1 className="hero-cine__display">
               <span className="reveal-word"><span>Conteúdo</span></span><br />
               <span className="reveal-word"><span style={{ fontFamily: "\"Archivo Black\"", fontStyle: "normal", marginRight: "0.3em" }}>que</span></span>
               <span className="reveal-word"><span className="accent">move.</span></span>
@@ -661,7 +628,7 @@ function Home({ setCurrent, density }) {
       <Marquee items={MARQUEE_WORDS} />
 
       {/* MANIFESTO */}
-      <section className="section" style={{ padding: "41px 98px 123px" }}>
+      <section className="section" style={{ paddingTop: 41, paddingBottom: 123 }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 3fr", gap: 48, alignItems: "start", fontFamily: "\"Archivo Black\"", fontWeight: "200" }}>
           <div>
             <p className="mono" style={{ color: "var(--ink-3)" }}>// 01</p>
@@ -676,7 +643,7 @@ function Home({ setCurrent, density }) {
       </section>
 
       {/* SERVIÇOS */}
-      <section className="section section--dark" data-comment-anchor="a9dc642ec8-section-138-7" style={{ padding: "112px 98px 113px" }}>
+      <section className="section section--dark" style={{ paddingTop: 112, paddingBottom: 113 }}>
         <SectionHead
           num="02"
           eyebrow="Serviços · 4 pilares"
@@ -688,13 +655,13 @@ function Home({ setCurrent, density }) {
           <ServiceCardDark key={s.num} {...s} />
           )}
         </div>
-        <div style={{ marginTop: 48, display: "flex", justifyContent: "flex-end" }} data-comment-anchor="1cd804d6a0-div-150-9">
+        <div style={{ marginTop: 48, display: "flex", justifyContent: "flex-end" }}>
           <button className="btn btn--ghost-dark" onClick={() => setCurrent("servicos")}>Detalhar serviços <Arrow /></button>
         </div>
       </section>
 
       {/* PROCESSO (preview clicável) */}
-      <section className="section" style={{ padding: "96px 98px 32px" }}>
+      <section className="section" style={{ paddingTop: 96, paddingBottom: 32 }}>
         <SectionHead
           num="03"
           eyebrow="Processo"
@@ -710,7 +677,7 @@ function Home({ setCurrent, density }) {
       </section>
 
       {/* TRABALHOS PREVIEW */}
-      <section className="section" style={{ padding: "32px 98px 64px" }}>
+      <section className="section" style={{ paddingTop: 32, paddingBottom: 96 }}>
         <SectionHead
           num="04"
           eyebrow="Trabalhos selecionados"
@@ -718,7 +685,7 @@ function Home({ setCurrent, density }) {
           sub="Recortes de 2024–25. Marcas, eventos e narrativas que a gente ajudou a contar." />
         
         <div className="grid-3">
-          {TRABALHOS.slice(0, 3).map((t, i) => <CaseCard key={i} {...t} idx={i} />)}
+          {TRABALHOS.slice(0, 3).map((t, i) => <CaseCard key={i} {...t} idx={i} onClick={() => router.push(caseHref(t.slug))} />)}
         </div>
         <div style={{ marginTop: 48, display: "flex", justifyContent: "flex-end" }}>
           <button className="btn btn--ghost" onClick={() => setCurrent("trabalhos")}>Ver todos os trabalhos <Arrow /></button>
@@ -726,14 +693,14 @@ function Home({ setCurrent, density }) {
       </section>
 
       {/* MARCAS, esteira */}
-      <section className="section section--tight" data-comment-anchor="5fa0ad7c32-section-186-7">
+      <section className="section section--tight">
         <SectionHead num="05" eyebrow="Confiança" title="Marcas que confiam na gente." />
         <BrandMarquee brands={BRANDS} />
         <p className="mono" style={{ marginTop: 24, color: "var(--ink-3)", textAlign: "center" }}>// + 30 marcas · 2019 → 2026</p>
       </section>
 
       {/* MUV HUB TEASER */}
-      <section className="section section--ink" style={{ position: "relative", overflow: "hidden", padding: "96px 98px 96px 35px" }}>
+      <section className="section section--ink" style={{ position: "relative", overflow: "hidden", paddingTop: 96, paddingBottom: 96 }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
           <div>
             <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>06 · Em breve · 2026</p>
@@ -762,10 +729,10 @@ function Home({ setCurrent, density }) {
       </section>
 
       {/* BLOG PREVIEW */}
-      <section className="section home-blog-preview" style={{ padding: "64px 98px 64px" }}>
+      <section className="section home-blog-preview" style={{ paddingTop: 64, paddingBottom: 64 }}>
         <SectionHead num="07" eyebrow="Diário MUV" title="Conteúdo sobre conteúdo." sub="Bastidor, ensaio, frameworks. O que a gente aprende, a gente compartilha." />
         <div>
-          {POSTS.slice(0, 3).map((p, i) => <PostRow key={i} {...p} />)}
+          {POSTS.slice(0, 3).map((p, i) => <PostRow key={i} {...p} onClick={() => router.push(postHref(p.slug))} />)}
         </div>
         <div style={{ marginTop: 16, display: "flex", justifyContent: "flex-end" }}>
           <button className="btn btn--ghost" onClick={() => setCurrent("blog")}>Ver todos os posts <Arrow /></button>
@@ -782,26 +749,27 @@ function HomeCTA({ setCurrent }) {
   const [form, setForm] = useState({ name: "", company: "", email: "", phone: "", type: "", budget: "", brief: "" });
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
+  const [consent, setConsent] = useState(false);
   const types = ["Brand Film", "Campanha publicitária", "Cobertura de evento", "Conteúdo social", "Documentário", "Showreel / institucional", "Outro"];
   const budgets = ["R$ 5–10k", "R$ 10–25k", "R$ 25–50k", "R$ 50–100k", "R$ 100k+", "A definir"];
   const submit = async (e) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.phone || !form.type || sending) return;
-    setSending(true);
-    setError(false);
+    if (!form.name || !form.email || !form.phone || !form.type) return;
+    if (!consent) {setError("Confirme o aceite da política de privacidade para enviar.");return;}
+    setSending(true);setError("");
     try {
-      const r = await postNetlifyForm("orcamento", form);
-      if (!r.ok) throw new Error("send failed");
+      await postToNetlify("orcamento", { ...form, origem: "Home · CTA final" });
       setSent(true);
-    } catch (_) {
-      setError(true);
+    } catch (err) {
+      setError("Não conseguimos enviar agora. Tenta de novo ou chama no WhatsApp: wa.me/message/D6LG7EUSTIR7C1");
+    } finally {
+      setSending(false);
     }
-    setSending(false);
   };
 
   return (
-    <section className="section section--ink home-cta" style={{ fontSize: "46px", padding: "96px 98px 128px" }}>
+    <section className="section section--ink home-cta" style={{ paddingTop: 96, paddingBottom: 128 }}>
       <div className="home-cta__grid">
         {/* LEFT: form card */}
         <div className="home-cta__form">
@@ -882,17 +850,16 @@ function HomeCTA({ setCurrent }) {
                 
                 </div>
 
+                <label className="quote-card__consent">
+                  <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
+                  <span>Autorizo o Grupo MUV a usar meus dados para responder este briefing, conforme a <a href="/politica-privacidade.html" target="_blank" rel="noopener noreferrer">política de privacidade</a>.</span>
+                </label>
+
                 <button type="submit" className="btn btn--ink quote-submit" disabled={sending}>
-                  {sending ? "ENVIANDO…" : <>MANDAR BRIEFING <Arrow /></>}
+                  {sending ? "ENVIANDO…" : "MANDAR BRIEFING"} {!sending && <Arrow />}
                 </button>
-                {error &&
-              <p className="quote-card__disclaimer" style={{ color: "var(--accent)" }}>
-                    Não conseguimos enviar agora. Tenta de novo ou chama no <a href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)", textDecoration: "underline" }}>WhatsApp</a>.
-                  </p>
-              }
-                <p className="quote-card__disclaimer">
-                  Ao enviar, você concorda que a gente use esses dados só pra responder seu contato, conforme a <a href="/politica-privacidade.html" style={{ color: "inherit", textDecoration: "underline" }}>Política de Privacidade</a>. Sem spam, sem repassar a terceiros.
-                </p>
+                {error && <p className="quote-card__error" role="alert">{error}</p>}
+                <p className="quote-card__disclaimer">Seus dados não serão compartilhados com terceiros.</p>
               </form>
             }
           </div>
@@ -967,18 +934,20 @@ function StepRow({ num, title, desc, deliverables, onClick, linkable }) {
 
 }
 
-function CaseCard({ title, client, tag, year, idx, variant }) {
+function CaseCard({ title, client, tag, year, idx, variant, onClick }) {
   const variants = ["default", "dark", "accent", "default", "dark", "accent"];
   const v = variant || variants[idx % variants.length];
   return (
-    <div className="case">
+    <div className="case" role={onClick ? "link" : undefined} tabIndex={onClick ? 0 : undefined}
+      onClick={onClick}
+      onKeyDown={onClick ? (e) => {if (e.key === "Enter" || e.key === " ") {e.preventDefault();onClick();}} : undefined}>
       <div className="case__media" style={{ fontSize: "10px", width: "100%" }}>
         <Cine label={title.toUpperCase()} code={`CASE.${String(idx + 1).padStart(2, "0")}`} aspect="4/3" variant={v} center={v === "accent" ? "▶ PREVIEW" : null} />
       </div>
       <div className="case__meta">
         <div>
           <p className="case__tag">{client}</p>
-          <h3 className="case__title" style={{ fontFamily: "\"Archivo Black\"" }}>{title}</h3>
+          <h3 className="case__title">{title}</h3>
         </div>
         <div style={{ textAlign: "right" }}>
           <p className="case__tag">{tag}</p>
@@ -989,14 +958,16 @@ function CaseCard({ title, client, tag, year, idx, variant }) {
 
 }
 
-function PostRow({ date, title, excerpt, read }) {
+function PostRow({ date, title, excerpt, read, onClick }) {
   return (
-    <article className="post">
+    <article className="post" role={onClick ? "link" : undefined} tabIndex={onClick ? 0 : undefined}
+      onClick={onClick}
+      onKeyDown={onClick ? (e) => {if (e.key === "Enter" || e.key === " ") {e.preventDefault();onClick();}} : undefined}>
       <div className="post__head">
         <h3 className="post__title">{title}</h3>
         <span className="post__date">{date} · {read}</span>
       </div>
-      <p className="post__excerpt" style={{ fontFamily: "Inter", fontWeight: "200" }}>{excerpt}</p>
+      <p className="post__excerpt">{excerpt}</p>
       <span className="link-arrow" style={{ color: "var(--ink-2)" }}>Ler texto <Arrow /></span>
     </article>);
 
@@ -1092,18 +1063,23 @@ function Metric({ num, label, desc }) {
 // ═════════════════════════════════════════════════════════════════════════════
 // TRABALHOS
 // ═════════════════════════════════════════════════════════════════════════════
-function Trabalhos({ setCurrent }) {
+function Trabalhos({ setCurrent, slug = null }) {
+  const router = useRouter();
   const [filter, setFilter] = useState("Todos");
-  const [selected, setSelected] = useState(null);
   const filters = ["Todos", "Brand film", "Documentário", "Social", "Cobertura"];
+  // O case aberto vem da URL (/trabalhos/<slug>/), não de estado local:
+  // link compartilhável, botão voltar do navegador correto e página indexável.
+  const selected = slug ? TRABALHOS.findIndex((t) => t.slug === slug) : null;
+  const openList = () => router.push("/trabalhos/");
+  const openCase = (t) => router.push(caseHref(t.slug));
 
-  if (selected !== null) {
+  if (selected !== null && selected >= 0) {
     const t = TRABALHOS[selected];
     return (
       <div className="page" data-screen-label="CaseDetail">
         <article className="case-detail">
           <div className="case-detail__nav">
-            <button className="link-arrow link-arrow--back" onClick={() => { setSelected(null); window.scrollTo({ top: 0, behavior: "instant" }); }}>
+            <button className="link-arrow link-arrow--back" onClick={openList}>
               <span style={{ transform: "rotate(180deg)", display: "inline-block" }}><Arrow /></span> Todos os cases
             </button>
           </div>
@@ -1149,7 +1125,7 @@ function Trabalhos({ setCurrent }) {
             <h3 className="h2" style={{ marginTop: 16 }}>Briefing parecido no seu radar?</h3>
             <div style={{ marginTop: 24, display: "flex", gap: 12, flexWrap: "wrap" }}>
               <button className="btn btn--ink" onClick={() => setCurrent("contato")}>Começar um projeto <Arrow /></button>
-              <button className="btn btn--ghost" onClick={() => { setSelected(null); window.scrollTo({ top: 0, behavior: "instant" }); }}>Ver outros cases</button>
+              <button className="btn btn--ghost" onClick={openList}>Ver outros cases</button>
             </div>
           </footer>
         </article>
@@ -1190,8 +1166,8 @@ function Trabalhos({ setCurrent }) {
                 className={`work-card work-card--regular work-card--link`}
                 role="button"
                 tabIndex={0}
-                onClick={() => { setSelected(realIdx); window.scrollTo({ top: 0, behavior: "instant" }); }}
-                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setSelected(realIdx); window.scrollTo({ top: 0, behavior: "instant" }); }}}>
+                onClick={() => openCase(t)}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openCase(t); }}}>
                 <Cine
                   label={t.title.toUpperCase().replace(/\n/g, " ")}
                   code={`CASE.${String(realIdx + 1).padStart(2, "0")}`}
@@ -1254,7 +1230,7 @@ function Sobre({ setCurrent }) {
       {/* GALLERY */}
       <section className="section section--tight about-gallery">
         <div className="about-gallery__grid">
-          <div className="about-gallery__main" data-comment-anchor="e7d656e993-div-759-11">
+          <div className="about-gallery__main">
             <Cine label="EQUIPE EM AÇÃO · BACKSTAGE" code="ABOUT.01" aspect="4/3" />
           </div>
           <div className="about-gallery__col">
@@ -1749,16 +1725,19 @@ function Module({ tag, title, items, icon, onClick }) {
 // ═════════════════════════════════════════════════════════════════════════════
 // BLOG
 // ═════════════════════════════════════════════════════════════════════════════
-function Blog({ setCurrent }) {
-  const [selected, setSelected] = useState(null);
+function Blog({ setCurrent, slug = null }) {
+  const router = useRouter();
+  const selected = slug ? POSTS.findIndex((p) => p.slug === slug) : null;
+  const openList = () => router.push("/blog/");
+  const openPost = (p) => router.push(postHref(p.slug));
 
-  if (selected !== null) {
+  if (selected !== null && selected >= 0) {
     const post = POSTS[selected];
     return (
       <div className="page" data-screen-label="BlogPost">
         <article className="post-detail">
           <div className="post-detail__nav">
-            <button className="link-arrow link-arrow--back" onClick={() => { setSelected(null); window.scrollTo({ top: 0, behavior: "instant" }); }}>
+            <button className="link-arrow link-arrow--back" onClick={openList}>
               <span style={{ transform: "rotate(180deg)", display: "inline-block" }}><Arrow /></span> Todos os textos
             </button>
           </div>
@@ -1785,7 +1764,7 @@ function Blog({ setCurrent }) {
             <h3 className="h2" style={{ marginTop: 16 }}>Próximo projeto que pede esse tipo de operação?</h3>
             <div style={{ marginTop: 24, display: "flex", gap: 12, flexWrap: "wrap" }}>
               <button className="btn btn--ink" onClick={() => setCurrent("contato")}>Falar com a gente <Arrow /></button>
-              <button className="btn btn--ghost" onClick={() => { setSelected(null); window.scrollTo({ top: 0, behavior: "instant" }); }}>Ver outros textos</button>
+              <button className="btn btn--ghost" onClick={openList}>Ver outros textos</button>
             </div>
           </footer>
         </article>
@@ -1815,7 +1794,7 @@ function Blog({ setCurrent }) {
             </div>
             <h2 className="blog-feature__title">{feat.title}</h2>
             <p className="body-l blog-feature__excerpt">{feat.excerpt}</p>
-            <button className="btn btn--ink" onClick={() => { setSelected(0); window.scrollTo({ top: 0, behavior: "instant" }); }}>Ler texto completo <Arrow /></button>
+            <button className="btn btn--ink" onClick={() => openPost(POSTS[0])}>Ler texto completo <Arrow /></button>
           </div>
         </div>
       </section>
@@ -1833,8 +1812,8 @@ function Blog({ setCurrent }) {
             className="blog-row blog-row--link"
             role="button"
             tabIndex={0}
-            onClick={() => { setSelected(i + 1); window.scrollTo({ top: 0, behavior: "instant" }); }}
-            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setSelected(i + 1); window.scrollTo({ top: 0, behavior: "instant" }); }}}>
+            onClick={() => openPost(p)}
+            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openPost(p); }}}>
               <div className="blog-row__num">{String(i + 2).padStart(2, "0")}</div>
               <div className="blog-row__cat"><span className="pill">{p.category}</span></div>
               <h3 className="blog-row__title">{p.title}</h3>
@@ -1858,7 +1837,15 @@ function Blog({ setCurrent }) {
             <h2 className="blog-newsletter__title">Recebe os textos no e-mail.</h2>
             <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 16, maxWidth: 420 }}>1 texto por mês. Sem spam. Cancela quando quiser.</p>
           </div>
-          <NewsletterForm />
+          <form className="blog-newsletter__form" onSubmit={async (e) => {
+            e.preventDefault();
+            const email = new FormData(e.currentTarget).get("email");
+            if (!email) return;
+            try {await postToNetlify("newsletter", { email });e.currentTarget.reset();alert("Pronto. Você está na lista.");} catch (_) {alert("Não conseguimos inscrever agora. Tenta de novo em instantes.");}
+          }}>
+            <input type="email" name="email" placeholder="seu@email.com" required />
+            <button type="submit" className="btn btn--primary">Assinar <Arrow /></button>
+          </form>
         </div>
       </section>
     </div>);
@@ -1871,23 +1858,23 @@ function Blog({ setCurrent }) {
 function Contato({ setCurrent }) {
   const [step, setStep] = useState(1);
   const [data, setData] = useState({ name: "", company: "", email: "", phone: "", scope: [], budget: "", deadline: "", brief: "" });
-  const [sending, setSending] = useState(false);
-  const [error, setError] = useState(false);
   const SCOPES = ["Brand Film", "Campanha", "Cobertura de Evento", "Conteúdo Social", "Documentário", "Showreel"];
   const BUDGETS = ["< R$30k", "R$30k – 80k", "R$80k – 200k", "+ R$200k"];
 
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
+  const [consent, setConsent] = useState(false);
   const submit = async () => {
-    if (sending) return;
-    setSending(true);
-    setError(false);
+    if (!consent) {setError("Confirme o aceite da política de privacidade para enviar.");return;}
+    setSending(true);setError("");
     try {
-      const r = await postNetlifyForm("briefing", { ...data, scope: data.scope.join(", ") });
-      if (!r.ok) throw new Error("send failed");
+      await postToNetlify("orcamento", { ...data, scope: data.scope.join(", "), origem: "Página Contato · briefing guiado" });
       setStep(4);
-    } catch (_) {
-      setError(true);
+    } catch (err) {
+      setError("Não conseguimos enviar agora. Tenta de novo ou chama no WhatsApp: wa.me/message/D6LG7EUSTIR7C1");
+    } finally {
+      setSending(false);
     }
-    setSending(false);
   };
 
   return (
@@ -1902,24 +1889,23 @@ function Contato({ setCurrent }) {
             <ul style={{ listStyle: "none", padding: 0, marginTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
               <li><a className="link-arrow" href="mailto:contato@grupomuv.com.br">contato@grupomuv.com.br <Arrow /></a></li>
               <li><a className="link-arrow" href="tel:+5511991087786">+55 11 99108-7786 <Arrow /></a></li>
-              <li><a className="link-arrow" href="#">WhatsApp <ArrowDiag /></a></li>
+              <li><a className="link-arrow" href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer">WhatsApp <ArrowDiag /></a></li>
             </ul>
 
             <p className="eyebrow eyebrow-dot" style={{ marginTop: 48 }}>Estúdio</p>
             <p style={{ marginTop: 16, color: "var(--ink-2)", lineHeight: 1.6 }}>
-              Rua Exemplo, 000<br />
-              Vila Madalena · São Paulo<br />
-              SP · 05000-000
+              Alameda Santos, 211 · Sala 1507<br />
+              Edif. Paulista Boulevard · São Paulo<br />
+              SP · 01419-000
             </p>
 
             <p className="eyebrow eyebrow-dot" style={{ marginTop: 48 }}>Horário</p>
-            <p style={{ marginTop: 16, color: "var(--ink-2)" }}>Seg–Sex · 10h–19h<br />Set & set: agenda 24/7</p>
+            <p style={{ marginTop: 16, color: "var(--ink-2)" }}>Seg–Sex · 10h–19h<br />Em dia de set: agenda 24/7</p>
 
             <p className="eyebrow eyebrow-dot" style={{ marginTop: 48 }}>Social</p>
             <ul style={{ listStyle: "none", padding: 0, marginTop: 16, display: "flex", flexDirection: "column", gap: 8 }}>
-              <li><a className="link-arrow" href="#">Instagram <ArrowDiag size={10} /></a></li>
-              <li><a className="link-arrow" href="#">LinkedIn <ArrowDiag size={10} /></a></li>
-              <li><a className="link-arrow" href="#">YouTube <ArrowDiag size={10} /></a></li>
+              <li><a className="link-arrow" href="https://instagram.com/grupomuv" target="_blank" rel="noopener noreferrer">Instagram <ArrowDiag size={10} /></a></li>
+              <li><a className="link-arrow" href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer">WhatsApp <ArrowDiag size={10} /></a></li>
             </ul>
           </aside>
 
@@ -1995,17 +1981,14 @@ function Contato({ setCurrent }) {
                   onChange={(e) => setData({ ...data, brief: e.target.value })} />
                 
                 </div>
-                {error &&
-              <p style={{ color: "var(--accent)", fontSize: 14 }}>
-                    Não conseguimos enviar agora. Tenta de novo ou chama no <a href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)", textDecoration: "underline" }}>WhatsApp</a>.
-                  </p>
-              }
-                <p style={{ color: "var(--ink-3)", fontSize: 13, lineHeight: 1.5 }}>
-                  Ao enviar, você concorda que a gente use esses dados só pra responder seu contato, conforme a <a href="/politica-privacidade.html" style={{ color: "inherit", textDecoration: "underline" }}>Política de Privacidade</a>.
-                </p>
+                <label className="quote-card__consent">
+                  <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
+                  <span>Autorizo o Grupo MUV a usar meus dados para responder este briefing, conforme a <a href="/politica-privacidade.html" target="_blank" rel="noopener noreferrer">política de privacidade</a>.</span>
+                </label>
+                {error && <p className="quote-card__error" role="alert">{error}</p>}
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <button className="btn btn--ghost" onClick={() => setStep(2)}>← Voltar</button>
-                  <button className="btn btn--primary" onClick={submit} disabled={!data.brief.trim() || sending}>{sending ? "Enviando…" : <>Enviar briefing <Arrow /></>}</button>
+                  <button className="btn btn--primary" onClick={submit} disabled={!data.brief.trim() || sending}>{sending ? "Enviando…" : "Enviar briefing"} {!sending && <Arrow />}</button>
                 </div>
               </div>
             }
@@ -2093,7 +2076,8 @@ function Faq({ setCurrent }) {
 }
 
 // ───── Export ────────────────────────────────────────────────────────────────
-Object.assign(window, { Home, Servicos, Processo, Trabalhos, Sobre, MuvHub, HubLocadora, HubStudio, HubComunidade, HubCowork, Blog, Contato, Faq });
+// (o Object.assign(window, ...) legado do unify.py foi removido: quebrava o
+//  pré-render no servidor, que é justamente o que faz o Google enxergar o site)
 
 // ===== app =====
 // app.jsx — Grupo MUV site (production)
@@ -2104,17 +2088,14 @@ const BODY_FONT    = `"Inter", "Helvetica Neue", system-ui, sans-serif`;
 
 const DARK_NAV_PAGES = new Set(["hub"]);
 
-function App() {
-  const [current, _setCurrent] = useState(() => {
-    const hash = (window.location.hash || "").replace("#", "");
-    return hash && NAV_ITEMS.find((n) => n.id === hash) ? hash : "home";
-  });
+function App({ page = "home", slug = null }) {
+  const current = page;
+  const router = useRouter();
   const [scrolledPastHero, setScrolledPastHero] = useState(false);
 
+  // Navegação = mudança de URL de verdade (histórico, compartilhável, indexável)
   const setCurrent = (id) => {
-    _setCurrent(id);
-    window.location.hash = id;
-    window.scrollTo({ top: 0, behavior: "instant" });
+    router.push(ROUTES[id] || "/");
   };
 
   // Bake design tokens into :root once
@@ -2138,16 +2119,6 @@ function App() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [current]);
 
-  // Hash listener for back/forward navigation
-  useEffect(() => {
-    const onHash = () => {
-      const h = (window.location.hash || "").replace("#", "");
-      if (h && h !== current) _setCurrent(h);
-    };
-    window.addEventListener("hashchange", onHash);
-    return () => window.removeEventListener("hashchange", onHash);
-  }, [current]);
-
   const isDark = DARK_NAV_PAGES.has(current) || (current === "home" && !scrolledPastHero);
 
   let Page = Home;
@@ -2167,7 +2138,7 @@ function App() {
   return (
     <React.Fragment>
       <Nav current={current} setCurrent={setCurrent} isDark={isDark} />
-      <Page setCurrent={setCurrent} density="regular" />
+      <Page setCurrent={setCurrent} density="regular" slug={slug} />
       <Footer setCurrent={setCurrent} />
     </React.Fragment>
   );
