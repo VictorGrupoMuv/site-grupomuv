@@ -2159,6 +2159,8 @@ a.home-cta__contact-item:hover { color: var(--accent); }
   gap: clamp(32px, 4vw, 64px);
 }
 @media (max-width: 768px) { .works-grid { grid-template-columns: 1fr; gap: 40px; } }
+/* telas largas: 3 colunas — em 1920px cada card ainda fica com ~520px, tamanho de sobra */
+@media (min-width: 1600px) { .works-grid { grid-template-columns: repeat(3, 1fr); } }
 .work-card {
   display: flex;
   flex-direction: column;
