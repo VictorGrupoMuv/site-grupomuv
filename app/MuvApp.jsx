@@ -638,7 +638,7 @@ function Home({ setCurrent, density }) {
       <Marquee items={MARQUEE_WORDS} />
 
       {/* MANIFESTO */}
-      <section className="section" style={{ paddingTop: 41, paddingBottom: 123 }}>
+      <section className="section" style={{ paddingTop: 41, paddingBottom: 84 }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 3fr", gap: 48, alignItems: "start", fontFamily: "\"Archivo Black\"", fontWeight: "200" }}>
           <div>
             <p className="mono" style={{ color: "var(--ink-3)" }}>// 01</p>
@@ -653,7 +653,7 @@ function Home({ setCurrent, density }) {
       </section>
 
       {/* SERVIÇOS */}
-      <section className="section section--dark" style={{ paddingTop: 112, paddingBottom: 113 }}>
+      <section className="section section--dark" style={{ paddingTop: 76, paddingBottom: 76 }}>
         <SectionHead
           num="02"
           eyebrow="Serviços · 4 pilares"
@@ -671,7 +671,7 @@ function Home({ setCurrent, density }) {
       </section>
 
       {/* PROCESSO (preview clicável) */}
-      <section className="section" style={{ paddingTop: 96, paddingBottom: 32 }}>
+      <section className="section" style={{ paddingTop: 64, paddingBottom: 32 }}>
         <SectionHead
           num="03"
           eyebrow="Processo"
@@ -687,7 +687,7 @@ function Home({ setCurrent, density }) {
       </section>
 
       {/* TRABALHOS PREVIEW */}
-      <section className="section" style={{ paddingTop: 32, paddingBottom: 96 }}>
+      <section className="section" style={{ paddingTop: 32, paddingBottom: 64 }}>
         <SectionHead
           num="04"
           eyebrow="Trabalhos selecionados"
@@ -713,7 +713,7 @@ function Home({ setCurrent, density }) {
 
       {/* MUV HUB TEASER */}
       {SETTINGS.showHub !== false && (
-      <section className="section section--ink" style={{ position: "relative", overflow: "hidden", paddingTop: 96, paddingBottom: 96 }}>
+      <section className="section section--ink" style={{ position: "relative", overflow: "hidden", paddingTop: 64, paddingBottom: 64 }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
           <div>
             <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>06 · Em breve · 2026</p>
@@ -744,7 +744,7 @@ function Home({ setCurrent, density }) {
 
       {/* BLOG PREVIEW */}
       {SETTINGS.showBlog !== false && (
-      <section className="section home-blog-preview" style={{ paddingTop: 64, paddingBottom: 64 }}>
+      <section className="section home-blog-preview" style={{ paddingTop: 48, paddingBottom: 48 }}>
         <SectionHead num="07" eyebrow="Diário MUV" title="Conteúdo sobre conteúdo." sub="Bastidor, ensaio, frameworks. O que a gente aprende, a gente compartilha." />
         <div>
           {POSTS.slice(0, 3).map((p, i) => <PostRow key={i} {...p} onClick={() => router.push(postHref(p.slug))} />)}
@@ -785,7 +785,7 @@ function HomeCTA({ setCurrent }) {
   };
 
   return (
-    <section className="section section--ink home-cta" style={{ paddingTop: 96, paddingBottom: 128 }}>
+    <section className="section section--ink home-cta" style={{ paddingTop: 64, paddingBottom: 84 }}>
       <div className="home-cta__grid">
         {/* LEFT: form card */}
         <div className="home-cta__form">
