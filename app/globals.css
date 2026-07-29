@@ -3065,3 +3065,48 @@ a.home-cta__contact-item:hover { color: var(--accent); }
   .page section > div[style*="grid-template-columns: 1fr 2fr"],
   .page section > div[style*="gridTemplateColumns"] { grid-template-columns: 1fr !important; }
 }
+
+/* ─── Cine com mídia real ───────────────────────────────────────────────────
+   Quando o slot recebe foto ou vídeo, a imagem cobre o quadro e o HUD
+   (código, proporção, label, REC) permanece por cima com um scrim de leitura. */
+.cine--media {
+  background: #0d0d12;
+  border-color: var(--dark-line);
+  color: rgba(255, 255, 255, 0.92);
+}
+.cine__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 0;
+}
+.cine__video { background: #0d0d12; }
+.cine__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(13,13,18,0.55) 0%, rgba(13,13,18,0) 28%),
+    linear-gradient(0deg, rgba(13,13,18,0.65) 0%, rgba(13,13,18,0) 40%);
+}
+.cine--media .cine__corner,
+.cine--media .cine__label {
+  position: relative;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+.cine--media .cine__corner[style] { z-index: 2; }
+.cine--media .cine__play { z-index: 2; }
+/* o vídeo precisa receber clique: o scrim já é pointer-events:none */
+.cine__video { z-index: 1; position: absolute; }
+.cine--media:hover .cine__img:not(.cine__video) { transform: scale(1.015); }
+.cine__img:not(.cine__video) { transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1); }
+/* com player de vídeo, o rodapé do HUD sai pra não brigar com os controles nativos */
+.cine--video-slot .cine__scrim {
+  background: linear-gradient(180deg, rgba(13,13,18,0.5) 0%, rgba(13,13,18,0) 22%);
+}

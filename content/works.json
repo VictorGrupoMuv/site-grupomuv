@@ -28,7 +28,107 @@
           "h": "Resultado",
           "p": "Entrega rodou no prazo contratado. O case film entrou em circulação comercial nos dois formatos (9x16 e 16x9), em mídia nacional, dentro da janela de dois meses prevista no contrato. Primeira entrega pra África Creative numa ação de marca dessa relevância, projeto que valida a MUV como produtora que opera com agilidade publicitária sem perder camada cinematográfica."
         }
+      ],
+      "still": "/assets/cases/case-01-still.jpg",
+      "video": "/assets/cases/case-01.mp4",
+      "poster": "/assets/cases/case-01-poster.jpg"
+    },
+    {
+      "slug": "dolce-gabbana",
+      "title": "Dolce &\nGabbana",
+      "client": "Dolce & Gabbana",
+      "tag": "FASHION FILM",
+      "year": "2026",
+      "category": "Brand film",
+      "format": "Fashion film",
+      "team": "[CONFIRMAR] equipe do projeto",
+      "gear": "[CONFIRMAR] setup usado na captação",
+      "summary": "Fashion film de luz controlada: personagem, atitude e textura de tecido em primeiro plano.",
+      "still": "/assets/cases/case-02-still.jpg",
+      "video": "/assets/cases/case-02.mp4",
+      "poster": "/assets/cases/case-02-poster.jpg",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "[RASCUNHO — CONFIRMAR] Moda de luxo tem uma exigência que nenhum outro segmento tem: a peça precisa aparecer com fidelidade absoluta de cor e textura, e ao mesmo tempo o filme não pode parecer catálogo. O material tem que ter personagem, atitude, ponto de vista. Foi esse o ponto de partida."
+        },
+        {
+          "h": "Desafio",
+          "p": "[RASCUNHO — CONFIRMAR] Construir um filme em que a roupa é protagonista sem que a câmera trate a roupa como produto. Isso muda tudo na decisão de luz: nada de luz chapada de e-commerce, e nada de estilização que distorça a cor do tecido."
+        },
+        {
+          "h": "Abordagem MUV",
+          "p": "[RASCUNHO — CONFIRMAR] Fundo escuro e luz direcional, com o recorte da personagem saindo do preto. O verniz do casaco vermelho pede fonte de luz controlada — grande o suficiente pra não estourar em ponto especular, dura o suficiente pra manter o brilho que dá leitura ao material. Enquadramento fechado, movimento mínimo: a atitude carrega o plano, não o corte."
+        },
+        {
+          "h": "Resultado",
+          "p": "[RASCUNHO — CONFIRMAR] Preencher com entregas, formatos e o que rodou. Se houver número de alcance ou volume de peças, entra aqui."
+        }
       ]
+    },
+    {
+      "slug": "guarana-monobloco",
+      "title": "Guaraná\nno Carnaval",
+      "client": "Guaraná Antarctica × Snack",
+      "tag": "CARNAVAL · BLOCOS · REAL-TIME",
+      "year": "2025",
+      "category": "Cobertura",
+      "format": "Cobertura de blocos + conteúdo social",
+      "team": "[CONFIRMAR] equipe de rua + edição",
+      "gear": "[CONFIRMAR] setup de captação em movimento",
+      "summary": "Carnaval de rua com a marca dentro da cena, não colada por cima dela.",
+      "still": "/assets/cases/case-03-still.jpg",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "O Guaraná chegou pela Snack pro Carnaval. Marca de bebida em bloco de rua tem um problema clássico: ou a marca some no meio da multidão, ou aparece de um jeito que denuncia a ação publicitária e mata a espontaneidade. O material precisava resolver os dois."
+        },
+        {
+          "h": "Desafio",
+          "p": "Carnaval não repete take. É captação em movimento, no meio da multidão, com luz de sol duro em horário que ninguém escolhe, e uma janela de entrega curta — o conteúdo de bloco tem validade de dias, não de semanas. [CONFIRMAR prazos e volume de peças entregues]"
+        },
+        {
+          "h": "Abordagem MUV",
+          "p": "Captação de dentro do bloco, na altura das pessoas, com a marca aparecendo onde ela já estaria de qualquer jeito: lata na mão, boné na cabeça, cor no figurino. Nada de plano de produto isolado. O verde do Guaraná vira paleta da cena inteira em vez de virar assinatura no fim do vídeo."
+        },
+        {
+          "h": "Resultado",
+          "p": "[RASCUNHO — CONFIRMAR] Preencher com o que foi entregue, prazo e desdobramento. Se houve renovação ou segunda ação, vale registrar aqui."
+        }
+      ]
+    },
+    {
+      "slug": "nissan-suba",
+      "title": "Nissan",
+      "client": "Nissan × Suba",
+      "tag": "BRANDED · KICKS + VERSA",
+      "year": "2025",
+      "category": "Brand film",
+      "format": "Branded content (6 verticais + 12 fotos + backstage)",
+      "team": "Equipe enxuta, filmmaker, fotógrafo, assistente",
+      "gear": "Sony FX3 · A73 · Insta 360 · GMaster 16-35 / 24-70 / 35 / 70-200mm · Cine 7Artisans T2 35/50/85mm · Aputure F22c/F21c · DJI Avata",
+      "summary": "Social-first pros quatro pilares do Kicks: conforto, tecnologia, dirigibilidade, segurança.",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "A Nissan chegou via Suba com o briefing do Kicks. O carro já tem campanha consolidada, mas a marca queria social-first, conteúdo nativo de feed, vertical, com cara de criador e cabeça de cliente. A ideia era cobrir os quatro pilares de comunicação do veículo (conforto, tecnologia, dirigibilidade, segurança) em peças curtas, com edição dinâmica, sem cara de comercial antigo."
+        },
+        {
+          "h": "Desafio",
+          "p": "Traduzir uma narrativa institucional automotiva, historicamente pesada, com aprovação longa e muito controle, num formato leve, vertical e cabível em 30 segundos. Em paralelo, entregar um banco de 12 fotos com a mesma cobertura conceitual. E entregar conteúdo extra de backstage como diferencial, com pré-aprovação dupla pela agência e pela marca. Vídeo em 7 dias, fotos em 7 dias, pagamento em 60."
+        },
+        {
+          "h": "Abordagem MUV",
+          "p": "Entramos na pré com um roteiro proprietário, base do diálogo com a Suba. Captação em torno do que cada pilar pedia visualmente: conforto exige interno em luz controlada e detalhe; tecnologia exige plano fechado de painel, gestual de toque, transições rápidas; dirigibilidade exige movimento, drone, FPV; segurança exige plano amplo, contexto, presença do carro no ambiente. FX3 pra cinema, A73 pra fotografia em paralelo, Insta 360 pra POV de motorista, drone Avata pra dirigibilidade. Iluminação com painéis Amaran F22c e F21c pra controlar reflexo na lataria. Lentes Cine 7Artisans T2 pra os planos preparados de close."
+        },
+        {
+          "h": "Resultado",
+          "p": "Seis verticais entregues, 12 fotos editadas, banco de backstage usado como conteúdo orgânico pra alimentar o canal nas semanas seguintes ao lançamento. Mais relevante: o trabalho gerou base pra renovação dos direitos de uso com a Nissan, num segundo aditivo que estendeu a presença das peças além da janela inicial."
+        }
+      ],
+      "still": "/assets/cases/case-04-still.jpg",
+      "video": "/assets/cases/case-04.mp4",
+      "poster": "/assets/cases/case-04-poster.jpg"
     },
     {
       "slug": "isla-gatorade-orlando",
@@ -57,96 +157,6 @@
         {
           "h": "Resultado",
           "p": "Materiais brutos organizados e com color grade básico entregues no prazo. A operação rodou sem ruído logístico, equipamento voltou inteiro, e o material entrou no banco da Gatorade pronto pra desdobramentos futuros. Marco de operação internacional com equipe reduzida e setup cinematográfico, modelo que a MUV quer expandir pra outras captações fora do Brasil."
-        }
-      ]
-    },
-    {
-      "slug": "adidas-runners",
-      "title": "Adidas\nRunners",
-      "client": "Adidas × Valiant",
-      "tag": "EVENTO · SOCIAL · 2 DIAS",
-      "year": "2026",
-      "category": "Cobertura",
-      "format": "Cobertura de evento + branded social",
-      "team": "3 pessoas, fotógrafo, filmmaker, assistente, operação multi-ponto",
-      "gear": "Sony A7III, A7IV, FX3 · GMaster 16-35 / 24-70 / 35mm · Laowa 10mm · LED Aputure · Flash Godox · Intercom",
-      "summary": "Dois dias, dois contextos: evento fechado em Alphaville com entrega real-time + treinão aberto no Ibirapuera.",
-      "body": [
-        {
-          "h": "Contexto",
-          "p": "A Adidas estava reposicionando peso na comunidade de running brasileira. Acabava de assumir parcerias que historicamente eram de outra marca, e o desafio do time não era mais \"ter produto bom\", era recuperar pertencimento na cena. O briefing chegou via Valiant, agência que cuida da parte de relacionamento estratégico com assessorias, atletas, influenciadores e os Adidas Runners."
-        },
-        {
-          "h": "Desafio",
-          "p": "Dois dias seguidos, dois contextos completamente diferentes. Dia 1: evento fechado no escritório de Alphaville, formato instagramável, até 100 convidados, influência, AR, atletas, palestras e ambientação de marca, com entrega parcial em real-time pro time poder postar enquanto o evento ainda rolava. Dia 2: treinão aberto no Ibirapuera, captação documental, sem pressão de feed mas com o peso simbólico de marcar a chegada da marca naquele território."
-        },
-        {
-          "h": "Abordagem MUV",
-          "p": "Em Alphaville: operação dupla, fotógrafo dedicado ao registro de marca, filmmaker em segunda câmera capturando interação real, assistente fazendo backup e enviando primeiras fotos pro time da agência durante o evento. A cada 30-40 minutos um lote de fotos selecionadas saía pro WhatsApp do cliente, já com tratamento da Adidas em LUT no Lightroom. No Ibirapuera: foco em narrativa, corredor real, comunidade real, luz natural da manhã, lente 35mm pra ficar próximo sem ser invasivo, Laowa 10mm pra capturar o coletivo em movimento."
-        },
-        {
-          "h": "Resultado",
-          "p": "Time da Valiant validou as fotos do Dia 1 durante a captação, cliente começou a postar antes do evento terminar. Material do Dia 2 entrou em circulação interna como bank pra desdobramentos futuros. Mais importante: o trabalho abriu relação. Na sequência fechamos cobertura da Kings Nation no Allianz Parque, também pra Adidas, com a mesma equipe, sinal claro de que o primeiro entregável funcionou."
-        }
-      ]
-    },
-    {
-      "slug": "nissan-kicks-suba",
-      "title": "Nissan\nKicks",
-      "client": "Nissan × Suba",
-      "tag": "BRANDED · 6 VERTICAIS",
-      "year": "2025",
-      "category": "Brand film",
-      "format": "Branded content (6 verticais + 12 fotos + backstage)",
-      "team": "Equipe enxuta, filmmaker, fotógrafo, assistente",
-      "gear": "Sony FX3 · A73 · Insta 360 · GMaster 16-35 / 24-70 / 35 / 70-200mm · Cine 7Artisans T2 35/50/85mm · Aputure F22c/F21c · DJI Avata",
-      "summary": "Social-first pros quatro pilares do Kicks: conforto, tecnologia, dirigibilidade, segurança.",
-      "body": [
-        {
-          "h": "Contexto",
-          "p": "A Nissan chegou via Suba com o briefing do Kicks. O carro já tem campanha consolidada, mas a marca queria social-first, conteúdo nativo de feed, vertical, com cara de criador e cabeça de cliente. A ideia era cobrir os quatro pilares de comunicação do veículo (conforto, tecnologia, dirigibilidade, segurança) em peças curtas, com edição dinâmica, sem cara de comercial antigo."
-        },
-        {
-          "h": "Desafio",
-          "p": "Traduzir uma narrativa institucional automotiva, historicamente pesada, com aprovação longa e muito controle, num formato leve, vertical e cabível em 30 segundos. Em paralelo, entregar um banco de 12 fotos com a mesma cobertura conceitual. E entregar conteúdo extra de backstage como diferencial, com pré-aprovação dupla pela agência e pela marca. Vídeo em 7 dias, fotos em 7 dias, pagamento em 60."
-        },
-        {
-          "h": "Abordagem MUV",
-          "p": "Entramos na pré com um roteiro proprietário, base do diálogo com a Suba. Captação em torno do que cada pilar pedia visualmente: conforto exige interno em luz controlada e detalhe; tecnologia exige plano fechado de painel, gestual de toque, transições rápidas; dirigibilidade exige movimento, drone, FPV; segurança exige plano amplo, contexto, presença do carro no ambiente. FX3 pra cinema, A73 pra fotografia em paralelo, Insta 360 pra POV de motorista, drone Avata pra dirigibilidade. Iluminação com painéis Amaran F22c e F21c pra controlar reflexo na lataria. Lentes Cine 7Artisans T2 pra os planos preparados de close."
-        },
-        {
-          "h": "Resultado",
-          "p": "Seis verticais entregues, 12 fotos editadas, banco de backstage usado como conteúdo orgânico pra alimentar o canal nas semanas seguintes ao lançamento. Mais relevante: o trabalho gerou base pra renovação dos direitos de uso com a Nissan, num segundo aditivo que estendeu a presença das peças além da janela inicial."
-        }
-      ]
-    },
-    {
-      "slug": "pop-comm-bento",
-      "title": "Pop-Comm\nSerie de 7",
-      "client": "Pop-Comm · Fernando Bento",
-      "tag": "REELS · 7 PEÇAS · 1 DIA",
-      "year": "2023",
-      "category": "Social",
-      "format": "Sete reels de até 1 min (banco de produto)",
-      "team": "3 pessoas, videomaker, assistente, editor",
-      "gear": "Sony FX3 · A73 · GMaster 16-35 / 24-70 / 70-200mm · Rode direcional · Hollyland lapela · MacBook Pro",
-      "summary": "Sete reels mostrando sete serviços diferentes, tudo captado numa única diária.",
-      "body": [
-        {
-          "h": "Contexto",
-          "p": "A Pop-Comm é integradora de comunicação corporativa, vende serviços que, no fundo, são intangíveis: estratégia, operação, mídia. Esse é o tipo de cliente que mais sofre na hora de virar conteúdo, porque o produto não é um objeto. É processo, é gente, é decisão. Fernando, à frente, queria uma forma de mostrar o que a Pop vende sem cair no discurso institucional cansado."
-        },
-        {
-          "h": "Desafio",
-          "p": "Sete reels, cada um mostrando um serviço diferente, todos captados em uma única diária. Equipe enxuta, prazo curto, e a barra alta: o conteúdo precisava parecer feito pra plataforma, não adaptado pra ela. Reel de 1 minuto não é vídeo institucional cortado, é estrutura própria, gancho nos primeiros 3 segundos, ritmo que segura o dedo."
-        },
-        {
-          "h": "Abordagem MUV",
-          "p": "Pré-produção condensada. Mapeamos com o Fernando os sete serviços, definimos qual seria a virada visual de cada um (entrevista direta, bastidor, metáfora visual?), e desenhamos uma ordem de captação que minimizava troca de setup, o que economizou hora e permitiu entregar os sete sem perder energia no último. FX3 como câmera principal em S-Log3, A73 como segunda câmera. Lentes GMaster cobrindo de 16-35 a 70-200. Áudio em duas vias, Rode direcional como referência ambiente, Hollyland de lapela como áudio principal."
-        },
-        {
-          "h": "Resultado",
-          "p": "Os sete reels viraram a base do feed da Pop-Comm naquele ciclo, com cadência de postagem espaçada por algumas semanas. Mais importante, o trabalho mostrou um modelo que repetimos até hoje com clientes B2B, uma diária densa, sete peças, custo unitário enxuto. O case da Pop-Comm ainda é referência interna pra projetos onde o orçamento pede eficiência sem cair na perda de qualidade."
         }
       ]
     }

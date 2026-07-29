@@ -15,3 +15,8 @@
 /blog                /blog/                301
 /faq                 /faq/                 301
 /contato             /contato/             301
+
+# cases renomeados — 28/jul/2026
+/trabalhos/adidas-runners/*    /trabalhos/    301
+/trabalhos/pop-comm-bento/*    /trabalhos/    301
+/trabalhos/nissan-kicks-suba/* /trabalhos/nissan-suba/ 301

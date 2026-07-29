@@ -42,24 +42,32 @@ function ArrowDiag({ size = 14 }) {
 }
 
 // ───── Cinematic placeholder ─────────────────────────────────────────────────
-function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = "default", play = false, center, style, className = "" }) {
+function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = "default", play = false, center, style, className = "", src = null, video = null, poster = null, alt = "" }) {
   const variantClass = variant === "dark" ? "cine--dark" : variant === "accent" ? "cine--accent" : "";
+  const hasMedia = Boolean(src || video);
   return (
     <div
-      className={`cine ${variantClass} ${className}`}
+      className={`cine ${variantClass} ${hasMedia ? "cine--media" : ""} ${video ? "cine--video-slot" : ""} ${className}`}
       style={{ aspectRatio: aspect, ...style, fontSize: "10px", width: "100%" }}>
-      
+
+      {video ?
+      <video className="cine__img cine__video" src={video} poster={poster || src || undefined}
+        controls playsInline preload="none" /> :
+      src ?
+      <img className="cine__img" src={src} alt={alt || label} loading="lazy" decoding="async" /> :
+      null}
+      {hasMedia ? <span className="cine__scrim" aria-hidden="true" /> : null}
       <span className="cine__corner" style={{ position: "absolute", top: 16, left: 16 }}>// {code}</span>
       <span className="cine__corner" style={{ position: "absolute", top: 16, right: 16 }}>{aspect.replace("/", ":")}</span>
-      {play ?
+      {play && !hasMedia ?
       <div className="cine__play">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
         </div> :
       center ?
       <span className="cine__center">{center}</span> :
       null}
-      <span className="cine__label">{label}</span>
-      <span className="cine__corner">REC ●</span>
+      {video ? null : <span className="cine__label">{label}</span>}
+      {video ? null : <span className="cine__corner">REC ●</span>}
     </div>);
 
 }
@@ -942,7 +950,7 @@ function StepRow({ num, title, desc, deliverables, onClick, linkable }) {
 
 }
 
-function CaseCard({ title, client, tag, year, idx, variant, onClick }) {
+function CaseCard({ title, client, tag, year, idx, variant, onClick, still }) {
   const variants = ["default", "dark", "accent", "default", "dark", "accent"];
   const v = variant || variants[idx % variants.length];
   return (
@@ -950,7 +958,7 @@ function CaseCard({ title, client, tag, year, idx, variant, onClick }) {
       onClick={onClick}
       onKeyDown={onClick ? (e) => {if (e.key === "Enter" || e.key === " ") {e.preventDefault();onClick();}} : undefined}>
       <div className="case__media" style={{ fontSize: "10px", width: "100%" }}>
-        <Cine label={title.toUpperCase()} code={`CASE.${String(idx + 1).padStart(2, "0")}`} aspect="4/3" variant={v} center={v === "accent" ? "▶ PREVIEW" : null} />
+        <Cine src={still} alt={`${title.replace(/\n/g, " ")} — ${client}`} label={title.toUpperCase()} code={`CASE.${String(idx + 1).padStart(2, "0")}`} aspect="4/3" variant={v} center={v === "accent" && !still ? "▶ PREVIEW" : null} />
       </div>
       <div className="case__meta">
         <div>
@@ -1101,7 +1109,7 @@ function Trabalhos({ setCurrent, slug = null }) {
             <p className="body-l case-detail__lead">{t.summary}</p>
           </header>
           <div className="case-detail__hero">
-            <Cine label={t.title.toUpperCase().replace(/\n/g, " ")} code={`CASE.${String(selected + 1).padStart(2, "0")}`} aspect="16/9" variant="accent" play />
+            <Cine video={t.video} poster={t.poster} src={t.still} alt={`${t.title.replace(/\n/g, " ")} — ${t.client}`} label={t.title.toUpperCase().replace(/\n/g, " ")} code={`CASE.${String(selected + 1).padStart(2, "0")}`} aspect="16/9" variant="accent" play />
           </div>
 
           <section className="case-detail__specs">
@@ -1177,6 +1185,8 @@ function Trabalhos({ setCurrent, slug = null }) {
                 onClick={() => openCase(t)}
                 onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openCase(t); }}}>
                 <Cine
+                  src={t.still}
+                  alt={`${t.title.replace(/\n/g, " ")} — ${t.client}`}
                   label={t.title.toUpperCase().replace(/\n/g, " ")}
                   code={`CASE.${String(realIdx + 1).padStart(2, "0")}`}
                   aspect="4/3"
