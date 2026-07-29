@@ -14,6 +14,21 @@ export default defineConfig({
   schema: {
     collections: [
       {
+        name: "home", label: "Home (textos)", path: "content", format: "json",
+        match: { include: "home" }, ui: { allowedActions: { create:false, delete:false } },
+        fields: [
+          S("heroEyebrow","Hero — sobrelinha"),
+          S("heroTitle1","Hero — titulo linha 1"), S("heroTitle2","Hero — titulo linha 2"), S("heroAccent","Hero — palavra destaque"),
+          S("heroSub","Hero — subtitulo",{ui:{component:"textarea"}}),
+          S("srvEyebrow","Servicos — sobrelinha"), S("srvTitle","Servicos — titulo"), S("srvSub","Servicos — sub",{ui:{component:"textarea"}}),
+          S("prcEyebrow","Processo — sobrelinha"), S("prcTitle","Processo — titulo",{ui:{component:"textarea"}}), S("prcSub","Processo — sub",{ui:{component:"textarea"}}),
+          S("trbEyebrow","Trabalhos — sobrelinha"), S("trbTitle","Trabalhos — titulo"), S("trbSub","Trabalhos — sub",{ui:{component:"textarea"}}),
+          S("mrcEyebrow","Marcas — sobrelinha"), S("mrcTitle","Marcas — titulo"),
+          S("hubEyebrow","Hub — sobrelinha"), S("hubAccent","Hub — palavra destaque"), S("hubTagline","Hub — frase"), S("hubBody","Hub — texto",{ui:{component:"textarea"}}),
+          S("blgEyebrow","Blog — sobrelinha"), S("blgTitle","Blog — titulo"), S("blgSub","Blog — sub",{ui:{component:"textarea"}}),
+        ],
+      },
+      {
         name: "services", label: "Serviços · Pilares", path: "content", format: "json",
         match: { include: "services" },
         ui: { allowedActions: { create: false, delete: false } },
