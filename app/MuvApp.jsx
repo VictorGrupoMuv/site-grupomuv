@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { useTina, tinaField } from "tinacms/dist/react";
 import _services from "../content/services.json";
 const SERVICOS = _services.items;
 import _process from "../content/process.json";
@@ -16,6 +17,7 @@ const BRANDS = _brands.items;
 const BRAND_LOGOS = {"Meta": "/assets/brands/meta.png", "Corona": "/assets/brands/corona-extra.png", "Ambev": "/assets/brands/ambev.png", "Adidas": "/assets/brands/adidas.png", "Volvo": "/assets/brands/volvo.png", "Heinz": "/assets/brands/heinz.png", "Burger King": "/assets/brands/burger-king.png", "Nissan": "/assets/brands/nissan.png", "Spotify": "/assets/brands/spotify.png", "Too Faced": "/assets/brands/too-faced.png", "Brastemp": "/assets/brands/brastemp.png", "Consul": "/assets/brands/consul.png", "Itaú": "/assets/brands/itau.png", "Lollapalooza": "/assets/brands/lollapalooza.png", "Primavera Sound": "/assets/brands/primavera-sound.png", "Numanice": "/assets/brands/numanice.png", "Stock Car": "/assets/brands/stock-car.png", "Kings League": "/assets/brands/kings-league.png"};
 import _marquee from "../content/marquee.json";
 import _settings from "../content/settings.json";
+import _home from "../content/home.json";
 const SETTINGS = _settings;
 const MARQUEE_WORDS = _marquee.items;
 import _faq from "../content/faq.json";
@@ -349,16 +351,16 @@ function BrandMarquee({ brands, dark = false }) {
 }
 
 // ───── Section head ──────────────────────────────────────────────────────────
-function SectionHead({ eyebrow, title, sub, num }) {
+function SectionHead({ eyebrow, title, sub, num, ef, tfld, sf }) {
   return (
     <div className="section-head">
       <div>
         {num && <p className="mono" style={{ color: "var(--ink-3)", marginBottom: 12 }}>// {num}</p>}
-        <p className="eyebrow eyebrow-dot">{eyebrow}</p>
+        <p className="eyebrow eyebrow-dot" data-tina-field={ef}>{eyebrow}</p>
       </div>
       <div>
-        <h2 className="h1 section-head__title" style={{ margin: 0 }}>{title}</h2>
-        {sub && <p className="body-l section-head__sub" style={{ maxWidth: 640, marginTop: 24 }}>{sub}</p>}
+        <h2 className="h1 section-head__title" style={{ margin: 0 }} data-tina-field={tfld}>{title}</h2>
+        {sub && <p className="body-l section-head__sub" style={{ maxWidth: 640, marginTop: 24 }} data-tina-field={sf}>{sub}</p>}
       </div>
     </div>);
 
@@ -544,8 +546,16 @@ function StatCounter({ target, prefix = "", suffix = "", pad = 0, label, accent 
 // ═════════════════════════════════════════════════════════════════════════════
 // HOME
 // ═════════════════════════════════════════════════════════════════════════════
-function Home({ setCurrent, density }) {
+function Home({ setCurrent, density, content }) {
   const router = useRouter();
+  const H = content?.home || _home;
+  const SRV = content?.services?.items || SERVICOS;
+  const PRC = content?.process?.items || PROCESSO;
+  const TRB = content?.works?.items || TRABALHOS;
+  const PST = content?.posts?.items || POSTS;
+  const BRN = content?.brands?.items || BRANDS;
+  const MQ = content?.marquee?.items || MARQUEE_WORDS;
+  const tf = (o, f) => (content && o) ? tinaField(o, f) : undefined;
   const heroRef = useRef(null);
   const [intro, setIntro] = useState("boot"); // boot → open → title → done
 
@@ -598,7 +608,7 @@ function Home({ setCurrent, density }) {
         <div className="hero-cine__content" ref={heroRef}>
           <div className="hero-cine__top">
             <div>
-              <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>Edição 01 · 2026 · Produtora audiovisual & hub criativo</p>
+              <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }} data-tina-field={tf(H,'heroEyebrow')}>{H.heroEyebrow}</p>
               <p className="mono" style={{ color: "var(--dark-ink-2)", marginTop: 12 }}>SP · BR · 23.5505° S · 46.6333° W</p>
             </div>
             <p className="mono hero-cine__rec" style={{ color: "var(--dark-ink-2)" }}>REEL 2026, V01 · LIVE</p>
@@ -606,16 +616,14 @@ function Home({ setCurrent, density }) {
 
           <div className="hero-cine__mid">
             <h1 className="hero-cine__display">
-              <span className="reveal-word"><span>Conteúdo</span></span><br />
-              <span className="reveal-word"><span style={{ fontFamily: "\"Archivo Black\"", fontStyle: "normal", marginRight: "0.3em" }}>que</span></span>
-              <span className="reveal-word"><span className="accent">move.</span></span>
+              <span className="reveal-word"><span data-tina-field={tf(H,'heroTitle1')}>{H.heroTitle1}</span></span><br />
+              <span className="reveal-word"><span style={{ fontFamily: "\"Archivo Black\"", fontStyle: "normal", marginRight: "0.3em" }} data-tina-field={tf(H,'heroTitle2')}>{H.heroTitle2}</span></span>
+              <span className="reveal-word"><span className="accent" data-tina-field={tf(H,'heroAccent')}>{H.heroAccent}</span></span>
             </h1>
           </div>
 
           <div className="hero-cine__bottom">
-            <p className="hero-cine__sub">
-              Produção audiovisual estratégica. Do briefing à entrega, cada frame tem intenção e cada prazo tem compromisso.
-            </p>
+            <p className="hero-cine__sub" data-tina-field={tf(H,'heroSub')}>{H.heroSub}</p>
             <div className="hero-cine__actions">
               <button className="btn btn--primary" onClick={() => setCurrent("contato")}>Começar um projeto <Arrow /></button>
               <button className="btn btn--ghost-dark" onClick={() => setCurrent("trabalhos")}>Ver portfolio <Arrow /></button>
@@ -635,7 +643,7 @@ function Home({ setCurrent, density }) {
       </section>
 
       {/* MARQUEE */}
-      <Marquee items={MARQUEE_WORDS} />
+      <Marquee items={MQ} />
 
       {/* MANIFESTO */}
       <section className="section" style={{ paddingTop: 41, paddingBottom: 84 }}>
@@ -654,14 +662,10 @@ function Home({ setCurrent, density }) {
 
       {/* SERVIÇOS */}
       <section className="section section--dark" style={{ paddingTop: 76, paddingBottom: 76 }}>
-        <SectionHead
-          num="02"
-          eyebrow="Serviços · 4 pilares"
-          title="Estratégia, produção, conteúdo, presença."
-          sub="Você não contrata quatro fornecedores. Contrata uma equipe integrada que pensa, produz e entrega com consistência." />
+        <SectionHead num="02" eyebrow={H.srvEyebrow} title={H.srvTitle} sub={H.srvSub} ef={tf(H,'srvEyebrow')} tfld={tf(H,'srvTitle')} sf={tf(H,'srvSub')} />
         
         <div className="grid-2">
-          {SERVICOS.map((s, i) =>
+          {SRV.map((s, i) =>
           <ServiceCardDark key={s.num} {...s} />
           )}
         </div>
@@ -672,14 +676,10 @@ function Home({ setCurrent, density }) {
 
       {/* PROCESSO (preview clicável) */}
       <section className="section" style={{ paddingTop: 64, paddingBottom: 32 }}>
-        <SectionHead
-          num="03"
-          eyebrow="Processo"
-          title={"Da ideia ao master.\nEm seis passos."}
-          sub="Sem improviso, sem surpresa no orçamento. Toda etapa tem entregável, prazo e aprovação." />
+        <SectionHead num="03" eyebrow={H.prcEyebrow} title={H.prcTitle} sub={H.prcSub} ef={tf(H,'prcEyebrow')} tfld={tf(H,'prcTitle')} sf={tf(H,'prcSub')} />
 
         <div>
-          {PROCESSO.slice(0, 3).map((p) =>
+          {PRC.slice(0, 3).map((p) =>
           <StepRow key={p.num} {...p} onClick={() => setCurrent("processo")} linkable />
           )}
           <div className="step"><div className="step__num">···</div><div></div><div></div><div style={{ textAlign: "right" }}><button className="link-arrow" onClick={() => setCurrent("processo")} style={{ background: "transparent", border: 0, padding: 0, font: "inherit" }}>Ver processo completo <Arrow /></button></div></div>
@@ -688,14 +688,10 @@ function Home({ setCurrent, density }) {
 
       {/* TRABALHOS PREVIEW */}
       <section className="section" style={{ paddingTop: 32, paddingBottom: 64 }}>
-        <SectionHead
-          num="04"
-          eyebrow="Trabalhos selecionados"
-          title="Cases recentes."
-          sub="Recortes de 2024–25. Marcas, eventos e narrativas que a gente ajudou a contar." />
+        <SectionHead num="04" eyebrow={H.trbEyebrow} title={H.trbTitle} sub={H.trbSub} ef={tf(H,'trbEyebrow')} tfld={tf(H,'trbTitle')} sf={tf(H,'trbSub')} />
         
         <div className="grid-3">
-          {TRABALHOS.slice(0, 3).map((t, i) => <CaseCard key={i} {...t} idx={i} onClick={() => router.push(caseHref(t.slug))} />)}
+          {TRB.slice(0, 3).map((t, i) => <CaseCard key={i} {...t} idx={i} onClick={() => router.push(caseHref(t.slug))} />)}
         </div>
         <div style={{ marginTop: 48, display: "flex", justifyContent: "flex-end" }}>
           <button className="btn btn--ghost" onClick={() => setCurrent("trabalhos")}>Ver todos os trabalhos <Arrow /></button>
@@ -705,8 +701,8 @@ function Home({ setCurrent, density }) {
       {/* MARCAS, esteira */}
       {SETTINGS.showMarcas !== false && (
       <section className="section section--tight">
-        <SectionHead num="05" eyebrow="Confiança" title="Marcas que confiam na gente." />
-        <BrandMarquee brands={BRANDS} />
+        <SectionHead num="05" eyebrow={H.mrcEyebrow} title={H.mrcTitle} ef={tf(H,'mrcEyebrow')} tfld={tf(H,'mrcTitle')} />
+        <BrandMarquee brands={BRN} />
         <p className="mono" style={{ marginTop: 24, color: "var(--ink-3)", textAlign: "center" }}>// + 30 marcas · 2019 → 2026</p>
       </section>
       )}
@@ -716,17 +712,12 @@ function Home({ setCurrent, density }) {
       <section className="section section--ink" style={{ position: "relative", overflow: "hidden", paddingTop: 64, paddingBottom: 64 }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
           <div>
-            <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>06 · Em breve · 2026</p>
+            <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }} data-tina-field={tf(H,'hubEyebrow')}>{H.hubEyebrow}</p>
             <h2 className="display" style={{ color: "var(--bg)", marginTop: 24, fontSize: "106px", margin: "24px 0 24px", letterSpacing: "-5px", lineHeight: "1" }}>
-              MUV <span style={{ color: "var(--accent)" }}>Hub.</span>
+              MUV <span style={{ color: "var(--accent)" }} data-tina-field={tf(H,'hubAccent')}>{H.hubAccent}</span>
             </h2>
-            <p style={{ color: "var(--bg)", fontFamily: "\"Archivo Black\"", fontWeight: "100", fontStyle: "normal", letterSpacing: "-1.9px", fontSize: "52px", lineHeight: "1", margin: "0 0 32px" }}>
-              Onde a produção acontece. E onde a comunidade se encontra.
-            </p>
-            <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 24, maxWidth: 480, fontWeight: "100" }}>
-              Locadora de equipamentos, reserva de studio, comunidade criativa e cowork
-              num só lugar. Exclusivo pra filmmakers, agências e marcas parceiras.
-            </p>
+            <p style={{ color: "var(--bg)", fontFamily: "\"Archivo Black\"", fontWeight: "100", fontStyle: "normal", letterSpacing: "-1.9px", fontSize: "52px", lineHeight: "1", margin: "0 0 32px" }} data-tina-field={tf(H,'hubTagline')}>{H.hubTagline}</p>
+            <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 24, maxWidth: 480, fontWeight: "100" }} data-tina-field={tf(H,'hubBody')}>{H.hubBody}</p>
             <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
               <button className="btn btn--primary" onClick={() => setCurrent("hub")}>Conhecer o Hub <Arrow /></button>
               <button className="btn btn--ghost-dark">Entrar na lista <Arrow /></button>
@@ -745,9 +736,9 @@ function Home({ setCurrent, density }) {
       {/* BLOG PREVIEW */}
       {SETTINGS.showBlog !== false && (
       <section className="section home-blog-preview" style={{ paddingTop: 48, paddingBottom: 48 }}>
-        <SectionHead num="07" eyebrow="Diário MUV" title="Conteúdo sobre conteúdo." sub="Bastidor, ensaio, frameworks. O que a gente aprende, a gente compartilha." />
+        <SectionHead num="07" eyebrow={H.blgEyebrow} title={H.blgTitle} sub={H.blgSub} ef={tf(H,'blgEyebrow')} tfld={tf(H,'blgTitle')} sf={tf(H,'blgSub')} />
         <div>
-          {POSTS.slice(0, 3).map((p, i) => <PostRow key={i} {...p} onClick={() => router.push(postHref(p.slug))} />)}
+          {PST.slice(0, 3).map((p, i) => <PostRow key={i} {...p} onClick={() => router.push(postHref(p.slug))} />)}
         </div>
         <div style={{ marginTop: 16, display: "flex", justifyContent: "flex-end" }}>
           <button className="btn btn--ghost" onClick={() => setCurrent("blog")}>Ver todos os posts <Arrow /></button>
@@ -2106,7 +2097,18 @@ const BODY_FONT    = `"Inter", "Helvetica Neue", system-ui, sans-serif`;
 
 const DARK_NAV_PAGES = new Set(["hub"]);
 
-function App({ page = "home", slug = null }) {
+function HomeLive({ tina, setCurrent }) {
+  const home     = useTina(tina.home).data.home;
+  const services = useTina(tina.services).data.services;
+  const process  = useTina(tina.process).data.process;
+  const works    = useTina(tina.works).data.works;
+  const posts    = useTina(tina.posts).data.posts;
+  const brands   = useTina(tina.brands).data.brands;
+  const marquee  = useTina(tina.marquee).data.marquee;
+  return <Home setCurrent={setCurrent} density="regular" content={{ home, services, process, works, posts, brands, marquee }} />;
+}
+
+function App({ page = "home", slug = null, tina = null }) {
   const current = page;
   const router = useRouter();
   const [scrolledPastHero, setScrolledPastHero] = useState(false);
@@ -2156,7 +2158,9 @@ function App({ page = "home", slug = null }) {
   return (
     <React.Fragment>
       <Nav current={current} setCurrent={setCurrent} isDark={isDark} />
-      <Page setCurrent={setCurrent} density="regular" slug={slug} />
+      {current === "home" && tina
+        ? <HomeLive tina={tina} setCurrent={setCurrent} />
+        : <Page setCurrent={setCurrent} density="regular" slug={slug} />}
       <Footer setCurrent={setCurrent} />
     </React.Fragment>
   );
