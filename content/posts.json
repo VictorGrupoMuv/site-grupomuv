@@ -155,7 +155,9 @@
         {
           "p": "O filme que estreia em Cannes é o resultado. O que vale estudar é o processo: curta em vez de longa como aposta primária, coprodução com vizinho de porte parecido em vez de parceiro grande demais pra te dar atenção, financiamento pulverizado entre fontes públicas e diplomáticas em vez de depender de um único edital. Nenhum dos três exige orçamento que uma produtora brasileira pequena não tenha — exige mapeamento e repetição. Antes do próximo projeto entrar em desenvolvimento, inverta a pergunta de sempre: em vez de \"que edital existe pra isso\", pergunte \"quais embaixadas, institutos culturais e produtoras de porte parecido eu ainda não conheço?\". A resposta provavelmente cabe numa tarde de pesquisa."
         }
-      ]
+      ],
+      "cover": "/assets/blog/modelo-indonesio-produtora-pequena.jpg",
+      "coverAlt": "Menina de uniforme escolar apoiada em uma sacada, com prédios do Sudeste Asiático ao fundo"
     },
     {
       "slug": "briefing-documentario-vs-comercial",
@@ -255,7 +257,9 @@
         {
           "p": "Comercial e documentário não são dois estilos do mesmo briefing. São dois briefings diferentes, com processos de aprovação, orçamento e gestão de expectativa que não se sobrepõem. Confundir os dois não é erro de execução, é erro de briefing — e aparece na tela como falta de naturalidade num formato que só se sustenta pela naturalidade. Antes do próximo projeto, decida primeiro qual pergunta está sendo feita: mensagem fixa ou pergunta de pesquisa. Só depois escreva o briefing."
         }
-      ]
+      ],
+      "cover": "/assets/blog/briefing-documentario-vs-comercial.jpg",
+      "coverAlt": "Storyboard desenhado à mão sobre mesa de madeira, com lapiseira, réguas e rolos de filme ao lado"
     },
     {
       "slug": "cobertura-tempo-real-evento",
