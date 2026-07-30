@@ -8,7 +8,7 @@
   "showMarquee": true,
   "showManifesto": true,
   "showServicos": true,
-  "showProcesso": true,
+  "showProcesso": false,
   "showTrabalhos": true,
   "showCTA": true,
   "navServicos": true,
