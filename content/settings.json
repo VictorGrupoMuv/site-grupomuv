@@ -3,5 +3,18 @@
   "accent2Color": "#1B57AD",
   "showMarcas": true,
   "showHub": true,
-  "showBlog": false
+  "showBlog": true,
+  "showStats": true,
+  "showMarquee": true,
+  "showManifesto": true,
+  "showServicos": true,
+  "showProcesso": true,
+  "showTrabalhos": true,
+  "showCTA": true,
+  "navServicos": true,
+  "navProcesso": true,
+  "navTrabalhos": true,
+  "navSobre": true,
+  "navHub": true,
+  "navBlog": true
 }
