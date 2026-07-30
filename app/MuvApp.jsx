@@ -1252,8 +1252,8 @@ function Sobre({ setCurrent }) {
             <Cine label="EQUIPE EM AÇÃO · BACKSTAGE" code="ABOUT.01" aspect="4/3" />
           </div>
           <div className="about-gallery__col">
-            <Cine label="STUDIO · INTERIOR" code="ABOUT.02" aspect="1/1" variant="dark" />
-            <Cine label="EQUIPAMENTO" code="ABOUT.03" aspect="3/2" variant="accent" />
+            <Cine src="/assets/about/about-02.jpg" alt="Interior do estúdio MUV: ciclorama montado, mesas de trabalho e área de convivência" label="STUDIO · INTERIOR" code="ABOUT.02" aspect="16/9" variant="dark" />
+            <Cine src="/assets/about/about-03.jpg" alt="Montagem de um refletor Amaran 300c no tripé durante preparação de set" label="EQUIPAMENTO" code="ABOUT.03" aspect="16/9" variant="accent" />
           </div>
         </div>
         <div className="about-gallery__caption">
