@@ -739,10 +739,10 @@ function Home({ setCurrent, density, content }) {
             </div>
           </div>
           <div className="hub-grid">
-            <Cine label="LOCADORA · CATÁLOGO" code="HUB.A" variant="dark" aspect="1/1" />
-            <Cine label="STUDIO · CICLORAMA" code="HUB.B" variant="accent" aspect="1/1" />
-            <Cine label="COMUNIDADE" code="HUB.C" variant="dark" aspect="1/1" />
-            <Cine label="COWORK · ESPAÇO" code="HUB.D" variant="accent" aspect="1/1" />
+            <Cine src="/assets/hub/hub-a.jpg" alt="Equipamento de produção organizado: câmeras, lentes, drone e acessórios" label="LOCADORA · CATÁLOGO" code="HUB.A" variant="dark" aspect="1/1" />
+            <Cine src="/assets/hub/hub-b.jpg" alt="Ciclorama do estúdio MUV com softbox montado" label="STUDIO · CICLORAMA" code="HUB.B" variant="accent" aspect="1/1" />
+            <Cine src="/assets/hub/hub-c.jpg" alt="Espaço de trabalho da MUV em uso, com pessoas circulando" label="COMUNIDADE" code="HUB.C" variant="dark" aspect="1/1" />
+            <Cine src="/assets/hub/hub-d.jpg" alt="Área de cowork da MUV com estações de trabalho e TV de parede" label="COWORK · ESPAÇO" code="HUB.D" variant="accent" aspect="1/1" />
           </div>
         </div>
       </section>
