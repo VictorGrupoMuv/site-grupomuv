@@ -722,6 +722,22 @@ function Home({ setCurrent, density, content }) {
       </section>
       )}
 
+      {/* BLOG PREVIEW */}
+      {SETTINGS.showBlog !== false && (
+      <section className="section home-blog-preview" style={{ paddingTop: 48, paddingBottom: 48 }}>
+        <SectionHead num="07" eyebrow={H.blgEyebrow} title={H.blgTitle} sub={H.blgSub} ef={tf(H,'blgEyebrow')} tfld={tf(H,'blgTitle')} sf={tf(H,'blgSub')} />
+        <div>
+          {PST.slice(0, 3).map((p, i) => <PostRow key={i} {...p} onClick={() => router.push(postHref(p.slug))} />)}
+        </div>
+        <div style={{ marginTop: 16, display: "flex", justifyContent: "flex-end" }}>
+          <button className="btn btn--ghost" onClick={() => setCurrent("blog")}>Ver todos os posts <Arrow /></button>
+        </div>
+      </section>
+      )}
+
+      {/* CTA FINAL */}
+      {SETTINGS.showCTA !== false && <HomeCTA setCurrent={setCurrent} />}
+
       {/* MUV HUB TEASER */}
       {SETTINGS.showHub !== false && (
       <section className="section section--ink" style={{ position: "relative", overflow: "hidden", paddingTop: 64, paddingBottom: 64 }}>
@@ -747,22 +763,6 @@ function Home({ setCurrent, density, content }) {
         </div>
       </section>
       )}
-
-      {/* BLOG PREVIEW */}
-      {SETTINGS.showBlog !== false && (
-      <section className="section home-blog-preview" style={{ paddingTop: 48, paddingBottom: 48 }}>
-        <SectionHead num="07" eyebrow={H.blgEyebrow} title={H.blgTitle} sub={H.blgSub} ef={tf(H,'blgEyebrow')} tfld={tf(H,'blgTitle')} sf={tf(H,'blgSub')} />
-        <div>
-          {PST.slice(0, 3).map((p, i) => <PostRow key={i} {...p} onClick={() => router.push(postHref(p.slug))} />)}
-        </div>
-        <div style={{ marginTop: 16, display: "flex", justifyContent: "flex-end" }}>
-          <button className="btn btn--ghost" onClick={() => setCurrent("blog")}>Ver todos os posts <Arrow /></button>
-        </div>
-      </section>
-      )}
-
-      {/* CTA FINAL */}
-      {SETTINGS.showCTA !== false && <HomeCTA setCurrent={setCurrent} />}
     </div>);
 
 }
