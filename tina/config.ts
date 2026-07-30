@@ -69,7 +69,7 @@ export default defineConfig({
         match: { include: "posts" },
         fields: [{ type:"object", name:"items", label:"Posts", list:true, ui:{itemProps:(i:any)=>({label:i?.title})},
           fields:[ S("slug","Slug"), S("date","Data"), S("title","Título",{ui:{component:"textarea"}}), S("excerpt","Resumo",{ui:{component:"textarea"}}),
-            S("read","Tempo de leitura"), S("category","Categoria"),
+            S("read","Tempo de leitura"), S("category","Categoria"), S("cover","Capa do post (caminho da imagem)"), S("coverAlt","Texto alternativo da capa"),
             { type:"object", name:"body", label:"Corpo", list:true, ui:{itemProps:(b:any)=>({label:b?.h||"Parágrafo"})},
               fields:[ S("h","Título da seção"), S("p","Parágrafo",{ui:{component:"textarea"}}) ] } ] }],
       },

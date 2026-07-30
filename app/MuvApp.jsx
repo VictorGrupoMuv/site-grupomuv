@@ -44,7 +44,7 @@ function ArrowDiag({ size = 14 }) {
 }
 
 // ───── Cinematic placeholder ─────────────────────────────────────────────────
-function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = "default", play = false, center, style, className = "", src = null, video = null, poster = null, vimeoId = null, alt = "" }) {
+function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = "default", play = false, center, style, className = "", src = null, video = null, poster = null, vimeoId = null, hideLabel = false, alt = "" }) {
   const variantClass = variant === "dark" ? "cine--dark" : variant === "accent" ? "cine--accent" : "";
   const hasMedia = Boolean(src || video || vimeoId);
   return (
@@ -71,8 +71,8 @@ function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = 
       center ?
       <span className="cine__center">{center}</span> :
       null}
-      {video || vimeoId ? null : <span className="cine__label">{label}</span>}
-      {video || vimeoId ? null : <span className="cine__corner">REC ●</span>}
+      {video || vimeoId || hideLabel ? null : <span className="cine__label">{label}</span>}
+      {video || vimeoId || hideLabel ? null : <span className="cine__corner">REC ●</span>}
     </div>);
 
 }
@@ -1780,7 +1780,7 @@ function Blog({ setCurrent, slug = null }) {
             <p className="body-l post-detail__lead">{post.excerpt}</p>
           </header>
           <div className="post-detail__hero">
-            <Cine label={post.title.toUpperCase()} code={`POST.${String(selected + 1).padStart(2, "0")}`} aspect="16/9" variant={selected % 3 === 0 ? "accent" : selected % 3 === 1 ? "dark" : "default"} />
+            <Cine src={post.cover} hideLabel={Boolean(post.cover)} alt={post.coverAlt || post.title} label={post.title.toUpperCase()} code={`POST.${String(selected + 1).padStart(2, "0")}`} aspect="16/9" variant={selected % 3 === 0 ? "accent" : selected % 3 === 1 ? "dark" : "default"} />
           </div>
           <div className="post-detail__body">
             {post.body.map((b, i) =>
@@ -1815,7 +1815,7 @@ function Blog({ setCurrent, slug = null }) {
         </div>
         <div className="blog-feature__grid">
           <div className="blog-feature__media">
-            <Cine label={feat.title.toUpperCase()} code="POST.FEAT" aspect="16/9" variant="accent" />
+            <Cine src={feat.cover} hideLabel={Boolean(feat.cover)} alt={feat.coverAlt || feat.title} label={feat.title.toUpperCase()} code="POST.FEAT" aspect="16/9" variant="accent" />
           </div>
           <div className="blog-feature__body">
             <div className="blog-feature__meta">
