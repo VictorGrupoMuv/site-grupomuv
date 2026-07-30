@@ -44,15 +44,18 @@ function ArrowDiag({ size = 14 }) {
 }
 
 // ───── Cinematic placeholder ─────────────────────────────────────────────────
-function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = "default", play = false, center, style, className = "", src = null, video = null, poster = null, alt = "" }) {
+function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = "default", play = false, center, style, className = "", src = null, video = null, poster = null, vimeoId = null, alt = "" }) {
   const variantClass = variant === "dark" ? "cine--dark" : variant === "accent" ? "cine--accent" : "";
-  const hasMedia = Boolean(src || video);
+  const hasMedia = Boolean(src || video || vimeoId);
   return (
     <div
-      className={`cine ${variantClass} ${hasMedia ? "cine--media" : ""} ${video ? "cine--video-slot" : ""} ${className}`}
+      className={`cine ${variantClass} ${hasMedia ? "cine--media" : ""} ${video || vimeoId ? "cine--video-slot" : ""} ${className}`}
       style={{ aspectRatio: aspect, ...style, fontSize: "10px", width: "100%" }}>
 
-      {video ?
+      {vimeoId ?
+      <iframe className="cine__img cine__video" src={`https://player.vimeo.com/video/${vimeoId}?dnt=1&title=0&byline=0&portrait=0`}
+        title={alt || label} frameBorder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen /> :
+      video ?
       <video className="cine__img cine__video" src={video} poster={poster || src || undefined}
         controls playsInline preload="none" /> :
       src ?
@@ -68,8 +71,8 @@ function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = 
       center ?
       <span className="cine__center">{center}</span> :
       null}
-      {video ? null : <span className="cine__label">{label}</span>}
-      {video ? null : <span className="cine__corner">REC ●</span>}
+      {video || vimeoId ? null : <span className="cine__label">{label}</span>}
+      {video || vimeoId ? null : <span className="cine__corner">REC ●</span>}
     </div>);
 
 }
@@ -125,10 +128,12 @@ const NAV_ITEMS = [
 { id: "blog", label: "Blog" },
 { id: "faq", label: "FAQ", hideFromHeader: true },
 { id: "contato", label: "Contato", hideFromHeader: true }];
+const NAV_OFF = { servicos:"navServicos", processo:"navProcesso", trabalhos:"navTrabalhos", sobre:"navSobre", hub:"navHub", blog:"navBlog" };
+const navOn = (n) => { const k = NAV_OFF[n.id]; return k ? SETTINGS[k] !== false : true; };
 
 
 // Header e Drawer escondem itens marcados hideFromHeader (ex: FAQ vai só no Footer)
-const HEADER_ITEMS = NAV_ITEMS.filter((n) => !n.hideFromHeader);
+const HEADER_ITEMS = NAV_ITEMS.filter((n) => !n.hideFromHeader && navOn(n));
 const DRAWER_ITEMS = HEADER_ITEMS.filter((n) => n.id !== "home");
 // Só entram redes com URL real: href="#" lê como "empresa desativada".
 const DRAWER_SOCIALS = [
@@ -271,7 +276,7 @@ function Footer({ setCurrent }) {
         <div className="footer__col">
           <p className="footer__col-title">Navegação</p>
           <ul>
-            {NAV_ITEMS.slice(1).filter((n) => !n.hideFromFooter).map((n) =>
+            {NAV_ITEMS.slice(1).filter((n) => !n.hideFromFooter && navOn(n)).map((n) =>
             <li key={n.id}><a href={ROUTES[n.id]} onClick={go(n.id)}>{n.label} <ArrowDiag size={10} /></a></li>
             )}
             <li><a href={ROUTES.contato} onClick={go("contato")}>Contato <ArrowDiag size={10} /></a></li>
@@ -633,6 +638,7 @@ function Home({ setCurrent, density, content }) {
       </section>
 
       {/* STATS */}
+      {SETTINGS.showStats !== false && (
       <section className="hero-stats">
         <div className="hero-stats__inner">
           <StatCounter prefix="+" target={120} label="Produções entregues" />
@@ -641,11 +647,13 @@ function Home({ setCurrent, density, content }) {
           <StatCounter target={1} pad={2} label="Hub criativo, quatro frentes" accent />
         </div>
       </section>
+      )}
 
       {/* MARQUEE */}
-      <Marquee items={MQ} />
+      {SETTINGS.showMarquee !== false && <Marquee items={MQ} />}
 
       {/* MANIFESTO */}
+      {SETTINGS.showManifesto !== false && (
       <section className="section" style={{ paddingTop: 41, paddingBottom: 84 }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 3fr", gap: 48, alignItems: "start", fontFamily: "\"Archivo Black\"", fontWeight: "200" }}>
           <div>
@@ -659,8 +667,10 @@ function Home({ setCurrent, density, content }) {
           </p>
         </div>
       </section>
+      )}
 
       {/* SERVIÇOS */}
+      {SETTINGS.showServicos !== false && (
       <section className="section section--dark" style={{ paddingTop: 76, paddingBottom: 76 }}>
         <SectionHead num="02" eyebrow={H.srvEyebrow} title={H.srvTitle} sub={H.srvSub} ef={tf(H,'srvEyebrow')} tfld={tf(H,'srvTitle')} sf={tf(H,'srvSub')} />
         
@@ -673,8 +683,10 @@ function Home({ setCurrent, density, content }) {
           <button className="btn btn--ghost-dark" onClick={() => setCurrent("servicos")}>Detalhar serviços <Arrow /></button>
         </div>
       </section>
+      )}
 
       {/* PROCESSO (preview clicável) */}
+      {SETTINGS.showProcesso !== false && (
       <section className="section" style={{ paddingTop: 64, paddingBottom: 32 }}>
         <SectionHead num="03" eyebrow={H.prcEyebrow} title={H.prcTitle} sub={H.prcSub} ef={tf(H,'prcEyebrow')} tfld={tf(H,'prcTitle')} sf={tf(H,'prcSub')} />
 
@@ -685,8 +697,10 @@ function Home({ setCurrent, density, content }) {
           <div className="step"><div className="step__num">···</div><div></div><div></div><div style={{ textAlign: "right" }}><button className="link-arrow" onClick={() => setCurrent("processo")} style={{ background: "transparent", border: 0, padding: 0, font: "inherit" }}>Ver processo completo <Arrow /></button></div></div>
         </div>
       </section>
+      )}
 
       {/* TRABALHOS PREVIEW */}
+      {SETTINGS.showTrabalhos !== false && (
       <section className="section" style={{ paddingTop: 32, paddingBottom: 64 }}>
         <SectionHead num="04" eyebrow={H.trbEyebrow} title={H.trbTitle} sub={H.trbSub} ef={tf(H,'trbEyebrow')} tfld={tf(H,'trbTitle')} sf={tf(H,'trbSub')} />
         
@@ -697,6 +711,7 @@ function Home({ setCurrent, density, content }) {
           <button className="btn btn--ghost" onClick={() => setCurrent("trabalhos")}>Ver todos os trabalhos <Arrow /></button>
         </div>
       </section>
+      )}
 
       {/* MARCAS, esteira */}
       {SETTINGS.showMarcas !== false && (
@@ -747,7 +762,7 @@ function Home({ setCurrent, density, content }) {
       )}
 
       {/* CTA FINAL */}
-      <HomeCTA setCurrent={setCurrent} />
+      {SETTINGS.showCTA !== false && <HomeCTA setCurrent={setCurrent} />}
     </div>);
 
 }
@@ -1100,7 +1115,7 @@ function Trabalhos({ setCurrent, slug = null }) {
             <p className="body-l case-detail__lead">{t.summary}</p>
           </header>
           <div className="case-detail__hero">
-            <Cine video={t.video} poster={t.poster} src={t.still} alt={`${t.title.replace(/\n/g, " ")} — ${t.client}`} label={t.title.toUpperCase().replace(/\n/g, " ")} code={`CASE.${String(selected + 1).padStart(2, "0")}`} aspect="16/9" variant="accent" play />
+            <Cine vimeoId={t.vimeoId} video={t.vimeoId ? null : t.video} poster={t.poster} src={t.still} alt={`${t.title.replace(/\n/g, " ")} — ${t.client}`} label={t.title.toUpperCase().replace(/\n/g, " ")} code={`CASE.${String(selected + 1).padStart(2, "0")}`} aspect="16/9" variant="accent" play />
           </div>
 
           <section className="case-detail__specs">
@@ -1206,7 +1221,13 @@ function Trabalhos({ setCurrent, slug = null }) {
           </h2>
         </div>
         <div className="works-reel__media">
-          <Cine label="REEL EXTENDED · 03'20" code="REEL.FULL" aspect="16/9" variant="dark" play />
+          <div style={{ maxWidth: 420, margin: "0 auto" }}>
+            <Cine
+              video="/assets/reel-social.mp4"
+              poster="/assets/reel-social-poster.jpg"
+              label="REEL SOCIAL · 00'30"
+              code="REEL.FULL" aspect="9/16" variant="dark" />
+          </div>
         </div>
       </section>
     </div>);
@@ -1240,11 +1261,11 @@ function Sobre({ setCurrent }) {
       <section className="section section--tight about-gallery">
         <div className="about-gallery__grid">
           <div className="about-gallery__main">
-            <Cine label="EQUIPE EM AÇÃO · BACKSTAGE" code="ABOUT.01" aspect="4/3" />
+            <Cine src="/assets/about/about-01.jpg" alt="Equipe da MUV em set: operador de câmera em primeiro plano e Nissan iluminado ao fundo" label="EQUIPE EM AÇÃO · BACKSTAGE" code="ABOUT.01" aspect="16/9" />
           </div>
           <div className="about-gallery__col">
-            <Cine label="STUDIO · INTERIOR" code="ABOUT.02" aspect="1/1" variant="dark" />
-            <Cine label="EQUIPAMENTO" code="ABOUT.03" aspect="3/2" variant="accent" />
+            <Cine src="/assets/about/about-02.jpg" alt="Interior do estúdio MUV: ciclorama montado, mesas de trabalho e área de convivência" label="STUDIO · INTERIOR" code="ABOUT.02" aspect="16/9" variant="dark" />
+            <Cine src="/assets/about/about-03.jpg" alt="Montagem de um refletor Amaran 300c no tripé durante preparação de set" label="EQUIPAMENTO" code="ABOUT.03" aspect="16/9" variant="accent" />
           </div>
         </div>
         <div className="about-gallery__caption">
@@ -1494,8 +1515,8 @@ function HubStudio({ setCurrent }) {
       <section className="section">
         <SectionHead num="01" eyebrow="Estúdio em fotos" title="Como é o espaço." />
         <div className="hub-studio-gallery">
-          <Cine label="CICLORAMA · L-SHAPE" code="STUDIO.01" aspect="16/9" variant="dark" />
-          <Cine label="MESA DE PRODUÇÃO" code="STUDIO.02" aspect="4/3" variant="accent" />
+          <Cine src="/assets/hub/studio-01.jpg" alt="Ciclorama L-shape do estúdio MUV, com softbox montado" label="CICLORAMA · L-SHAPE" code="STUDIO.01" aspect="16/9" variant="dark" />
+          <Cine src="/assets/hub/studio-02.jpg" alt="Equipamento de produção organizado: câmeras, lentes, drone e iluminação" label="EQUIPAMENTO EM BANCADA" code="STUDIO.02" aspect="16/9" variant="accent" />
           <Cine label="ILUMINAÇÃO MONTADA" code="STUDIO.03" aspect="4/3" />
         </div>
       </section>
@@ -1655,9 +1676,9 @@ function HubCowork({ setCurrent }) {
       <section className="section">
         <SectionHead num="01" eyebrow="O espaço" title="Como é o cowork." />
         <div className="hub-studio-gallery">
-          <Cine label="MESAS COMPARTILHADAS" code="COW.01" aspect="16/9" variant="accent" />
-          <Cine label="SALA DE REUNIÃO" code="COW.02" aspect="4/3" />
-          <Cine label="LOUNGE & CAFÉ" code="COW.03" aspect="4/3" variant="dark" />
+          <Cine src="/assets/hub/cow-01.jpg" alt="Mesas compartilhadas do cowork MUV em uso" label="MESAS COMPARTILHADAS" code="COW.01" aspect="16/9" variant="accent" />
+          <Cine src="/assets/hub/cow-02.jpg" alt="Sala de reunião do cowork MUV" label="SALA DE REUNIÃO" code="COW.02" aspect="4/3" />
+          <Cine src="/assets/hub/cow-03.jpg" alt="Área de convivência do cowork MUV" label="LOUNGE & CAFÉ" code="COW.03" aspect="4/3" variant="dark" />
         </div>
       </section>
 
@@ -2142,7 +2163,9 @@ function App({ page = "home", slug = null, tina = null }) {
   const isDark = DARK_NAV_PAGES.has(current) || (current === "home" && !scrolledPastHero);
 
   let Page = Home;
-  if      (current === "servicos")  Page = Servicos;
+  const _navKey = NAV_OFF[current] || (String(current).startsWith("hub") ? "navHub" : null);
+  if (_navKey && SETTINGS[_navKey] === false) Page = Home;
+  else if (current === "servicos")  Page = Servicos;
   else if (current === "processo")  Page = Processo;
   else if (current === "trabalhos") Page = Trabalhos;
   else if (current === "sobre")     Page = Sobre;
