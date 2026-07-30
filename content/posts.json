@@ -1,8 +1,263 @@
 {
   "items": [
     {
+      "slug": "ifood-nubank-comarketing",
+      "date": "2026 · JUL",
+      "title": "iFood + Nubank: a engenharia por trás de duas marcas que dividem a conta da aquisição.",
+      "excerpt": "O que interessa na parceria não é o cupom. É o desenho de duas marcas de categorias diferentes decidindo rachar o custo de mídia e de aquisição — e o que dá pra replicar disso numa escala menor.",
+      "read": "9 min",
+      "category": "Análise",
+      "body": [
+        {
+          "p": "Em 18 de novembro de 2025, quem pagasse pedido no iFood com cartão Nubank ou NuPay passou a ver desconto automático no checkout, sem código promocional, em quatro categorias diferentes. A campanha foi assinada pela DM9, teve mídia em estação de metrô e mobiliário urbano em São Paulo, presença nas redes das duas marcas e um time de creators divulgando o benefício."
+        },
+        {
+          "p": "O que interessa aqui não é o cupom em si. É a engenharia por trás de duas marcas de categorias diferentes que decidiram dividir a conta de aquisição."
+        },
+        {
+          "h": "A mecânica"
+        },
+        {
+          "p": "O mecanismo é automático: o cliente escolhe cartão de crédito Nubank ou NuPay dentro do app do iFood, e o desconto cai direto no checkout. Cada CPF tinha direito a um cupom por categoria durante todo o período — não por dia, não por semana."
+        },
+        {
+          "p": "Os valores variaram por categoria: R$ 10 em pedidos acima de R$ 20; R$ 20 em compras acima de R$ 60 em restaurantes, restrito à semana de Black Friday; R$ 20 acima de R$ 100 em farmácia; R$ 20 acima de R$ 120 em mercado. Desconto fixo condicionado a um piso de gasto, não percentual — desenho clássico de cupom de aquisição, em que o valor cresce onde o ticket médio da categoria também é maior."
+        },
+        {
+          "p": "Repare nas categorias cobertas: não é só delivery de comida. Farmácia e mercado são frentes que o iFood vem tratando como negócio próprio, e o benefício passa por elas de propósito. Isso é detalhe estrutural, não estético — significa que o acordo foi desenhado pra empurrar tráfego onde o iFood ainda está construindo hábito de uso, não onde já é dominante."
+        },
+        {
+          "h": "O que faz esse modelo funcionar"
+        },
+        {
+          "p": "Não é o desconto. É a divisão do custo de aquisição entre duas marcas que não competem entre si, mas compartilham uma fatia relevante de base. O iFood paga menos por exposição do que pagaria sozinho porque a mídia é cofinanciada pelo Nubank, e vice-versa. Cada marca expõe sua oferta a uma base que, estruturalmente, tem mais probabilidade de já usar o serviço da outra do que a população geral teria."
+        },
+        {
+          "p": "Isso é arquitetura de custo e distribuição, verificável pela própria estrutura do acordo. Duas marcas, uma mídia, um cupom cruzado. Se o desconto de fato mudou o comportamento de quem já usava as duas, ou se apenas subsidiou quem ia pagar de qualquer jeito, é uma pergunta diferente — e não respondida."
+        },
+        {
+          "h": "Por que esses dois nomes"
+        },
+        {
+          "p": "A escolha do parceiro não é aleatória, e dá pra checar com números públicos. O Nubank fechou 2025 com 112 milhões de clientes no Brasil, cerca de 61% da população adulta, e é a maior instituição financeira privada do país em número de clientes. O iFood detém cerca de 92% do mercado de delivery no primeiro trimestre de 2025 e bateu recorde de 180 milhões de pedidos em novembro do mesmo ano."
+        },
+        {
+          "p": "Dado o tamanho de cada base, é matematicamente inevitável que exista sobreposição relevante entre as duas. Nenhuma das empresas, porém, divulgou o número exato dessa intersecção. \"Quem usa Nubank provavelmente já compra online\" é inferência a partir da escala, não cruzamento de CRM confirmado publicamente."
+        },
+        {
+          "h": "O que foi meta e o que ainda não é resultado"
+        },
+        {
+          "p": "No lançamento, o iFood declarou à Exame objetivos para o período: queria que a categoria de mercados crescesse 50%, que farmácia subisse 86%, crescimento de 35% no tráfego do app e aumento de 25% na base de usuários. Repare no tempo verbal — são frases de intenção, publicadas no dia do anúncio, não números fechados depois de a campanha rodar."
+        },
+        {
+          "p": "Até o fechamento desta pesquisa, iFood, Nubank e DM9 não divulgaram adesão, quantos cupons foram resgatados, em qual categoria a adesão foi maior, nem se as metas foram batidas. Não existe comparativo público de conversão entre quem pagou com Nubank e quem pagou de outra forma. Se esse dado sair depois, muda o que dá pra afirmar sobre eficácia."
+        },
+        {
+          "h": "Como replicar em escala menor"
+        },
+        {
+          "p": "O modelo é replicável por marca pequena com uma condição que costuma ser ignorada: a marca parceira precisa ter base complementar, não concorrente — e essa complementaridade precisa ser verificada, não presumida. Uma cafeteria de bairro e uma barbearia da mesma região dividem geografia, mas não necessariamente perfil de cliente recorrente. Supor que sim sem checar é o erro mais comum de quem tenta pela primeira vez."
+        },
+        {
+          "p": "Três coisas pra verificar antes, nessa ordem. Primeiro, cruzamento entre as bases: mesmo em escala local, dá pra comparar horário de pico, ticket médio e CEP de entrega entre os dois públicos, ainda que manualmente. Segundo, ferramenta capaz de rodar cupom condicionado à forma de pagamento ou ao cadastro cruzado — a maioria dos PDVs e apps locais não tem esse recurso nativo. Terceiro, alinhamento de calendário: iFood e Nubank amarraram o pico à Black Friday, uma data que já concentra intenção de compra; replicar sem data-âncora equivalente dilui o efeito da mídia conjunta, que é justamente o que sustenta a divisão de custo."
+        },
+        {
+          "p": "Um quarto ponto, menos óbvio: quem banca o quê precisa estar em contrato antes do lançamento, não negociado depois que o cupom já está no ar. Nem iFood nem Nubank divulgaram a divisão exata do custo entre eles. Definir isso antes evita a situação mais comum de parceria de cupom que não dá certo — os dois lados achando que o outro está bancando a maior parte do desconto."
+        },
+        {
+          "p": "O que dá pra levar como fato: duas marcas de categorias diferentes, com bases de escala comprovada, dividiram uma mídia e desenharam um cupom condicionado ao produto financeiro de uma delas. O que não dá pra levar é se isso converteu mais do que uma campanha de desconto comum teria convertido sozinha. Se você lidera marketing ou parceria de marca e está avaliando um cupom cruzado, comece pela pergunta que iFood e Nubank puderam responder com dado de CRM antes de fechar: qual é, de fato, a intersecção entre a sua base e a do parceiro."
+        }
+      ]
+    },
+    {
+      "slug": "modelo-indonesio-produtora-pequena",
+      "date": "2026 · JUL",
+      "title": "O modelo indonésio que a sua produtora pequena pode copiar.",
+      "excerpt": "Quatro curtas, oito diretores, cinco países, nenhum grande estúdio por trás — e Cannes no fim. Três decisões estruturais da KawanKawan Media que cabem no orçamento de uma produtora brasileira pequena.",
+      "read": "10 min",
+      "category": "Negócio",
+      "body": [
+        {
+          "p": "Quatro curtas de 15 minutos, oito diretores, cinco países, nenhum grande estúdio por trás. Foi assim que a KawanKawan Media, produtora de Jacarta fundada em 2017 por duas sócias, chegou à Semana da Crítica de Cannes 2026 com \"Next Step Studio Indonesia\"."
+        },
+        {
+          "p": "O filme em si importa menos do que o caminho até ele: três decisões estruturais que uma produtora pequena brasileira consegue copiar sem inventar orçamento que não tem."
+        },
+        {
+          "h": "Por que essa história não é sobre o filme"
+        },
+        {
+          "p": "A KawanKawan não é estúdio, não tem escritório em Los Angeles, não tem fundo de investimento por trás. Duas sócias: Yulia Evina Bhara e Amerta Kusuma. Mesmo assim, desde 2019 acumulou uma sequência que qualquer produtora sonha — um hat-trick em Locarno com \"The Science of Fictions\" (2019), \"Whether the Weather Is Fine\" (2021) e \"Stone Turtle\" (2022), prêmio no CPH:DOX com \"You and I\" (2020), \"Autobiography\" em Veneza (2022) e o Grande Prêmio da Semana da Crítica de Cannes em 2023 com \"Tiger Stripes\"."
+        },
+        {
+          "p": "Vale registrar uma ressalva desde já: Bhara hoje também responde pela cooperação internacional na BPI, a agência de cinema apoiada pelo governo indonésio. Isso ajuda a explicar, sem esgotar, o acesso da produtora a financiamento público."
+        },
+        {
+          "p": "E \"Next Step Studio\" não é invenção da KawanKawan: é um programa itinerante da própria Semana da Crítica, criado em 2013 pela produtora francesa Dominique Welinski, que já passou por mais de 80 diretores. Este ano é a primeira vez que desembarca na Indonésia, com a KawanKawan como parceira produtora local. Isso muda a leitura do case — a lição não é como inventar um formato de festival, é como se posicionar pra ser a produtora local escolhida quando um formato já validado chega ao seu país."
+        },
+        {
+          "h": "Elemento 1 — antologia de curtas em vez de aposta única em longa"
+        },
+        {
+          "p": "A decisão mais replicável é a mais simples: em vez de concentrar recursos escassos num único longa, a KawanKawan entrou num formato de antologia. Quatro filmes de 15 minutos, produzidos em paralelo, empacotados como uma peça só."
+        },
+        {
+          "p": "Isso reduz risco de duas formas que dão pra calcular em planilha. Primeiro, custo e prazo de um curta são fração do de um longa, então o custo do fracasso de qualquer um dos quatro isoladamente é pequeno. Segundo, a chance de pelo menos um dos quatro performar bem em festival é estatisticamente maior do que apostar tudo num longa que pode simplesmente não emplacar."
+        },
+        {
+          "p": "Pra produtora pequena que vive de emenda de edital em edital, essa é a virada de mentalidade que mais vale copiar: parar de tratar o longa como o único produto que justifica a existência da empresa, e passar a tratar o curta — ou a coleção de curtas — como unidade de produção com valor próprio, não como treino pro longa que viria depois."
+        },
+        {
+          "h": "Elemento 2 — coprodução com vizinhos, não com quem tem mais dinheiro"
+        },
+        {
+          "p": "Repara na engenharia dos pares: Reza Fahriyansyah (Indonésia) com Ananth Subramaniam (Malásia); Shelby Kho (Indonésia) com Sein Lyan Tun (Mianmar); Reza Rahadian (Indonésia) com Sam Manacsa (Filipinas); Khozy Rizal (Indonésia) com Lam Li Shuen (Singapura). Oito diretores, cinco países, todos do Sudeste Asiático. Nenhum parceiro americano, nenhum europeu."
+        },
+        {
+          "p": "Coproduzir com um país vizinho de porte de indústria parecido dobra a rede de contatos e as portas de financiamento sem dobrar o orçamento, porque cada diretor chega com o próprio acesso a fundo nacional, distribuidora regional e crítica especializada do seu país."
+        },
+        {
+          "p": "Não é movimento isolado: em 2022 a KawanKawan já tinha fechado coprodução com a Momo, de Singapura, para \"Dreaming & Dying\" e \"Don't Cry Butterfly\". O Next Step Studio é a mesma lógica em escala maior, com quatro parceiros de uma vez. A imprensa especializada estima que, dos cerca de 200 filmes produzidos por ano na Indonésia, apenas de 10 a 15 produtores dominam de fato a mecânica de coprodução internacional. Ser um desses poucos é vantagem competitiva difícil de replicar — não porque exija capital, mas porque exige relacionamento construído filme a filme."
+        },
+        {
+          "p": "Pro Brasil o paralelo é direto: a produtora que aposta tudo em coproduzir com parceiro americano ou europeu está competindo por atenção de gente que tem dezenas de opções e orçamento de sobra. Coproduzir com uma produtora do Chile, da Colômbia, do Uruguai ou de Portugal — porte parecido, urgência parecida, fundo público parecido — multiplica rede sem multiplicar risco financeiro."
+        },
+        {
+          "h": "Elemento 3 — dinheiro público e diplomático, não edital único"
+        },
+        {
+          "p": "O financiamento de \"Next Step Studio Indonesia\" não veio de um estúdio nem de um edital nacional: veio do Governo Provincial de Jacarta, do Ministério da Cultura da Indonésia, da Embaixada da França na Indonésia — que também responde por Timor-Leste e pela relação com a ASEAN — e de um grupo de produtores executivos locais."
+        },
+        {
+          "p": "Quatro fontes, cada uma com um interesse diferente: a prefeitura quer economia criativa e turismo, o ministério quer exportação cultural, a embaixada quer diplomacia cultural francesa na região. Nenhuma delas precisa cobrir o orçamento inteiro sozinha."
+        },
+        {
+          "p": "É esse detalhe que a produtora pequena costuma ignorar: embaixadas, institutos culturais e fundos municipais não financiam produção por caridade — financiam porque isso cumpre a agenda deles. Instituto Francês, Goethe-Institut, British Council, secretarias municipais e estaduais de cultura, todos têm linha de fomento à coprodução ou ao intercâmbio, e a maioria fica subutilizada porque a produtora concentra energia inteira em editais nacionais competitivos e trata financiamento diplomático como exceção, não como linha regular de captação."
+        },
+        {
+          "p": "O contraponto honesto: o duplo papel de Bhara, produtora e ao mesmo tempo responsável por cooperação internacional na agência de cinema do governo, facilita esse acesso de um jeito que uma produtora brasileira sem cargo institucional não consegue da noite pro dia. Mas o mecanismo continua de pé sem essa vantagem — embaixada, instituto cultural e secretaria têm orçamento de fomento com meta de execução todo ano, e a maior parte não recebe projeto suficiente pra gastar. Isso é porta aberta, não exclusividade de quem já está dentro."
+        },
+        {
+          "h": "Por que copiar a Indonésia faz mais sentido que copiar Hollywood"
+        },
+        {
+          "p": "A tentação é estudar o modelo americano ou o europeu grande — Sundance, A24, festival com fundo estatal robusto — porque é o que mais aparece em matéria de mercado. O problema é que esse modelo pressupõe condições que a produtora pequena brasileira não tem: capital privado de risco disposto a apostar em cinema autoral, agentes e sales houses com relação direta com estúdio, fundo estatal em escala europeia. Copiar isso com orçamento de produtora pequena é o equivalente a rodar a estratégia de mídia de uma marca global com verba de negócio local."
+        },
+        {
+          "p": "A Indonésia serve de espelho porque a condição de partida é mais próxima: indústria de porte médio, equipe pequena — a KawanKawan opera com um núcleo de duas sócias e uma rede de colaboradores por projeto, não um quadro fixo de dezenas de funcionários —, orçamento limitado e o circuito de festival como canal principal de distribuição."
+        },
+        {
+          "p": "A diferença entre a KawanKawan e a maioria das produtoras brasileiras não é o tamanho do orçamento. É ter transformado rede, financiamento público diplomático e produção de curtas numa estratégia deliberada e repetida, em vez de recurso usado uma vez e esquecido."
+        },
+        {
+          "p": "O filme que estreia em Cannes é o resultado. O que vale estudar é o processo: curta em vez de longa como aposta primária, coprodução com vizinho de porte parecido em vez de parceiro grande demais pra te dar atenção, financiamento pulverizado entre fontes públicas e diplomáticas em vez de depender de um único edital. Nenhum dos três exige orçamento que uma produtora brasileira pequena não tenha — exige mapeamento e repetição. Antes do próximo projeto entrar em desenvolvimento, inverta a pergunta de sempre: em vez de \"que edital existe pra isso\", pergunte \"quais embaixadas, institutos culturais e produtoras de porte parecido eu ainda não conheço?\". A resposta provavelmente cabe numa tarde de pesquisa."
+        }
+      ]
+    },
+    {
+      "slug": "briefing-documentario-vs-comercial",
+      "date": "2026 · JUL",
+      "title": "Documentário x comercial: por que o briefing precisa ser diferente.",
+      "excerpt": "Um briefing de documentário com a lista de falas que o personagem \"deve\" dizer. Um roteiro fechado cena a cena antes do primeiro depoimento. Os dois casos têm a mesma origem — e o mesmo resultado.",
+      "read": "8 min",
+      "category": "Framework",
+      "body": [
+        {
+          "p": "Você recebe um briefing de documentário com uma lista de falas que os personagens \"devem\" dizer diante da câmera. Ou aprova um roteiro fechado, cena a cena, para um filme que ainda não tem um único depoimento gravado."
+        },
+        {
+          "p": "Os dois casos têm a mesma origem: alguém aplicou a lógica de briefing comercial num formato que não funciona assim. E o resultado, quase sempre, é um documentário que parece um comercial mal disfarçado."
+        },
+        {
+          "h": "O objetivo muda: mensagem fixa vira pergunta de pesquisa"
+        },
+        {
+          "p": "Comercial começa com a mensagem decidida. Antes de qualquer câmera ligar, alguém já sabe o que a peça precisa comunicar — um benefício de produto, um posicionamento, uma emoção associada à marca — e cada plano existe pra servir essa mensagem. É um brief de controle: a conclusão vem primeiro, a filmagem só ilustra."
+        },
+        {
+          "p": "Documentário não trabalha ao contrário por capricho estético. Trabalha ao contrário porque a mensagem fixa antes da captação é incompatível com o que dá valor ao formato: a resposta real de quem está sendo filmado. Um briefing de documentário bem construído não declara o que o filme vai dizer — declara a pergunta que o filme vai investigar."
+        },
+        {
+          "p": "Pense num documentário sobre a rotina de uma equipe médica em plantão. O brief de comercial perguntaria \"como mostramos que essa equipe é eficiente e dedicada\". O brief de documentário pergunta \"como essa equipe toma decisão sob pressão de tempo\", e aceita que a resposta pode ser mais complicada, mais ambígua ou simplesmente diferente do que se imaginava ao escrever a pergunta."
+        },
+        {
+          "p": "Parece sutil no papel, mas muda tudo no set: equipe de comercial filma pra confirmar uma hipótese fechada; equipe de documentário filma pra testar uma hipótese que pode não sobreviver ao primeiro dia. Se o briefing não deixa espaço pra hipótese mudar, você não contratou um documentário — contratou um comercial com estética de documentário. O que é escolha válida, mas deveria ser nomeada como tal desde o início."
+        },
+        {
+          "p": "Essa troca redefine o próprio critério de sucesso. Sucesso de comercial é entregar a mensagem definida com clareza e impacto. Sucesso de documentário é ter feito a pergunta certa e captado uma resposta honesta a ela, mesmo que não seja a que o briefing antecipava. Um documentário \"bem-sucedido\" segundo critério de comercial — mensagem clara, tom controlado, sem ambiguidade — costuma ser, na prática, um documentário que falhou em captar algo real."
+        },
+        {
+          "h": "A aprovação muda: de roteiro fechado para direção e hipótese"
+        },
+        {
+          "p": "Em comercial, aprovação é sobre texto. Roteiro, storyboard, script de locução passam por rodadas de revisão antes da diária, e o que foi aprovado no papel é, com pequenas variações, o que sai na tela. Faz sentido: a mensagem já estava decidida, então aprovar a peça é conferir se o roteiro a entrega com precisão."
+        },
+        {
+          "p": "Documentário não funciona assim. O que se aprova é direção: abordagem estrutural, ponto de vista e principalmente os limites do que não vai ser explorado — temas sensíveis fora do escopo, por exemplo. Aprovar a fala que a pessoa vai dizer antes de gravar é pedir pra alguém decorar uma resposta. E resposta decorada é a primeira coisa que o espectador percebe como falsa."
+        },
+        {
+          "p": "O ponto de checagem certo não é \"aprove este roteiro antes da diária\". É \"aprove esta direção, esta pergunta de pesquisa, estes limites — e reserve um momento de revisão depois da captação, quando já existe material real pra avaliar, não hipótese no papel\"."
+        },
+        {
+          "h": "Orçamento e prazo: diária fechada vira tempo de captação incerto"
+        },
+        {
+          "p": "Comercial se planeja em diárias. Você sabe quantos dias precisa porque sabe exatamente o que vai ser filmado — está no roteiro aprovado. Orçamento e cronograma seguem essa previsibilidade."
+        },
+        {
+          "p": "Documentário tem uma variável que comercial não tem: você não sabe com precisão quanto tempo de captação é necessário até ter o material que sustenta a história. Às vezes o momento que carrega a cena não acontece no primeiro dia, só na segunda visita, ou na terceira. Um briefing que trata a captação como diária fixa, sem contingência, está briefando o formato errado."
+        },
+        {
+          "p": "O ajuste é simples: orçamento com dia extra reservado, usado ou não, ou cláusula clara de que a extensão da captação depende do que for necessário pra responder à pergunta de pesquisa. Isso não é desculpa pra prazo elástico sem limite — é reconhecer, desde o briefing, que documentário tem uma incerteza que precisa de espaço orçamentário, mesmo pequeno, em vez de ser ignorada até virar problema no set."
+        },
+        {
+          "p": "Também muda a forma de negociar prazo internamente. Um brief de comercial defende orçamento com escopo fechado: tantos planos, tantas locações, tantos dias. Um briefing de documentário defende com base em risco controlado: um teto de dias, um gatilho claro pra revisita — \"se o material não sustentar a pergunta de pesquisa até o dia X, há um dia extra reservado\" — e a transparência de que esse teto existe justamente pra não deixar a incerteza virar custo sem controle."
+        },
+        {
+          "h": "Comercial entrega o que foi aprovado, documentário pode entregar outra coisa"
+        },
+        {
+          "p": "Em comercial, o que foi aprovado no roteiro é, salvo ajuste fino de edição, o que o cliente recebe. A entrega confirma a expectativa criada no briefing. É o contrato do formato."
+        },
+        {
+          "p": "Em documentário, o material captado pode revelar uma história diferente da que o briefing imaginava — e um bom documentário segue essa revelação em vez de forçar o material a caber na expectativa original. No exemplo da equipe médica: o briefing pode ter sido escrito esperando um filme sobre decisão sob pressão, e a captação revelar que a cena mais forte está no silêncio da sala de espera, não no plantão. Ignorar isso pra \"entregar o que foi prometido\" produz um filme mais fraco do que o material realmente permite."
+        },
+        {
+          "p": "Gerenciar essa expectativa é trabalho do briefing, não da entrega. O documento inicial precisa deixar explícito que a narrativa final depende do que for captado, e o processo precisa prever um checkpoint na montagem, depois que existe material, pra alinhar cliente e equipe sobre o caminho que a edição está tomando. Cliente surpreendido na entrega final é sinal de briefing que não avisou essa possibilidade com antecedência."
+        },
+        {
+          "p": "Uma forma prática de escrever isso é separar duas camadas de compromisso: o que é fixo — a pergunta de pesquisa, o prazo, o formato final, os limites éticos do que pode ou não ser mostrado — e o que é aberto: a estrutura narrativa exata, quem acaba sendo o protagonista, qual cena carrega o clímax. Cliente que entende, desde a assinatura, que só a primeira camada está garantida chega ao corte final sem a sensação de que o time fugiu do combinado — porque o combinado, desde o início, incluía essa margem."
+        },
+        {
+          "h": "Onde o briefing de documentário é contaminado pela lógica de comercial"
+        },
+        {
+          "p": "Acontece com mais frequência do que se admite, e não só por parte do cliente. Produtora acostumada ao músculo do comercial cai no mesmo hábito por reflexo. Os sintomas são reconhecíveis: pedir que o personagem bata as mensagens-chave numa entrevista, querer aprovar a estrutura de edição antes de qualquer material bruto existir, tratar o cronograma de captação como diária fixa, revisar falas linha por linha antes de gravar."
+        },
+        {
+          "p": "O resultado é sempre o mesmo tipo de problema: um documentário que parece encenado, com respostas ensaiadas demais e uma estrutura que não deixa a história real aparecer. Isso anula exatamente o motivo pelo qual alguém escolhe documentário em vez de comercial. A autenticidade só existe quando a pessoa filmada não está performando uma mensagem pré-aprovada. Se o briefing tira essa liberdade, o formato perde a razão de ter sido escolhido."
+        },
+        {
+          "h": "Checklist antes de decidir qual brief usar"
+        },
+        {
+          "p": "Você já sabe exatamente o que quer que as pessoas digam diante da câmera? Se sim, é briefing de comercial — não force o formato documentário em cima disso."
+        },
+        {
+          "p": "Você consegue aceitar que a história final seja diferente da que está imaginando hoje? Existe espaço de orçamento e prazo pra um dia extra de captação, caso o material inicial não seja suficiente? O valor do projeto está na autenticidade da resposta captada ou no controle preciso da mensagem entregue? Você está disposto a aprovar direção e hipótese de pesquisa, em vez de roteiro e falas prontas?"
+        },
+        {
+          "p": "Se a maioria das respostas aponta pra controle, mensagem fixa e roteiro fechado, o formato certo é comercial — mesmo que use recursos estéticos de documentário, como câmera na mão ou luz natural. Isso não é problema, é apenas nomear o formato pelo que ele é."
+        },
+        {
+          "p": "Comercial e documentário não são dois estilos do mesmo briefing. São dois briefings diferentes, com processos de aprovação, orçamento e gestão de expectativa que não se sobrepõem. Confundir os dois não é erro de execução, é erro de briefing — e aparece na tela como falta de naturalidade num formato que só se sustenta pela naturalidade. Antes do próximo projeto, decida primeiro qual pergunta está sendo feita: mensagem fixa ou pergunta de pesquisa. Só depois escreva o briefing."
+        }
+      ]
+    },
+    {
       "slug": "cobertura-tempo-real-evento",
-      "date": "2026 · MAI",
+      "date": "2026 · JAN",
       "title": "Cobertura em tempo real evento: como entregar conteúdo enquanto o show acontece.",
       "excerpt": "O segundo dia de um festival grande começa às 13h. Às 19h, antes do headliner subir, a marca já quer um corte no story. É no pipeline que se ganha, não no equipamento.",
       "read": "8 min",
@@ -51,7 +306,7 @@
     },
     {
       "slug": "branded-vs-publicidade",
-      "date": "2026 · MAI",
+      "date": "2026 · FEV",
       "title": "Branded content vs publicidade tradicional: a diferença que multiplica resultado.",
       "excerpt": "Publicidade tradicional interrompe. Branded é procurado. A frase de efeito é meio verdadeira e meio mentira, a diferença real está nos quatro critérios que ninguém quer rodar.",
       "read": "7 min",
@@ -100,7 +355,7 @@
     },
     {
       "slug": "video-referencia-5-ingredientes",
-      "date": "2026 · MAI",
+      "date": "2026 · MAR",
       "title": "O que faz um vídeo virar referência: 5 ingredientes invisíveis.",
       "excerpt": "Nike, A24, Arc'teryx, Apple. Sempre os mesmos nomes aparecem nas reuniões. A resposta não está no equipamento, nem no orçamento, nem no diretor famoso.",
       "read": "9 min",
@@ -149,7 +404,7 @@
     },
     {
       "slug": "bastidores-lollapalooza-72h",
-      "date": "2026 · MAI",
+      "date": "2026 · ABR",
       "title": "Bastidores cobertura Lollapalooza: 72 horas de captação, edição e entrega em tempo real.",
       "excerpt": "Sexta-feira, 9h da manhã. A van já tá carregada. Quatro câmeras, dois drones, três notebooks. A próxima vez que esse equipamento vai parar é segunda à tarde.",
       "read": "10 min",

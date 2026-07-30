@@ -15,7 +15,7 @@ export default defineConfig({
     collections: [
       {
         name: "home", label: "Home (textos)", path: "content", format: "json",
-        match: { include: "home" }, ui: { allowedActions: { create:false, delete:false } },
+        match: { include: "home" }, ui: { allowedActions: { create:false, delete:false }, router: () => "/" },
         fields: [
           S("heroEyebrow","Hero — sobrelinha"),
           S("heroTitle1","Hero — titulo linha 1"), S("heroTitle2","Hero — titulo linha 2"), S("heroAccent","Hero — palavra destaque"),
@@ -54,7 +54,7 @@ export default defineConfig({
           fields:[ S("slug","Slug"), S("title","Título",{ui:{component:"textarea"}}), S("client","Cliente"), S("tag","Tag"), S("year","Ano"),
             S("category","Categoria"), S("format","Formato"), S("team","Equipe",{ui:{component:"textarea"}}), S("gear","Equipamento",{ui:{component:"textarea"}}),
             S("summary","Resumo",{ui:{component:"textarea"}}),
-            S("still","Foto de capa (caminho)"), S("video","Vídeo de preview (caminho)"), S("poster","Poster do vídeo (caminho)"),
+            S("still","Foto de capa (caminho)"), S("video","Vídeo de preview (caminho)"), S("poster","Poster do vídeo (caminho)"), S("vimeoId","ID do Vimeo (opcional — quando preenchido, substitui o vídeo local)"),
             { type:"object", name:"body", label:"Corpo (seções)", list:true, ui:{itemProps:(b:any)=>({label:b?.h||"Parágrafo"})},
               fields:[ S("h","Título da seção"), S("p","Parágrafo",{ui:{component:"textarea"}}) ] } ] }],
       },
@@ -94,6 +94,19 @@ export default defineConfig({
           { type:"boolean", name:"showMarcas",   label:"Mostrar secao 'Marcas' (home)" },
           { type:"boolean", name:"showHub",      label:"Mostrar secao 'MUV Hub' (home)" },
           { type:"boolean", name:"showBlog",     label:"Mostrar secao 'Blog' (home)" },
+          { type:"boolean", name:"showStats",     label:"Home: mostrar Numeros/estatisticas" },
+          { type:"boolean", name:"showMarquee",   label:"Home: mostrar Esteira de palavras" },
+          { type:"boolean", name:"showManifesto", label:"Home: mostrar Manifesto" },
+          { type:"boolean", name:"showServicos",  label:"Home: mostrar secao Servicos" },
+          { type:"boolean", name:"showProcesso",  label:"Home: mostrar secao Processo" },
+          { type:"boolean", name:"showTrabalhos", label:"Home: mostrar secao Cases" },
+          { type:"boolean", name:"showCTA",       label:"Home: mostrar Chamada final (CTA)" },
+          { type:"boolean", name:"navServicos",   label:"Menu/Pagina: Servicos" },
+          { type:"boolean", name:"navProcesso",   label:"Menu/Pagina: Processo" },
+          { type:"boolean", name:"navTrabalhos",  label:"Menu/Pagina: Trabalhos" },
+          { type:"boolean", name:"navSobre",      label:"Menu/Pagina: Sobre" },
+          { type:"boolean", name:"navHub",        label:"Menu/Pagina: MUV Hub" },
+          { type:"boolean", name:"navBlog",       label:"Menu/Pagina: Blog" },
         ],
       },
       {
