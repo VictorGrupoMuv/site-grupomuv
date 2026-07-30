@@ -128,10 +128,12 @@ const NAV_ITEMS = [
 { id: "blog", label: "Blog" },
 { id: "faq", label: "FAQ", hideFromHeader: true },
 { id: "contato", label: "Contato", hideFromHeader: true }];
+const NAV_OFF = { servicos:"navServicos", processo:"navProcesso", trabalhos:"navTrabalhos", sobre:"navSobre", hub:"navHub", blog:"navBlog" };
+const navOn = (n) => { const k = NAV_OFF[n.id]; return k ? SETTINGS[k] !== false : true; };
 
 
 // Header e Drawer escondem itens marcados hideFromHeader (ex: FAQ vai só no Footer)
-const HEADER_ITEMS = NAV_ITEMS.filter((n) => !n.hideFromHeader);
+const HEADER_ITEMS = NAV_ITEMS.filter((n) => !n.hideFromHeader && navOn(n));
 const DRAWER_ITEMS = HEADER_ITEMS.filter((n) => n.id !== "home");
 // Só entram redes com URL real: href="#" lê como "empresa desativada".
 const DRAWER_SOCIALS = [
@@ -274,7 +276,7 @@ function Footer({ setCurrent }) {
         <div className="footer__col">
           <p className="footer__col-title">Navegação</p>
           <ul>
-            {NAV_ITEMS.slice(1).filter((n) => !n.hideFromFooter).map((n) =>
+            {NAV_ITEMS.slice(1).filter((n) => !n.hideFromFooter && navOn(n)).map((n) =>
             <li key={n.id}><a href={ROUTES[n.id]} onClick={go(n.id)}>{n.label} <ArrowDiag size={10} /></a></li>
             )}
             <li><a href={ROUTES.contato} onClick={go("contato")}>Contato <ArrowDiag size={10} /></a></li>
@@ -636,6 +638,7 @@ function Home({ setCurrent, density, content }) {
       </section>
 
       {/* STATS */}
+      {SETTINGS.showStats !== false && (
       <section className="hero-stats">
         <div className="hero-stats__inner">
           <StatCounter prefix="+" target={120} label="Produções entregues" />
@@ -644,11 +647,13 @@ function Home({ setCurrent, density, content }) {
           <StatCounter target={1} pad={2} label="Hub criativo, quatro frentes" accent />
         </div>
       </section>
+      )}
 
       {/* MARQUEE */}
-      <Marquee items={MQ} />
+      {SETTINGS.showMarquee !== false && <Marquee items={MQ} />}
 
       {/* MANIFESTO */}
+      {SETTINGS.showManifesto !== false && (
       <section className="section" style={{ paddingTop: 41, paddingBottom: 84 }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 3fr", gap: 48, alignItems: "start", fontFamily: "\"Archivo Black\"", fontWeight: "200" }}>
           <div>
@@ -662,8 +667,10 @@ function Home({ setCurrent, density, content }) {
           </p>
         </div>
       </section>
+      )}
 
       {/* SERVIÇOS */}
+      {SETTINGS.showServicos !== false && (
       <section className="section section--dark" style={{ paddingTop: 76, paddingBottom: 76 }}>
         <SectionHead num="02" eyebrow={H.srvEyebrow} title={H.srvTitle} sub={H.srvSub} ef={tf(H,'srvEyebrow')} tfld={tf(H,'srvTitle')} sf={tf(H,'srvSub')} />
         
@@ -676,8 +683,10 @@ function Home({ setCurrent, density, content }) {
           <button className="btn btn--ghost-dark" onClick={() => setCurrent("servicos")}>Detalhar serviços <Arrow /></button>
         </div>
       </section>
+      )}
 
       {/* PROCESSO (preview clicável) */}
+      {SETTINGS.showProcesso !== false && (
       <section className="section" style={{ paddingTop: 64, paddingBottom: 32 }}>
         <SectionHead num="03" eyebrow={H.prcEyebrow} title={H.prcTitle} sub={H.prcSub} ef={tf(H,'prcEyebrow')} tfld={tf(H,'prcTitle')} sf={tf(H,'prcSub')} />
 
@@ -688,8 +697,10 @@ function Home({ setCurrent, density, content }) {
           <div className="step"><div className="step__num">···</div><div></div><div></div><div style={{ textAlign: "right" }}><button className="link-arrow" onClick={() => setCurrent("processo")} style={{ background: "transparent", border: 0, padding: 0, font: "inherit" }}>Ver processo completo <Arrow /></button></div></div>
         </div>
       </section>
+      )}
 
       {/* TRABALHOS PREVIEW */}
+      {SETTINGS.showTrabalhos !== false && (
       <section className="section" style={{ paddingTop: 32, paddingBottom: 64 }}>
         <SectionHead num="04" eyebrow={H.trbEyebrow} title={H.trbTitle} sub={H.trbSub} ef={tf(H,'trbEyebrow')} tfld={tf(H,'trbTitle')} sf={tf(H,'trbSub')} />
         
@@ -700,6 +711,7 @@ function Home({ setCurrent, density, content }) {
           <button className="btn btn--ghost" onClick={() => setCurrent("trabalhos")}>Ver todos os trabalhos <Arrow /></button>
         </div>
       </section>
+      )}
 
       {/* MARCAS, esteira */}
       {SETTINGS.showMarcas !== false && (
@@ -750,7 +762,7 @@ function Home({ setCurrent, density, content }) {
       )}
 
       {/* CTA FINAL */}
-      <HomeCTA setCurrent={setCurrent} />
+      {SETTINGS.showCTA !== false && <HomeCTA setCurrent={setCurrent} />}
     </div>);
 
 }
@@ -2151,7 +2163,9 @@ function App({ page = "home", slug = null, tina = null }) {
   const isDark = DARK_NAV_PAGES.has(current) || (current === "home" && !scrolledPastHero);
 
   let Page = Home;
-  if      (current === "servicos")  Page = Servicos;
+  const _navKey = NAV_OFF[current] || (String(current).startsWith("hub") ? "navHub" : null);
+  if (_navKey && SETTINGS[_navKey] === false) Page = Home;
+  else if (current === "servicos")  Page = Servicos;
   else if (current === "processo")  Page = Processo;
   else if (current === "trabalhos") Page = Trabalhos;
   else if (current === "sobre")     Page = Sobre;
