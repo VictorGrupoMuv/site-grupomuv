@@ -15,7 +15,7 @@ export default defineConfig({
     collections: [
       {
         name: "home", label: "Home (textos)", path: "content", format: "json",
-        match: { include: "home" }, ui: { allowedActions: { create:false, delete:false } },
+        match: { include: "home" }, ui: { allowedActions: { create:false, delete:false }, router: () => "/" },
         fields: [
           S("heroEyebrow","Hero — sobrelinha"),
           S("heroTitle1","Hero — titulo linha 1"), S("heroTitle2","Hero — titulo linha 2"), S("heroAccent","Hero — palavra destaque"),
@@ -54,7 +54,7 @@ export default defineConfig({
           fields:[ S("slug","Slug"), S("title","Título",{ui:{component:"textarea"}}), S("client","Cliente"), S("tag","Tag"), S("year","Ano"),
             S("category","Categoria"), S("format","Formato"), S("team","Equipe",{ui:{component:"textarea"}}), S("gear","Equipamento",{ui:{component:"textarea"}}),
             S("summary","Resumo",{ui:{component:"textarea"}}),
-            S("still","Foto de capa (caminho)"), S("video","Vídeo de preview (caminho)"), S("poster","Poster do vídeo (caminho)"),
+            S("still","Foto de capa (caminho)"), S("video","Vídeo de preview (caminho)"), S("poster","Poster do vídeo (caminho)"), S("vimeoId","ID do Vimeo (opcional — quando preenchido, substitui o vídeo local)"),
             { type:"object", name:"body", label:"Corpo (seções)", list:true, ui:{itemProps:(b:any)=>({label:b?.h||"Parágrafo"})},
               fields:[ S("h","Título da seção"), S("p","Parágrafo",{ui:{component:"textarea"}}) ] } ] }],
       },

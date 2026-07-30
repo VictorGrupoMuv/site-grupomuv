@@ -44,15 +44,18 @@ function ArrowDiag({ size = 14 }) {
 }
 
 // ───── Cinematic placeholder ─────────────────────────────────────────────────
-function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = "default", play = false, center, style, className = "", src = null, video = null, poster = null, alt = "" }) {
+function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = "default", play = false, center, style, className = "", src = null, video = null, poster = null, vimeoId = null, alt = "" }) {
   const variantClass = variant === "dark" ? "cine--dark" : variant === "accent" ? "cine--accent" : "";
-  const hasMedia = Boolean(src || video);
+  const hasMedia = Boolean(src || video || vimeoId);
   return (
     <div
-      className={`cine ${variantClass} ${hasMedia ? "cine--media" : ""} ${video ? "cine--video-slot" : ""} ${className}`}
+      className={`cine ${variantClass} ${hasMedia ? "cine--media" : ""} ${video || vimeoId ? "cine--video-slot" : ""} ${className}`}
       style={{ aspectRatio: aspect, ...style, fontSize: "10px", width: "100%" }}>
 
-      {video ?
+      {vimeoId ?
+      <iframe className="cine__img cine__video" src={`https://player.vimeo.com/video/${vimeoId}?dnt=1&title=0&byline=0&portrait=0`}
+        title={alt || label} frameBorder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen /> :
+      video ?
       <video className="cine__img cine__video" src={video} poster={poster || src || undefined}
         controls playsInline preload="none" /> :
       src ?
@@ -68,8 +71,8 @@ function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = 
       center ?
       <span className="cine__center">{center}</span> :
       null}
-      {video ? null : <span className="cine__label">{label}</span>}
-      {video ? null : <span className="cine__corner">REC ●</span>}
+      {video || vimeoId ? null : <span className="cine__label">{label}</span>}
+      {video || vimeoId ? null : <span className="cine__corner">REC ●</span>}
     </div>);
 
 }
@@ -1100,7 +1103,7 @@ function Trabalhos({ setCurrent, slug = null }) {
             <p className="body-l case-detail__lead">{t.summary}</p>
           </header>
           <div className="case-detail__hero">
-            <Cine video={t.video} poster={t.poster} src={t.still} alt={`${t.title.replace(/\n/g, " ")} — ${t.client}`} label={t.title.toUpperCase().replace(/\n/g, " ")} code={`CASE.${String(selected + 1).padStart(2, "0")}`} aspect="16/9" variant="accent" play />
+            <Cine vimeoId={t.vimeoId} video={t.vimeoId ? null : t.video} poster={t.poster} src={t.still} alt={`${t.title.replace(/\n/g, " ")} — ${t.client}`} label={t.title.toUpperCase().replace(/\n/g, " ")} code={`CASE.${String(selected + 1).padStart(2, "0")}`} aspect="16/9" variant="accent" play />
           </div>
 
           <section className="case-detail__specs">
@@ -1206,7 +1209,13 @@ function Trabalhos({ setCurrent, slug = null }) {
           </h2>
         </div>
         <div className="works-reel__media">
-          <Cine label="REEL EXTENDED · 03'20" code="REEL.FULL" aspect="16/9" variant="dark" play />
+          <div style={{ maxWidth: 420, margin: "0 auto" }}>
+            <Cine
+              video="/assets/reel-social.mp4"
+              poster="/assets/reel-social-poster.jpg"
+              label="REEL SOCIAL · 00'30"
+              code="REEL.FULL" aspect="9/16" variant="dark" />
+          </div>
         </div>
       </section>
     </div>);
@@ -1494,8 +1503,8 @@ function HubStudio({ setCurrent }) {
       <section className="section">
         <SectionHead num="01" eyebrow="Estúdio em fotos" title="Como é o espaço." />
         <div className="hub-studio-gallery">
-          <Cine label="CICLORAMA · L-SHAPE" code="STUDIO.01" aspect="16/9" variant="dark" />
-          <Cine label="MESA DE PRODUÇÃO" code="STUDIO.02" aspect="4/3" variant="accent" />
+          <Cine src="/assets/hub/studio-01.jpg" alt="Ciclorama L-shape do estúdio MUV, com softbox montado" label="CICLORAMA · L-SHAPE" code="STUDIO.01" aspect="16/9" variant="dark" />
+          <Cine src="/assets/hub/studio-02.jpg" alt="Equipamento de produção organizado: câmeras, lentes, drone e iluminação" label="EQUIPAMENTO EM BANCADA" code="STUDIO.02" aspect="16/9" variant="accent" />
           <Cine label="ILUMINAÇÃO MONTADA" code="STUDIO.03" aspect="4/3" />
         </div>
       </section>
@@ -1655,9 +1664,9 @@ function HubCowork({ setCurrent }) {
       <section className="section">
         <SectionHead num="01" eyebrow="O espaço" title="Como é o cowork." />
         <div className="hub-studio-gallery">
-          <Cine label="MESAS COMPARTILHADAS" code="COW.01" aspect="16/9" variant="accent" />
-          <Cine label="SALA DE REUNIÃO" code="COW.02" aspect="4/3" />
-          <Cine label="LOUNGE & CAFÉ" code="COW.03" aspect="4/3" variant="dark" />
+          <Cine src="/assets/hub/cow-01.jpg" alt="Mesas compartilhadas do cowork MUV em uso" label="MESAS COMPARTILHADAS" code="COW.01" aspect="16/9" variant="accent" />
+          <Cine src="/assets/hub/cow-02.jpg" alt="Sala de reunião do cowork MUV" label="SALA DE REUNIÃO" code="COW.02" aspect="4/3" />
+          <Cine src="/assets/hub/cow-03.jpg" alt="Área de convivência do cowork MUV" label="LOUNGE & CAFÉ" code="COW.03" aspect="4/3" variant="dark" />
         </div>
       </section>
 
