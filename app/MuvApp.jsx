@@ -279,7 +279,6 @@ function Footer({ setCurrent }) {
             {NAV_ITEMS.slice(1).filter((n) => !n.hideFromFooter && navOn(n)).map((n) =>
             <li key={n.id}><a href={ROUTES[n.id]} onClick={go(n.id)}>{n.label} <ArrowDiag size={10} /></a></li>
             )}
-            <li><a href={ROUTES.contato} onClick={go("contato")}>Contato <ArrowDiag size={10} /></a></li>
           </ul>
         </div>
         <div className="footer__col">
@@ -671,16 +670,24 @@ function Home({ setCurrent, density, content }) {
 
       {/* SERVIÇOS */}
       {SETTINGS.showServicos !== false && (
-      <section className="section section--dark" style={{ paddingTop: 76, paddingBottom: 76 }}>
+      <section className="section home-capabilities">
         <SectionHead num="02" eyebrow={H.srvEyebrow} title={H.srvTitle} sub={H.srvSub} ef={tf(H,'srvEyebrow')} tfld={tf(H,'srvTitle')} sf={tf(H,'srvSub')} />
-        
-        <div className="grid-2">
-          {SRV.map((s, i) =>
-          <ServiceCardDark key={s.num} {...s} />
+
+        <div className="home-capabilities__grid">
+          {SRV.map((s) =>
+          <article className="home-capability" key={s.num}>
+            <div className="home-capability__meta">
+              <span className="mono">// {s.num}</span>
+              <span className="pill pill--accent">{s.tag}</span>
+            </div>
+            <h3>{s.title}</h3>
+            <p>{s.desc}</p>
+            <p className="mono home-capability__items">{s.items.join(" · ")}</p>
+          </article>
           )}
         </div>
-        <div style={{ marginTop: 48, display: "flex", justifyContent: "flex-end" }}>
-          <button className="btn btn--ghost-dark" onClick={() => setCurrent("servicos")}>Detalhar serviços <Arrow /></button>
+        <div className="home-capabilities__footer">
+          <a className="btn btn--ghost" href={ROUTES.servicos} onClick={(e) => {e.preventDefault();setCurrent("servicos");}}>Detalhar serviços <Arrow /></a>
         </div>
       </section>
       )}
@@ -740,18 +747,23 @@ function Home({ setCurrent, density, content }) {
 
       {/* MUV HUB TEASER */}
       {SETTINGS.showHub !== false && (
-      <section className="section section--ink" style={{ position: "relative", overflow: "hidden", paddingTop: 64, paddingBottom: 64 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
-          <div>
+      <section className="section section--ink home-hub">
+        <div className="home-hub__bridge">
+          <span className="mono">Do briefing para a produção</span>
+          <span aria-hidden="true">↓</span>
+          <span className="mono">e da produção para a comunidade</span>
+        </div>
+        <div className="home-hub__layout">
+          <div className="home-hub__copy">
             <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }} data-tina-field={tf(H,'hubEyebrow')}>{H.hubEyebrow}</p>
-            <h2 className="display" style={{ color: "var(--bg)", marginTop: 24, fontSize: "106px", margin: "24px 0 24px", letterSpacing: "-5px", lineHeight: "1" }}>
+            <h2 className="display home-hub__title">
               MUV <span style={{ color: "var(--accent)" }} data-tina-field={tf(H,'hubAccent')}>{H.hubAccent}</span>
             </h2>
-            <p style={{ color: "var(--bg)", fontFamily: "\"Archivo Black\"", fontWeight: "100", fontStyle: "normal", letterSpacing: "-1.9px", fontSize: "52px", lineHeight: "1", margin: "0 0 32px" }} data-tina-field={tf(H,'hubTagline')}>{H.hubTagline}</p>
+            <p className="home-hub__tagline" data-tina-field={tf(H,'hubTagline')}>{H.hubTagline}</p>
             <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 24, maxWidth: 480, fontWeight: "100" }} data-tina-field={tf(H,'hubBody')}>{H.hubBody}</p>
             <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <button className="btn btn--primary" onClick={() => setCurrent("hub")}>Conhecer o Hub <Arrow /></button>
-              <button className="btn btn--ghost-dark">Entrar na lista <Arrow /></button>
+              <a className="btn btn--primary" href={ROUTES.hub} onClick={(e) => {e.preventDefault();setCurrent("hub");}}>Conhecer o Hub <Arrow /></a>
+              <a className="btn btn--ghost-dark" href={ROUTES.hub} onClick={(e) => {e.preventDefault();setCurrent("hub");}}>Entrar na lista <Arrow /></a>
             </div>
           </div>
           <div className="hub-grid">
@@ -896,6 +908,11 @@ function HomeCTA({ setCurrent }) {
           <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 32, maxWidth: 420, fontFamily: "Inter", fontWeight: "200" }}>
             Conta o que você quer fazer. A gente volta com diagnóstico, escopo e timeline. Sem proposta genérica.
           </p>
+          <ol className="home-cta__steps" aria-label="O que acontece depois do briefing">
+            <li><span>01</span><strong>Leitura</strong><small>A gente entende contexto e objetivo.</small></li>
+            <li><span>02</span><strong>Diagnóstico</strong><small>Você recebe caminho, escopo e prioridades.</small></li>
+            <li><span>03</span><strong>Próximo passo</strong><small>Alinhamos timeline e formato de produção.</small></li>
+          </ol>
           <div style={{ marginTop: 40, display: "flex", gap: 12, flexWrap: "wrap" }}>
             <button className="btn btn--ghost-dark" onClick={() => setCurrent("trabalhos")}>Ver portfolio <Arrow /></button>
             <button className="btn btn--ghost-dark" onClick={() => setCurrent("contato")}>Briefing completo <Arrow /></button>
@@ -1101,9 +1118,9 @@ function Trabalhos({ setCurrent, slug = null }) {
       <div className="page" data-screen-label="CaseDetail">
         <article className="case-detail">
           <div className="case-detail__nav">
-            <button className="link-arrow link-arrow--back" onClick={openList}>
+            <a className="link-arrow link-arrow--back" href="/trabalhos/" onClick={(e) => {e.preventDefault();openList();}}>
               <span style={{ transform: "rotate(180deg)", display: "inline-block" }}><Arrow /></span> Todos os cases
-            </button>
+            </a>
           </div>
           <header className="case-detail__head">
             <div className="case-detail__meta">
@@ -1135,7 +1152,7 @@ function Trabalhos({ setCurrent, slug = null }) {
 
           <div className="case-detail__body">
             {t.body.map((b, i) =>
-              <div key={i} className="case-detail__block">
+              <div key={i} className={`case-detail__block ${b.h.toLowerCase().includes("resultado") ? "case-detail__block--result" : ""}`}>
                 <h2 className="case-detail__h2">{b.h}</h2>
                 <p className="case-detail__p">{b.p}</p>
               </div>
@@ -1146,8 +1163,8 @@ function Trabalhos({ setCurrent, slug = null }) {
             <p className="eyebrow eyebrow-dot">Próximo passo</p>
             <h3 className="h2" style={{ marginTop: 16 }}>Briefing parecido no seu radar?</h3>
             <div style={{ marginTop: 24, display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <button className="btn btn--ink" onClick={() => setCurrent("contato")}>Começar um projeto <Arrow /></button>
-              <button className="btn btn--ghost" onClick={openList}>Ver outros cases</button>
+              <a className="btn btn--ink" href={ROUTES.contato} onClick={(e) => {e.preventDefault();setCurrent("contato");}}>Começar um projeto <Arrow /></a>
+              <a className="btn btn--ghost" href="/trabalhos/" onClick={(e) => {e.preventDefault();openList();}}>Ver outros cases</a>
             </div>
           </footer>
         </article>
@@ -1242,6 +1259,13 @@ function Sobre({ setCurrent }) {
     <div className="page" data-screen-label="Sobre">
       <PageHead crumb="04 · Sobre" title={"Produtora audiovisual.\nEstrutura de hub criativo."} lead="Começamos produzindo pra eventos, marcas em crescimento e artistas independentes. Hoje operamos no nível de exigência dos grandes anunciantes — sem perder o que nos fez começar." accent="hub criativo" meta="Equipe · Manifesto · Pilares" />
 
+      <section className="about-proof" aria-label="Números e estrutura do Grupo MUV">
+        <div><strong>+120</strong><span>produções entregues</span></div>
+        <div><strong>+30</strong><span>marcas parceiras</span></div>
+        <div><strong>4</strong><span>capacidades integradas</span></div>
+        <div><strong>SP</strong><span>produtora + hub criativo</span></div>
+      </section>
+
       {/* MANIFESTO */}
       <section className="section about-manifesto">
         <div className="about-manifesto__inner">
@@ -1326,14 +1350,14 @@ function Sobre({ setCurrent }) {
 function MuvHub({ setCurrent }) {
   return (
     <div className="page" data-screen-label="MuvHub">
-      <section className="hero" style={{ borderBottom: "1px solid var(--line)" }}>
+      <section className="hero hub-overview-hero" style={{ borderBottom: "1px solid var(--line)" }}>
         <div className="hero__top">
           <span className="pill pill--accent pill--dot">Em breve · 2026</span>
           <p className="mono" style={{ color: "var(--ink-3)" }}>// HUB.OVERVIEW</p>
         </div>
-        <h1 className="hero__display" style={{ letterSpacing: "0px", textAlign: "left" }}>
+        <h1 className="hero__display hub-overview-hero__title">
           MUV <span className="accent">Hub.</span><br />
-          <span className="italic" style={{ fontSize: "145px" }}>Onde a produção acontece.</span>
+          <span className="italic hub-overview-hero__line">Onde a produção acontece.</span>
         </h1>
         <p className="hero__sub" style={{ marginTop: 48 }}>
           Locadora de equipamentos, reserva de studio e comunidade criativa
@@ -1372,7 +1396,7 @@ function MuvHub({ setCurrent }) {
         </div>
       </section>
 
-      <section className="section section--dark" style={{ textAlign: "center", padding: "148px 86px 68px" }}>
+      <section className="section section--dark hub-waitlist">
         <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)", display: "inline-flex" }}>Lançamento · 2026</p>
         <h2 className="display" style={{ marginTop: 24, fontSize: "clamp(48px, 8vw, 140px)" }}>
           Lista de <span style={{ color: "var(--accent)", fontStyle: "italic", fontWeight: 400 }}>espera</span><br />prioritária.
@@ -1380,7 +1404,7 @@ function MuvHub({ setCurrent }) {
         <p className="body-l" style={{ color: "var(--dark-ink-2)", maxWidth: 540, margin: "32px auto 0" }}>
           Quem entra na lista agora tem acesso antecipado, condição de fundador e prioridade na agenda de studio.
         </p>
-        <div style={{ marginTop: 48, maxWidth: 480, margin: "48px auto 0", display: "flex", gap: 8 }}>
+        <div className="hub-waitlist__form">
           <input
             type="email"
             placeholder="seu@email.com"
@@ -1767,9 +1791,9 @@ function Blog({ setCurrent, slug = null }) {
       <div className="page" data-screen-label="BlogPost">
         <article className="post-detail">
           <div className="post-detail__nav">
-            <button className="link-arrow link-arrow--back" onClick={openList}>
+            <a className="link-arrow link-arrow--back" href="/blog/" onClick={(e) => {e.preventDefault();openList();}}>
               <span style={{ transform: "rotate(180deg)", display: "inline-block" }}><Arrow /></span> Todos os textos
-            </button>
+            </a>
           </div>
           <header className="post-detail__head">
             <div className="post-detail__meta">
@@ -1778,14 +1802,24 @@ function Blog({ setCurrent, slug = null }) {
             </div>
             <h1 className="post-detail__title">{post.title}</h1>
             <p className="body-l post-detail__lead">{post.excerpt}</p>
+            <div className="post-detail__byline">
+              <span>Por Grupo MUV · Equipe editorial</span>
+              <span>Prática de produção audiovisual em São Paulo</span>
+            </div>
           </header>
           <div className="post-detail__hero">
             <Cine src={post.cover} hideLabel={Boolean(post.cover)} alt={post.coverAlt || post.title} label={post.title.toUpperCase()} code={`POST.${String(selected + 1).padStart(2, "0")}`} aspect="16/9" variant={selected % 3 === 0 ? "accent" : selected % 3 === 1 ? "dark" : "default"} />
           </div>
+          <nav className="post-detail__toc" aria-label="Neste artigo">
+            <p className="eyebrow eyebrow-dot">Neste artigo</p>
+            <ol>
+              {post.body.map((b, i) => b.h ? <li key={i}><a href={`#secao-${i}`}>{b.h}</a></li> : null)}
+            </ol>
+          </nav>
           <div className="post-detail__body">
             {post.body.map((b, i) =>
               b.h ?
-                <h2 key={i} className="post-detail__h2">{b.h}</h2> :
+                <h2 key={i} id={`secao-${i}`} className="post-detail__h2">{b.h}</h2> :
                 <p key={i} className="post-detail__p">{b.p}</p>
             )}
           </div>
@@ -1793,8 +1827,8 @@ function Blog({ setCurrent, slug = null }) {
             <p className="eyebrow eyebrow-dot">Próximo passo</p>
             <h3 className="h2" style={{ marginTop: 16 }}>Próximo projeto que pede esse tipo de operação?</h3>
             <div style={{ marginTop: 24, display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <button className="btn btn--ink" onClick={() => setCurrent("contato")}>Falar com a gente <Arrow /></button>
-              <button className="btn btn--ghost" onClick={openList}>Ver outros textos</button>
+              <a className="btn btn--ink" href={ROUTES.contato} onClick={(e) => {e.preventDefault();setCurrent("contato");}}>Falar com a gente <Arrow /></a>
+              <a className="btn btn--ghost" href="/blog/" onClick={(e) => {e.preventDefault();openList();}}>Ver outros textos</a>
             </div>
           </footer>
         </article>
@@ -1912,9 +1946,9 @@ function Contato({ setCurrent }) {
       <PageHead crumb="06 · Contato" title="A gente lê todo briefing." lead="Conta o que você quer fazer. A gente volta com diagnóstico, próximo passo e timeline. Sem proposta genérica." accent="briefing" meta="Briefing · Diagnóstico · Escopo" />
 
       <section className="section">
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 64 }}>
+        <div className="contact-layout">
           {/* Sidebar */}
-          <aside style={{ position: "sticky", top: 120, alignSelf: "start" }}>
+          <aside className="contact-sidebar">
             <p className="eyebrow eyebrow-dot">Direto</p>
             <ul style={{ listStyle: "none", padding: 0, marginTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
               <li><a className="link-arrow" href="mailto:contato@grupomuv.com.br">contato@grupomuv.com.br <Arrow /></a></li>
@@ -1940,8 +1974,8 @@ function Contato({ setCurrent }) {
           </aside>
 
           {/* Form */}
-          <div>
-            <div style={{ display: "flex", gap: 24, marginBottom: 48 }}>
+          <div className="contact-form">
+            <div className="contact-progress">
               {[1, 2, 3].map((n) =>
               <div key={n} style={{ display: "flex", alignItems: "center", gap: 10, opacity: step >= n ? 1 : 0.4 }}>
                   <span style={{ width: 28, height: 28, borderRadius: "50%", border: `1px solid ${step >= n ? "var(--accent)" : "var(--line)"}`, background: step > n ? "var(--accent)" : "transparent", color: step > n ? "#fff" : step === n ? "var(--accent)" : "var(--ink-3)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-mono)", fontSize: 11 }}>
@@ -1953,7 +1987,7 @@ function Contato({ setCurrent }) {
             </div>
 
             {step === 1 &&
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
+            <div className="contact-fields-grid">
                 <div className="field"><label>Seu nome</label><input value={data.name} onChange={(e) => setData({ ...data, name: e.target.value })} /></div>
                 <div className="field"><label>Marca / Empresa</label><input value={data.company} onChange={(e) => setData({ ...data, company: e.target.value })} /></div>
                 <div className="field"><label>E-mail</label><input type="email" value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })} /></div>

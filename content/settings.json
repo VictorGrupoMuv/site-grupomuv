@@ -7,7 +7,7 @@
   "showStats": true,
   "showMarquee": false,
   "showManifesto": true,
-  "showServicos": false,
+  "showServicos": true,
   "showProcesso": true,
   "showTrabalhos": true,
   "showCTA": true,
