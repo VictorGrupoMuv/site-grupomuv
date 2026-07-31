@@ -144,13 +144,36 @@ const DRAWER_SOCIALS = [
 function Nav({ current, setCurrent, isDark }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const firstLinkRef = useRef(null);
+  const menuTriggerRef = useRef(null);
+  const drawerRef = useRef(null);
 
   useEffect(() => {
     if (!menuOpen) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     document.body.classList.add("drawer-active");
-    const onKey = (e) => { if (e.key === "Escape") setMenuOpen(false); };
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setMenuOpen(false);
+        return;
+      }
+      if (e.key !== "Tab" || !drawerRef.current) return;
+      const drawerItems = Array.from(drawerRef.current.querySelectorAll(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      ));
+      const focusables = [menuTriggerRef.current, ...drawerItems].filter(Boolean);
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
     window.addEventListener("keydown", onKey);
     const focusTimer = setTimeout(() => {
       if (firstLinkRef.current) firstLinkRef.current.focus();
@@ -160,6 +183,7 @@ function Nav({ current, setCurrent, isDark }) {
       document.body.classList.remove("drawer-active");
       window.removeEventListener("keydown", onKey);
       clearTimeout(focusTimer);
+      window.requestAnimationFrame(() => menuTriggerRef.current?.focus());
     };
   }, [menuOpen]);
 
@@ -191,6 +215,7 @@ function Nav({ current, setCurrent, isDark }) {
           Falar com a gente <Arrow />
         </a>
         <button
+          ref={menuTriggerRef}
           className={`nav__burger ${menuOpen ? "nav__burger--open" : ""}`}
           aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
           aria-expanded={menuOpen}
@@ -203,6 +228,7 @@ function Nav({ current, setCurrent, isDark }) {
       </nav>
 
       <div
+        ref={drawerRef}
         id="muv-drawer"
         className={`drawer ${menuOpen ? "drawer--open" : ""}`}
         role="dialog"
@@ -277,7 +303,7 @@ function Footer({ setCurrent }) {
           <details className="footer__group">
             <summary>Navegação <span aria-hidden="true">+</span></summary>
             <ul>
-              {NAV_ITEMS.slice(1).filter((n) => !n.hideFromFooter && navOn(n)).map((n) =>
+              {NAV_ITEMS.slice(1).filter((n) => !n.hideFromFooter).map((n) =>
               <li key={n.id}><a href={ROUTES[n.id]} onClick={go(n.id)}>{n.label} <ArrowDiag size={10} /></a></li>
               )}
             </ul>
@@ -362,7 +388,7 @@ function SectionHead({ eyebrow, title, sub, num, ef, tfld, sf }) {
     <div className="section-head">
       <div>
         {num && <p className="mono" style={{ color: "var(--ink-3)", marginBottom: 12 }}>// {num}</p>}
-        <p className="eyebrow eyebrow-dot" data-tina-field={ef}>{eyebrow}</p>
+        {eyebrow && <p className="eyebrow eyebrow-dot" data-tina-field={ef}>{eyebrow}</p>}
       </div>
       <div>
         <h2 className="h1 section-head__title" style={{ margin: 0 }} data-tina-field={tfld}>{title}</h2>
@@ -524,6 +550,11 @@ function StatCounter({ target, prefix = "", suffix = "", pad = 0, label, accent 
 
   useEffect(() => {
     if (!ref.current || started) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setValue(target);
+      setStarted(true);
+      return;
+    }
     const io = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !started) {
@@ -539,6 +570,10 @@ function StatCounter({ target, prefix = "", suffix = "", pad = 0, label, accent 
 
   useEffect(() => {
     if (!started) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setValue(target);
+      return;
+    }
     // Anima 1 → target em ~1.6s, easing easeOutCubic pra desacelerar no fim
     const duration = Math.min(1600, 600 + target * 8);
     const start = performance.now();
@@ -619,36 +654,33 @@ function ManifestoReader() {
   );
 }
 
-function ProcessRail({ items, onOpen, actionLabel = "Ver processo completo" }) {
-  const railRef = useRef(null);
-  const move = (direction) => {
-    if (!railRef.current) return;
-    railRef.current.scrollBy({
-      left: direction * Math.min(railRef.current.clientWidth * 0.78, 560),
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
-    });
-  };
+function ProcessRail({ items, onOpen, actionLabel = "Ver processo completo", headingLevel = 3 }) {
+  const [openIndex, setOpenIndex] = useState(null);
+  const Heading = `h${headingLevel}`;
 
   return (
     <div className="process-rail">
-      <div className="process-rail__controls" aria-label="Navegar pelas etapas do processo">
-        <button type="button" onClick={() => move(-1)} aria-label="Etapas anteriores">←</button>
-        <span className="mono">ARRASTE · ROLE · USE AS SETAS</span>
-        <button type="button" onClick={() => move(1)} aria-label="Próximas etapas">→</button>
-      </div>
-      <ol className="process-rail__track" ref={railRef}>
+      <ol className="process-rail__track">
         {items.map((item, index) => (
           <li
-            className="process-rail__chapter"
-            key={item.num}
-            tabIndex={0}
-            aria-label={`Etapa ${item.num}: ${item.title}`}>
-            <div className="process-rail__chapter-head">
-              <span className="mono">// {item.num}</span>
-              <span className="mono">{String(index + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}</span>
-            </div>
-            <h3>{item.title}</h3>
-            <div className="process-rail__details">
+            className={`process-rail__chapter ${openIndex === index ? "is-open" : ""}`}
+            key={item.num}>
+            <Heading className="process-rail__heading">
+              <button
+                type="button"
+                className="process-rail__toggle"
+                aria-expanded={openIndex === index}
+                aria-controls={`process-detail-${item.num}`}
+                onClick={() => setOpenIndex(openIndex === index ? null : index)}>
+                <span className="mono">{String(index + 1).padStart(2, "0")}</span>
+                <span>{item.title}</span>
+                <span className="process-rail__toggle-mark" aria-hidden="true">+</span>
+              </button>
+            </Heading>
+            <div
+              className="process-rail__details"
+              id={`process-detail-${item.num}`}
+              aria-hidden={openIndex !== index}>
               <p>{item.desc}</p>
               <div className="process-rail__deliverable">
                 <span className="mono">ENTREGÁVEL</span>
@@ -659,7 +691,6 @@ function ProcessRail({ items, onOpen, actionLabel = "Ver processo completo" }) {
         ))}
       </ol>
       <div className="process-rail__footer">
-        <span className="process-rail__scan" aria-hidden="true"><i /></span>
         <button className="btn btn--ghost" type="button" onClick={onOpen}>{actionLabel} <Arrow /></button>
       </div>
     </div>
@@ -667,39 +698,35 @@ function ProcessRail({ items, onOpen, actionLabel = "Ver processo completo" }) {
 }
 
 function ServiceRail({ items, onContact }) {
-  const railRef = useRef(null);
-  const move = (direction) => {
-    if (!railRef.current) return;
-    railRef.current.scrollBy({
-      left: direction * Math.min(railRef.current.clientWidth * 0.84, 680),
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
-    });
-  };
+  const [openIndex, setOpenIndex] = useState(null);
 
   return (
     <div className="service-rail">
-      <div className="service-rail__controls">
-        <p className="mono">04 PILARES · 01 DIREÇÃO</p>
-        <div>
-          <button type="button" onClick={() => move(-1)} aria-label="Serviços anteriores">←</button>
-          <button type="button" onClick={() => move(1)} aria-label="Próximos serviços">→</button>
-        </div>
-      </div>
-      <ol className="service-rail__track" ref={railRef}>
+      <ol className="service-rail__track">
         {items.map((service, index) => (
-          <li className="service-rail__card" key={service.num}>
-            <div className="service-rail__card-top">
-              <span className="mono">// {service.num}</span>
-              <span className="pill">{service.tag}</span>
-            </div>
-            <div className="service-rail__card-body">
-              <p className="mono">{String(index + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}</p>
-              <h2>{service.title}</h2>
+          <li className={`service-rail__card ${openIndex === index ? "is-open" : ""}`} key={service.num}>
+            <h2 className="service-rail__heading">
+              <button
+                type="button"
+                className="service-rail__toggle"
+                aria-expanded={openIndex === index}
+                aria-controls={`service-detail-${service.num}`}
+                onClick={() => setOpenIndex(openIndex === index ? null : index)}>
+                <span className="mono">{String(index + 1).padStart(2, "0")}</span>
+                <span>{service.tag}</span>
+                <span className="service-rail__toggle-mark" aria-hidden="true">+</span>
+              </button>
+            </h2>
+            <div
+              className="service-rail__details"
+              id={`service-detail-${service.num}`}
+              aria-hidden={openIndex !== index}>
+              <h3>{service.title}</h3>
               <p>{service.desc}</p>
+              <ul className="service-rail__scope">
+                {service.items.map((item) => <li key={item}>{item}</li>)}
+              </ul>
             </div>
-            <ul className="service-rail__scope">
-              {service.items.map((item) => <li key={item}>{item}</li>)}
-            </ul>
           </li>
         ))}
       </ol>
@@ -736,15 +763,32 @@ function Home({ setCurrent, density, content }) {
 
   // Letterbox intro timeline
   useEffect(() => {
-    const t1 = setTimeout(() => setIntro("open"), 900); // bars start retracting
-    const t2 = setTimeout(() => setIntro("title"), 2000); // headline + meta reveal
-    const t3 = setTimeout(() => setIntro("done"), 3600); // everything settled
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setIntro("done");
+      return;
+    }
+    if (window.sessionStorage.getItem("muv-intro-seen")) {
+      setIntro("done");
+      return;
+    }
+    window.sessionStorage.setItem("muv-intro-seen", "1");
+    const t1 = setTimeout(() => setIntro("open"), 120);
+    const t2 = setTimeout(() => setIntro("title"), 480);
+    const t3 = setTimeout(() => setIntro("done"), 950);
     return () => {clearTimeout(t1);clearTimeout(t2);clearTimeout(t3);};
   }, []);
 
   // Hero responde ao SCROLL apenas. (O auto-fade por tempo foi removido:
   // apagava a headline e os CTAs 8s depois do load, mesmo sem o usuário rolar.)
   useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      if (heroRef.current) {
+        heroRef.current.style.opacity = "1";
+        heroRef.current.style.transform = "none";
+      }
+      return;
+    }
     const apply = (t) => {
       if (!heroRef.current) return;
       heroRef.current.style.opacity = String(Math.max(0.35, 1 - t));
@@ -792,7 +836,7 @@ function Home({ setCurrent, density, content }) {
           <div className="hero-cine__mid">
             <h1 className="hero-cine__display">
               <span className="reveal-word"><span data-tina-field={tf(H,'heroTitle1')}>{H.heroTitle1}</span></span><br />
-              <span className="reveal-word"><span style={{ fontFamily: "var(--font-display)", fontStyle: "normal", marginRight: "0.3em" }} data-tina-field={tf(H,'heroTitle2')}>{H.heroTitle2}</span></span>
+              <span className="reveal-word"><span style={{ fontFamily: "var(--font-display)", fontStyle: "normal", marginRight: "0.3em" }} data-tina-field={tf(H,'heroTitle2')}>{H.heroTitle2}</span></span>{" "}
               <span className="reveal-word"><span className="accent" data-tina-field={tf(H,'heroAccent')}>{H.heroAccent}</span></span>
             </h1>
           </div>
@@ -882,15 +926,6 @@ function Home({ setCurrent, density, content }) {
       </section>
       )}
 
-      {/* MARCAS, esteira */}
-      {SETTINGS.showMarcas !== false && (
-      <section className="section section--tight">
-        <SectionHead num="05" eyebrow={H.mrcEyebrow} title={H.mrcTitle} ef={tf(H,'mrcEyebrow')} tfld={tf(H,'mrcTitle')} />
-        <BrandMarquee brands={BRN} />
-        <p className="mono" style={{ marginTop: 24, color: "var(--ink-3)", textAlign: "center" }}>// + 30 marcas · 2019 → 2026</p>
-      </section>
-      )}
-
       {/* BLOG PREVIEW */}
       {SETTINGS.showBlog !== false && (
       <section className="section home-blog-preview" style={{ paddingTop: 48, paddingBottom: 48 }}>
@@ -905,7 +940,13 @@ function Home({ setCurrent, density, content }) {
       )}
 
       {/* CTA FINAL */}
-      {SETTINGS.showCTA !== false && <HomeCTA setCurrent={setCurrent} />}
+      {SETTINGS.showCTA !== false && (
+        <HomeCTA
+          setCurrent={setCurrent}
+          brands={BRN}
+          showBrands={SETTINGS.showMarcas !== false}
+        />
+      )}
 
       {/* MUV HUB TEASER */}
       {SETTINGS.showHub !== false && (
@@ -941,7 +982,7 @@ function Home({ setCurrent, density, content }) {
 
 }
 
-function HomeCTA({ setCurrent }) {
+function HomeCTA({ setCurrent, brands = BRANDS, showBrands = true }) {
   const [form, setForm] = useState({ name: "", company: "", email: "", phone: "", type: "", budget: "", brief: "" });
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
@@ -989,30 +1030,30 @@ function HomeCTA({ setCurrent }) {
 
                 <div className="quote-card__row">
                   <div className="field field--solid">
-                    <label>Nome <span style={{ color: "var(--accent)" }}>*</span></label>
-                    <input placeholder="Seu nome" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
+                    <label htmlFor="quote-name">Nome <span style={{ color: "var(--accent)" }}>*</span></label>
+                    <input id="quote-name" name="name" autoComplete="name" placeholder="Seu nome" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
                   </div>
                   <div className="field field--solid">
-                    <label>Empresa</label>
-                    <input placeholder="Nome da empresa" value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} />
+                    <label htmlFor="quote-company">Empresa</label>
+                    <input id="quote-company" name="company" autoComplete="organization" placeholder="Nome da empresa" value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} />
                   </div>
                 </div>
 
                 <div className="quote-card__row">
                   <div className="field field--solid">
-                    <label>E-mail <span style={{ color: "var(--accent)" }}>*</span></label>
-                    <input type="email" placeholder="seu@email.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
+                    <label htmlFor="quote-email">E-mail <span style={{ color: "var(--accent)" }}>*</span></label>
+                    <input id="quote-email" name="email" type="email" autoComplete="email" placeholder="seu@email.com" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
                   </div>
                   <div className="field field--solid">
-                    <label>Telefone <span style={{ color: "var(--accent)" }}>*</span></label>
-                    <input placeholder="(11) 99999-9999" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} required />
+                    <label htmlFor="quote-phone">Telefone <span style={{ color: "var(--accent)" }}>*</span></label>
+                    <input id="quote-phone" name="phone" type="tel" autoComplete="tel" placeholder="(11) 99999-9999" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} required />
                   </div>
                 </div>
 
                 <div className="field field--solid" style={{ marginBottom: 20 }}>
-                  <label>Tipo de projeto <span style={{ color: "var(--accent)" }}>*</span></label>
+                  <label htmlFor="quote-type">Tipo de projeto <span style={{ color: "var(--accent)" }}>*</span></label>
                   <div className="select-wrap">
-                    <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })} required>
+                    <select id="quote-type" name="type" value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })} required>
                       <option value="">Selecione</option>
                       {types.map((t) => <option key={t} value={t}>{t}</option>)}
                     </select>
@@ -1028,6 +1069,7 @@ function HomeCTA({ setCurrent }) {
                     key={b}
                     type="button"
                     className={`budget-chip ${form.budget === b ? "budget-chip--on" : ""}`}
+                    aria-pressed={form.budget === b}
                     onClick={() => setForm({ ...form, budget: form.budget === b ? "" : b })}>
                     
                         {b}
@@ -1037,8 +1079,10 @@ function HomeCTA({ setCurrent }) {
                 </div>
 
                 <div className="field field--solid" style={{ marginBottom: 24 }}>
-                  <label>Sobre o projeto</label>
+                  <label htmlFor="quote-brief">Sobre o projeto</label>
                   <textarea
+                  id="quote-brief"
+                  name="brief"
                   rows="4"
                   placeholder="Descreva o que precisa, prazo e detalhes..."
                   value={form.brief}
@@ -1046,8 +1090,8 @@ function HomeCTA({ setCurrent }) {
                 
                 </div>
 
-                <label className="quote-card__consent">
-                  <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
+                <label className="quote-card__consent" htmlFor="quote-consent">
+                  <input id="quote-consent" name="privacy-consent" type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
                   <span>Autorizo o Grupo MUV a usar meus dados para responder este briefing, conforme a <a href="/politica-privacidade.html" target="_blank" rel="noopener noreferrer">política de privacidade</a>.</span>
                 </label>
 
@@ -1095,6 +1139,12 @@ function HomeCTA({ setCurrent }) {
           </div>
         </div>
       </div>
+      {showBrands && (
+        <div className="home-cta__proof" aria-label="Marcas que já trabalharam com o Grupo MUV">
+          <BrandMarquee brands={brands} />
+          <p className="mono">// +30 marcas · 2019—2026</p>
+        </div>
+      )}
     </section>);
 
 }
@@ -1135,9 +1185,10 @@ function StepRow({ num, title, desc, deliverables, onClick, linkable }) {
 
 }
 
-function CaseCard({ title, client, tag, year, idx, variant, onClick, still, video, poster, slug, placeholder = false, compactReveal = false }) {
+function CaseCard({ title, client, tag, year, idx, variant, onClick, still, video, poster, slug, placeholder = false, compactReveal = false, headingLevel = 3 }) {
   const videoRef = useRef(null);
   const [isTouched, setIsTouched] = useState(false);
+  const TitleTag = `h${headingLevel}`;
   const variants = ["default", "dark", "accent", "default", "dark", "accent"];
   const v = variant || variants[idx % variants.length];
   const playPreview = () => {
@@ -1196,7 +1247,7 @@ function CaseCard({ title, client, tag, year, idx, variant, onClick, still, vide
       <div className="case__meta">
         <div>
           <p className="case__tag">{client}</p>
-          <h3 className="case__title">{title}</h3>
+          <TitleTag className="case__title">{title}</TitleTag>
         </div>
         <div style={{ textAlign: "right" }}>
           <p className="case__tag">{tag}</p>
@@ -1229,10 +1280,25 @@ function PostRow({ date, title, excerpt, read, onClick }) {
 function Servicos({ setCurrent }) {
   return (
     <div className="page" data-screen-label="Servicos">
-      <PageHead crumb="01 · Serviços" title={"Do conceito à plataforma.\nTudo sob uma direção."} lead="Você não contrata quatro fornecedores. Contrata uma equipe integrada que pensa, produz e entrega com consistência." accent="direção" meta="04 frentes · 01 direção" compact />
+      <PageHead crumb="01 · Serviços e Processo" title={"O que fazemos.\nComo entregamos."} lead="Estratégia, produção, conteúdo e presença conduzidos pela mesma equipe, do briefing ao master." accent="entregamos" meta="04 pilares · 06 etapas" compact />
 
-      <section className="section services-horizontal">
+      <section className="section services-horizontal" id="pilares">
+        <SectionHead eyebrow="Quatro pilares" title={"Uma direção.\nQuatro frentes."} sub="Abra cada pilar para entender o que entra no escopo e como ele se conecta ao projeto." />
         <ServiceRail items={SERVICOS} onContact={() => setCurrent("contato")} />
+      </section>
+
+      <section className="section process-horizontal" id="processo">
+        <SectionHead eyebrow="Como entregamos" title="Da ideia ao master." sub="Seis etapas com escopo, aprovação e entregável claros. Abra uma etapa para ver os detalhes." />
+        <ProcessRail items={PROCESSO} onOpen={() => setCurrent("contato")} actionLabel="Começar um projeto" headingLevel={2} />
+      </section>
+
+      <section className="section process-principles">
+        <SectionHead title="O que orienta o trabalho? Direção, prazo e retenção." />
+        <div className="grid-3">
+          <Metric num="01" label="Direção" desc="Cada decisão estética responde a um objetivo de comunicação." />
+          <Metric num="02" label="Prazo" desc="Cronograma, aprovação e responsabilidade claros desde o início." />
+          <Metric num="03" label="Retenção" desc="Conteúdo pensado para a plataforma, o formato e a audiência." />
+        </div>
       </section>
     </div>);
 
@@ -1242,38 +1308,16 @@ function Servicos({ setCurrent }) {
 // PROCESSO
 // ═════════════════════════════════════════════════════════════════════════════
 function Processo({ setCurrent }) {
-  return (
-    <div className="page" data-screen-label="Processo">
-      <PageHead crumb="02 · Processo" title="Da ideia ao master." lead="Seis passos. Cada um com entregável, prazo e aprovação. Sem improviso, sem surpresa no orçamento, claro do dia zero." accent="master" meta="06 etapas · Workflow MUV" />
-
-      <section className="section process-horizontal">
-        <ProcessRail items={PROCESSO} onOpen={() => setCurrent("contato")} actionLabel="Começar um projeto" />
-      </section>
-
-      <section className="section section--dark">
-        <SectionHead num="*" eyebrow="Como medimos" title="Não medimos só o que fica bonito." sub="Imagem bem fotografada é ponto de partida, não de chegada. A gente mede retenção, adequação de plataforma e consistência com o posicionamento da marca." />
-        <div className="grid-3">
-          <Metric num="01" label="Direção" desc="Cada decisão estética tem motivo estratégico. Não filmamos por filmar." />
-          <Metric num="02" label="Prazo" desc="Cronograma respeitado. Atraso é exceção justificada, nunca padrão." />
-          <Metric num="03" label="Retenção" desc="Conteúdo entregue pra plataforma certa, no formato certo, na curva certa." />
-        </div>
-      </section>
-
-      <section className="section" style={{ textAlign: "center" }}>
-        <p className="eyebrow eyebrow-dot" style={{ display: "inline-flex" }}>Próximo passo</p>
-        <h2 className="h1" style={{ marginTop: 24 }}>Briefa a gente em 5 minutos.</h2>
-        <button className="btn btn--ink" style={{ marginTop: 32 }} onClick={() => setCurrent("contato")}>Mandar briefing <Arrow /></button>
-      </section>
-    </div>);
+  return <Servicos setCurrent={setCurrent} />;
 
 }
 
 function Metric({ num, label, desc }) {
   return (
-    <div style={{ padding: 32, border: "1px solid var(--dark-line)", display: "flex", flexDirection: "column", gap: 16, minHeight: 240 }}>
-      <p className="mono" style={{ color: "var(--accent)" }}>// {num}</p>
-      <h3 className="h3" style={{ marginTop: "auto" }}>{label}</h3>
-      <p style={{ color: "var(--dark-ink-2)", fontSize: 14 }}>{desc}</p>
+    <div className="process-principle">
+      <p className="mono">// {num}</p>
+      <h3 className="h3">{label}</h3>
+      <p>{desc}</p>
     </div>);
 
 }
@@ -1364,6 +1408,7 @@ function Trabalhos({ setCurrent, slug = null }) {
               key={f}
               onClick={() => setFilter(f)}
               className={`pill ${filter === f ? "pill--accent" : ""}`}
+              aria-pressed={filter === f}
               style={{ cursor: "pointer", background: filter === f ? undefined : "transparent" }}>
 
                 {f}
@@ -1383,6 +1428,7 @@ function Trabalhos({ setCurrent, slug = null }) {
                 key={t.slug}
                 {...t}
                 idx={realIdx}
+                headingLevel={2}
                 onClick={() => openCase(t)}
               />);
           })}
@@ -1416,7 +1462,13 @@ function Trabalhos({ setCurrent, slug = null }) {
 function Sobre({ setCurrent }) {
   return (
     <div className="page" data-screen-label="Sobre">
-      <PageHead crumb="04 · Sobre" title={"Produtora audiovisual.\nEstrutura de hub criativo."} lead="Começamos produzindo pra eventos, marcas em crescimento e artistas independentes. Hoje operamos no nível de exigência dos grandes anunciantes — sem perder o que nos fez começar." accent="hub criativo" meta="Equipe · Manifesto · Pilares" />
+      <PageHead
+        crumb="04 · Sobre"
+        title={"Produtora audiovisual.\nEstrutura de hub criativo."}
+        lead={"Começamos produzindo para eventos, marcas em crescimento e artistas independentes.\nHoje operamos no nível de exigência dos grandes anunciantes, sem perder o que nos fez começar."}
+        accent="hub criativo"
+        meta="Equipe · Manifesto · Pilares"
+      />
 
       <section className="about-proof" aria-label="Números e estrutura do Grupo MUV">
         <div><strong>+120</strong><span>produções entregues</span></div>
@@ -1476,6 +1528,15 @@ function Sobre({ setCurrent }) {
         </div>
       </section>
 
+      <section className="section about-hub" id="hub">
+        <SectionHead
+          eyebrow="MUV Hub"
+          title="Estrutura para produzir."
+          sub="Locadora, studio, comunidade e espaço de trabalho conectados à operação audiovisual da MUV."
+        />
+        <HubAccessGrid setCurrent={setCurrent} />
+      </section>
+
       {/* EQUIPE */}
       {SETTINGS.showTeam !== false && (
       <section className="section section--dark about-team">
@@ -1497,7 +1558,7 @@ function Sobre({ setCurrent }) {
       <section className="section about-cta">
         <div className="about-cta__inner">
           <p className="eyebrow eyebrow-dot">Quer trabalhar com a gente?</p>
-          <h2 className="about-cta__title">O primeiro passo é uma conversa. Sem compromisso, sem proposta padrão.</h2>
+          <h2 className="about-cta__title">{"O primeiro passo é uma conversa.\nSem compromisso, sem proposta padrão."}</h2>
           <button className="btn btn--primary" onClick={() => setCurrent("contato")}>Falar com a gente <Arrow /></button>
         </div>
       </section>
@@ -1508,6 +1569,34 @@ function Sobre({ setCurrent }) {
 // ═════════════════════════════════════════════════════════════════════════════
 // MUV HUB
 // ═════════════════════════════════════════════════════════════════════════════
+const HUB_ACCESS = [
+  { id: "hub-locadora", code: "01", title: "Locadora", note: "Equipamento" },
+  { id: "hub-studio", code: "02", title: "Studio", note: "Criação e produção" },
+  { id: "hub-comunidade", code: "03", title: "Comunidade", note: "Hub criativo" },
+  { id: "hub-cowork", code: "04", title: "Cowork", note: "Espaço de trabalho" }
+];
+
+function HubAccessGrid({ setCurrent }) {
+  return (
+    <div className="hub-access-grid">
+      {HUB_ACCESS.map((item) => (
+        <a
+          key={item.id}
+          className="hub-access-card"
+          href={ROUTES[item.id]}
+          onClick={(event) => { event.preventDefault(); setCurrent(item.id); }}>
+          <span className="mono">{item.code}</span>
+          <div>
+            <h3>{item.title}</h3>
+            <p>{item.note}</p>
+          </div>
+          <Arrow />
+        </a>
+      ))}
+    </div>
+  );
+}
+
 function MuvHub({ setCurrent }) {
   return (
     <div className="page" data-screen-label="MuvHub">
@@ -1517,7 +1606,7 @@ function MuvHub({ setCurrent }) {
           <p className="mono" style={{ color: "var(--ink-3)" }}>// HUB.OVERVIEW</p>
         </div>
         <h1 className="hero__display hub-overview-hero__title">
-          MUV <span className="accent">Hub.</span><br />
+          MUV <span className="accent">Hub.</span>{" "}
           <span className="italic hub-overview-hero__line">Onde a produção acontece.</span>
         </h1>
         <p className="hero__sub" style={{ marginTop: 48 }}>
@@ -1525,55 +1614,24 @@ function MuvHub({ setCurrent }) {
           num só lugar. Plataforma exclusiva pra filmmakers, agências e marcas parceiras.
         </p>
         <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
-          <button className="btn btn--primary">Entrar na lista de espera <Arrow /></button>
+          <a className="btn btn--primary" href="#hub-waitlist">Entrar na lista de espera <Arrow /></a>
           <button className="btn btn--ghost" onClick={() => setCurrent("contato")}>Saber mais <Arrow /></button>
         </div>
       </section>
 
-      <section className="section section--ink">
-        <SectionHead num="01" eyebrow="Quatro módulos · Uma plataforma" title="Tudo num só endereço." sub="Cada módulo tem página própria com catálogo, especificações e formas de reservar." />
-        <div className="grid-2-2">
-          <Module tag="LOCADORA" title="Equipamento profissional sob demanda." items={["Sony FX6, FX3", "Drones DJI", "Iluminação completa", "Reserva online", "Retirada na MUV"]} icon="A" onClick={() => setCurrent("hub-locadora")} />
-          <Module tag="STUDIO" title="Espaço pra criar, gravar, produzir." items={["Ciclorama", "Iluminação inclusa", "Equipamento básico", "Reserva por turno", "Café & wifi"]} icon="B" onClick={() => setCurrent("hub-studio")} />
-          <Module tag="COMUNIDADE" title="Hub criativo de filmmakers e marcas." items={["Feed & networking", "Agenda de eventos", "Conteúdos exclusivos", "Cursos & mentorias", "Conexão com marcas"]} icon="C" onClick={() => setCurrent("hub-comunidade")} />
-          <Module tag="COWORK" title="Espaço pra trabalhar entre projetos." items={["Mesas compartilhadas", "Salas de reunião", "Internet 1Gbps", "Café & impressão", "Acesso 24/7"]} icon="D" onClick={() => setCurrent("hub-cowork")} />
-        </div>
+      <section className="section hub-overview-access">
+        <SectionHead eyebrow="Quatro acessos" title="Escolha o que precisa." sub="Cada área tem uma página própria com contexto, estrutura e formas de acesso." />
+        <HubAccessGrid setCurrent={setCurrent} />
       </section>
 
-      <section className="section">
-        <SectionHead num="02" eyebrow="Como funciona" title="Conta grátis. Acesso instantâneo." sub="Cria sua conta em 30 segundos e já tem acesso ao catálogo, agenda e comunidade." />
-        <div className="grid-3">
-          {[
-          { n: "01", t: "Cadastro", d: "Conta grátis em 30s. Sem cartão, sem compromisso. Filmmakers, agências e marcas." },
-          { n: "02", t: "Catálogo & Reserva", d: "Equipamento e studio online. Reserva, contrato digital, retirada na MUV." },
-          { n: "03", t: "Comunidade", d: "Feed, eventos, networking, conteúdo educativo. Cresce junto com o hub." }].
-          map((s) =>
-          <div key={s.n} style={{ padding: "32px 24px", borderTop: "1px solid var(--ink)", minHeight: 240 }}>
-              <p className="mono" style={{ color: "var(--accent)" }}>// {s.n}</p>
-              <h3 className="h3" style={{ marginTop: 32 }}>{s.t}</h3>
-              <p style={{ color: "var(--ink-2)", fontSize: 14, marginTop: 12 }}>{s.d}</p>
-            </div>
-          )}
-        </div>
-      </section>
-
-      <section className="section section--dark hub-waitlist">
-        <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)", display: "inline-flex" }}>Lançamento · 2026</p>
-        <h2 className="display" style={{ marginTop: 24, fontSize: "clamp(48px, 8vw, 140px)" }}>
-          Lista de <span style={{ color: "var(--accent)", fontStyle: "italic", fontWeight: 400 }}>espera</span><br />prioritária.
-        </h2>
-        <p className="body-l" style={{ color: "var(--dark-ink-2)", maxWidth: 540, margin: "32px auto 0" }}>
-          Quem entra na lista agora tem acesso antecipado, condição de fundador e prioridade na agenda de studio.
-        </p>
-        <div className="hub-waitlist__form">
-          <input
-            type="email"
-            placeholder="seu@email.com"
-            style={{ flex: 1, padding: "16px 20px", borderRadius: 999, border: "1px solid var(--dark-line)", background: "rgba(255,255,255,0.04)", color: "var(--dark-ink)", fontFamily: "var(--font-body)", fontSize: 14, outline: "none" }} />
-          
-          <button className="btn btn--primary">Entrar <Arrow /></button>
-        </div>
-      </section>
+      <HubEmailCapture
+        id="hub-waitlist"
+        eyebrow="Lançamento · 2026"
+        title="Lista de espera"
+        accent="prioritária."
+        body="Quem entra na lista agora tem acesso antecipado, condição de fundador e prioridade na agenda de studio."
+        source="MUV Hub"
+      />
     </div>);
 
 }
@@ -1581,10 +1639,10 @@ function MuvHub({ setCurrent }) {
 // ═════════════════════════════════════════════════════════════════════════════
 // HUB · LOCADORA
 // ═════════════════════════════════════════════════════════════════════════════
-function HubEmailCapture({ eyebrow, title, accent, body, source }) {
+function HubEmailCapture({ eyebrow, title, accent, body, source, id }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");
-  const inputId = `hub-email-${source.toLowerCase()}`;
+  const inputId = `hub-email-${source.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-")}`;
 
   const submit = async (event) => {
     event.preventDefault();
@@ -1600,11 +1658,11 @@ function HubEmailCapture({ eyebrow, title, accent, body, source }) {
   };
 
   return (
-    <section className="section section--dark hub-cta hub-email-capture">
+    <section id={id} className="section section--dark hub-cta hub-email-capture">
       <div className="hub-cta__inner">
         <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>{eyebrow}</p>
         <h2 className="h1 hub-email-capture__title">
-          {title}<br /><span>{accent}</span>
+          {title} <span>{accent}</span>
         </h2>
         <p className="body-l hub-email-capture__body">{body}</p>
         {status === "sent" ? (
@@ -1968,8 +2026,50 @@ function Module({ tag, title, items, icon, onClick }) {
 // ═════════════════════════════════════════════════════════════════════════════
 // BLOG
 // ═════════════════════════════════════════════════════════════════════════════
+function BlogNewsletterForm() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("idle");
+
+  const submit = async (event) => {
+    event.preventDefault();
+    if (!email || status === "sending") return;
+    setStatus("sending");
+    try {
+      await postToNetlify("newsletter", { email });
+      setEmail("");
+      setStatus("sent");
+    } catch (_) {
+      setStatus("error");
+    }
+  };
+
+  return (
+    <div className="blog-newsletter__capture">
+      <form className="blog-newsletter__form" onSubmit={submit}>
+        <label className="sr-only" htmlFor="blog-newsletter-email">Seu e-mail</label>
+        <input
+          id="blog-newsletter-email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          placeholder="seu@email.com"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          required
+        />
+        <button type="submit" className="btn btn--primary" disabled={status === "sending"}>
+          {status === "sending" ? "Enviando…" : "Assinar"} {status !== "sending" && <Arrow />}
+        </button>
+      </form>
+      {status === "sent" && <p className="blog-newsletter__feedback" role="status">Pronto. Você está na lista.</p>}
+      {status === "error" && <p className="blog-newsletter__feedback blog-newsletter__feedback--error" role="alert">Não conseguimos inscrever agora. Tente novamente em instantes.</p>}
+    </div>
+  );
+}
+
 function Blog({ setCurrent, slug = null }) {
   const router = useRouter();
+  const [visiblePosts, setVisiblePosts] = useState(3);
   const selected = slug ? POSTS.findIndex((p) => p.slug === slug) : null;
   const openList = () => router.push("/blog/");
   const openPost = (p) => router.push(postHref(p.slug));
@@ -2026,9 +2126,11 @@ function Blog({ setCurrent, slug = null }) {
 
   const feat = POSTS[0];
   const rest = POSTS.slice(1);
+  const visibleRest = rest.slice(0, visiblePosts);
+  const hasMorePosts = visiblePosts < rest.length;
   return (
     <div className="page" data-screen-label="Blog">
-      <PageHead crumb="05 · Diário MUV" title="Conteúdo sobre conteúdo." lead="Bastidor, ensaio, frameworks. O que a gente aprende produzindo, a gente compartilha por escrito." accent="conteúdo" meta={`${POSTS.length} textos · Atualizado mensal`} />
+      <PageHead crumb="05 · Diário MUV" title="Conteúdo sobre conteúdo." lead="Bastidores, ensaios, frameworks. O que a gente aprende produzindo, a gente compartilha por escrito." accent="conteúdo" meta={`${POSTS.length} textos · Atualizado mensal`} />
 
       {/* DESTAQUE */}
       <section className="section blog-feature">
@@ -2059,7 +2161,7 @@ function Blog({ setCurrent, slug = null }) {
           <p className="mono" style={{ color: "var(--ink-3)" }}>{rest.length} publicações</p>
         </div>
         <div className="blog-list__rows">
-          {rest.map((p, i) =>
+          {visibleRest.map((p, i) =>
           <article
             key={i}
             className="blog-row blog-row--link"
@@ -2080,6 +2182,16 @@ function Blog({ setCurrent, slug = null }) {
             </article>
           )}
         </div>
+        {hasMorePosts && (
+          <div className="blog-list__more">
+            <button
+              type="button"
+              className="btn btn--ghost"
+              onClick={() => setVisiblePosts((count) => Math.min(count + 3, rest.length))}>
+              Ver outras matérias <Arrow />
+            </button>
+          </div>
+        )}
       </section>
 
       {/* NEWSLETTER */}
@@ -2090,15 +2202,7 @@ function Blog({ setCurrent, slug = null }) {
             <h2 className="blog-newsletter__title">Recebe os textos no e-mail.</h2>
             <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 16, maxWidth: 420 }}>1 texto por mês. Sem spam. Cancela quando quiser.</p>
           </div>
-          <form className="blog-newsletter__form" onSubmit={async (e) => {
-            e.preventDefault();
-            const email = new FormData(e.currentTarget).get("email");
-            if (!email) return;
-            try {await postToNetlify("newsletter", { email });e.currentTarget.reset();alert("Pronto. Você está na lista.");} catch (_) {alert("Não conseguimos inscrever agora. Tenta de novo em instantes.");}
-          }}>
-            <input type="email" name="email" placeholder="seu@email.com" required />
-            <button type="submit" className="btn btn--primary">Assinar <Arrow /></button>
-          </form>
+          <BlogNewsletterForm />
         </div>
       </section>
     </div>);
@@ -2167,7 +2271,7 @@ function Contato({ setCurrent }) {
             <div className="contact-progress">
               {[1, 2, 3].map((n) =>
               <div key={n} style={{ display: "flex", alignItems: "center", gap: 10, opacity: step >= n ? 1 : 0.4 }}>
-                  <span style={{ width: 28, height: 28, borderRadius: "50%", border: `1px solid ${step >= n ? "var(--accent)" : "var(--line)"}`, background: step > n ? "var(--accent)" : "transparent", color: step > n ? "#fff" : step === n ? "var(--accent)" : "var(--ink-3)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-mono)", fontSize: 11 }}>
+                  <span style={{ width: 28, height: 28, borderRadius: "50%", border: `1px solid ${step >= n ? "var(--accent-text)" : "var(--line)"}`, background: step > n ? "var(--accent-text)" : "transparent", color: step > n ? "#fff" : step === n ? "var(--accent-text)" : "var(--ink-3)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-mono)", fontSize: 11 }}>
                     {step > n ? "✓" : n}
                   </span>
                   <span className="mono" style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase" }}>{n === 1 ? "Você" : n === 2 ? "Projeto" : "Briefing"}</span>
@@ -2177,10 +2281,10 @@ function Contato({ setCurrent }) {
 
             {step === 1 &&
             <div className="contact-fields-grid">
-                <div className="field"><label>Seu nome</label><input value={data.name} onChange={(e) => setData({ ...data, name: e.target.value })} /></div>
-                <div className="field"><label>Marca / Empresa</label><input value={data.company} onChange={(e) => setData({ ...data, company: e.target.value })} /></div>
-                <div className="field"><label>E-mail</label><input type="email" value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })} /></div>
-                <div className="field"><label>Telefone</label><input value={data.phone} onChange={(e) => setData({ ...data, phone: e.target.value })} /></div>
+                <div className="field"><label htmlFor="contact-name">Seu nome</label><input id="contact-name" name="name" autoComplete="name" required value={data.name} onChange={(e) => setData({ ...data, name: e.target.value })} /></div>
+                <div className="field"><label htmlFor="contact-company">Marca / Empresa</label><input id="contact-company" name="company" autoComplete="organization" value={data.company} onChange={(e) => setData({ ...data, company: e.target.value })} /></div>
+                <div className="field"><label htmlFor="contact-email">E-mail</label><input id="contact-email" name="email" type="email" autoComplete="email" required value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })} /></div>
+                <div className="field"><label htmlFor="contact-phone">Telefone</label><input id="contact-phone" name="phone" type="tel" autoComplete="tel" value={data.phone} onChange={(e) => setData({ ...data, phone: e.target.value })} /></div>
                 <div style={{ gridColumn: "1 / -1", display: "flex", justifyContent: "flex-end", marginTop: 24 }}>
                   <button className="btn btn--primary" onClick={() => setStep(2)} disabled={!data.name || !data.email}>Próximo <Arrow /></button>
                 </div>
@@ -2197,6 +2301,7 @@ function Contato({ setCurrent }) {
                     key={s}
                     type="button"
                     className={`pill ${data.scope.includes(s) ? "pill--accent" : ""}`}
+                    aria-pressed={data.scope.includes(s)}
                     style={{ cursor: "pointer", background: data.scope.includes(s) ? undefined : "transparent" }}
                     onClick={() => setData({ ...data, scope: data.scope.includes(s) ? data.scope.filter((x) => x !== s) : [...data.scope, s] })}>
                     
@@ -2209,13 +2314,13 @@ function Contato({ setCurrent }) {
                   <p className="eyebrow eyebrow-dot">Faixa de investimento</p>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 16 }}>
                     {BUDGETS.map((b) =>
-                  <button key={b} type="button" className={`pill ${data.budget === b ? "pill--accent" : ""}`} style={{ cursor: "pointer", background: data.budget === b ? undefined : "transparent" }} onClick={() => setData({ ...data, budget: b })}>{b}</button>
+                  <button key={b} type="button" className={`pill ${data.budget === b ? "pill--accent" : ""}`} aria-pressed={data.budget === b} style={{ cursor: "pointer", background: data.budget === b ? undefined : "transparent" }} onClick={() => setData({ ...data, budget: b })}>{b}</button>
                   )}
                   </div>
                 </div>
                 <div className="field" style={{ maxWidth: 360 }}>
-                  <label>Prazo desejado</label>
-                  <input type="text" placeholder="Ex: até 30 dias" value={data.deadline} onChange={(e) => setData({ ...data, deadline: e.target.value })} />
+                  <label htmlFor="contact-deadline">Prazo desejado</label>
+                  <input id="contact-deadline" name="deadline" type="text" placeholder="Ex: até 30 dias" value={data.deadline} onChange={(e) => setData({ ...data, deadline: e.target.value })} />
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <button className="btn btn--ghost" onClick={() => setStep(1)}>← Voltar</button>
@@ -2227,15 +2332,17 @@ function Contato({ setCurrent }) {
             {step === 3 &&
             <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
                 <div className="field">
-                  <label>Conta um pouco sobre o projeto</label>
+                  <label htmlFor="contact-brief">Conta um pouco sobre o projeto</label>
                   <textarea
+                  id="contact-brief"
+                  name="brief"
                   placeholder="O que você quer comunicar? Pra quem? Qual o sonho? Quanto mais específico, melhor."
                   value={data.brief}
                   onChange={(e) => setData({ ...data, brief: e.target.value })} />
                 
                 </div>
-                <label className="quote-card__consent">
-                  <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
+                <label className="quote-card__consent" htmlFor="contact-consent">
+                  <input id="contact-consent" name="privacy-consent" type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
                   <span>Autorizo o Grupo MUV a usar meus dados para responder este briefing, conforme a <a href="/politica-privacidade.html" target="_blank" rel="noopener noreferrer">política de privacidade</a>.</span>
                 </label>
                 {error && <p className="quote-card__error" role="alert">{error}</p>}
@@ -2376,9 +2483,9 @@ function MotionController({ pageKey }) {
     const revealNodes = Array.from(document.querySelectorAll(
       ".page-head, .page > .section, .hero-stats, .home-capabilities, .home-cta, .home-hub, .case-detail__head, .post-detail__head"
     ));
-    const staggerNodes = Array.from(document.querySelectorAll(
-      ".case, .work-card, .step, .home-capability, .svc-row, .service-rail__card, .process-rail__chapter, .module, .post, .pilar-card, .team__card, .faq-item, .hub-cat-card, .footer__group"
-    ));
+    // A seção conduz a entrada. Cards e controles permanecem estáveis para
+    // preservar leitura, leveza e previsibilidade durante a rolagem.
+    const staggerNodes = [];
 
     revealNodes.forEach((node) => node.setAttribute("data-muv-reveal", ""));
     staggerNodes.forEach((node, index) => {
