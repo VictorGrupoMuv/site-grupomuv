@@ -170,7 +170,7 @@ function Nav({ current, setCurrent, isDark }) {
       <nav className={`nav ${isDark ? "nav--dark" : ""} ${menuOpen ? "nav--open" : ""}`}>
         <a className="nav__logo" onClick={(e) => {e.preventDefault();setCurrent("home");}} href="/" aria-label="Grupo MUV — ir para home">
           <img
-            src={isDark ? "/assets/logo-muv-branco.png" : "/assets/logo-horizontal-preto.png"}
+            src={isDark ? "/brand-assets/vectors/muv-horizontal-white.svg" : "/brand-assets/vectors/muv-horizontal-black.svg"}
             alt="Grupo MUV"
             className="nav__logo-img" />
         </a>
@@ -264,42 +264,44 @@ function Footer({ setCurrent }) {
     <footer className="footer">
       <div className="footer__giant">GRUPO MUV.</div>
       <div className="footer__grid">
-        <div>
+        <div className="footer__intro">
           <p className="footer__col-title">/ ECOSSISTEMA</p>
-          <p style={{ maxWidth: 340, color: "var(--dark-ink-2)", lineHeight: 1.5, marginBottom: 24 }}>
+          <p style={{ maxWidth: 440, color: "var(--dark-ink-2)", lineHeight: 1.5, marginBottom: 24 }}>
             Produtora audiovisual e hub criativo. Estratégia, produção e conteúdo. <span style={{ color: "var(--dark-ink)" }}>São Paulo, Brasil.</span>
           </p>
           <a className="btn btn--primary" href={ROUTES.contato} onClick={go("contato")}>
             Começar um projeto <Arrow />
           </a>
         </div>
-        <div className="footer__col">
-          <p className="footer__col-title">Navegação</p>
-          <ul>
-            {NAV_ITEMS.slice(1).filter((n) => !n.hideFromFooter && navOn(n)).map((n) =>
-            <li key={n.id}><a href={ROUTES[n.id]} onClick={go(n.id)}>{n.label} <ArrowDiag size={10} /></a></li>
-            )}
-          </ul>
-        </div>
-        <div className="footer__col">
-          <p className="footer__col-title">MUV Hub</p>
-          <ul>
-            <li><a href={ROUTES["hub"]} onClick={go("hub")}>Overview <ArrowDiag size={10} /></a></li>
-            <li><a href={ROUTES["hub-locadora"]} onClick={go("hub-locadora")}>Locadora <ArrowDiag size={10} /></a></li>
-            <li><a href={ROUTES["hub-studio"]} onClick={go("hub-studio")}>Studio <ArrowDiag size={10} /></a></li>
-            <li><a href={ROUTES["hub-comunidade"]} onClick={go("hub-comunidade")}>Comunidade <ArrowDiag size={10} /></a></li>
-            <li><a href={ROUTES["hub-cowork"]} onClick={go("hub-cowork")}>Cowork <ArrowDiag size={10} /></a></li>
-          </ul>
-        </div>
-        <div className="footer__col">
-          <p className="footer__col-title">Social</p>
-          <ul>
-            <li><a href="https://instagram.com/grupomuv" target="_blank" rel="noopener noreferrer">Instagram <ArrowDiag size={10} /></a></li>
-            <li><a href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer">WhatsApp <ArrowDiag size={10} /></a></li>
-            <li><a href="mailto:contato@grupomuv.com.br">E-mail <ArrowDiag size={10} /></a></li>
-            <li><a href="/politica-privacidade.html">Privacidade <ArrowDiag size={10} /></a></li>
-            <li><a href="/termos-de-uso.html">Termos de uso <ArrowDiag size={10} /></a></li>
-          </ul>
+        <div className="footer__accordions">
+          <details className="footer__group">
+            <summary>Navegação <span aria-hidden="true">+</span></summary>
+            <ul>
+              {NAV_ITEMS.slice(1).filter((n) => !n.hideFromFooter && navOn(n)).map((n) =>
+              <li key={n.id}><a href={ROUTES[n.id]} onClick={go(n.id)}>{n.label} <ArrowDiag size={10} /></a></li>
+              )}
+            </ul>
+          </details>
+          <details className="footer__group">
+            <summary>MUV Hub <span aria-hidden="true">+</span></summary>
+            <ul>
+              <li><a href={ROUTES["hub"]} onClick={go("hub")}>Overview <ArrowDiag size={10} /></a></li>
+              <li><a href={ROUTES["hub-locadora"]} onClick={go("hub-locadora")}>Locadora <ArrowDiag size={10} /></a></li>
+              <li><a href={ROUTES["hub-studio"]} onClick={go("hub-studio")}>Studio <ArrowDiag size={10} /></a></li>
+              <li><a href={ROUTES["hub-comunidade"]} onClick={go("hub-comunidade")}>Comunidade <ArrowDiag size={10} /></a></li>
+              <li><a href={ROUTES["hub-cowork"]} onClick={go("hub-cowork")}>Cowork <ArrowDiag size={10} /></a></li>
+            </ul>
+          </details>
+          <details className="footer__group">
+            <summary>Contato e social <span aria-hidden="true">+</span></summary>
+            <ul>
+              <li><a href="https://instagram.com/grupomuv" target="_blank" rel="noopener noreferrer">Instagram <ArrowDiag size={10} /></a></li>
+              <li><a href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer">WhatsApp <ArrowDiag size={10} /></a></li>
+              <li><a href="mailto:contato@grupomuv.com.br">E-mail <ArrowDiag size={10} /></a></li>
+              <li><a href="/politica-privacidade.html">Privacidade <ArrowDiag size={10} /></a></li>
+              <li><a href="/termos-de-uso.html">Termos de uso <ArrowDiag size={10} /></a></li>
+            </ul>
+          </details>
         </div>
       </div>
       <div className="footer__bottom">
@@ -374,10 +376,10 @@ function SectionHead({ eyebrow, title, sub, num, ef, tfld, sf }) {
 function PageHead({ crumb, title, lead, accent, meta, compact }) {
   // Suporta quebra de linha via "\n" no título, mantendo a destaque do accent.
   const renderLineWithAccent = (line, key) => {
-    if (!accent || !line.includes(accent)) return <span key={key}>{line}</span>;
+    if (!accent || !line.includes(accent)) return <span className="page-head__line" key={key}>{line}</span>;
     const [before, after] = line.split(accent);
     return (
-      <span key={key}>
+      <span className="page-head__line" key={key}>
         {before}<span style={{ color: "var(--accent)" }}>{accent}</span>{after}
       </span>);
   };
@@ -399,7 +401,7 @@ function PageHead({ crumb, title, lead, accent, meta, compact }) {
         <span className="page-head__top-right">{meta || "Ed. 01 · 2026"}</span>
       </div>
       <div className="page-head__body">
-        <h1 className={`page-head__title ${compact ? "page-head__title--compact" : ""}`}>{titleNode}</h1>
+        <h1 className={`page-head__title ${compact ? "page-head__title--compact" : ""} ${lines.length > 1 ? "page-head__title--multiline" : ""}`}>{titleNode}</h1>
         <p className="page-head__lead">{lead}</p>
       </div>
     </header>);
@@ -429,70 +431,86 @@ function Reveal({ children, delay = 0, as: Tag = "div", ...rest }) {
 
 
 // ===== pages (code) =====
-// ───── Showreel BG, placeholder cinematográfico com cenas em loop ───────────
-const SHOWREEL_SCENES = [
-{ label: "INT. SET · MARCA DE MODA", code: "01/06", grad: "radial-gradient(ellipse at 35% 60%, rgba(222,78,43,0.55), transparent 55%), radial-gradient(ellipse at 75% 30%, rgba(27,87,173,0.25), transparent 60%), linear-gradient(135deg, #2a1410 0%, #1B1B1F 60%, #0d0d12 100%)" },
-{ label: "EXT. NOITE · FESTIVAL", code: "02/06", grad: "radial-gradient(ellipse at 20% 30%, rgba(27,87,173,0.55), transparent 55%), radial-gradient(ellipse at 80% 80%, rgba(222,78,43,0.3), transparent 50%), linear-gradient(225deg, #0e1a2a 0%, #1B1B1F 55%, #0d0d12 100%)" },
-{ label: "CLOSE · EQUIPAMENTO", code: "03/06", grad: "radial-gradient(ellipse at 60% 50%, rgba(245,240,235,0.18), transparent 55%), radial-gradient(ellipse at 20% 80%, rgba(222,78,43,0.4), transparent 55%), linear-gradient(180deg, #221b18 0%, #1B1B1F 50%, #0d0d12 100%)" },
-{ label: "DRONE · CIDADE", code: "04/06", grad: "radial-gradient(ellipse at 50% 30%, rgba(222,78,43,0.42), transparent 55%), radial-gradient(ellipse at 30% 80%, rgba(27,87,173,0.4), transparent 55%), linear-gradient(160deg, #1a1410 0%, #181c28 70%, #0d0d12 100%)" },
-{ label: "STUDIO · CICLORAMA", code: "05/06", grad: "radial-gradient(ellipse at 50% 60%, rgba(245,240,235,0.22), transparent 60%), radial-gradient(ellipse at 80% 30%, rgba(222,78,43,0.35), transparent 55%), linear-gradient(200deg, #1b1814 0%, #1B1B1F 60%, #0d0d12 100%)" },
-{ label: "INT. CLIENTE · BRIEFING", code: "06/06", grad: "radial-gradient(ellipse at 70% 40%, rgba(27,87,173,0.45), transparent 55%), radial-gradient(ellipse at 25% 70%, rgba(222,78,43,0.35), transparent 55%), linear-gradient(140deg, #14182a 0%, #1B1B1F 60%, #0d0d12 100%)" }];
-
-
 function ShowreelBG() {
-  const [scene, setScene] = useState(0);
-  const [tc, setTc] = useState({ m: 0, s: 0, f: 0 });
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
   useEffect(() => {
-    const id = setInterval(() => setScene((s) => (s + 1) % SHOWREEL_SCENES.length), 4200);
-    return () => clearInterval(id);
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const syncMotion = () => {
+      if (!videoRef.current) return;
+      if (reducedMotion.matches) {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        videoRef.current.play()
+          .then(() => setIsPlaying(true))
+          .catch(() => setIsPlaying(false));
+      }
+    };
+    syncMotion();
+    reducedMotion.addEventListener("change", syncMotion);
+    return () => reducedMotion.removeEventListener("change", syncMotion);
   }, []);
-  useEffect(() => {
-    const id = setInterval(() => {
-      setTc((t) => {
-        let f = t.f + 1;
-        let s = t.s,m = t.m;
-        if (f >= 24) {f = 0;s += 1;}
-        if (s >= 60) {s = 0;m += 1;}
-        if (m >= 99) m = 0;
-        return { m, s, f };
-      });
-    }, 41); // ~24fps
-    return () => clearInterval(id);
-  }, []);
-  const pad = (n, w = 2) => String(n).padStart(w, "0");
+
+  const togglePlayback = () => {
+    if (!videoRef.current) return;
+    if (videoRef.current.paused) {
+      videoRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false));
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
 
   return (
     <div className="showreel">
-      {SHOWREEL_SCENES.map((sc, i) =>
-      <div key={i} className={`showreel__scene ${i === scene ? "is-on" : ""}`} style={{ background: sc.grad }} />
-      )}
-      <div className="showreel__bars" />
+      <img
+        className="showreel__poster"
+        src="/assets/reel-social-poster.jpg"
+        alt=""
+        aria-hidden="true"
+      />
+      <video
+        ref={videoRef}
+        className="showreel__film"
+        src="/assets/reel-social.mp4"
+        poster="/assets/reel-social-poster.jpg"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+        tabIndex={-1}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+      />
       <div className="showreel__grain" />
       <div className="showreel__vignette" />
       <div className="showreel__scanlines" />
 
-      {/* HUD */}
       <div className="showreel__hud showreel__hud--tl">
         <span className="showreel__rec"><span className="showreel__rec-dot" /> REC</span>
         <span className="showreel__hud-text">SHOWREEL · MUV · 2026</span>
       </div>
       <div className="showreel__hud showreel__hud--tr">
-        <span className="showreel__hud-text">TC {pad(tc.m)}:{pad(tc.s)}:{pad(tc.f)}</span>
-        <span className="showreel__hud-text">{SHOWREEL_SCENES[scene].code}</span>
+        <span className="showreel__hud-text">FILM · 01/01</span>
       </div>
       <div className="showreel__hud showreel__hud--bl">
-        <span className="showreel__hud-text">{SHOWREEL_SCENES[scene].label}</span>
+        <span className="showreel__hud-text">IDENTIDADE EM MOVIMENTO</span>
       </div>
       <div className="showreel__hud showreel__hud--br">
-        <span className="showreel__hud-text">SONY FX6 · 4K · 24P</span>
-      </div>
-
-      {/* Timeline scrubber */}
-      <div className="showreel__timeline">
-        <div className="showreel__timeline-fill" style={{ width: `${(scene + 1) / SHOWREEL_SCENES.length * 100}%` }} />
-        {SHOWREEL_SCENES.map((_, i) =>
-        <span key={i} className="showreel__timeline-mark" style={{ left: `${i / SHOWREEL_SCENES.length * 100}%` }} />
-        )}
+        <button
+          type="button"
+          className="showreel__control"
+          onClick={togglePlayback}
+          aria-label={isPlaying ? "Pausar reel" : "Reproduzir reel"}
+          aria-pressed={!isPlaying}
+        >
+          {isPlaying ? "PAUSAR" : "REPRODUZIR"}
+        </button>
       </div>
     </div>);
 
@@ -547,6 +565,152 @@ function StatCounter({ target, prefix = "", suffix = "", pad = 0, label, accent 
     </div>);
 }
 
+function ManifestoReader() {
+  const sectionRef = useRef(null);
+  const [activeGroup, setActiveGroup] = useState(0);
+
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || !sectionRef.current) return undefined;
+    let frame;
+    const update = () => {
+      frame = undefined;
+      const section = sectionRef.current;
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      const travel = Math.max(1, section.offsetHeight - window.innerHeight);
+      const progress = Math.max(0, Math.min(1, -rect.top / travel));
+      const nextGroup = Math.min(2, Math.floor(progress * 3));
+      setActiveGroup((group) => group === nextGroup ? group : nextGroup);
+    };
+    const requestUpdate = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(update);
+    };
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    update();
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+    };
+  }, []);
+
+  const phrases = ["Imagem", "com direção", "gera valor real."];
+
+  return (
+    <section className="muv-reader" ref={sectionRef} aria-labelledby="manifesto-home">
+      <div className="muv-reader__stage">
+        <p className="eyebrow eyebrow-dot">Manifesto</p>
+        <p className="mono muv-reader__counter" aria-hidden="true">0{activeGroup + 1} / 03</p>
+        <h2 id="manifesto-home" className="muv-reader__statement" aria-label="Imagem com direção gera valor real.">
+          {phrases.map((phrase, index) => (
+            <span
+              className={`muv-reader__phrase ${index <= activeGroup ? "is-visible" : ""} ${activeGroup === index ? "is-active" : ""}`}
+              aria-hidden={index > activeGroup}
+              key={phrase}>
+              {phrase}
+            </span>
+          ))}
+        </h2>
+      </div>
+    </section>
+  );
+}
+
+function ProcessRail({ items, onOpen, actionLabel = "Ver processo completo" }) {
+  const railRef = useRef(null);
+  const move = (direction) => {
+    if (!railRef.current) return;
+    railRef.current.scrollBy({
+      left: direction * Math.min(railRef.current.clientWidth * 0.78, 560),
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
+    });
+  };
+
+  return (
+    <div className="process-rail">
+      <div className="process-rail__controls" aria-label="Navegar pelas etapas do processo">
+        <button type="button" onClick={() => move(-1)} aria-label="Etapas anteriores">←</button>
+        <span className="mono">ARRASTE · ROLE · USE AS SETAS</span>
+        <button type="button" onClick={() => move(1)} aria-label="Próximas etapas">→</button>
+      </div>
+      <ol className="process-rail__track" ref={railRef}>
+        {items.map((item, index) => (
+          <li
+            className="process-rail__chapter"
+            key={item.num}
+            tabIndex={0}
+            aria-label={`Etapa ${item.num}: ${item.title}`}>
+            <div className="process-rail__chapter-head">
+              <span className="mono">// {item.num}</span>
+              <span className="mono">{String(index + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}</span>
+            </div>
+            <h3>{item.title}</h3>
+            <div className="process-rail__details">
+              <p>{item.desc}</p>
+              <div className="process-rail__deliverable">
+                <span className="mono">ENTREGÁVEL</span>
+                <strong>{item.deliverables}</strong>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div className="process-rail__footer">
+        <span className="process-rail__scan" aria-hidden="true"><i /></span>
+        <button className="btn btn--ghost" type="button" onClick={onOpen}>{actionLabel} <Arrow /></button>
+      </div>
+    </div>
+  );
+}
+
+function ServiceRail({ items, onContact }) {
+  const railRef = useRef(null);
+  const move = (direction) => {
+    if (!railRef.current) return;
+    railRef.current.scrollBy({
+      left: direction * Math.min(railRef.current.clientWidth * 0.84, 680),
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
+    });
+  };
+
+  return (
+    <div className="service-rail">
+      <div className="service-rail__controls">
+        <p className="mono">04 PILARES · 01 DIREÇÃO</p>
+        <div>
+          <button type="button" onClick={() => move(-1)} aria-label="Serviços anteriores">←</button>
+          <button type="button" onClick={() => move(1)} aria-label="Próximos serviços">→</button>
+        </div>
+      </div>
+      <ol className="service-rail__track" ref={railRef}>
+        {items.map((service, index) => (
+          <li className="service-rail__card" key={service.num}>
+            <div className="service-rail__card-top">
+              <span className="mono">// {service.num}</span>
+              <span className="pill">{service.tag}</span>
+            </div>
+            <div className="service-rail__card-body">
+              <p className="mono">{String(index + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}</p>
+              <h2>{service.title}</h2>
+              <p>{service.desc}</p>
+            </div>
+            <ul className="service-rail__scope">
+              {service.items.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </li>
+        ))}
+      </ol>
+      <div className="service-rail__footer">
+        <p>Estratégia, produção, conteúdo e presença sob a mesma direção.</p>
+        <button className="btn btn--primary" type="button" onClick={onContact}>Começar um projeto <Arrow /></button>
+      </div>
+    </div>
+  );
+}
+
 // ═════════════════════════════════════════════════════════════════════════════
 // HOME
 // ═════════════════════════════════════════════════════════════════════════════
@@ -559,6 +723,13 @@ function Home({ setCurrent, density, content }) {
   const PST = content?.posts?.items || POSTS;
   const BRN = content?.brands?.items || BRANDS;
   const MQ = content?.marquee?.items || MARQUEE_WORDS;
+  const CASE_SLOTS = Array.from({ length: 3 }, (_, index) => TRB[index] || {
+    title: "Novo case",
+    client: "Em preparação",
+    tag: "PRÓXIMA HISTÓRIA",
+    year: "2026",
+    placeholder: true
+  });
   const tf = (o, f) => (content && o) ? tinaField(o, f) : undefined;
   const heroRef = useRef(null);
   const [intro, setIntro] = useState("boot"); // boot → open → title → done
@@ -621,7 +792,7 @@ function Home({ setCurrent, density, content }) {
           <div className="hero-cine__mid">
             <h1 className="hero-cine__display">
               <span className="reveal-word"><span data-tina-field={tf(H,'heroTitle1')}>{H.heroTitle1}</span></span><br />
-              <span className="reveal-word"><span style={{ fontFamily: "\"Archivo Black\"", fontStyle: "normal", marginRight: "0.3em" }} data-tina-field={tf(H,'heroTitle2')}>{H.heroTitle2}</span></span>
+              <span className="reveal-word"><span style={{ fontFamily: "var(--font-display)", fontStyle: "normal", marginRight: "0.3em" }} data-tina-field={tf(H,'heroTitle2')}>{H.heroTitle2}</span></span>
               <span className="reveal-word"><span className="accent" data-tina-field={tf(H,'heroAccent')}>{H.heroAccent}</span></span>
             </h1>
           </div>
@@ -653,17 +824,26 @@ function Home({ setCurrent, density, content }) {
 
       {/* MANIFESTO */}
       {SETTINGS.showManifesto !== false && (
-      <section className="section" style={{ paddingTop: 41, paddingBottom: 84 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 3fr", gap: 48, alignItems: "start", fontFamily: "\"Archivo Black\"", fontWeight: "200" }}>
-          <div>
-            <p className="mono" style={{ color: "var(--ink-3)" }}>// 01</p>
-            <p className="eyebrow eyebrow-dot" style={{ marginTop: 12 }}>Manifesto</p>
-          </div>
-          <p className="manifesto-text manifesto-text--sm" style={{ fontFamily: "\"Archivo Black\"" }}>
-            Imagem tem poder quando tem <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>direção</span>.<br />
-            A gente trabalha na interseção entre <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>criatividade</span> e <span className="blue">estratégia</span>,<br />
-            porque é lá que o audiovisual gera valor de verdade.
-          </p>
+      <ManifestoReader />
+      )}
+
+      {/* TRABALHOS · prova antes da lista de capacidades */}
+      {SETTINGS.showTrabalhos !== false && (
+      <section className="section home-cases" style={{ paddingTop: 64, paddingBottom: 64 }}>
+        <SectionHead num="02" eyebrow={H.trbEyebrow} title={H.trbTitle} sub={H.trbSub} ef={tf(H,'trbEyebrow')} tfld={tf(H,'trbTitle')} sf={tf(H,'trbSub')} />
+        <div className="grid-3">
+          {CASE_SLOTS.map((t, i) => (
+            <CaseCard
+              key={t.slug || `case-slot-${i}`}
+              {...t}
+              idx={i}
+              compactReveal
+              onClick={t.slug ? () => router.push(caseHref(t.slug)) : undefined}
+            />
+          ))}
+        </div>
+        <div style={{ marginTop: 48, display: "flex", justifyContent: "flex-end" }}>
+          <button className="btn btn--ghost" onClick={() => setCurrent("trabalhos")}>Ver todos os trabalhos <Arrow /></button>
         </div>
       </section>
       )}
@@ -671,18 +851,20 @@ function Home({ setCurrent, density, content }) {
       {/* SERVIÇOS */}
       {SETTINGS.showServicos !== false && (
       <section className="section home-capabilities">
-        <SectionHead num="02" eyebrow={H.srvEyebrow} title={H.srvTitle} sub={H.srvSub} ef={tf(H,'srvEyebrow')} tfld={tf(H,'srvTitle')} sf={tf(H,'srvSub')} />
+        <SectionHead num="03" eyebrow={H.srvEyebrow} title={H.srvTitle} sub={H.srvSub} ef={tf(H,'srvEyebrow')} tfld={tf(H,'srvTitle')} sf={tf(H,'srvSub')} />
 
         <div className="home-capabilities__grid">
           {SRV.map((s) =>
-          <article className="home-capability" key={s.num}>
+          <article className="home-capability" key={s.num} tabIndex={0} aria-label={`${s.tag}: ${s.title}`}>
             <div className="home-capability__meta">
               <span className="mono">// {s.num}</span>
-              <span className="pill pill--accent">{s.tag}</span>
             </div>
-            <h3>{s.title}</h3>
-            <p>{s.desc}</p>
-            <p className="mono home-capability__items">{s.items.join(" · ")}</p>
+            <h3>{s.tag}</h3>
+            <div className="home-capability__details">
+              <h4>{s.title}</h4>
+              <p>{s.desc}</p>
+              <p className="mono home-capability__items">{s.items.join(" · ")}</p>
+            </div>
           </article>
           )}
         </div>
@@ -694,29 +876,9 @@ function Home({ setCurrent, density, content }) {
 
       {/* PROCESSO (preview clicável) */}
       {SETTINGS.showProcesso !== false && (
-      <section className="section" style={{ paddingTop: 64, paddingBottom: 32 }}>
-        <SectionHead num="03" eyebrow={H.prcEyebrow} title={H.prcTitle} sub={H.prcSub} ef={tf(H,'prcEyebrow')} tfld={tf(H,'prcTitle')} sf={tf(H,'prcSub')} />
-
-        <div>
-          {PRC.slice(0, 3).map((p) =>
-          <StepRow key={p.num} {...p} onClick={() => setCurrent("processo")} linkable />
-          )}
-          <div className="step"><div className="step__num">···</div><div></div><div></div><div style={{ textAlign: "right" }}><button className="link-arrow" onClick={() => setCurrent("processo")} style={{ background: "transparent", border: 0, padding: 0, font: "inherit" }}>Ver processo completo <Arrow /></button></div></div>
-        </div>
-      </section>
-      )}
-
-      {/* TRABALHOS PREVIEW */}
-      {SETTINGS.showTrabalhos !== false && (
-      <section className="section" style={{ paddingTop: 32, paddingBottom: 64 }}>
-        <SectionHead num="04" eyebrow={H.trbEyebrow} title={H.trbTitle} sub={H.trbSub} ef={tf(H,'trbEyebrow')} tfld={tf(H,'trbTitle')} sf={tf(H,'trbSub')} />
-        
-        <div className="grid-3">
-          {TRB.slice(0, 3).map((t, i) => <CaseCard key={i} {...t} idx={i} onClick={() => router.push(caseHref(t.slug))} />)}
-        </div>
-        <div style={{ marginTop: 48, display: "flex", justifyContent: "flex-end" }}>
-          <button className="btn btn--ghost" onClick={() => setCurrent("trabalhos")}>Ver todos os trabalhos <Arrow /></button>
-        </div>
+      <section className="section home-process" style={{ paddingTop: 64, paddingBottom: 64 }}>
+        <SectionHead num="04" eyebrow={H.prcEyebrow} title={H.prcTitle} sub={H.prcSub} ef={tf(H,'prcEyebrow')} tfld={tf(H,'prcTitle')} sf={tf(H,'prcSub')} />
+        <ProcessRail items={PRC} onOpen={() => setCurrent("processo")} />
       </section>
       )}
 
@@ -760,7 +922,7 @@ function Home({ setCurrent, density, content }) {
               MUV <span style={{ color: "var(--accent)" }} data-tina-field={tf(H,'hubAccent')}>{H.hubAccent}</span>
             </h2>
             <p className="home-hub__tagline" data-tina-field={tf(H,'hubTagline')}>{H.hubTagline}</p>
-            <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 24, maxWidth: 480, fontWeight: "100" }} data-tina-field={tf(H,'hubBody')}>{H.hubBody}</p>
+            <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 24, maxWidth: 480 }} data-tina-field={tf(H,'hubBody')}>{H.hubBody}</p>
             <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
               <a className="btn btn--primary" href={ROUTES.hub} onClick={(e) => {e.preventDefault();setCurrent("hub");}}>Conhecer o Hub <Arrow /></a>
               <a className="btn btn--ghost-dark" href={ROUTES.hub} onClick={(e) => {e.preventDefault();setCurrent("hub");}}>Entrar na lista <Arrow /></a>
@@ -905,7 +1067,7 @@ function HomeCTA({ setCurrent }) {
           <h2 className="display" style={{ marginTop: 32, color: "var(--dark-ink)", fontSize: "67px" }}>
             Cada projeto<br />começa com <span style={{ color: "var(--accent)", fontStyle: "italic", fontWeight: 400 }}>escuta.</span>
           </h2>
-          <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 32, maxWidth: 420, fontFamily: "Inter", fontWeight: "200" }}>
+          <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 32, maxWidth: 420 }}>
             Conta o que você quer fazer. A gente volta com diagnóstico, escopo e timeline. Sem proposta genérica.
           </p>
           <ol className="home-cta__steps" aria-label="O que acontece depois do briefing">
@@ -947,7 +1109,7 @@ function ServiceCardDark({ num, tag, title, desc, items }) {
       <p style={{ fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--dark-ink-2)" }}>
         {items.join(" · ")}
       </p>
-      <h3 className="svc__title" style={{ color: "var(--dark-ink)", fontFamily: "\"Archivo Black\"" }}>{title}</h3>
+      <h3 className="svc__title" style={{ color: "var(--dark-ink)", fontFamily: "var(--font-display)" }}>{title}</h3>
       <p className="svc__desc" style={{ color: "var(--dark-ink-2)" }}>{desc}</p>
     </div>);
 
@@ -963,7 +1125,7 @@ function StepRow({ num, title, desc, deliverables, onClick, linkable }) {
       onKeyDown={onClick ? (e) => {if (e.key === "Enter" || e.key === " ") {e.preventDefault();onClick();}} : undefined}>
       
       <div className="step__num">{num}</div>
-      <h3 className="step__title" style={{ fontFamily: "\"Archivo Black\"" }}>{title}</h3>
+      <h3 className="step__title" style={{ fontFamily: "var(--font-display)" }}>{title}</h3>
       <p className="step__desc">{desc}</p>
       <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
         <p className="step__deliverables">{deliverables}</p>
@@ -973,15 +1135,63 @@ function StepRow({ num, title, desc, deliverables, onClick, linkable }) {
 
 }
 
-function CaseCard({ title, client, tag, year, idx, variant, onClick, still }) {
+function CaseCard({ title, client, tag, year, idx, variant, onClick, still, video, poster, slug, placeholder = false, compactReveal = false }) {
+  const videoRef = useRef(null);
+  const [isTouched, setIsTouched] = useState(false);
   const variants = ["default", "dark", "accent", "default", "dark", "accent"];
   const v = variant || variants[idx % variants.length];
+  const playPreview = () => {
+    if (!videoRef.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    videoRef.current.play().catch(() => undefined);
+  };
+  const stopPreview = () => {
+    if (!videoRef.current) return;
+    videoRef.current.pause();
+    videoRef.current.currentTime = 0;
+  };
+  const href = slug ? caseHref(slug) : undefined;
+  const CardTag = href ? "a" : "article";
+  const activateCard = (event) => {
+    const isCoarsePointer = compactReveal && window.matchMedia("(hover: none), (pointer: coarse)").matches;
+    if (isCoarsePointer && !isTouched) {
+      event.preventDefault();
+      setIsTouched(true);
+      return;
+    }
+    if (onClick) {
+      event.preventDefault();
+      onClick();
+    }
+  };
+
   return (
-    <div className="case" role={onClick ? "link" : undefined} tabIndex={onClick ? 0 : undefined}
-      onClick={onClick}
-      onKeyDown={onClick ? (e) => {if (e.key === "Enter" || e.key === " ") {e.preventDefault();onClick();}} : undefined}>
-      <div className="case__media" style={{ fontSize: "10px", width: "100%" }}>
-        <Cine src={still} alt={`${title.replace(/\n/g, " ")} — ${client}`} label={title.toUpperCase()} code={`CASE.${String(idx + 1).padStart(2, "0")}`} aspect="4/3" variant={v} center={v === "accent" && !still ? "▶ PREVIEW" : null} />
+    <CardTag
+      className={`case case--preview ${placeholder ? "case--placeholder" : ""} ${isTouched ? "is-touched" : ""}`}
+      href={href}
+      onClick={href || onClick ? activateCard : undefined}
+      onMouseEnter={playPreview}
+      onMouseLeave={stopPreview}
+      onFocus={playPreview}
+      onBlur={() => { stopPreview(); setIsTouched(false); }}>
+      <div className={`case__media case__media--${v}`} style={{ fontSize: "10px", width: "100%" }}>
+        {still ? <img className="case__still" src={still} alt={`${title.replace(/\n/g, " ")} — ${client}`} loading="lazy" decoding="async" /> : null}
+        {video ? (
+          <video
+            ref={videoRef}
+            className="case__preview-video"
+            src={video}
+            poster={poster || still}
+            muted
+            loop
+            playsInline
+            preload="none"
+            aria-hidden="true"
+            tabIndex={-1}
+          />
+        ) : null}
+        <span className="case__frame-code mono">// CASE.{String(idx + 1).padStart(2, "0")}</span>
+        <span className="case__frame-state mono">{placeholder ? "SLOT · ABERTO" : video ? "HOVER · FILM" : "STILL · FRAME"}</span>
+        <span className="case__preview-cta">{placeholder ? "Case em preparação" : "Ver mais"} {!placeholder && <Arrow />}</span>
       </div>
       <div className="case__meta">
         <div>
@@ -992,8 +1202,9 @@ function CaseCard({ title, client, tag, year, idx, variant, onClick, still }) {
           <p className="case__tag">{tag}</p>
           <p className="case__tag" style={{ marginTop: 4 }}>{year}</p>
         </div>
+        <span className="case__more">{placeholder ? "Espaço reservado" : "Ver mais"} {!placeholder && <Arrow />}</span>
       </div>
-    </div>);
+    </CardTag>);
 
 }
 
@@ -1020,38 +1231,8 @@ function Servicos({ setCurrent }) {
     <div className="page" data-screen-label="Servicos">
       <PageHead crumb="01 · Serviços" title={"Do conceito à plataforma.\nTudo sob uma direção."} lead="Você não contrata quatro fornecedores. Contrata uma equipe integrada que pensa, produz e entrega com consistência." accent="direção" meta="04 frentes · 01 direção" compact />
 
-      <section className="section">
-        <div className="svc-stack">
-          {SERVICOS.map((s, i) =>
-          <div key={s.num} className="svc-row">
-              <div className="svc-row__sidebar">
-                <p className="mono svc-row__num">// {s.num}</p>
-                <span className="pill pill--accent svc-row__pill">{s.tag}</span>
-                <h2 className="svc-row__title">{s.title}</h2>
-              </div>
-              <div className="svc-row__main">
-                <Cine label={s.tag.toUpperCase()} code={`SVC.${s.num}`} aspect="16/10" variant={i % 2 === 0 ? "dark" : "default"} />
-                <p className="body-l svc-row__desc">{s.desc}</p>
-                <p className="eyebrow eyebrow-dot svc-row__scope-label">O que entra no escopo</p>
-                <ul className="svc-row__list">
-                  {s.items.map((it, k) =>
-                <li key={k}>
-                      <span className="svc-row__plus">+</span>{it}
-                    </li>
-                )}
-                </ul>
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
-
-      <section className="section section--ink" style={{ textAlign: "center" }}>
-        <h2 className="display" style={{ fontSize: "clamp(40px, 7vw, 120px)" }}>
-          Um briefing.<br />
-          <span style={{ color: "var(--accent)", fontStyle: "italic", fontWeight: 400 }}>Uma equipe.</span>
-        </h2>
-        <button className="btn btn--primary" style={{ marginTop: 48 }} onClick={() => setCurrent("contato")}>Começar um projeto <Arrow /></button>
+      <section className="section services-horizontal">
+        <ServiceRail items={SERVICOS} onContact={() => setCurrent("contato")} />
       </section>
     </div>);
 
@@ -1065,10 +1246,8 @@ function Processo({ setCurrent }) {
     <div className="page" data-screen-label="Processo">
       <PageHead crumb="02 · Processo" title="Da ideia ao master." lead="Seis passos. Cada um com entregável, prazo e aprovação. Sem improviso, sem surpresa no orçamento, claro do dia zero." accent="master" meta="06 etapas · Workflow MUV" />
 
-      <section className="section">
-        <div>
-          {PROCESSO.map((p) => <StepRow key={p.num} {...p} />)}
-        </div>
+      <section className="section process-horizontal">
+        <ProcessRail items={PROCESSO} onOpen={() => setCurrent("contato")} actionLabel="Começar um projeto" />
       </section>
 
       <section className="section section--dark">
@@ -1200,32 +1379,12 @@ function Trabalhos({ setCurrent, slug = null }) {
           {filtered.map((t, i) => {
             const realIdx = TRABALHOS.indexOf(t);
             return (
-              <article
+              <CaseCard
                 key={t.slug}
-                className={`work-card work-card--regular work-card--link`}
-                role="button"
-                tabIndex={0}
+                {...t}
+                idx={realIdx}
                 onClick={() => openCase(t)}
-                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openCase(t); }}}>
-                <Cine
-                  src={t.still}
-                  alt={`${t.title.replace(/\n/g, " ")} — ${t.client}`}
-                  label={t.title.toUpperCase().replace(/\n/g, " ")}
-                  code={`CASE.${String(realIdx + 1).padStart(2, "0")}`}
-                  aspect="4/3"
-                  variant={realIdx % 4 === 0 ? "accent" : realIdx % 4 === 2 ? "dark" : "default"}
-                  play={realIdx % 3 === 0} />
-                <div className="work-card__meta">
-                  <div className="work-card__left">
-                    <p className="case__tag">{t.client}</p>
-                    <h3 className="case__title">{t.title}</h3>
-                  </div>
-                  <div className="work-card__right">
-                    <p className="case__tag">{t.tag}</p>
-                    <p className="case__tag work-card__year">{t.year}</p>
-                  </div>
-                </div>
-              </article>);
+              />);
           })}
         </div>
       </section>
@@ -1273,7 +1432,7 @@ function Sobre({ setCurrent }) {
             <p className="mono" style={{ color: "var(--ink-3)" }}>// MANIFESTO</p>
             <p className="eyebrow eyebrow-dot" style={{ marginTop: 12 }}>O que define a gente</p>
           </div>
-          <p className="manifesto-text" style={{ fontFamily: "\"Archivo Black\"" }}>
+          <p className="manifesto-text" style={{ fontFamily: "var(--font-display)" }}>
             Criatividade com <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>direção.</span><br />
             Estética com <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>propósito.</span><br />
             <span className="blue">Conteúdo</span> que <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>move.</span>
@@ -1308,16 +1467,17 @@ function Sobre({ setCurrent }) {
           { tag: "Método", desc: "Processo documentado, com aprovação em cada fase. Clareza de escopo do briefing até a entrega do master." },
           { tag: "Precisão", desc: "Entrega no formato certo, no prazo acordado, sem revisão desnecessária. O processo existe pra isso não depender de sorte." }].
           map((p, i) =>
-          <div key={i} className="pilar-card">
+          <article key={i} className="pilar-card" tabIndex={0}>
               <p className="mono pilar-card__num">// 0{i + 1}</p>
               <h3 className="pilar-card__title">{p.tag}.</h3>
               <p className="pilar-card__desc">{p.desc}</p>
-            </div>
+            </article>
           )}
         </div>
       </section>
 
       {/* EQUIPE */}
+      {SETTINGS.showTeam !== false && (
       <section className="section section--dark about-team">
         <SectionHead num="02" eyebrow="Equipe" title="Quem faz acontecer." sub="Direção criativa, captação, pós e estratégia. Uma equipe sênior, integrada do briefing à entrega." />
         <div className="team">
@@ -1331,6 +1491,7 @@ function Sobre({ setCurrent }) {
           )}
         </div>
       </section>
+      )}
 
       {/* CTA */}
       <section className="section about-cta">
@@ -1420,6 +1581,63 @@ function MuvHub({ setCurrent }) {
 // ═════════════════════════════════════════════════════════════════════════════
 // HUB · LOCADORA
 // ═════════════════════════════════════════════════════════════════════════════
+function HubEmailCapture({ eyebrow, title, accent, body, source }) {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("idle");
+  const inputId = `hub-email-${source.toLowerCase()}`;
+
+  const submit = async (event) => {
+    event.preventDefault();
+    if (!email || status === "sending") return;
+    setStatus("sending");
+    try {
+      await postToNetlify("hub-waitlist", { email, origem: `Hub · ${source}` });
+      setEmail("");
+      setStatus("sent");
+    } catch (_) {
+      setStatus("error");
+    }
+  };
+
+  return (
+    <section className="section section--dark hub-cta hub-email-capture">
+      <div className="hub-cta__inner">
+        <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>{eyebrow}</p>
+        <h2 className="h1 hub-email-capture__title">
+          {title}<br /><span>{accent}</span>
+        </h2>
+        <p className="body-l hub-email-capture__body">{body}</p>
+        {status === "sent" ? (
+          <div className="hub-email-capture__success" role="status">
+            <span aria-hidden="true">✓</span>
+            <p>E-mail recebido. Avisaremos você primeiro.</p>
+            <button type="button" className="btn btn--ghost-dark" onClick={() => setStatus("idle")}>Cadastrar outro e-mail</button>
+          </div>
+        ) : (
+          <form className="hub-email-capture__form" onSubmit={submit}>
+            <label className="sr-only" htmlFor={inputId}>Seu e-mail</label>
+            <input
+              id={inputId}
+              name="email"
+              type="email"
+              placeholder="seu@email.com"
+              autoComplete="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+            />
+            <button type="submit" className="btn btn--primary" disabled={status === "sending"}>
+              {status === "sending" ? "Enviando…" : "Quero receber"} {status !== "sending" && <Arrow />}
+            </button>
+          </form>
+        )}
+        {status === "error" && <p className="hub-email-capture__error" role="alert">Não foi possível cadastrar agora. Tente novamente em instantes.</p>}
+        <p className="mono hub-email-capture__privacy">SEM SPAM · APENAS NOVIDADES DO MUV HUB</p>
+      </div>
+    </section>
+  );
+}
+
 const LOCADORA_CATEGORIAS = [
   {
     cat: "Câmeras",
@@ -1497,18 +1715,13 @@ function HubLocadora({ setCurrent }) {
         </div>
       </section>
 
-      <section className="section section--dark hub-cta">
-        <div className="hub-cta__inner">
-          <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>Próximo projeto</p>
-          <h2 className="h1" style={{ marginTop: 16, color: "var(--dark-ink)" }}>
-            Precisa de equipamento<br />pra <span style={{ color: "var(--accent)" }}>essa semana?</span>
-          </h2>
-          <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <a className="btn btn--primary" href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer">Conferir no WhatsApp <Arrow /></a>
-            <button className="btn btn--ghost-dark" onClick={() => setCurrent("contato")}>Briefing completo <Arrow /></button>
-          </div>
-        </div>
-      </section>
+      <HubEmailCapture
+        eyebrow="Lista de interesse"
+        title="Catálogo e disponibilidade"
+        accent="direto no seu e-mail."
+        body="Cadastre seu e-mail para receber a abertura das reservas, novidades do catálogo e condições da locadora."
+        source="Locadora"
+      />
     </div>);
 }
 
@@ -1575,21 +1788,13 @@ function HubStudio({ setCurrent }) {
         </div>
       </section>
 
-      <section className="section section--dark hub-cta">
-        <div className="hub-cta__inner">
-          <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>Reservar studio</p>
-          <h2 className="h1" style={{ marginTop: 16, color: "var(--dark-ink)" }}>
-            Vem ver o espaço<br /><span style={{ color: "var(--accent)" }}>antes de fechar.</span>
-          </h2>
-          <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 16, maxWidth: 540 }}>
-            Agenda uma visita pra ver o ciclorama, conhecer o equipamento incluso e bater papo sobre o projeto. Sem compromisso.
-          </p>
-          <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <a className="btn btn--primary" href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer">Agendar visita <Arrow /></a>
-            <button className="btn btn--ghost-dark" onClick={() => setCurrent("contato")}>Briefing completo <Arrow /></button>
-          </div>
-        </div>
-      </section>
+      <HubEmailCapture
+        eyebrow="Agenda do studio"
+        title="Visitas e reservas"
+        accent="quando abrirem."
+        body="Cadastre seu e-mail para receber primeiro a agenda de visitas, turnos disponíveis e novidades do studio."
+        source="Studio"
+      />
     </div>);
 }
 
@@ -1657,21 +1862,13 @@ function HubComunidade({ setCurrent }) {
         </div>
       </section>
 
-      <section className="section section--dark hub-cta">
-        <div className="hub-cta__inner">
-          <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>Lista de espera</p>
-          <h2 className="h1" style={{ marginTop: 16, color: "var(--dark-ink)" }}>
-            Entra agora,<br /><span style={{ color: "var(--accent)" }}>vira fundador.</span>
-          </h2>
-          <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 16, maxWidth: 540 }}>
-            Quem entra antes do lançamento tem perfil destaque, acesso antecipado às vagas e condição vitalícia de membro fundador.
-          </p>
-          <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <a className="btn btn--primary" href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer">Entrar na lista <Arrow /></a>
-            <button className="btn btn--ghost-dark" onClick={() => setCurrent("contato")}>Saber mais <Arrow /></button>
-          </div>
-        </div>
-      </section>
+      <HubEmailCapture
+        eyebrow="Lista de espera"
+        title="Entre antes"
+        accent="do lançamento."
+        body="Cadastre seu e-mail para receber acesso antecipado, novidades da comunidade e oportunidades para membros fundadores."
+        source="Comunidade"
+      />
     </div>);
 }
 
@@ -1736,21 +1933,13 @@ function HubCowork({ setCurrent }) {
         </div>
       </section>
 
-      <section className="section section--dark hub-cta">
-        <div className="hub-cta__inner">
-          <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>Experimenta antes</p>
-          <h2 className="h1" style={{ marginTop: 16, color: "var(--dark-ink)" }}>
-            Primeiro day pass<br />é por <span style={{ color: "var(--accent)" }}>nossa conta.</span>
-          </h2>
-          <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 16, maxWidth: 540 }}>
-            Marca um dia pra trabalhar no espaço, conhecer a galera e sentir o ritmo. Se rolar, a gente fecha plano. Se não, ficou o café.
-          </p>
-          <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <a className="btn btn--primary" href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer">Reservar day pass <Arrow /></a>
-            <button className="btn btn--ghost-dark" onClick={() => setCurrent("contato")}>Saber mais <Arrow /></button>
-          </div>
-        </div>
-      </section>
+      <HubEmailCapture
+        eyebrow="Novidades do cowork"
+        title="Day pass e planos"
+        accent="assim que abrirem."
+        body="Cadastre seu e-mail para receber a abertura da agenda, condições dos planos e convites para conhecer o espaço."
+        source="Cowork"
+      />
     </div>);
 }
 
@@ -2147,8 +2336,8 @@ function Faq({ setCurrent }) {
 // app.jsx — Grupo MUV site (production)
 // Tweaks baked in: Archivo Black display · Inter body · orange accent · regular density.
 
-const DISPLAY_FONT = `"Archivo Black", "Anton", system-ui, sans-serif`;
-const BODY_FONT    = `"Inter", "Helvetica Neue", system-ui, sans-serif`;
+const DISPLAY_FONT = `"Archivo Black", "Arial Black", sans-serif`;
+const BODY_FONT    = `"Inter", Arial, sans-serif`;
 
 const DARK_NAV_PAGES = new Set(["hub"]);
 
@@ -2161,6 +2350,68 @@ function HomeLive({ tina, setCurrent }) {
   const brands   = useTina(tina.brands).data.brands;
   const marquee  = useTina(tina.marquee).data.marquee;
   return <Home setCurrent={setCurrent} density="regular" content={{ home, services, process, works, posts, brands, marquee }} />;
+}
+
+function SiteProgress() {
+  const barRef = useRef(null);
+  useEffect(() => {
+    const update = () => {
+      if (!barRef.current) return;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = max > 0 ? Math.max(0, Math.min(1, window.scrollY / max)) : 0;
+      barRef.current.style.transform = `scaleX(${progress})`;
+    };
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+  return <span className="site-progress" ref={barRef} aria-hidden="true" />;
+}
+
+function MotionController({ pageKey }) {
+  useEffect(() => {
+    const root = document.documentElement;
+    const main = document.getElementById("main-content");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const revealNodes = Array.from(document.querySelectorAll(
+      ".page-head, .page > .section, .hero-stats, .home-capabilities, .home-cta, .home-hub, .case-detail__head, .post-detail__head"
+    ));
+    const staggerNodes = Array.from(document.querySelectorAll(
+      ".case, .work-card, .step, .home-capability, .svc-row, .service-rail__card, .process-rail__chapter, .module, .post, .pilar-card, .team__card, .faq-item, .hub-cat-card, .footer__group"
+    ));
+
+    revealNodes.forEach((node) => node.setAttribute("data-muv-reveal", ""));
+    staggerNodes.forEach((node, index) => {
+      node.setAttribute("data-muv-reveal", "");
+      node.style.setProperty("--muv-reveal-index", String(index % 6));
+    });
+
+    if (main && !reduced) {
+      main.classList.remove("muv-page-enter");
+      window.requestAnimationFrame(() => main.classList.add("muv-page-enter"));
+    }
+    root.classList.add("muv-motion-ready");
+    if (reduced || !("IntersectionObserver" in window)) {
+      revealNodes.concat(staggerNodes).forEach((node) => node.classList.add("is-inview"));
+      return () => main?.classList.remove("muv-page-enter");
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-inview");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.08, rootMargin: "0px 0px -8% 0px" });
+
+    revealNodes.concat(staggerNodes).forEach((node) => observer.observe(node));
+    return () => {
+      observer.disconnect();
+      main?.classList.remove("muv-page-enter");
+    };
+  }, [pageKey]);
+
+  return null;
 }
 
 function App({ page = "home", slug = null, tina = null }) {
@@ -2179,8 +2430,8 @@ function App({ page = "home", slug = null, tina = null }) {
     root.setAttribute("data-density", "regular");
     root.style.setProperty("--font-display", DISPLAY_FONT);
     root.style.setProperty("--font-body",    BODY_FONT);
-    root.style.setProperty("--accent",       SETTINGS.accentColor  || "#DE4E2B");
-    root.style.setProperty("--accent-2",     SETTINGS.accent2Color || "#1B57AD");
+    root.style.setProperty("--accent",       SETTINGS.accentColor  || "#F04A24");
+    root.style.setProperty("--accent-2",     SETTINGS.accent2Color || "#2457D6");
   }, []);
 
   // Detect scroll past hero on Home for dynamic nav theming
@@ -2214,10 +2465,15 @@ function App({ page = "home", slug = null, tina = null }) {
 
   return (
     <React.Fragment>
+      <a className="skip-link" href="#main-content">Pular para o conteúdo</a>
+      <SiteProgress />
+      <MotionController pageKey={`${current}:${slug || ""}`} />
       <Nav current={current} setCurrent={setCurrent} isDark={isDark} />
-      {current === "home" && tina
-        ? <HomeLive tina={tina} setCurrent={setCurrent} />
-        : <Page setCurrent={setCurrent} density="regular" slug={slug} />}
+      <main id="main-content" tabIndex="-1">
+        {current === "home" && tina
+          ? <HomeLive tina={tina} setCurrent={setCurrent} />
+          : <Page setCurrent={setCurrent} density="regular" slug={slug} />}
+      </main>
       <Footer setCurrent={setCurrent} />
     </React.Fragment>
   );

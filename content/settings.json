@@ -1,6 +1,6 @@
 {
-  "accentColor": "#DE4E2B",
-  "accent2Color": "#1B57AD",
+  "accentColor": "#F04A24",
+  "accent2Color": "#2457D6",
   "showMarcas": true,
   "showHub": true,
   "showBlog": false,
@@ -11,6 +11,7 @@
   "showProcesso": true,
   "showTrabalhos": true,
   "showCTA": true,
+  "showTeam": false,
   "navServicos": true,
   "navProcesso": true,
   "navTrabalhos": true,

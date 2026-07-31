@@ -13,17 +13,17 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
   <style>
     *,*::before,*::after{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:#F5F0EB;color:#1A1A1A;font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-feature-settings:"ss01","cv11"}
-    .nav{position:sticky;top:0;background:rgba(245,240,235,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(26,26,26,.08);padding:18px 7vw;display:flex;justify-content:space-between;align-items:center;z-index:10}
-    .nav__logo{font-family:"Archivo Black",sans-serif;font-size:18px;letter-spacing:-.02em;text-decoration:none;color:#0D0D0D;display:flex;align-items:center;gap:10px}
-    .nav__logo-mark{width:28px;height:28px;border-radius:50%;background:#0D0D0D;color:#F5F0EB;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
+    html,body{margin:0;padding:0;background:#F5F0EB;color:#1A1A1A;font-family:"Inter",Arial,sans-serif;-webkit-font-smoothing:antialiased;font-feature-settings:"ss01","cv11"}
+    .nav{position:sticky;top:0;background:rgba(245,240,235,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(26,26,26,.08);padding:18px clamp(12px,1.8vw,28px);display:flex;justify-content:space-between;align-items:center;z-index:10}
+    .nav__logo{display:flex;align-items:center;text-decoration:none;border:0}
+    .nav__logo-img{display:block;width:clamp(96px,10vw,120px);height:auto}
     .nav__back{font-family:"JetBrains Mono",monospace;font-size:12px;text-transform:uppercase;letter-spacing:.18em;color:#1A1A1A;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
     .nav__back::before{content:"";width:6px;height:6px;background:#DE4E2B;display:inline-block}
     .nav__back:hover{color:#DE4E2B}
-    main{max-width:780px;margin:0 auto;padding:80px 7vw 120px}
+    main{max-width:900px;margin:0;padding:80px clamp(12px,1.8vw,28px) 120px}
     .eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#6B6B73;display:inline-flex;align-items:center;gap:10px;margin-bottom:24px}
     .eyebrow::before{content:"";width:6px;height:6px;background:#DE4E2B;display:inline-block}
-    h1{font-family:"Archivo Black","Anton",sans-serif;font-weight:400;font-size:clamp(40px,6vw,72px);line-height:.95;letter-spacing:-.03em;margin:0 0 24px;text-wrap:balance}
+    h1{font-family:"Archivo Black","Arial Black",sans-serif;font-weight:400;font-size:clamp(40px,6vw,72px);line-height:.95;letter-spacing:-.03em;margin:0 0 24px;text-wrap:balance}
     .lead{font-size:19px;line-height:1.55;color:#333;max-width:640px;margin:0 0 12px}
     .meta{font-family:"JetBrains Mono",monospace;font-size:12px;color:#6B6B73;margin:24px 0 56px;padding:14px 0;border-top:1px solid rgba(26,26,26,.08);border-bottom:1px solid rgba(26,26,26,.08);display:flex;flex-wrap:wrap;gap:24px}
     h2{font-family:"Inter",sans-serif;font-weight:600;font-size:clamp(22px,2.4vw,30px);line-height:1.2;letter-spacing:-.02em;margin:56px 0 16px;text-wrap:balance}
@@ -35,17 +35,16 @@
     a:hover{border-bottom-color:#DE4E2B}
     .callout{background:#E6E2DD;border-left:3px solid #DE4E2B;padding:18px 22px;border-radius:0 8px 8px 0;margin:24px 0;font-size:15px;line-height:1.55}
     .callout strong{display:block;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#6B6B73;margin-bottom:6px}
-    footer{padding:40px 7vw;border-top:1px solid rgba(26,26,26,.08);background:#0D0D0D;color:#F5F0EB}
-    footer .footer__inner{max-width:780px;margin:0 auto;font-family:"JetBrains Mono",monospace;font-size:12px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;color:#A8A8B2}
+    footer{padding:40px clamp(12px,1.8vw,28px);border-top:1px solid rgba(26,26,26,.08);background:#0D0D0D;color:#F5F0EB}
+    footer .footer__inner{max-width:none;margin:0;font-family:"JetBrains Mono",monospace;font-size:12px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;color:#A8A8B2}
     footer a{color:#A8A8B2;border:none}
     footer a:hover{color:#F5F0EB}
   </style>
 </head>
 <body>
   <nav class="nav">
-    <a class="nav__logo" href="/">
-      <span class="nav__logo-mark">M</span>
-      <span>GRUPO MUV</span>
+    <a class="nav__logo" href="/" aria-label="Grupo MUV — ir para home">
+      <img class="nav__logo-img" src="/brand-assets/vectors/muv-horizontal-black.svg" alt="Grupo MUV" />
     </a>
     <a class="nav__back" href="/">Voltar pro site</a>
   </nav>

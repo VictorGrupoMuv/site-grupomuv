@@ -101,6 +101,7 @@ export default defineConfig({
           { type:"boolean", name:"showProcesso",  label:"Home: mostrar secao Processo" },
           { type:"boolean", name:"showTrabalhos", label:"Home: mostrar secao Cases" },
           { type:"boolean", name:"showCTA",       label:"Home: mostrar Chamada final (CTA)" },
+          { type:"boolean", name:"showTeam",      label:"Sobre: mostrar secao Quem faz acontecer" },
           { type:"boolean", name:"navServicos",   label:"Menu/Pagina: Servicos" },
           { type:"boolean", name:"navProcesso",   label:"Menu/Pagina: Processo" },
           { type:"boolean", name:"navTrabalhos",  label:"Menu/Pagina: Trabalhos" },
