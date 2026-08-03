@@ -1300,8 +1300,7 @@ body.drawer-active #muv-whatsapp {
 
 /* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
-  .brand-marquee__track,
+  *:not(.brand-marquee__track), *::before, *::after { animation: none !important; transition: none !important; }
   .marquee__track {
     animation: none !important;
     transform: none !important;
@@ -5197,8 +5196,7 @@ html {
   .case video,
   .work-card video { display: none !important; }
   .showreel__control { display: none !important; }
-  .marquee__track,
-  .brand-marquee__track {
+  .marquee__track {
     animation: none !important;
     transform: none !important;
   }
@@ -7021,13 +7019,6 @@ body {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .brand-marquee__track {
-    animation: none !important;
-    transform: none !important;
-  }
-}
-
 /* Serviços: quatro pilares com a mesma interação simples do processo. */
 .services-horizontal {
   padding-top: var(--section-y);
@@ -7699,22 +7690,21 @@ body {
 /* A marca pediu reel em loop e esteira ativa. Em redução de movimento,
    a esteira fica mais lenta e ambos continuam oferecendo pausa/foco. */
 @media (prefers-reduced-motion: reduce) {
+  .hero-cine__media video {
+    display: block !important;
+  }
   .showreel__control {
     display: inline-flex !important;
   }
-  .brand-marquee__track {
-    animation: brand-marquee-reduced 84s linear infinite !important;
-    animation-play-state: running !important;
-    translate: 0 0;
-    will-change: translate;
-  }
-  .brand-marquee:hover .brand-marquee__track,
-  .brand-marquee:focus-within .brand-marquee__track {
-    animation-play-state: paused !important;
-  }
 }
 
-@keyframes brand-marquee-reduced {
-  from { translate: 0 0; }
-  to { translate: -33.333% 0; }
+/* O movimento da esteira é controlado pelo componente para continuar ativo
+   mesmo quando o navegador desliga animações CSS por preferência do sistema. */
+.brand-marquee__track--js,
+.brand-marquee:hover .brand-marquee__track--js,
+.brand-marquee:focus-within .brand-marquee__track--js {
+  animation: none !important;
+  animation-play-state: paused !important;
+  flex-wrap: nowrap !important;
+  will-change: transform;
 }

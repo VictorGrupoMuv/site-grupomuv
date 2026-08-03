@@ -368,9 +368,50 @@ function BrandStrip({ brands }) {
 
 // ───── Brand Marquee ─────────────────────────────────────────────────────────
 function BrandMarquee({ brands, dark = false }) {
+  const trackRef = useRef(null);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const speed = reducedMotion ? 12 : 24;
+    let frame = 0;
+    let lastTime = 0;
+    let offset = 0;
+    let segmentWidth = track.scrollWidth / 3;
+
+    const updateSegmentWidth = () => {
+      segmentWidth = track.scrollWidth / 3;
+    };
+    const resizeObserver = typeof ResizeObserver !== "undefined" ?
+      new ResizeObserver(updateSegmentWidth) :
+      null;
+    resizeObserver?.observe(track);
+
+    const move = (time) => {
+      if (lastTime) {
+        const delta = Math.min(time - lastTime, 64);
+        offset -= speed * delta / 1000;
+        if (segmentWidth > 0 && -offset >= segmentWidth) offset += segmentWidth;
+        track.style.transform = `translate3d(${offset}px, 0, 0)`;
+      }
+      lastTime = time;
+      frame = window.requestAnimationFrame(move);
+    };
+
+    frame = window.requestAnimationFrame(move);
+    window.addEventListener("resize", updateSegmentWidth);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", updateSegmentWidth);
+      resizeObserver?.disconnect();
+    };
+  }, [brands]);
+
   return (
     <div className={`brand-marquee ${dark ? "brand-marquee--dark" : ""}`}>
-      <div className="brand-marquee__track">
+      <div ref={trackRef} className="brand-marquee__track brand-marquee__track--js">
         {[...brands, ...brands, ...brands].map((b, i) =>
         <React.Fragment key={i}>
             <span className="brand-marquee__item">{BRAND_LOGOS[b] ? <img src={BRAND_LOGOS[b]} alt={b} /> : b}</span>
