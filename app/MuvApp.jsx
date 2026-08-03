@@ -461,21 +461,18 @@ function ShowreelBG() {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
   useEffect(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const syncMotion = () => {
+    const startPlayback = () => {
       if (!videoRef.current) return;
-      if (reducedMotion.matches) {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        videoRef.current.play()
-          .then(() => setIsPlaying(true))
-          .catch(() => setIsPlaying(false));
-      }
+      videoRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false));
     };
-    syncMotion();
-    reducedMotion.addEventListener("change", syncMotion);
-    return () => reducedMotion.removeEventListener("change", syncMotion);
+    const resumeWhenVisible = () => {
+      if (!document.hidden && videoRef.current?.paused) startPlayback();
+    };
+    startPlayback();
+    document.addEventListener("visibilitychange", resumeWhenVisible);
+    return () => document.removeEventListener("visibilitychange", resumeWhenVisible);
   }, []);
 
   const togglePlayback = () => {
@@ -1428,6 +1425,7 @@ function Trabalhos({ setCurrent, slug = null }) {
                 key={t.slug}
                 {...t}
                 idx={realIdx}
+                compactReveal
                 headingLevel={2}
                 onClick={() => openCase(t)}
               />);

@@ -7607,3 +7607,114 @@ body {
     white-space: normal;
   }
 }
+
+/* ============================================================
+   CORREÇÕES FINAIS · HOME + TRABALHOS
+   Evita cortes tipográficos, espaços mortos e movimento parado.
+   ============================================================ */
+
+/* A máscara continua fazendo o reveal, mas agora inclui toda a caixa
+   tipográfica (acentos e extremidades não são mais recortados). */
+.hero-cine__display .reveal-word {
+  line-height: 1.08;
+}
+
+/* Trabalhos: cards alinhados, sem o estiramento causado pelo stagger. */
+.page[data-screen-label="Trabalhos"] .works-grid {
+  align-items: start;
+}
+.page[data-screen-label="Trabalhos"] .works-grid .case--preview,
+.page[data-screen-label="Trabalhos"] .works-grid .case--preview:nth-child(even) {
+  align-self: start;
+  margin-top: 0;
+  background: transparent;
+}
+
+/* O conteúdo do case deixa de ocupar uma faixa vazia em repouso. */
+.page[data-screen-label="Trabalhos"] .case--preview .case__meta {
+  min-height: 0;
+  max-height: 0;
+  padding: 0 20px;
+  overflow: hidden;
+  border-top-width: 0;
+  opacity: 0;
+  transition:
+    min-height var(--motion-base) var(--ease-out),
+    max-height var(--motion-base) var(--ease-out),
+    padding var(--motion-base) var(--ease-out),
+    opacity var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
+}
+.page[data-screen-label="Trabalhos"] .case--preview:hover .case__meta,
+.page[data-screen-label="Trabalhos"] .case--preview:focus .case__meta,
+.page[data-screen-label="Trabalhos"] .case--preview:focus-visible .case__meta,
+.page[data-screen-label="Trabalhos"] .case--preview.is-touched .case__meta {
+  min-height: 116px;
+  max-height: 164px;
+  padding: 20px;
+  border-top: 1px solid var(--accent);
+  opacity: 1;
+}
+.page[data-screen-label="Trabalhos"] .case--preview.is-touched .case__meta > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* Filtros compactos em telas pequenas: uma faixa horizontal, não duas linhas. */
+@media (max-width: 600px) {
+  .page[data-screen-label="Trabalhos"] .works-filter {
+    top: 64px;
+    padding: 10px var(--gutter) 12px;
+  }
+  .page[data-screen-label="Trabalhos"] .works-filter__inner {
+    display: grid;
+    gap: 8px;
+  }
+  .page[data-screen-label="Trabalhos"] .works-filter__chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .page[data-screen-label="Trabalhos"] .works-filter__chips::-webkit-scrollbar {
+    display: none;
+  }
+  .page[data-screen-label="Trabalhos"] .works-filter__count {
+    margin: 0;
+  }
+  .page[data-screen-label="Trabalhos"] .works-grid-section {
+    padding-top: 32px;
+  }
+  .page[data-screen-label="Trabalhos"] .case--preview:hover .case__meta,
+  .page[data-screen-label="Trabalhos"] .case--preview:focus .case__meta,
+  .page[data-screen-label="Trabalhos"] .case--preview:focus-visible .case__meta,
+  .page[data-screen-label="Trabalhos"] .case--preview.is-touched .case__meta {
+    min-height: 102px;
+    max-height: 148px;
+    padding: 16px;
+  }
+}
+
+/* A marca pediu reel em loop e esteira ativa. Em redução de movimento,
+   a esteira fica mais lenta e ambos continuam oferecendo pausa/foco. */
+@media (prefers-reduced-motion: reduce) {
+  .showreel__control {
+    display: inline-flex !important;
+  }
+  .brand-marquee__track {
+    animation: brand-marquee-reduced 84s linear infinite !important;
+    animation-play-state: running !important;
+    translate: 0 0;
+    will-change: translate;
+  }
+  .brand-marquee:hover .brand-marquee__track,
+  .brand-marquee:focus-within .brand-marquee__track {
+    animation-play-state: paused !important;
+  }
+}
+
+@keyframes brand-marquee-reduced {
+  from { translate: 0 0; }
+  to { translate: -33.333% 0; }
+}
