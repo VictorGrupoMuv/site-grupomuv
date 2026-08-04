@@ -1030,7 +1030,7 @@ function HomeCTA({ setCurrent, brands = BRANDS, showBrands = true }) {
   const budgets = ["R$ 5–10k", "R$ 10–25k", "R$ 25–50k", "R$ 50–100k", "R$ 100k+", "A definir"];
   const submit = async (e) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.phone || !form.type) return;
+    if (!form.name || !form.email || !form.phone) return;
     if (!consent) {setError("Confirme o aceite da política de privacidade para enviar.");return;}
     setSending(true);setError("");
     try {
@@ -1088,45 +1088,59 @@ function HomeCTA({ setCurrent, brands = BRANDS, showBrands = true }) {
                   </div>
                 </div>
 
-                <div className="field field--solid" style={{ marginBottom: 20 }}>
-                  <label htmlFor="quote-type">Tipo de projeto <span style={{ color: "var(--accent)" }}>*</span></label>
-                  <div className="select-wrap">
-                    <select id="quote-type" name="type" value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })} required>
-                      <option value="">Selecione</option>
-                      {types.map((t) => <option key={t} value={t}>{t}</option>)}
-                    </select>
-                    <svg className="select-chev" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                  </div>
-                </div>
+                <details className="quote-card__details">
+                  <summary className="quote-card__details-summary">
+                    <span>
+                      <strong>Briefing completo</strong>
+                      <small>Opcional · acrescente contexto ao pedido</small>
+                    </span>
+                    <svg className="quote-card__details-arrow" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                      <path d="M4 9h10M10.5 5.5 14 9l-3.5 3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </summary>
 
-                <div className="field field--solid" style={{ marginBottom: 20 }}>
-                  <label>Faixa de investimento</label>
-                  <div className="budget-grid">
-                    {budgets.map((b) =>
-                  <button
-                    key={b}
-                    type="button"
-                    className={`budget-chip ${form.budget === b ? "budget-chip--on" : ""}`}
-                    aria-pressed={form.budget === b}
-                    onClick={() => setForm({ ...form, budget: form.budget === b ? "" : b })}>
+                  <div className="quote-card__details-body">
+                    <div className="field field--solid" style={{ marginBottom: 20 }}>
+                      <label htmlFor="quote-type">Tipo de projeto</label>
+                      <div className="select-wrap">
+                        <select id="quote-type" name="type" value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}>
+                          <option value="">Selecione</option>
+                          {types.map((t) => <option key={t} value={t}>{t}</option>)}
+                        </select>
+                        <svg className="select-chev" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                      </div>
+                    </div>
+
+                    <div className="field field--solid" style={{ marginBottom: 20 }}>
+                      <label>Faixa de investimento</label>
+                      <div className="budget-grid">
+                        {budgets.map((b) =>
+                      <button
+                        key={b}
+                        type="button"
+                        className={`budget-chip ${form.budget === b ? "budget-chip--on" : ""}`}
+                        aria-pressed={form.budget === b}
+                        onClick={() => setForm({ ...form, budget: form.budget === b ? "" : b })}>
+
+                            {b}
+                          </button>
+                      )}
+                      </div>
+                    </div>
+
+                    <div className="field field--solid" style={{ marginBottom: 8 }}>
+                      <label htmlFor="quote-brief">Sobre o projeto</label>
+                      <textarea
+                      id="quote-brief"
+                      name="brief"
+                      rows="4"
+                      placeholder="Descreva o que precisa, prazo e detalhes..."
+                      value={form.brief}
+                      onChange={(e) => setForm({ ...form, brief: e.target.value })} />
                     
-                        {b}
-                      </button>
-                  )}
+                    </div>
                   </div>
-                </div>
-
-                <div className="field field--solid" style={{ marginBottom: 24 }}>
-                  <label htmlFor="quote-brief">Sobre o projeto</label>
-                  <textarea
-                  id="quote-brief"
-                  name="brief"
-                  rows="4"
-                  placeholder="Descreva o que precisa, prazo e detalhes..."
-                  value={form.brief}
-                  onChange={(e) => setForm({ ...form, brief: e.target.value })} />
-                
-                </div>
+                </details>
 
                 <label className="quote-card__consent" htmlFor="quote-consent">
                   <input id="quote-consent" name="privacy-consent" type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
@@ -1134,7 +1148,7 @@ function HomeCTA({ setCurrent, brands = BRANDS, showBrands = true }) {
                 </label>
 
                 <button type="submit" className="btn btn--ink quote-submit" disabled={sending}>
-                  {sending ? "ENVIANDO…" : "MANDAR BRIEFING"} {!sending && <Arrow />}
+                  {sending ? "ENVIANDO…" : "COMEÇAR CONVERSA"} {!sending && <Arrow />}
                 </button>
                 {error && <p className="quote-card__error" role="alert">{error}</p>}
                 <p className="quote-card__disclaimer">Seus dados não serão compartilhados com terceiros.</p>

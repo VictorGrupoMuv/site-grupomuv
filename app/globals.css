@@ -2719,6 +2719,59 @@ body.drawer-active #muv-whatsapp {
 }
 @media (max-width: 520px) { .quote-card__row { grid-template-columns: 1fr; } }
 
+.quote-card__details {
+  margin: 4px 0 18px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.quote-card__details-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 13px 2px;
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+.quote-card__details-summary::-webkit-details-marker {
+  display: none;
+}
+.quote-card__details-summary strong,
+.quote-card__details-summary small {
+  display: block;
+}
+.quote-card__details-summary strong {
+  font-family: var(--font-display);
+  font-size: 13px;
+  line-height: 1.2;
+  letter-spacing: .01em;
+}
+.quote-card__details-summary small {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 1.4;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.quote-card__details-arrow {
+  flex: 0 0 auto;
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+.quote-card__details[open] .quote-card__details-arrow {
+  transform: rotate(90deg);
+}
+.quote-card__details-body {
+  padding: 10px 0 12px;
+  animation: quote-details-in var(--motion-fast) var(--ease-out) both;
+}
+@keyframes quote-details-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+
 .quote-card__disclaimer {
   text-align: center;
   font-size: 12px;
@@ -6690,8 +6743,19 @@ body {
 .home-cta .quote-card__sub,
 .home-cta .field--solid label,
 .home-cta .quote-card__consent,
-.home-cta .quote-card__disclaimer {
+.home-cta .quote-card__disclaimer,
+.home-cta .quote-card__details-summary small {
   color: var(--dark-ink-2);
+}
+.home-cta .quote-card__details {
+  border-color: var(--dark-line);
+}
+.home-cta .quote-card__details-summary {
+  color: var(--dark-ink);
+}
+.home-cta .quote-card__details-summary:hover,
+.home-cta .quote-card__details-summary:focus-visible {
+  color: var(--accent);
 }
 .home-cta .field--solid input,
 .home-cta .field--solid textarea,
@@ -7707,4 +7771,77 @@ body {
   animation-play-state: paused !important;
   flex-wrap: nowrap !important;
   will-change: transform;
+}
+
+/* Home · o conteúdo lateral acompanha a altura do formulário recolhido.
+   A redução acontece apenas em telas com as duas colunas lado a lado. */
+@media (min-width: 901px) {
+  .home-cta__grid {
+    align-items: stretch;
+    gap: clamp(28px, 3vw, 52px);
+  }
+  .home-cta__form {
+    max-width: 700px;
+  }
+  .home-cta__form .quote-card {
+    width: 100%;
+    max-width: 700px;
+  }
+  .home-cta__form,
+  .home-cta__hero {
+    height: 100%;
+  }
+  .home-cta__hero {
+    min-height: 0;
+    padding-top: 0;
+  }
+  .home-cta__hero > .eyebrow {
+    margin: 0;
+  }
+  .home-cta__hero > .display {
+    margin-top: 12px !important;
+    max-width: 18ch;
+    margin-bottom: 0;
+    font-size: clamp(40px, 3.4vw, 48px) !important;
+    line-height: .94;
+  }
+  .home-cta__hero > .body-l {
+    max-width: 560px !important;
+    margin-top: 14px !important;
+    margin-bottom: 0;
+    font-size: 16px;
+    line-height: 1.45;
+  }
+  .home-cta__steps {
+    max-width: none;
+    margin-top: 16px;
+  }
+  .home-cta__steps li {
+    grid-template-columns: 28px 92px 1fr;
+    gap: 10px;
+    padding: 8px 0;
+  }
+  .home-cta__steps small {
+    font-size: 11px;
+    line-height: 1.35;
+  }
+  .home-cta__steps + div {
+    margin-top: 16px !important;
+  }
+  .home-cta__steps + div .btn {
+    min-height: 42px;
+    padding: 10px 18px;
+  }
+  .home-cta__contact {
+    gap: 10px 20px;
+    margin-top: auto;
+    padding-top: 14px;
+  }
+  .home-cta__contact-item {
+    gap: 4px;
+    font-size: 13px;
+  }
+  .home-cta__contact-item .mono {
+    font-size: 9px;
+  }
 }
