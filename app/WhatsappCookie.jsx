@@ -19,6 +19,7 @@ export default function WhatsappCookie() {
   }, []);
   const decide = (v) => {
     try { localStorage.setItem("muv-cookie-consent", v); localStorage.setItem("muv-cookie-consent-at", new Date().toISOString()); } catch (_) {}
+    window.dispatchEvent(new CustomEvent("muv:cookie-consent", { detail: { value: v } }));
     setShowCookie(false);
   };
   return (

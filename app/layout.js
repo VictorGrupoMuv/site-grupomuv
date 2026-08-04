@@ -1,5 +1,6 @@
 import "./globals.css";
 import WhatsappCookie from "./WhatsappCookie";
+import GoogleAnalytics from "./GoogleAnalytics";
 
 
 const LEGACY_HASH_REDIRECT = `(function(){try{var m={servicos:"/servicos/",processo:"/processo/",trabalhos:"/trabalhos/",sobre:"/sobre/",hub:"/hub/","hub-locadora":"/hub/locadora/","hub-studio":"/hub/studio/","hub-comunidade":"/hub/comunidade/","hub-cowork":"/hub/cowork/",blog:"/blog/",faq:"/faq/",contato:"/contato/"};var h=(location.hash||"").replace("#","");if(h&&m[h]&&location.pathname==="/"){location.replace(m[h]);}}catch(e){}})();`;
@@ -50,6 +51,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         {children}
+        <GoogleAnalytics />
         <WhatsappCookie />
       </body>
     </html>

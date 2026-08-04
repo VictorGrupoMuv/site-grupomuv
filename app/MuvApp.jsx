@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useTina, tinaField } from "tinacms/dist/react";
+import { trackAnalytics } from "./GoogleAnalytics";
 import _services from "../content/services.json";
 const SERVICOS = _services.items;
 import _process from "../content/process.json";
@@ -1035,6 +1036,11 @@ function HomeCTA({ setCurrent, brands = BRANDS, showBrands = true }) {
     setSending(true);setError("");
     try {
       await postToNetlify("orcamento", { ...form, origem: "Home · CTA final" });
+      trackAnalytics("generate_lead", {
+        form_name: "orcamento_home",
+        project_type: form.type || "nao_informado",
+        budget_range: form.budget || "nao_informado",
+      });
       setSent(true);
     } catch (err) {
       setError("Não conseguimos enviar agora. Tenta de novo ou chama no WhatsApp: wa.me/message/D6LG7EUSTIR7C1");
@@ -1703,6 +1709,10 @@ function HubEmailCapture({ eyebrow, title, accent, body, source, id }) {
     setStatus("sending");
     try {
       await postToNetlify("hub-waitlist", { email, origem: `Hub · ${source}` });
+      trackAnalytics("sign_up", {
+        method: "hub_waitlist",
+        signup_source: source,
+      });
       setEmail("");
       setStatus("sent");
     } catch (_) {
@@ -2089,6 +2099,10 @@ function BlogNewsletterForm() {
     setStatus("sending");
     try {
       await postToNetlify("newsletter", { email });
+      trackAnalytics("sign_up", {
+        method: "newsletter",
+        signup_source: "blog",
+      });
       setEmail("");
       setStatus("sent");
     } catch (_) {
@@ -2279,6 +2293,11 @@ function Contato({ setCurrent }) {
     setSending(true);setError("");
     try {
       await postToNetlify("orcamento", { ...data, scope: data.scope.join(", "), origem: "Página Contato · briefing guiado" });
+      trackAnalytics("generate_lead", {
+        form_name: "orcamento_contato",
+        project_scope: data.scope.join("|") || "nao_informado",
+        budget_range: data.budget || "nao_informado",
+      });
       setStep(4);
     } catch (err) {
       setError("Não conseguimos enviar agora. Tenta de novo ou chama no WhatsApp: wa.me/message/D6LG7EUSTIR7C1");
