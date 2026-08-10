@@ -1,7 +1,7 @@
 import MuvApp from "../../MuvApp";
 import _works from "../../../content/works.json";
 
-const WORKS = _works.items;
+const WORKS = _works.items.filter((w) => !w.hidden);
 
 export function generateStaticParams() {
   return WORKS.map((w) => ({ slug: w.slug }));

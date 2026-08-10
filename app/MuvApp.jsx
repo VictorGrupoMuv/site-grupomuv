@@ -8,7 +8,7 @@ const SERVICOS = _services.items;
 import _process from "../content/process.json";
 const PROCESSO = _process.items;
 import _works from "../content/works.json";
-const TRABALHOS = _works.items;
+const TRABALHOS = _works.items.filter((w) => !w.hidden);
 import _team from "../content/team.json";
 const TIME = _team.items;
 import _posts from "../content/posts.json";
@@ -802,7 +802,7 @@ function Home({ setCurrent, density, content }) {
   const H = content?.home || _home;
   const SRV = content?.services?.items || SERVICOS;
   const PRC = content?.process?.items || PROCESSO;
-  const TRB = content?.works?.items || TRABALHOS;
+  const TRB = (content?.works?.items || TRABALHOS).filter((t) => !t.hidden);
   const PST = content?.posts?.items || POSTS;
   const BRN = content?.brands?.items || BRANDS;
   const MQ = content?.marquee?.items || MARQUEE_WORDS;
@@ -1404,7 +1404,7 @@ function Metric({ num, label, desc }) {
 function Trabalhos({ setCurrent, slug = null }) {
   const router = useRouter();
   const [filter, setFilter] = useState("Todos");
-  // Chips derivados do conteúdo: categoria sem nenhum case nunca aparece como filtro vazio.
+  // Chips derivados do conteudo: categoria sem nenhum case nunca aparece como filtro vazio.
   const filters = ["Todos", ...Array.from(new Set(TRABALHOS.map((t) => t.category).filter(Boolean)))];
   // O case aberto vem da URL (/trabalhos/<slug>/), não de estado local:
   // link compartilhável, botão voltar do navegador correto e página indexável.

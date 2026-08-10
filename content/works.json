@@ -352,7 +352,8 @@
           "h": "Créditos e entrega",
           "p": "Captação e edição: Grupo MUV para o Grupo Uma Uma."
         }
-      ]
+      ],
+      "hidden": true
     },
     {
       "slug": "mac-cosmetics-lancamento",
