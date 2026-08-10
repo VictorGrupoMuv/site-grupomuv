@@ -1404,7 +1404,8 @@ function Metric({ num, label, desc }) {
 function Trabalhos({ setCurrent, slug = null }) {
   const router = useRouter();
   const [filter, setFilter] = useState("Todos");
-  const filters = ["Todos", "Brand film", "Documentário", "Social", "Cobertura"];
+  // Chips derivados do conteúdo: categoria sem nenhum case nunca aparece como filtro vazio.
+  const filters = ["Todos", ...Array.from(new Set(TRABALHOS.map((t) => t.category).filter(Boolean)))];
   // O case aberto vem da URL (/trabalhos/<slug>/), não de estado local:
   // link compartilhável, botão voltar do navegador correto e página indexável.
   const selected = slug ? TRABALHOS.findIndex((t) => t.slug === slug) : null;
