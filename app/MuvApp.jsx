@@ -44,6 +44,18 @@ function ArrowDiag({ size = 14 }) {
 
 }
 
+// Monta a URL do player do Vimeo. Aceita "123456789", "123456789/hash"
+// ou "123456789?h=hash" — o hash é obrigatório em vídeos não listados.
+function vimeoEmbed(raw) {
+  const v = String(raw || "").trim()
+    .replace(/^https?:\/\/(www\.)?vimeo\.com\//i, "")
+    .replace(/^https?:\/\/player\.vimeo\.com\/video\//i, "");
+  const id = v.split(/[/?#]/)[0];
+  const m = v.match(/(?:[/?#]h=|\/)([0-9a-zA-Z]{6,})/);
+  const h = m ? m[1] : "";
+  return `https://player.vimeo.com/video/${id}?${h ? `h=${h}&` : ""}dnt=1&title=0&byline=0&portrait=0`;
+}
+
 // ───── Cinematic placeholder ─────────────────────────────────────────────────
 function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = "default", play = false, center, style, className = "", src = null, video = null, poster = null, vimeoId = null, hideLabel = false, alt = "" }) {
   const variantClass = variant === "dark" ? "cine--dark" : variant === "accent" ? "cine--accent" : "";
@@ -54,7 +66,7 @@ function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = 
       style={{ aspectRatio: aspect, ...style, fontSize: "10px", width: "100%" }}>
 
       {vimeoId ?
-      <iframe className="cine__img cine__video" src={`https://player.vimeo.com/video/${vimeoId}?dnt=1&title=0&byline=0&portrait=0`}
+      <iframe className="cine__img cine__video" src={vimeoEmbed(vimeoId)}
         title={alt || label} frameBorder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen /> :
       video ?
       <video className="cine__img cine__video" src={video} poster={poster || src || undefined}
@@ -95,6 +107,11 @@ const ROUTES = {
   blog: "/blog/",
   faq: "/faq/",
   contato: "/contato/" };
+
+// Cmd/Ctrl/Shift+clique deve abrir em nova aba: nesse caso NÃO chamamos
+// preventDefault, deixando o href nativo do <a> agir.
+const isModifiedClick = (e) =>
+  e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || (e.button !== undefined && e.button !== 0);
 
 const caseHref = (slug) => `/trabalhos/${slug}/`;
 const postHref = (slug) => `/blog/${slug}/`;
@@ -193,7 +210,7 @@ function Nav({ current, setCurrent, isDark }) {
   return (
     <React.Fragment>
       <nav className={`nav ${isDark ? "nav--dark" : ""} ${menuOpen ? "nav--open" : ""}`}>
-        <a className="nav__logo" onClick={(e) => {e.preventDefault();setCurrent("home");}} href="/" aria-label="Grupo MUV — ir para home">
+        <a className="nav__logo" onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("home");}} href="/" aria-label="Grupo MUV — ir para home">
           <img
             src={isDark ? "/brand-assets/vectors/muv-horizontal-white.svg" : "/brand-assets/vectors/muv-horizontal-black.svg"}
             alt="Grupo MUV"
@@ -206,13 +223,13 @@ function Nav({ current, setCurrent, isDark }) {
               href={ROUTES[n.id]}
               className={`nav__link ${current === n.id ? "nav__link--active" : ""}`}
               aria-current={current === n.id ? "page" : undefined}
-              onClick={(e) => {e.preventDefault();setCurrent(n.id);}}>
+              onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent(n.id);}}>
                 {n.label}
               </a>
             </li>
           )}
         </ul>
-        <a href={ROUTES.contato} className={`btn ${isDark ? "btn--ghost-dark" : "btn--ink"} nav__cta`} onClick={(e) => {e.preventDefault();setCurrent("contato");}}>
+        <a href={ROUTES.contato} className={`btn ${isDark ? "btn--ghost-dark" : "btn--ink"} nav__cta`} onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("contato");}}>
           Falar com a gente <Arrow />
         </a>
         <button
@@ -245,7 +262,7 @@ function Nav({ current, setCurrent, isDark }) {
                 href={ROUTES[n.id]}
                 className={`drawer__link ${current === n.id ? "drawer__link--active" : ""}`}
                 tabIndex={menuOpen ? 0 : -1}
-                onClick={(e) => {e.preventDefault();go(n.id);}}>
+                onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();go(n.id);}}>
                 <span className="drawer__link-index">0{i + 1}</span>
                 <span className="drawer__link-label">{n.label}</span>
               </a>
@@ -286,7 +303,7 @@ function Nav({ current, setCurrent, isDark }) {
 
 // ───── Footer ────────────────────────────────────────────────────────────────
 function Footer({ setCurrent }) {
-  const go = (id) => (e) => {e.preventDefault();setCurrent(id);};
+  const go = (id) => (e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent(id);};
   return (
     <footer className="footer">
       <div className="footer__giant">GRUPO MUV.</div>
@@ -952,7 +969,7 @@ function Home({ setCurrent, density, content }) {
           )}
         </div>
         <div className="home-capabilities__footer">
-          <a className="btn btn--ghost" href={ROUTES.servicos} onClick={(e) => {e.preventDefault();setCurrent("servicos");}}>Detalhar serviços <Arrow /></a>
+          <a className="btn btn--ghost" href={ROUTES.servicos} onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("servicos");}}>Detalhar serviços <Arrow /></a>
         </div>
       </section>
       )}
@@ -1004,8 +1021,8 @@ function Home({ setCurrent, density, content }) {
             <p className="home-hub__tagline" data-tina-field={tf(H,'hubTagline')}>{H.hubTagline}</p>
             <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 24, maxWidth: 480 }} data-tina-field={tf(H,'hubBody')}>{H.hubBody}</p>
             <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <a className="btn btn--primary" href={ROUTES.hub} onClick={(e) => {e.preventDefault();setCurrent("hub");}}>Conhecer o Hub <Arrow /></a>
-              <a className="btn btn--ghost-dark" href={ROUTES.hub} onClick={(e) => {e.preventDefault();setCurrent("hub");}}>Entrar na lista <Arrow /></a>
+              <a className="btn btn--primary" href={ROUTES.hub} onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("hub");}}>Conhecer o Hub <Arrow /></a>
+              <a className="btn btn--ghost-dark" href={ROUTES.hub} onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("hub");}}>Entrar na lista <Arrow /></a>
             </div>
           </div>
           <div className="hub-grid">
@@ -1035,7 +1052,7 @@ function HomeCTA({ setCurrent, brands = BRANDS, showBrands = true }) {
     if (!consent) {setError("Confirme o aceite da política de privacidade para enviar.");return;}
     setSending(true);setError("");
     try {
-      await postToNetlify("orcamento", { ...form, origem: "Home · CTA final" });
+      await postToNetlify("orcamento", { ...form, origem: "Home · CTA final", "aceite-privacidade": `sim · ${new Date().toISOString()}` });
       trackAnalytics("generate_lead", {
         form_name: "orcamento_home",
         project_type: form.type || "nao_informado",
@@ -1317,18 +1334,19 @@ function CaseCard({ title, client, tag, year, idx, variant, onClick, still, vide
 
 }
 
-function PostRow({ date, title, excerpt, read, onClick }) {
+function PostRow({ date, title, excerpt, read, slug, onClick }) {
+  const href = slug ? postHref(slug) : undefined;
+  const Tag = href ? "a" : "article";
   return (
-    <article className="post" role={onClick ? "link" : undefined} tabIndex={onClick ? 0 : undefined}
-      onClick={onClick}
-      onKeyDown={onClick ? (e) => {if (e.key === "Enter" || e.key === " ") {e.preventDefault();onClick();}} : undefined}>
+    <Tag className="post" href={href}
+      onClick={href || onClick ? (e) => {if (isModifiedClick(e)) return;if (onClick) {e.preventDefault();onClick();}} : undefined}>
       <div className="post__head">
         <h3 className="post__title">{title}</h3>
         <span className="post__date">{date} · {read}</span>
       </div>
       <p className="post__excerpt">{excerpt}</p>
       <span className="link-arrow" style={{ color: "var(--ink-2)" }}>Ler texto <Arrow /></span>
-    </article>);
+    </Tag>);
 
 }
 
@@ -1395,6 +1413,7 @@ function Trabalhos({ setCurrent, slug = null }) {
 
   if (selected !== null && selected >= 0) {
     const t = TRABALHOS[selected];
+    const heroVertical = t.ratio ? t.ratio === "9/16" : Boolean(t.vimeoId);
     return (
       <div className="page" data-screen-label="CaseDetail">
         <article className="case-detail">
@@ -1413,7 +1432,9 @@ function Trabalhos({ setCurrent, slug = null }) {
             <p className="body-l case-detail__lead">{t.summary}</p>
           </header>
           <div className="case-detail__hero">
-            <Cine vimeoId={t.vimeoId} video={t.vimeoId ? null : t.video} poster={t.poster} src={t.still} alt={`${t.title.replace(/\n/g, " ")} — ${t.client}`} label={t.title.toUpperCase().replace(/\n/g, " ")} code={`CASE.${String(selected + 1).padStart(2, "0")}`} aspect="16/9" variant="accent" play />
+            <div style={heroVertical ? { maxWidth: 440, margin: "0 auto" } : undefined}>
+              <Cine vimeoId={t.vimeoId} video={t.vimeoId ? null : t.video} poster={t.poster} src={t.still} alt={`${t.title.replace(/\n/g, " ")} — ${t.client}`} label={t.title.toUpperCase().replace(/\n/g, " ")} code={`CASE.${String(selected + 1).padStart(2, "0")}`} aspect={heroVertical ? "9/16" : "16/9"} variant="accent" play />
+            </div>
           </div>
 
           <section className="case-detail__specs">
@@ -1444,7 +1465,7 @@ function Trabalhos({ setCurrent, slug = null }) {
             <p className="eyebrow eyebrow-dot">Próximo passo</p>
             <h3 className="h2" style={{ marginTop: 16 }}>Briefing parecido no seu radar?</h3>
             <div style={{ marginTop: 24, display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <a className="btn btn--ink" href={ROUTES.contato} onClick={(e) => {e.preventDefault();setCurrent("contato");}}>Começar um projeto <Arrow /></a>
+              <a className="btn btn--ink" href={ROUTES.contato} onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("contato");}}>Começar um projeto <Arrow /></a>
               <a className="btn btn--ghost" href="/trabalhos/" onClick={(e) => {e.preventDefault();openList();}}>Ver outros cases</a>
             </div>
           </footer>
@@ -2183,7 +2204,7 @@ function Blog({ setCurrent, slug = null }) {
             <p className="eyebrow eyebrow-dot">Próximo passo</p>
             <h3 className="h2" style={{ marginTop: 16 }}>Próximo projeto que pede esse tipo de operação?</h3>
             <div style={{ marginTop: 24, display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <a className="btn btn--ink" href={ROUTES.contato} onClick={(e) => {e.preventDefault();setCurrent("contato");}}>Falar com a gente <Arrow /></a>
+              <a className="btn btn--ink" href={ROUTES.contato} onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("contato");}}>Falar com a gente <Arrow /></a>
               <a className="btn btn--ghost" href="/blog/" onClick={(e) => {e.preventDefault();openList();}}>Ver outros textos</a>
             </div>
           </footer>
@@ -2229,13 +2250,11 @@ function Blog({ setCurrent, slug = null }) {
         </div>
         <div className="blog-list__rows">
           {visibleRest.map((p, i) =>
-          <article
+          <a
             key={i}
             className="blog-row blog-row--link"
-            role="button"
-            tabIndex={0}
-            onClick={() => openPost(p)}
-            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openPost(p); }}}>
+            href={postHref(p.slug)}
+            onClick={(e) => { if (isModifiedClick(e)) return; e.preventDefault(); openPost(p); }}>
               <div className="blog-row__num">{String(i + 2).padStart(2, "0")}</div>
               <div className="blog-row__cat"><span className="pill">{p.category}</span></div>
               <h3 className="blog-row__title">{p.title}</h3>
@@ -2246,7 +2265,7 @@ function Blog({ setCurrent, slug = null }) {
               <div className="blog-row__cta">
                 <span className="link-arrow">Ler <Arrow /></span>
               </div>
-            </article>
+            </a>
           )}
         </div>
         {hasMorePosts && (
@@ -2292,7 +2311,7 @@ function Contato({ setCurrent }) {
     if (!consent) {setError("Confirme o aceite da política de privacidade para enviar.");return;}
     setSending(true);setError("");
     try {
-      await postToNetlify("orcamento", { ...data, scope: data.scope.join(", "), origem: "Página Contato · briefing guiado" });
+      await postToNetlify("orcamento", { ...data, scope: data.scope.join(", "), origem: "Página Contato · briefing guiado", "aceite-privacidade": `sim · ${new Date().toISOString()}` });
       trackAnalytics("generate_lead", {
         form_name: "orcamento_contato",
         project_scope: data.scope.join("|") || "nao_informado",

@@ -2905,10 +2905,7 @@ a.home-cta__contact-item:hover { color: var(--accent); }
   padding: clamp(48px, 6vw, 96px) 0;
   border-top: 1px solid var(--line);
 }
-.svc-row__main .cine {
-  max-width: 420px !important;
-  width: 100% !important;
-}
+.svc-row__main .cine { max-width: none !important; width: 100% !important; }
 .svc-row:first-child { border-top: 0; padding-top: clamp(24px, 3vw, 48px); }
 
 .svc-row__sidebar {
@@ -4756,8 +4753,11 @@ a.home-cta__contact-item:hover { color: var(--accent); }
   border-left: 2px solid #e0503a; background: rgba(224, 80, 58, 0.07);
   font-size: 12.5px; line-height: 1.5; color: #c4402c;
 }
-.section--ink .quote-card__error,
-.section--dark .quote-card__error { color: #ff8a72; background: rgba(224, 80, 58, 0.12); }
+/* O .quote-card tem fundo claro mesmo dentro de section--ink: o override
+   escuro deixava o erro em 1,62:1. Só vale fora do card. */
+.section--ink > .quote-card__error,
+.section--dark > .quote-card__error { color: #ff8a72; background: rgba(224, 80, 58, 0.12); }
+.quote-card .quote-card__error { color: #c4402c; background: rgba(224, 80, 58, 0.07); }
 
 /* Botão em envio */
 .quote-submit:disabled,
@@ -4773,8 +4773,12 @@ a.home-cta__contact-item:hover { color: var(--accent); }
 
 /* Página de Contato e blocos da Home: grids inline não tinham breakpoint */
 @media (max-width: 860px) {
-  .page section > div[style*="grid-template-columns: 1fr 2fr"],
-  .page section > div[style*="gridTemplateColumns"] { grid-template-columns: 1fr !important; }
+  /* O React serializa style inline sem espaço depois dos ":" — o seletor
+     antigo (com espaço) não casava com nada e a /contato/ seguia quebrada. */
+  .page section > div[style*="grid-template-columns:1fr 2fr"],
+  .page section > div[style*="grid-template-columns:1fr 3fr"],
+  .page section > div[style*="grid-template-columns:1fr 1fr"],
+  .page section > div[style*="grid-template-columns:2fr 1fr"] { grid-template-columns: 1fr !important; }
 }
 
 /* ─── Cine com mídia real ───────────────────────────────────────────────────
