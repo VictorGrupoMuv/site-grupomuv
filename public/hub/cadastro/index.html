@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cadastro · MUV Hub Turma 01</title>
+<meta name="description" content="Cadastro da turma fundadora do MUV Hub. Escolha o plano, deixe seus dados e finalize o pagamento.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F0E9; --bg-2:#E8E5DC; --ink:#10100F; --ink-2:#35332F; --ink-3:#625F59; --ink-4:#8D8981;
+  --accent:#F04A24; --accent-text:#C03B20;
+  --surface:#FFFFFF; --line:rgba(16,16,15,.13); --line-2:rgba(16,16,15,.065);
+  --dark-bg:#10100F; --dark-bg-2:#1D1C1A; --dark-ink:#F2F0E9; --dark-ink-2:#B8B6AF;
+  --dark-line:rgba(242,240,233,.12);
+  --mono:"JetBrains Mono",monospace; --body:"Inter",Arial,sans-serif; --display:"Archivo Black","Arial Black",sans-serif;
+  --gutter:clamp(16px,2vw,28px); --ease-out:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--dark-bg);color:var(--dark-ink);font-family:var(--body);font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 var(--gutter)}
+h1,h2,h3{margin:0;letter-spacing:-.02em;text-transform:uppercase;font-family:var(--display);line-height:.98}
+p{margin:0}
+.mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:.12em;font-size:10.5px}
+
+/* TOPO */
+.topbar{background:var(--dark-bg);border-bottom:1px solid var(--dark-line)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:58px;gap:16px}
+.brand{font-family:var(--display);font-size:15px;text-transform:uppercase}
+.brand span{color:var(--accent)}
+.steps{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-4)}
+.steps b{color:var(--accent);font-weight:700}
+.steps i{font-style:normal;opacity:.4}
+@media(max-width:700px){.steps{display:none}}
+.back{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dark-ink-2);text-decoration:none}
+.back:hover{color:var(--dark-ink)}
+
+/* HEAD */
+.head{padding:clamp(26px,3.5vw,44px) 0 clamp(20px,2.5vw,30px)}
+.head .kick{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:9px}
+.head .kick::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.head h1{font-size:clamp(30px,4.4vw,54px);letter-spacing:-.035em}
+.head p{color:var(--dark-ink-2);margin-top:14px;max-width:560px;font-size:15px}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(20px,3vw,44px);align-items:start;padding-bottom:clamp(48px,6vw,88px)}
+@media(max-width:940px){.grid{grid-template-columns:1fr}}
+
+/* PLANOS */
+.sec{margin-bottom:34px}
+.sec .st{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-4);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.sec .st b{color:var(--accent);font-weight:700}
+.plans{display:grid;gap:11px}
+.plan{position:relative;display:flex;align-items:center;gap:16px;background:var(--dark-bg-2);border:1px solid var(--dark-line);border-radius:15px;padding:18px 20px;cursor:pointer;transition:border-color .2s var(--ease-out),background .2s}
+.plan:hover{border-color:rgba(242,240,233,.32)}
+.plan input{position:absolute;opacity:0;pointer-events:none}
+.plan .radio{flex:none;width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(242,240,233,.3);display:grid;place-items:center;transition:border-color .2s}
+.plan .radio::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent);transform:scale(0);transition:transform .2s var(--ease-out)}
+.plan .pt{flex:1;min-width:0}
+.plan .pt b{display:block;font-size:16px;font-weight:600;letter-spacing:-.01em;margin-bottom:3px}
+.plan .pt span{display:block;font-size:12.8px;color:var(--dark-ink-2);line-height:1.45}
+.plan .pv{flex:none;text-align:right}
+.plan .pv b{display:block;font-family:var(--display);font-size:19px;letter-spacing:-.02em;white-space:nowrap}
+.plan .pv em{display:block;font-style:normal;font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);margin-top:4px}
+.plan.on{border-color:var(--accent);background:rgba(240,74,36,.07)}
+.plan.on .radio{border-color:var(--accent)}
+.plan.on .radio::after{transform:scale(1)}
+.plan.on .pv b{color:var(--accent)}
+.tagbest{position:absolute;top:-9px;right:18px;background:var(--accent);color:#fff;font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:999px;font-weight:700}
+@media(max-width:560px){.plan{flex-wrap:wrap}.plan .pv{width:100%;text-align:left;padding-left:36px}.plan .pv em{margin-top:2px}}
+
+/* FORM */
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:620px){.fields{grid-template-columns:1fr}}
+.field.full{grid-column:1/-1}
+.field label{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dark-ink-2);margin-bottom:8px}
+.field input,.field select,.field textarea{width:100%;background:rgba(242,240,233,.05);border:1px solid var(--dark-line);border-radius:11px;padding:14px 15px;color:var(--dark-ink);font-family:var(--body);font-size:15px;outline:none;transition:border-color .2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}
+.field input::placeholder,.field textarea::placeholder{color:#5e5b56}
+.field select{appearance:none;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B8B6AF' stroke-width='1.6' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center}
+.field select option{background:var(--dark-bg-2);color:var(--dark-ink)}
+.field textarea{min-height:82px;resize:vertical}
+.field .hint{font-size:11.5px;color:var(--ink-4);margin-top:7px;line-height:1.4}
+.field input.err,.field select.err{border-color:#ff6b4a}
+.consent{display:flex;gap:11px;align-items:flex-start;margin-top:20px}
+.consent input{width:18px;height:18px;flex:none;margin-top:2px;accent-color:var(--accent)}
+.consent label{font-size:12.8px;color:var(--dark-ink-2);line-height:1.5}
+.consent label a{color:var(--accent)}
+
+/* RESUMO */
+.side{background:var(--dark-bg-2);border:1px solid var(--dark-line);border-radius:20px;padding:clamp(22px,2.6vw,30px);position:sticky;top:22px}
+.side .sh{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dark-ink-2);margin-bottom:20px}
+.side .item{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:12px 0;border-bottom:1px solid var(--dark-line);font-size:14px;color:var(--dark-ink-2)}
+.side .item b{font-family:var(--mono);font-size:13.5px;color:var(--dark-ink);font-weight:500;text-align:right;white-space:nowrap}
+.side .tot{padding-top:20px;margin-top:6px;border-top:2px solid rgba(242,240,233,.28)}
+.side .tot .lb{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:9px}
+.side .tot .vl{font-family:var(--display);font-size:clamp(30px,3.6vw,42px);line-height:.95;letter-spacing:-.035em}
+.side .tot .sub{font-size:12.5px;color:var(--dark-ink-2);margin-top:9px;line-height:1.45}
+.side .incl{margin-top:22px;padding-top:20px;border-top:1px solid var(--dark-line)}
+.side .incl p{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-4);margin-bottom:12px}
+.side .incl ul{list-style:none;padding:0;margin:0}
+.side .incl li{position:relative;padding-left:19px;margin-bottom:9px;font-size:13px;color:var(--dark-ink-2);line-height:1.45}
+.side .incl li::before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+/* BOTÃO */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:17px 26px;border-radius:999px;border:0;cursor:pointer;transition:transform .2s var(--ease-out),background .2s;width:100%}
+.btn--primary{background:var(--accent);color:#fff}
+.btn--primary:hover{transform:translateY(-2px);background:#ff5a30}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.safe{display:flex;align-items:flex-start;gap:10px;margin-top:16px;font-size:11.5px;color:var(--ink-4);line-height:1.5}
+.safe svg{flex:none;margin-top:1px;color:var(--dark-ink-2)}
+.wpp{display:block;text-align:center;margin-top:16px;font-size:12.5px;color:var(--dark-ink-2);text-decoration:none}
+.wpp:hover{color:var(--dark-ink)}
+.wpp b{color:var(--accent)}
+
+/* SUCESSO */
+.done{display:none;text-align:center;padding:clamp(40px,6vw,80px) 0}
+.done.on{display:block}
+.done .dk{font-family:var(--display);font-size:clamp(30px,4.4vw,52px);color:var(--accent);text-transform:uppercase;letter-spacing:-.03em;line-height:1}
+.done p{color:var(--dark-ink-2);max-width:460px;margin:18px auto 0;font-size:15px}
+
+footer{border-top:1px solid var(--dark-line);padding:24px 0 40px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4)}
+footer a{text-decoration:none}
+footer a:hover{color:var(--dark-ink-2)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">MUV <span>HUB</span></div>
+    <div class="steps"><b>01 Cadastro</b> <i>—</i> <span>02 Pagamento</span> <i>—</i> <span>03 Contrato</span></div>
+    <a class="back" href="/hub/fundadores/">← Voltar</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="head">
+    <p class="kick">Turma 01 · 14 vagas</p>
+    <h1>Cadastro<br>de fundador.</h1>
+    <p>Escolha como quer entrar, deixe seus dados e a gente te leva para o pagamento. Leva menos de um minuto.</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="grid" id="app">
+    <!-- COLUNA ESQUERDA -->
+    <div>
+      <form id="form" name="hub-cadastro" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="hub-cadastro">
+        <input type="hidden" name="plano" id="planoField" value="Sinal de reserva">
+        <input type="hidden" name="valor" id="valorField" value="R$ 300">
+        <p style="display:none"><label>Não preencha: <input name="bot-field"></label></p>
+
+        <div class="sec">
+          <p class="st"><b>01</b> Como você quer entrar</p>
+          <div class="plans">
+            <label class="plan on" data-plan="sinal" data-nome="Sinal de reserva" data-valor="R$ 300" data-sub="Abatido da primeira mensalidade. Vaga travada por 7 dias." data-total="R$ 300">
+              <input type="radio" name="opcao" value="sinal" checked>
+              <span class="radio"></span>
+              <span class="pt"><b>Garantir a vaga com o sinal</b><span>Trava uma das 14 vagas por 7 dias. O valor é abatido da primeira mensalidade.</span></span>
+              <span class="pv"><b>R$ 300</b><em>Pix ou cartão</em></span>
+            </label>
+
+            <label class="plan" data-plan="anualPix" data-nome="Anual à vista" data-valor="R$ 8.900" data-sub="Doze meses pelo preço de dez. Já entra ativo." data-total="R$ 8.900">
+              <input type="radio" name="opcao" value="anualPix">
+              <span class="radio"></span>
+              <span class="pt"><b>Fechar o ano à vista</b><span>Doze meses pelo preço de dez, mais uma diária cheia de estúdio de bônus.</span></span>
+              <span class="pv"><b>R$ 8.900</b><em>Pix ou cartão</em></span>
+            </label>
+
+            <label class="plan" data-plan="anual12" data-nome="Anual parcelado" data-valor="12× R$ 790" data-sub="Economiza R$ 1.200 em relação ao mensal de R$ 890." data-total="12× R$ 790">
+              <span class="tagbest">Mais escolhido</span>
+              <input type="radio" name="opcao" value="anual12">
+              <span class="radio"></span>
+              <span class="pt"><b>Fechar o ano parcelado</b><span>Mesmos benefícios do anual, em doze vezes no cartão.</span></span>
+              <span class="pv"><b>12× 790</b><em>No cartão</em></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="sec">
+          <p class="st"><b>02</b> Seus dados</p>
+          <div class="fields">
+            <div class="field full">
+              <label for="nome">Nome completo</label>
+              <input id="nome" name="nome" type="text" required placeholder="Como te chamam" autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="email">E-mail</label>
+              <input id="email" name="email" type="email" required placeholder="voce@email.com" autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="tel">WhatsApp</label>
+              <input id="tel" name="telefone" type="tel" required placeholder="(11) 90000-0000" autocomplete="tel">
+            </div>
+            <div class="field">
+              <label for="atua">O que você faz</label>
+              <select id="atua" name="atuacao" required>
+                <option value="">Selecione</option>
+                <option>Direção / filmmaker</option>
+                <option>Fotografia / still</option>
+                <option>Edição / pós-produção</option>
+                <option>Produção / produtora</option>
+                <option>Social media / creator</option>
+                <option>Design / arte</option>
+                <option>Agência / marca</option>
+                <option>Outro</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="freq">Com que frequência você produz</label>
+              <select id="freq" name="frequencia" required>
+                <option value="">Selecione</option>
+                <option>Toda semana</option>
+                <option>Algumas vezes por mês</option>
+                <option>Uma vez por mês</option>
+                <option>Esporadicamente</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="msg">Algo que a gente precise saber (opcional)</label>
+              <textarea id="msg" name="mensagem" placeholder="O que você produz hoje, o que mais usaria no Hub, alguma dúvida sobre as regras..."></textarea>
+            </div>
+          </div>
+
+          <div class="consent">
+            <input type="checkbox" id="lgpd" name="consentimento" required value="sim">
+            <label for="lgpd">Li as <a href="/hub/fundadores/#regras" target="_blank">regras de uso</a> e autorizo o Grupo MUV a entrar em contato comigo sobre o MUV Hub. Meus dados não são compartilhados com terceiros.</label>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- COLUNA DIREITA -->
+    <aside class="side">
+      <p class="sh">Resumo do pedido</p>
+      <div class="item"><span>Plano</span><b id="rPlano">Sinal de reserva</b></div>
+      <div class="item"><span>Turma</span><b>01 · 14 vagas</b></div>
+      <div class="item"><span>Preço travado</span><b>Sim</b></div>
+
+      <div class="tot">
+        <p class="lb">Você vai pagar agora</p>
+        <div class="vl" id="rValor">R$ 300</div>
+        <p class="sub" id="rSub">Abatido da primeira mensalidade. Vaga travada por 7 dias.</p>
+      </div>
+
+      <div class="incl">
+        <p>O que entra no plano</p>
+        <ul>
+          <li>4 horas de estúdio por mês</li>
+          <li>Baia de trabalho 2× por semana</li>
+          <li>−20% na locadora, sem caução até R$ 5.000</li>
+          <li>Estúdio a R$ 150/h nas horas extras</li>
+          <li>Eventos fechados da comunidade</li>
+        </ul>
+      </div>
+
+      <button class="btn btn--primary" type="submit" form="form" id="go" style="margin-top:24px">Ir para o pagamento →</button>
+
+      <p class="safe">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>O pagamento é processado pelo <b style="color:var(--dark-ink-2)">Asaas</b>, instituição de pagamento autorizada pelo Banco Central. A MUV não armazena dados do seu cartão.</span>
+      </p>
+
+      <a class="wpp" href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener">Prefere resolver conversando? <b>Chamar no WhatsApp</b></a>
+    </aside>
+  </div>
+
+  <!-- SUCESSO (quando volta com ?ok=1) -->
+  <div class="done" id="done">
+    <p class="dk">Vaga garantida</p>
+    <p>Recebemos seu cadastro e o pagamento. Em até 24h você recebe o contrato de membership e as instruções de agendamento do estúdio. Bem-vindo à turma 01.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>MUV HUB · Turma 01 · São Paulo</div>
+    <div><a href="/hub/tabela/">Tabela avulsa</a> · <a href="https://grupomuv.com.br">grupomuv.com.br</a></div>
+  </div>
+</footer>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   Links de pagamento — os mesmos da landing de fundadores.
+   Trocar aqui e lá se mudar de gateway.
+   ───────────────────────────────────────────────────────────── */
+var MUV_PAY = {
+  sinal    : "https://www.asaas.com/c/8hmjv8trs3p1ve8b",
+  anualPix : "https://www.asaas.com/c/opzfcr0bo5q3x7a8",
+  anual12  : "https://www.asaas.com/c/u35l41eru6j1qbnp"
+};
+var WPP = "https://wa.me/message/D6LG7EUSTIR7C1";
+
+(function(){
+  var form = document.getElementById('form'),
+      go   = document.getElementById('go'),
+      atual = 'sinal';
+
+  // ── seleção de plano ──
+  function selecionar(el){
+    document.querySelectorAll('.plan').forEach(function(p){ p.classList.remove('on'); });
+    el.classList.add('on');
+    el.querySelector('input').checked = true;
+    atual = el.dataset.plan;
+    document.getElementById('rPlano').textContent = el.dataset.nome;
+    document.getElementById('rValor').textContent = el.dataset.total;
+    document.getElementById('rSub').textContent   = el.dataset.sub;
+    document.getElementById('planoField').value   = el.dataset.nome;
+    document.getElementById('valorField').value   = el.dataset.valor;
+  }
+  document.querySelectorAll('.plan').forEach(function(el){
+    el.addEventListener('click', function(){ selecionar(el); });
+  });
+
+  // ── validação simples e visível ──
+  function validar(){
+    var ok = true;
+    ['nome','email','tel','atua','freq'].forEach(function(id){
+      var f = document.getElementById(id);
+      if(!f.value.trim()){ f.classList.add('err'); ok = false; } else { f.classList.remove('err'); }
+    });
+    if(!document.getElementById('lgpd').checked) ok = false;
+    return ok;
+  }
+
+  // ── envio: grava o lead e só então manda pro checkout ──
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    if(!validar()){
+      var primeiro = document.querySelector('.err') || document.getElementById('lgpd');
+      primeiro.scrollIntoView({behavior:'smooth', block:'center'});
+      primeiro.focus({preventScroll:true});
+      return;
+    }
+    go.textContent = 'Levando pro pagamento...';
+    go.disabled = true;
+    var body = new URLSearchParams(new FormData(form)).toString();
+    fetch('/__forms.html', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body})
+      .then(irPagar).catch(irPagar);
+  });
+
+  function irPagar(){
+    var url = MUV_PAY[atual];
+    window.location.href = (url && url.indexOf('http') === 0) ? url : WPP;
+  }
+
+  // plano pré-selecionado pela landing (?plano=anual12)
+  var qp = (location.search.match(/[?&]plano=([a-zA-Z0-9]+)/) || [])[1];
+  if(qp){
+    var alvo = document.querySelector('.plan[data-plan="' + qp + '"]');
+    if(alvo) selecionar(alvo);
+  }
+
+  // volta do gateway com ?ok=1 → confirmação
+  if(/[?&]ok=1/.test(window.location.search)){
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('done').classList.add('on');
+    document.querySelector('.head').style.display = 'none';
+  }
+})();
+</script>
+</body>
+</html>

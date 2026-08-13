@@ -11,6 +11,9 @@
 /fundadores/         /hub/fundadores/      301
 /hub/fundadores      /hub/fundadores/      301
 /tabela              /hub/tabela/          301
+/cadastro            /hub/cadastro/        301
+/cadastro/           /hub/cadastro/        301
+/hub/cadastro        /hub/cadastro/        301
 /tabela/             /hub/tabela/          301
 /hub/tabela          /hub/tabela/          301
 

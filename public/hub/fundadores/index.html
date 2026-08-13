@@ -615,7 +615,10 @@ var MUV_PAY = {
       if(op==='falar'){
         cbox.style.display='none'; fh.style.display='block';
         document.getElementById('reservar').scrollIntoView({behavior:'smooth',block:'center'});
-      } else { abrir(op); }
+      } else {
+        // cadastro próprio, na nossa casa — o gateway só entra no último passo
+        window.location.href = '/hub/cadastro/?plano=' + op;
+      }
     });
   });
 
