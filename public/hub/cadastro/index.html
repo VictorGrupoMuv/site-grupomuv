@@ -155,7 +155,7 @@ footer a:hover{color:var(--dark-ink-2)}
 <div class="topbar">
   <div class="wrap">
     <div class="brand">MUV <span>HUB</span></div>
-    <div class="steps"><b>01 Cadastro</b> <i>—</i> <span>02 Pagamento</span> <i>—</i> <span>03 Contrato</span></div>
+    <div class="steps"><b>01 Cadastro</b> <i>·</i> <span>02 Pagamento</span> <i>·</i> <span>03 Contrato</span></div>
     <a class="back" href="/hub/fundadores/">← Voltar</a>
   </div>
 </div>
@@ -299,7 +299,7 @@ footer a:hover{color:var(--dark-ink-2)}
           </div>
 
           <div class="paypane" id="panePix">
-            <div class="pixnote"><b>No Pix a confirmação é na hora.</b> Ao finalizar, você vai para o ambiente seguro do Asaas, lê o QR Code e pronto — a vaga fica no seu nome assim que o pagamento cair.</div>
+            <div class="pixnote"><b>No Pix a confirmação é na hora.</b> Ao finalizar, você vai para o ambiente seguro do Asaas, lê o QR Code e pronto. A vaga fica no seu nome assim que o pagamento cair.</div>
           </div>
 
           <div class="alerta" id="alerta"></div>
@@ -451,7 +451,7 @@ var WPP = "https://wa.me/message/D6LG7EUSTIR7C1";
     if(metodo === 'pix'){
       if(atual === 'mensal'){
         go.disabled = false;
-        aviso('A mensalidade automática só funciona no cartão. Para pagar no Pix, escolha o anual — ou fale com a gente pelo WhatsApp que a gente resolve.');
+        aviso('A mensalidade automática só funciona no cartão. Para pagar no Pix, escolha o anual, ou fale com a gente pelo WhatsApp que a gente resolve.');
         return;
       }
       go.textContent = 'Levando pro Pix...';
