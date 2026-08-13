@@ -119,6 +119,25 @@ p{margin:0}
 .wpp:hover{color:var(--dark-ink)}
 .wpp b{color:var(--accent)}
 
+
+/* ===== PAGAMENTO ===== */
+.paytabs{display:flex;gap:10px;margin-bottom:16px}
+.paytab{flex:1;background:var(--dark-bg-2);border:1px solid var(--dark-line);border-radius:13px;padding:15px 16px;cursor:pointer;transition:border-color .2s,background .2s;text-align:left;font-family:var(--body)}
+.paytab.on{border-color:var(--accent);background:rgba(240,74,36,.07)}
+.paytab b{display:block;font-size:14.5px;font-weight:600;color:var(--dark-ink);margin-bottom:3px}
+.paytab span{display:block;font-size:11.5px;color:var(--dark-ink-2);line-height:1.4}
+.paypane{display:none}
+.paypane.on{display:block}
+.cardbox{background:var(--dark-bg-2);border:1px solid var(--dark-line);border-radius:15px;padding:20px}
+.cardbox .cbh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.cardbox .cbh p{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-4)}
+.brands{display:flex;gap:6px}
+.brands i{width:32px;height:20px;border-radius:3px;background:rgba(242,240,233,.1);font-style:normal;font-size:7px;font-family:var(--mono);color:var(--dark-ink-2);display:grid;place-items:center}
+.pixnote{background:var(--dark-bg-2);border:1px solid var(--dark-line);border-radius:15px;padding:20px;font-size:13.5px;color:var(--dark-ink-2);line-height:1.55}
+.pixnote b{color:var(--dark-ink)}
+.alerta{display:none;margin-top:16px;padding:14px 16px;border-radius:12px;border:1px solid #ff6b4a;background:rgba(255,107,74,.09);color:#ffb3a1;font-size:13.5px;line-height:1.5}
+.alerta.on{display:block}
+
 /* SUCESSO */
 .done{display:none;text-align:center;padding:clamp(40px,6vw,80px) 0}
 .done.on{display:block}
@@ -153,7 +172,7 @@ footer a:hover{color:var(--dark-ink-2)}
   <div class="grid" id="app">
     <!-- COLUNA ESQUERDA -->
     <div>
-      <form id="form" name="hub-cadastro" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <form id="form" name="hub-cadastro" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
         <input type="hidden" name="form-name" value="hub-cadastro">
         <input type="hidden" name="plano" id="planoField" value="Sinal de reserva">
         <input type="hidden" name="valor" id="valorField" value="R$ 300">
@@ -169,11 +188,11 @@ footer a:hover{color:var(--dark-ink-2)}
               <span class="pv"><b>R$ 300</b><em>Pix ou cartão</em></span>
             </label>
 
-            <label class="plan" data-plan="anualPix" data-nome="Anual à vista" data-valor="R$ 8.900" data-sub="Doze meses pelo preço de dez. Já entra ativo." data-total="R$ 8.900">
-              <input type="radio" name="opcao" value="anualPix">
+                        <label class="plan" data-plan="mensal" data-nome="Mensal fundador" data-valor="R$ 890/mes" data-sub="Cobrança automática todo mês, no cartão. Entrada leve, sem pagar o ano de uma vez." data-total="R$ 890">
+              <input type="radio" name="opcao" value="mensal">
               <span class="radio"></span>
-              <span class="pt"><b>Fechar o ano à vista</b><span>Doze meses pelo preço de dez, mais uma diária cheia de estúdio de bônus.</span></span>
-              <span class="pv"><b>R$ 8.900</b><em>Pix ou cartão</em></span>
+              <span class="pt"><b>Entrar no mensal</b><span>R$ 890 por mês, cobrado automaticamente. Preço travado enquanto o plano estiver ativo.</span></span>
+              <span class="pv"><b>R$ 890</b><em>Por mês · cartão</em></span>
             </label>
 
             <label class="plan" data-plan="anual12" data-nome="Anual parcelado" data-valor="12× R$ 790" data-sub="Economiza R$ 1.200 em relação ao mensal de R$ 890." data-total="12× R$ 790">
@@ -225,6 +244,14 @@ footer a:hover{color:var(--dark-ink-2)}
                 <option>Esporadicamente</option>
               </select>
             </div>
+            <div class="field">
+              <label for="cpf">CPF ou CNPJ</label>
+              <input id="cpf" name="cpfCnpj" type="text" inputmode="numeric" placeholder="000.000.000-00">
+            </div>
+            <div class="field">
+              <label for="cep">CEP</label>
+              <input id="cep" name="cep" type="text" inputmode="numeric" placeholder="00000-000" autocomplete="postal-code">
+            </div>
             <div class="field full">
               <label for="msg">Algo que a gente precise saber (opcional)</label>
               <textarea id="msg" name="mensagem" placeholder="O que você produz hoje, o que mais usaria no Hub, alguma dúvida sobre as regras..."></textarea>
@@ -235,6 +262,47 @@ footer a:hover{color:var(--dark-ink-2)}
             <input type="checkbox" id="lgpd" name="consentimento" required value="sim">
             <label for="lgpd">Li as <a href="/hub/fundadores/#regras" target="_blank">regras de uso</a> e autorizo o Grupo MUV a entrar em contato comigo sobre o MUV Hub. Meus dados não são compartilhados com terceiros.</label>
           </div>
+        </div>
+
+        <div class="sec" style="margin-top:34px">
+          <p class="st"><b>03</b> Pagamento</p>
+          <div class="paytabs">
+            <button type="button" class="paytab on" data-metodo="cartao"><b>Cartão de crédito</b><span>Você paga aqui mesmo, sem sair da página</span></button>
+            <button type="button" class="paytab" data-metodo="pix"><b>Pix</b><span>Confirmação em segundos, no ambiente do Asaas</span></button>
+          </div>
+
+          <div class="paypane on" id="paneCartao">
+            <div class="cardbox">
+              <div class="cbh">
+                <p>Dados do cartão</p>
+                <span class="brands"><i>VISA</i><i>MASTER</i><i>ELO</i><i>AMEX</i></span>
+              </div>
+              <div class="fields">
+                <div class="field full">
+                  <label for="ccnum">Número do cartão</label>
+                  <input id="ccnum" type="text" inputmode="numeric" placeholder="0000 0000 0000 0000" autocomplete="cc-number">
+                </div>
+                <div class="field full">
+                  <label for="cctit">Nome impresso no cartão</label>
+                  <input id="cctit" type="text" placeholder="COMO ESTA NO CARTAO" autocomplete="cc-name" style="text-transform:uppercase">
+                </div>
+                <div class="field">
+                  <label for="ccval">Validade</label>
+                  <input id="ccval" type="text" inputmode="numeric" placeholder="MM/AA" autocomplete="cc-exp">
+                </div>
+                <div class="field">
+                  <label for="cccvv">CVV</label>
+                  <input id="cccvv" type="text" inputmode="numeric" placeholder="000" autocomplete="cc-csc">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="paypane" id="panePix">
+            <div class="pixnote"><b>No Pix a confirmação é na hora.</b> Ao finalizar, você vai para o ambiente seguro do Asaas, lê o QR Code e pronto — a vaga fica no seu nome assim que o pagamento cair.</div>
+          </div>
+
+          <div class="alerta" id="alerta"></div>
         </div>
       </form>
     </div>
@@ -263,7 +331,7 @@ footer a:hover{color:var(--dark-ink-2)}
         </ul>
       </div>
 
-      <button class="btn btn--primary" type="submit" form="form" id="go" style="margin-top:24px">Ir para o pagamento →</button>
+      <button class="btn btn--primary" type="submit" form="form" id="go" style="margin-top:24px">Pagar agora →</button>
 
       <p class="safe">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
@@ -321,37 +389,112 @@ var WPP = "https://wa.me/message/D6LG7EUSTIR7C1";
     el.addEventListener('click', function(){ selecionar(el); });
   });
 
-  // ── validação simples e visível ──
-  function validar(){
-    var ok = true;
-    ['nome','email','tel','atua','freq'].forEach(function(id){
-      var f = document.getElementById(id);
-      if(!f.value.trim()){ f.classList.add('err'); ok = false; } else { f.classList.remove('err'); }
-    });
-    if(!document.getElementById('lgpd').checked) ok = false;
-    return ok;
-  }
+  // ── máscaras ──
+  var dig = function(v){ return v.replace(/\D/g,''); };
+  function mascara(id, fn){ var el=document.getElementById(id); if(el) el.addEventListener('input', function(){ el.value = fn(el.value); }); }
+  mascara('cpf', function(v){
+    v = dig(v).slice(0,14);
+    return v.length <= 11
+      ? v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2')
+      : v.replace(/^(\d{2})(\d)/,'$1.$2').replace(/^(\d{2})\.(\d{3})(\d)/,'$1.$2.$3').replace(/\.(\d{3})(\d)/,'.$1/$2').replace(/(\d{4})(\d)/,'$1-$2');
+  });
+  mascara('cep',   function(v){ v=dig(v).slice(0,8);  return v.replace(/^(\d{5})(\d)/,'$1-$2'); });
+  mascara('tel',   function(v){ v=dig(v).slice(0,11); return v.replace(/^(\d{2})(\d)/,'($1) $2').replace(/(\d{5})(\d)/,'$1-$2'); });
+  mascara('ccnum', function(v){ return dig(v).slice(0,19).replace(/(\d{4})(?=\d)/g,'$1 '); });
+  mascara('ccval', function(v){ v=dig(v).slice(0,4);  return v.replace(/^(\d{2})(\d)/,'$1/$2'); });
+  mascara('cccvv', function(v){ return dig(v).slice(0,4); });
 
-  // ── envio: grava o lead e só então manda pro checkout ──
-  form.addEventListener('submit', function(ev){
-    ev.preventDefault();
-    if(!validar()){
-      var primeiro = document.querySelector('.err') || document.getElementById('lgpd');
-      primeiro.scrollIntoView({behavior:'smooth', block:'center'});
-      primeiro.focus({preventScroll:true});
-      return;
-    }
-    go.textContent = 'Levando pro pagamento...';
-    go.disabled = true;
-    var body = new URLSearchParams(new FormData(form)).toString();
-    fetch('/__forms.html', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body})
-      .then(irPagar).catch(irPagar);
+  // ── cartão ou Pix ──
+  var metodo = 'cartao';
+  var alerta = document.getElementById('alerta');
+  function aviso(txt){ alerta.textContent = txt; alerta.classList.add('on'); alerta.scrollIntoView({behavior:'smooth', block:'center'}); }
+  function limpaAviso(){ alerta.classList.remove('on'); }
+
+  document.querySelectorAll('.paytab').forEach(function(t){
+    t.addEventListener('click', function(){
+      document.querySelectorAll('.paytab').forEach(function(x){ x.classList.remove('on'); });
+      t.classList.add('on');
+      metodo = t.dataset.metodo;
+      document.getElementById('paneCartao').classList.toggle('on', metodo === 'cartao');
+      document.getElementById('panePix').classList.toggle('on', metodo === 'pix');
+      go.textContent = metodo === 'cartao' ? 'Pagar agora →' : 'Ir para o Pix →';
+      limpaAviso();
+    });
   });
 
-  function irPagar(){
-    var url = MUV_PAY[atual];
-    window.location.href = (url && url.indexOf('http') === 0) ? url : WPP;
+  function validar(){
+    var falta = [];
+    var base = [['nome','nome'],['email','e-mail'],['tel','WhatsApp'],['atua','o que você faz'],['freq','frequência'],['cpf','CPF/CNPJ'],['cep','CEP']];
+    if(metodo === 'cartao') base = base.concat([['ccnum','número do cartão'],['cctit','nome no cartão'],['ccval','validade'],['cccvv','CVV']]);
+    base.forEach(function(par){
+      var f = document.getElementById(par[0]);
+      if(!f.value.trim()){ f.classList.add('err'); falta.push(par[1]); } else f.classList.remove('err');
+    });
+    if(!document.getElementById('lgpd').checked) falta.push('aceite dos termos');
+    return falta;
   }
+
+  function salvarLead(){
+    var body = new URLSearchParams(new FormData(form)).toString();
+    return fetch('/__forms.html', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body}).catch(function(){});
+  }
+
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    limpaAviso();
+    var falta = validar();
+    if(falta.length){ aviso('Falta preencher: ' + falta.join(', ') + '.'); return; }
+
+    var original = go.textContent;
+    go.disabled = true;
+
+    if(metodo === 'pix'){
+      if(atual === 'mensal'){
+        go.disabled = false;
+        aviso('A mensalidade automática só funciona no cartão. Para pagar no Pix, escolha o anual — ou fale com a gente pelo WhatsApp que a gente resolve.');
+        return;
+      }
+      go.textContent = 'Levando pro Pix...';
+      salvarLead().then(irPagar);
+      return;
+    }
+
+    go.textContent = 'Processando pagamento...';
+    var val = document.getElementById('ccval').value.split('/');
+    var payload = {
+      plano: atual,
+      nome:  document.getElementById('nome').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      telefone: document.getElementById('tel').value,
+      cpfCnpj:  document.getElementById('cpf').value,
+      cep:      document.getElementById('cep').value,
+      cartao: {
+        numero:  document.getElementById('ccnum').value,
+        titular: document.getElementById('cctit').value,
+        mes: (val[0]||'').trim(),
+        ano: (val[1]||'').trim(),
+        cvv: document.getElementById('cccvv').value
+      }
+    };
+    salvarLead();
+    fetch('/.netlify/functions/criar-cobranca', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(d && d.ok){
+        ['ccnum','cctit','ccval','cccvv'].forEach(function(id){ document.getElementById(id).value = ''; });
+        window.location.href = location.pathname + '?ok=1';
+        return;
+      }
+      go.disabled = false; go.textContent = original;
+      aviso((d && d.erro) || 'Não foi possível concluir. Tente o Pix ou fale com a gente no WhatsApp.');
+    })
+    .catch(function(){
+      go.disabled = false; go.textContent = original;
+      aviso('Falha de conexão. Nenhuma cobrança foi feita. Tente de novo ou use o Pix.');
+    });
+  });
 
   // plano pré-selecionado pela landing (?plano=anual12)
   var qp = (location.search.match(/[?&]plano=([a-zA-Z0-9]+)/) || [])[1];
