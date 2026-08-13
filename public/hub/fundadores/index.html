@@ -393,7 +393,7 @@ footer.f a:hover{color:var(--dark-ink)}
           <li>Preço travado enquanto o plano estiver ativo</li>
           <li>Prioridade na fila de agendamento do estúdio</li>
         </ul>
-        <a class="btn btn--primary" href="#reservar" data-pay="anual">Reservar no anual</a>
+        <a class="btn btn--primary" href="#reservar" data-pay="anual12">Reservar no anual</a>
       </div>
     </div>
   </div>
@@ -447,7 +447,7 @@ footer.f a:hover{color:var(--dark-ink)}
         <p style="color:var(--dark-ink-2);margin-top:24px;max-width:400px">Pagamento na hora, direto aqui. O sinal de R$ 300 trava sua vaga por 7 dias e é abatido da primeira mensalidade — se desistir dentro do prazo, devolvemos.</p>
         <div class="alt">
           <p>Prefere resolver falando com gente?</p>
-          <a class="btn btn--ghost" href="https://wa.me/55SEUNUMERO?text=Quero%20uma%20vaga%20na%20turma%2001%20do%20MUV%20Hub" target="_blank" rel="noopener">Chamar no WhatsApp →</a>
+          <a class="btn btn--ghost" href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener">Chamar no WhatsApp →</a>
         </div>
       </div>
 
@@ -464,13 +464,18 @@ footer.f a:hover{color:var(--dark-ink)}
               <span class="ct2"><b>Garantir minha vaga</b><span>Pague o sinal agora e trave uma das 14 vagas por 7 dias. Abatido da primeira mensalidade.</span></span>
               <span class="cv"><b>R$ 300</b><em>Pix ou cartão</em></span>
             </a>
-            <a class="copt" href="#" data-pay="anual">
+            <a class="copt" href="#" data-pay="anualPix">
               <span class="cn">02</span>
-              <span class="ct2"><b>Fechar o ano inteiro</b><span>12× de R$ 790 no cartão, ou R$ 8.900 à vista no Pix. Mais uma diária cheia de estúdio de bônus.</span></span>
-              <span class="cv"><b>12× 790</b><em>ou R$ 8.900 à vista</em></span>
+              <span class="ct2"><b>Fechar o ano à vista</b><span>Doze meses pelo preço de dez, no Pix. Mais uma diária cheia de estúdio de bônus.</span></span>
+              <span class="cv"><b>R$ 8.900</b><em>Pix ou cartão</em></span>
+            </a>
+            <a class="copt" href="#" data-pay="anual12">
+              <span class="cn">03</span>
+              <span class="ct2"><b>Fechar o ano parcelado</b><span>Mesmos benefícios do anual, em doze vezes no cartão. Economiza R$ 1.200 contra o mensal.</span></span>
+              <span class="cv"><b>12× 790</b><em>No cartão</em></span>
             </a>
             <a class="copt" href="#" data-pay="falar">
-              <span class="cn">03</span>
+              <span class="cn">04</span>
               <span class="ct2"><b>Quero conversar antes</b><span>Deixe seus dados e a gente te chama em até 24h. Sem robô, sem funil de sete e-mails.</span></span>
               <span class="cv"><b>Falar</b><em>Em até 24h</em></span>
             </a>
@@ -559,8 +564,9 @@ footer.f a:hover{color:var(--dark-ink)}
    e "Assinaturas" (recorrente). Depois é só salvar o arquivo.
    ───────────────────────────────────────────────────────────── */
 var MUV_PAY = {
-  sinal : "COLE_AQUI_O_LINK_DO_SINAL_300",     // Link de pagamento · R$ 300
-  anual : "COLE_AQUI_O_LINK_DO_ANUAL"          // Link de pagamento · R$ 8.900 (12× de R$ 790)
+  sinal : "https://www.asaas.com/c/8hmjv8trs3p1ve8b",   // Sinal R$ 300 · Asaas · sem limite de vendas
+  anualPix : "https://www.asaas.com/c/opzfcr0bo5q3x7a8", // Anual a vista R$ 8.900 · Pix ou cartao
+  anual12  : "https://www.asaas.com/c/u35l41eru6j1qbnp"  // Anual parcelado 12x de R$ 790 · so cartao
 };
 /* No Mercado Pago, configure a URL de retorno ("Voltar ao site" /
    back_urls · sucesso) para:  <endereço desta página>?pago=1
@@ -576,17 +582,20 @@ var MUV_PAY = {
 
   var COPY = {
     sinal:{ k:'Sinal de reserva · R$ 300', t:'Falta só isso.' },
-    anual:{ k:'Anual · 12× de R$ 790 ou R$ 8.900 à vista', t:'Bora fechar.' }
+    anualPix:{ k:'Anual à vista · R$ 8.900 no Pix', t:'Bora fechar.' },
+    anual12 :{ k:'Anual · 12× de R$ 790 no cartão', t:'Bora fechar.' }
   };
 
   function post(form){
     var body=new URLSearchParams(new FormData(form)).toString();
     return fetch('/__forms.html',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body});
   }
+  var WPP = "https://wa.me/message/D6LG7EUSTIR7C1";
   function irPara(op){
-    var url=MUV_PAY[op];
-    if(!url || url.indexOf('COLE_AQUI')===0){ alert('Link de pagamento ainda não configurado. Use o WhatsApp por enquanto.'); return; }
-    window.location.href=url;
+    var url = MUV_PAY[op];
+    // sem link de pagamento configurado, o caminho vira conversa — nunca um beco sem saída
+    if(!url || url.indexOf('COLE_AQUI') === 0){ window.location.href = WPP; return; }
+    window.location.href = url;
   }
   function abrir(op){
     atual=op;
