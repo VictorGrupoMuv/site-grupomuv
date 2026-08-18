@@ -1700,6 +1700,15 @@ function MuvHub({ setCurrent }) {
         </div>
       </section>
 
+      {/* REEL DO ENCONTRO — aftermovie da comunidade */}
+      <section className="section section--dark" style={{ paddingTop: 56, paddingBottom: 56 }}>
+        <SectionHead num="*" eyebrow="O Hub na prática" title={"Não é render.\nÉ o lugar."} sub="Aftermovie do primeiro encontro da comunidade MUV." />
+        <div style={{ marginTop: 28, maxWidth: 720, marginInline: "auto" }}>
+          <Cine vimeoId="1219340230" aspect="16/9" variant="dark" code="REEL" hideLabel
+            alt="Encontro da comunidade MUV — aftermovie" />
+        </div>
+      </section>
+
       <section className="section hub-overview-access">
         <SectionHead eyebrow="Quatro acessos" title="Escolha o que precisa." sub="Cada área tem uma página própria com contexto, estrutura e formas de acesso." />
         <HubAccessGrid setCurrent={setCurrent} />
