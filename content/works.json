@@ -95,7 +95,9 @@
           "h": "Resultado",
           "p": "[RASCUNHO — CONFIRMAR] Preencher com o que foi entregue, prazo e desdobramento. Se houve renovação ou segunda ação, vale registrar aqui."
         }
-      ]
+      ],
+      "vimeoId": "1219351172",
+      "ratio": "16/9"
     },
     {
       "slug": "nissan-suba",
@@ -238,7 +240,7 @@
       "gear": "Captação móvel Sony · lentes rápidas · áudio embarcado",
       "summary": "Um dos maiores eventos corporativos do mercado financeiro brasileiro, com Tom Brady no palco. A MUV integrou a equipe de captação para entrega real-time.",
       "vimeoId": "903808449/4faaae5691",
-      "still": "https://i.vimeocdn.com/video/1784086769-fb5c10cccb8d3617b7c67c0f1b30761c20350900f9ae9cfd75d38a73a3caa497-d_1280?region=us",
+      "still": "https://i.vimeocdn.com/video/2188687352-882c1bae9e061c6f92fa0bce8d13482e074cabbe74156611ebbd07130dcad1db-d_1280?region=us",
       "body": [
         {
           "h": "Contexto",
@@ -416,38 +418,6 @@
         {
           "h": "Créditos",
           "p": "Captação: Grupo MUV integrando a equipe da ECD Videos."
-        }
-      ]
-    },
-    {
-      "slug": "too-faced-lancamento",
-      "title": "Too Faced\nLançamento",
-      "client": "Too Faced · com ECD Videos",
-      "tag": "BEAUTY · LANÇAMENTO · REAL TIME",
-      "year": "2024",
-      "category": "Social",
-      "format": "Cobertura de evento de lançamento · captação e edição em tempo real para redes sociais",
-      "team": "MUV integrando a equipe de captação e edição da ECD Videos",
-      "gear": "Captação móvel Sony · lentes rápidas · estação de edição no local",
-      "summary": "Evento de lançamento da Too Faced, com conteúdo produzido e entregue durante a ação para as redes da marca e dos convidados.",
-      "vimeoId": "903827891/f687a43caa",
-      "still": "https://i.vimeocdn.com/video/1784131750-a5cb590c74f45e2ac0657c60343c62f44408aa1e04a3db74ffbfde6ae51693c7-d_1280?region=us",
-      "body": [
-        {
-          "h": "Contexto",
-          "p": "Lançamento de produto da Too Faced com criadores de conteúdo e convidados. A MUV integrou a equipe da ECD Videos na captação e na edição em tempo real."
-        },
-        {
-          "h": "Desafio",
-          "p": "Evento de beleza tem uma particularidade: boa parte do público presente também está produzindo conteúdo. Isso significa que a peça oficial da marca precisa ser visivelmente melhor do que o que qualquer convidado publica do celular — e ainda assim sair rápido o suficiente para não chegar depois deles."
-        },
-        {
-          "h": "Abordagem MUV",
-          "p": "Diferenciação por decisão técnica, não por volume: profundidade de campo controlada, movimento intencional e som de ambiente tratado — três coisas que o conteúdo de celular não entrega. Estrutura de edição definida antes do evento, o que reduz o tempo entre a captação e a publicação."
-        },
-        {
-          "h": "Créditos",
-          "p": "Captação e edição em tempo real: Grupo MUV integrando a equipe da ECD Videos."
         }
       ]
     },
