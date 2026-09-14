@@ -1,3 +1,8 @@
+# Domínio canônico: o subdomínio da Netlify servia o site inteiro em paralelo
+# (200 com o mesmo conteúdo), o que gera sinal de conteúdo duplicado no Google.
+https://main--zesty-lollipop-e19da1.netlify.app/*  https://grupomuv.com.br/:splat  301!
+https://zesty-lollipop-e19da1.netlify.app/*        https://grupomuv.com.br/:splat  301!
+
 # Rotas são arquivos estáticos reais (Next output: export).
 # NÃO reintroduzir catch-all SPA (/* /index.html 200): ele sobrescreve tudo.
 

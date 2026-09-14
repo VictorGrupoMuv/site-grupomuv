@@ -31,7 +31,9 @@
       ],
       "still": "/assets/cases/case-01-still.jpg",
       "video": "/assets/cases/case-01.mp4",
-      "poster": "/assets/cases/case-01-poster.jpg"
+      "poster": "/assets/cases/case-01-poster.jpg",
+      "videoDuration": "PT20S",
+      "videoDate": "2026-07-29"
     },
     {
       "slug": "dolce-gabbana",
@@ -64,7 +66,9 @@
           "h": "Resultado",
           "p": "[RASCUNHO — CONFIRMAR] Preencher com entregas, formatos e o que rodou. Se houver número de alcance ou volume de peças, entra aqui."
         }
-      ]
+      ],
+      "videoDuration": "PT20S",
+      "videoDate": "2026-07-29"
     },
     {
       "slug": "guarana-monobloco",
@@ -97,7 +101,9 @@
         }
       ],
       "vimeoId": "1219351172",
-      "ratio": "16/9"
+      "ratio": "16/9",
+      "videoDuration": "PT24S",
+      "videoDate": "2026-08-18"
     },
     {
       "slug": "nissan-suba",
@@ -130,7 +136,9 @@
       ],
       "still": "https://i.vimeocdn.com/video/2188681968-beaece3fa9b87fe77fc4a203e35fb6d347c78ffe0b8edc50f4261ac497644f64-d_1280?region=us",
       "vimeoId": "1213671189",
-      "ratio": "16/9"
+      "ratio": "16/9",
+      "videoDuration": "PT19S",
+      "videoDate": "2026-07-28"
     },
     {
       "slug": "consul-pizza-de-ontem",
@@ -162,7 +170,9 @@
           "h": "Créditos e entrega",
           "p": "Captação e edição: Grupo MUV. Cliente direto: Snack. Produzido para a marca Consul. Entrega em formato vertical, otimizada para Reels e Stories."
         }
-      ]
+      ],
+      "videoDuration": "PT16S",
+      "videoDate": "2025-08-05"
     },
     {
       "slug": "shell-gp-sao-paulo",
@@ -194,7 +204,9 @@
           "h": "Resultado",
           "p": "Quinze vídeos entregues em três dias de evento, dentro da janela real-time, no formato de publicação da marca. O projeto virou referência interna do que a MUV chama de cobertura em tempo real: conteúdo que sai enquanto o assunto ainda é assunto."
         }
-      ]
+      ],
+      "videoDuration": "PT1M53S",
+      "videoDate": "2025-08-05"
     },
     {
       "slug": "brastemp-retro-martinelli",
@@ -226,7 +238,9 @@
           "h": "Créditos e entrega",
           "p": "Captação e edição: Grupo MUV. Entregas verticais para redes sociais da marca e dos convidados, produzidas in-loco."
         }
-      ]
+      ],
+      "videoDuration": "PT1M7S",
+      "videoDate": "2025-08-05"
     },
     {
       "slug": "xp-expert-tom-brady",
@@ -258,7 +272,9 @@
           "h": "Créditos",
           "p": "Captação: Grupo MUV integrando a equipe da ECD Videos. Projeto em parceria com a Nozy. Entrega em tempo real para os canais do evento."
         }
-      ]
+      ],
+      "videoDuration": "PT1M25S",
+      "videoDate": "2024-01-17"
     },
     {
       "slug": "numanice-ludmilla",
@@ -290,7 +306,9 @@
           "h": "Créditos",
           "p": "Captação e entrega real-time: Grupo MUV integrando a equipe da ECD Videos, para as redes da Nozy."
         }
-      ]
+      ],
+      "videoDuration": "PT1M1S",
+      "videoDate": "2024-01-18"
     },
     {
       "slug": "diageo-world-class",
@@ -322,7 +340,9 @@
           "h": "Créditos",
           "p": "Captação: Grupo MUV integrando a equipe da ECD Videos. Entrega em tempo real para as redes sociais da Diageo."
         }
-      ]
+      ],
+      "videoDuration": "PT17S",
+      "videoDate": "2024-01-17"
     },
     {
       "slug": "carnauba-wind-house",
@@ -355,7 +375,9 @@
           "p": "Captação e edição: Grupo MUV para o Grupo Uma Uma."
         }
       ],
-      "hidden": true
+      "hidden": true,
+      "videoDuration": "PT1M",
+      "videoDate": "2024-01-17"
     },
     {
       "slug": "mac-cosmetics-lancamento",
@@ -387,7 +409,9 @@
           "h": "Créditos",
           "p": "Captação e edição em tempo real: Grupo MUV integrando a equipe da ECD Videos."
         }
-      ]
+      ],
+      "videoDuration": "PT1M29S",
+      "videoDate": "2024-01-17"
     },
     {
       "slug": "kylie-cosmetics",
@@ -419,7 +443,9 @@
           "h": "Créditos",
           "p": "Captação: Grupo MUV integrando a equipe da ECD Videos."
         }
-      ]
+      ],
+      "videoDuration": "PT33S",
+      "videoDate": "2023-06-02"
     },
     {
       "slug": "clear-lancamento",
@@ -451,7 +477,9 @@
           "h": "Créditos",
           "p": "Captação: Grupo MUV integrando a equipe da ECD Videos."
         }
-      ]
+      ],
+      "videoDuration": "PT50S",
+      "videoDate": "2024-01-17"
     },
     {
       "slug": "budweiser-ativacao",
@@ -483,7 +511,9 @@
           "h": "Créditos",
           "p": "Captação e edição em tempo real: Grupo MUV integrando a equipe da ECD Videos."
         }
-      ]
+      ],
+      "videoDuration": "PT30S",
+      "videoDate": "2024-01-17"
     }
   ]
 }
