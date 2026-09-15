@@ -583,15 +583,23 @@ var MUV_PAY = {
     anual12 :{ k:'Anual · 12× de R$ 790 no cartão', t:'Bora fechar.' }
   };
 
+
+  // Conversao do Google Ads. Silencioso se a tag nao carregou (bloqueador de
+  // anuncios) — nunca pode quebrar o envio do formulario.
+  function muvConv(sendTo){
+    try{ if(typeof window.gtag==='function'){ window.gtag('event','conversion',{send_to:sendTo}); } }catch(e){}
+  }
+
   function post(form){
     var body=new URLSearchParams(new FormData(form)).toString();
+    muvConv('AW-18360678358/uzfSCNSv7_gcENbvhrNE');
     return fetch('/__forms.html',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body});
   }
   var WPP = "https://wa.me/message/D6LG7EUSTIR7C1";
   function irPara(op){
     var url = MUV_PAY[op];
     // sem link de pagamento configurado, o caminho vira conversa — nunca um beco sem saída
-    if(!url || url.indexOf('COLE_AQUI') === 0){ window.location.href = WPP; return; }
+    if(!url || url.indexOf('COLE_AQUI') === 0){ muvConv('AW-18360678358/HcjgCNev7_gcENbvhrNE'); window.location.href = WPP; return; }
     window.location.href = url;
   }
   function abrir(op){

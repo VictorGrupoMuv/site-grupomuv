@@ -1,7 +1,7 @@
 import "./globals.css";
 import WhatsappCookie from "./WhatsappCookie";
 import GoogleAnalytics from "./GoogleAnalytics";
-import { GA_MEASUREMENT_ID, ADS_CONVERSION_ID, CONSENT_KEY } from "./gtag-config";
+import { GA_MEASUREMENT_ID, ADS_CONVERSION_ID, ADS_CONVERSION_ID_2, CONSENT_KEY } from "./gtag-config";
 
 
 const LEGACY_HASH_REDIRECT = `(function(){try{var m={servicos:"/servicos/",processo:"/processo/",trabalhos:"/trabalhos/",sobre:"/sobre/",hub:"/hub/","hub-locadora":"/hub/locadora/","hub-studio":"/hub/studio/","hub-comunidade":"/hub/comunidade/","hub-cowork":"/hub/cowork/",blog:"/blog/",faq:"/faq/",contato:"/contato/"};var h=(location.hash||"").replace("#","");if(h&&m[h]&&location.pathname==="/"){location.replace(m[h]);}}catch(e){}})();`;
@@ -10,7 +10,7 @@ const LEGACY_HASH_REDIRECT = `(function(){try{var m={servicos:"/servicos/",proce
 // a tag carrega para todos, mas nenhum armazenamento e ligado antes do aceite.
 // Se o visitante ja aceitou numa visita anterior, o consentimento e concedido
 // ANTES do primeiro config - senao a primeira pagina da sessao sairia sem cookie.
-const GTAG_BOOTSTRAP = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=window.gtag||gtag;gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});try{if(localStorage.getItem('${CONSENT_KEY}')==='accepted'){gtag('consent','update',{analytics_storage:'granted',ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});}}catch(e){}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');gtag('config','${ADS_CONVERSION_ID}');`;
+const GTAG_BOOTSTRAP = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=window.gtag||gtag;gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});try{if(localStorage.getItem('${CONSENT_KEY}')==='accepted'){gtag('consent','update',{analytics_storage:'granted',ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});}}catch(e){}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');gtag('config','${ADS_CONVERSION_ID}');gtag('config','${ADS_CONVERSION_ID_2}');`;
 
 export const viewport = {
   themeColor: "#0D0D0D",

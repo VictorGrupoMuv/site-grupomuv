@@ -2,7 +2,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useTina, tinaField } from "tinacms/dist/react";
-import { trackAnalytics } from "./GoogleAnalytics";
+import { trackAnalytics, trackAdsConversion } from "./GoogleAnalytics";
+import { ADS_CONV } from "./gtag-config";
 import _services from "../content/services.json";
 const SERVICOS = _services.items;
 import _process from "../content/process.json";
@@ -1058,6 +1059,7 @@ function HomeCTA({ setCurrent, brands = BRANDS, showBrands = true }) {
         project_type: form.type || "nao_informado",
         budget_range: form.budget || "nao_informado",
       });
+      trackAdsConversion(ADS_CONV.orcamento);
       setSent(true);
     } catch (err) {
       setError("Não conseguimos enviar agora. Tenta de novo ou chama no WhatsApp: wa.me/message/D6LG7EUSTIR7C1");
@@ -1744,6 +1746,7 @@ function HubEmailCapture({ eyebrow, title, accent, body, source, id }) {
         method: "hub_waitlist",
         signup_source: source,
       });
+      trackAdsConversion(ADS_CONV.hub);
       setEmail("");
       setStatus("sent");
     } catch (_) {
@@ -2327,6 +2330,7 @@ function Contato({ setCurrent }) {
         project_scope: data.scope.join("|") || "nao_informado",
         budget_range: data.budget || "nao_informado",
       });
+      trackAdsConversion(ADS_CONV.orcamento);
       setStep(4);
     } catch (err) {
       setError("Não conseguimos enviar agora. Tenta de novo ou chama no WhatsApp: wa.me/message/D6LG7EUSTIR7C1");

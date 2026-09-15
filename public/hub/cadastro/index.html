@@ -437,8 +437,16 @@ var WPP = "https://wa.me/message/D6LG7EUSTIR7C1";
     return falta;
   }
 
+
+  // Conversao do Google Ads. Silencioso se a tag nao carregou (bloqueador de
+  // anuncios) — nunca pode quebrar o envio do formulario.
+  function muvConv(sendTo){
+    try{ if(typeof window.gtag==='function'){ window.gtag('event','conversion',{send_to:sendTo}); } }catch(e){}
+  }
+
   function salvarLead(){
     var body = new URLSearchParams(new FormData(form)).toString();
+    muvConv('AW-18360678358/uzfSCNSv7_gcENbvhrNE');
     return fetch('/__forms.html', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body}).catch(function(){});
   }
 

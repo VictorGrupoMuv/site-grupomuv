@@ -7,7 +7,8 @@ import { useEffect } from "react";
 // mais de uma tag gtag.js por página. GA4 mede o site; Ads mede conversão e
 // alimenta remarketing. O carregamento da tag vive no <head> (app/layout.js);
 // este componente cuida só dos eventos e da atualização de consentimento.
-export { GA_MEASUREMENT_ID, ADS_CONVERSION_ID, CONSENT_KEY } from "./gtag-config";
+import { ADS_CONV } from "./gtag-config";
+export { GA_MEASUREMENT_ID, ADS_CONVERSION_ID, ADS_CONVERSION_ID_2, ADS_CONV, CONSENT_KEY } from "./gtag-config";
 
 const CONCEDIDO = {
   analytics_storage: "granted",
@@ -65,6 +66,7 @@ export default function GoogleAnalytics() {
 
       if (href.includes("wa.me") || href.includes("whatsapp")) {
         trackAnalytics("click_whatsapp", { link_location: pathname });
+        trackAdsConversion(ADS_CONV.whatsapp);
       } else if (href.startsWith("tel:")) {
         trackAnalytics("click_phone", { link_location: pathname });
       } else if (href.startsWith("mailto:")) {
