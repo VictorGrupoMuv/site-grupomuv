@@ -1,9 +1,16 @@
 import "./globals.css";
 import WhatsappCookie from "./WhatsappCookie";
 import GoogleAnalytics from "./GoogleAnalytics";
+import { GA_MEASUREMENT_ID, ADS_CONVERSION_ID, CONSENT_KEY } from "./gtag-config";
 
 
 const LEGACY_HASH_REDIRECT = `(function(){try{var m={servicos:"/servicos/",processo:"/processo/",trabalhos:"/trabalhos/",sobre:"/sobre/",hub:"/hub/","hub-locadora":"/hub/locadora/","hub-studio":"/hub/studio/","hub-comunidade":"/hub/comunidade/","hub-cowork":"/hub/cowork/",blog:"/blog/",faq:"/faq/",contato:"/contato/"};var h=(location.hash||"").replace("#","");if(h&&m[h]&&location.pathname==="/"){location.replace(m[h]);}}catch(e){}})();`;
+
+// Tag do Google no <head>, como o proprio Google instrui. Consent Mode v2:
+// a tag carrega para todos, mas nenhum armazenamento e ligado antes do aceite.
+// Se o visitante ja aceitou numa visita anterior, o consentimento e concedido
+// ANTES do primeiro config - senao a primeira pagina da sessao sairia sem cookie.
+const GTAG_BOOTSTRAP = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=window.gtag||gtag;gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});try{if(localStorage.getItem('${CONSENT_KEY}')==='accepted'){gtag('consent','update',{analytics_storage:'granted',ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});}}catch(e){}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');gtag('config','${ADS_CONVERSION_ID}');`;
 
 export const viewport = {
   themeColor: "#0D0D0D",
@@ -46,6 +53,8 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+        <script dangerouslySetInnerHTML={{ __html: GTAG_BOOTSTRAP }} />
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSONLD }} />
         <script dangerouslySetInnerHTML={{ __html: LEGACY_HASH_REDIRECT }} />
       </head>
