@@ -24,6 +24,9 @@ const SETTINGS = _settings;
 const MARQUEE_WORDS = _marquee.items;
 import _faq from "../content/faq.json";
 const FAQ_ITEMS = _faq.items;
+// FAQ e constantes do Hub vivem em app/hub/hubSeo.js: o mesmo texto que a
+// página mostra é o que vai no JSON-LD (FAQPage) emitido pelo page.js.
+import { HUB_FAQ, WHATSAPP as HUB_WHATSAPP, TABELA as HUB_TABELA } from "./hub/hubSeo";
 
 // ===== components =====
 // components.jsx
@@ -330,11 +333,12 @@ function Footer({ setCurrent }) {
           <details className="footer__group">
             <summary>MUV Hub <span aria-hidden="true">+</span></summary>
             <ul>
-              <li><a href={ROUTES["hub"]} onClick={go("hub")}>Overview <ArrowDiag size={10} /></a></li>
-              <li><a href={ROUTES["hub-locadora"]} onClick={go("hub-locadora")}>Locadora <ArrowDiag size={10} /></a></li>
-              <li><a href={ROUTES["hub-studio"]} onClick={go("hub-studio")}>Studio <ArrowDiag size={10} /></a></li>
-              <li><a href={ROUTES["hub-comunidade"]} onClick={go("hub-comunidade")}>Comunidade <ArrowDiag size={10} /></a></li>
-              <li><a href={ROUTES["hub-cowork"]} onClick={go("hub-cowork")}>Cowork <ArrowDiag size={10} /></a></li>
+              <li><a href={ROUTES["hub"]} onClick={go("hub")}>MUV Hub em São Paulo <ArrowDiag size={10} /></a></li>
+              <li><a href={ROUTES["hub-locadora"]} onClick={go("hub-locadora")}>Locadora de equipamento <ArrowDiag size={10} /></a></li>
+              <li><a href={ROUTES["hub-studio"]} onClick={go("hub-studio")}>Estúdio para gravação <ArrowDiag size={10} /></a></li>
+              <li><a href={ROUTES["hub-cowork"]} onClick={go("hub-cowork")}>Coworking criativo <ArrowDiag size={10} /></a></li>
+              <li><a href={ROUTES["hub-comunidade"]} onClick={go("hub-comunidade")}>Comunidade de filmmakers <ArrowDiag size={10} /></a></li>
+              <li><a href={HUB_TABELA}>Tabela de preços <ArrowDiag size={10} /></a></li>
             </ul>
           </details>
           <details className="footer__group">
@@ -459,7 +463,10 @@ function SectionHead({ eyebrow, title, sub, num, ef, tfld, sf }) {
 }
 
 // ───── Page Head ─────────────────────────────────────────────────────────────
-function PageHead({ crumb, title, lead, accent, meta, compact }) {
+// `tagline` (opcional) é a frase editorial que fica logo abaixo do H1, em
+// itálico. Serve pra manter a voz da marca sem diluir o H1, que precisa
+// dizer o que a página é e onde (ex.: "Locadora audiovisual em São Paulo").
+function PageHead({ crumb, title, lead, accent, meta, compact, tagline }) {
   // Suporta quebra de linha via "\n" no título, mantendo a destaque do accent.
   const renderLineWithAccent = (line, key) => {
     if (!accent || !line.includes(accent)) return <span className="page-head__line" key={key}>{line}</span>;
@@ -487,7 +494,10 @@ function PageHead({ crumb, title, lead, accent, meta, compact }) {
         <span className="page-head__top-right">{meta || "Ed. 01 · 2026"}</span>
       </div>
       <div className="page-head__body">
-        <h1 className={`page-head__title ${compact ? "page-head__title--compact" : ""} ${lines.length > 1 ? "page-head__title--multiline" : ""}`}>{titleNode}</h1>
+        <div className="page-head__heading">
+          <h1 className={`page-head__title ${compact ? "page-head__title--compact" : ""} ${lines.length > 1 ? "page-head__title--multiline" : ""}`}>{titleNode}</h1>
+          {tagline && <p className="page-head__tagline editorial-italic">{tagline}</p>}
+        </div>
         <p className="page-head__lead">{lead}</p>
       </div>
     </header>);
@@ -1021,9 +1031,20 @@ function Home({ setCurrent, density, content }) {
             </h2>
             <p className="home-hub__tagline" data-tina-field={tf(H,'hubTagline')}>{H.hubTagline}</p>
             <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 24, maxWidth: 480 }} data-tina-field={tf(H,'hubBody')}>{H.hubBody}</p>
+            {/* Âncoras descritivas da home para as 4 páginas do Hub: é o link
+                interno de maior peso do site, então o texto diz o que a página é. */}
+            <ul className="home-hub__links">
+              {HUB_ACCESS.map((i) => (
+                <li key={i.id}>
+                  <a href={ROUTES[i.id]} onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent(i.id);}}>
+                    <span className="mono">{i.code}</span> {i.title} <ArrowDiag size={10} />
+                  </a>
+                </li>
+              ))}
+            </ul>
             <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
               <a className="btn btn--primary" href={ROUTES.hub} onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("hub");}}>Conhecer o Hub <Arrow /></a>
-              <a className="btn btn--ghost-dark" href={ROUTES.hub} onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("hub");}}>Entrar na lista <Arrow /></a>
+              <a className="btn btn--ghost-dark" href={HUB_TABELA}>Ver tabela de preços <Arrow /></a>
             </div>
           </div>
           <div className="hub-grid">
@@ -1652,11 +1673,13 @@ function Sobre({ setCurrent }) {
 // ═════════════════════════════════════════════════════════════════════════════
 // MUV HUB
 // ═════════════════════════════════════════════════════════════════════════════
+// Títulos descritivos de propósito: são as âncoras internas que dizem ao
+// Google o que cada página é. "Locadora" sozinho não rankeia nada.
 const HUB_ACCESS = [
-  { id: "hub-locadora", code: "01", title: "Locadora", note: "Equipamento" },
-  { id: "hub-studio", code: "02", title: "Studio", note: "Criação e produção" },
-  { id: "hub-comunidade", code: "03", title: "Comunidade", note: "Hub criativo" },
-  { id: "hub-cowork", code: "04", title: "Cowork", note: "Espaço de trabalho" }
+  { id: "hub-locadora", code: "01", title: "Locadora de equipamento", note: "Sony FX6 e FX3, lentes G Master, drones, luz e áudio. Diárias a partir de R$ 230." },
+  { id: "hub-studio", code: "02", title: "Estúdio para gravação e foto", note: "60 m² com ciclorama e luz montada. Por hora, bloco de 4h ou diária." },
+  { id: "hub-cowork", code: "03", title: "Coworking criativo", note: "Baia com internet de produção, café e sala de reunião. Day pass R$ 90." },
+  { id: "hub-comunidade", code: "04", title: "Comunidade de filmmakers", note: "Encontros no Hub, oportunidades de trabalho e rede entre quem produz." }
 ];
 
 function HubAccessGrid({ setCurrent }) {
@@ -1680,25 +1703,91 @@ function HubAccessGrid({ setCurrent }) {
   );
 }
 
+// ───── Hub · blocos compartilhados ──────────────────────────────────────────
+// CTA de reserva: WhatsApp como ação principal e tabela de preços como prova.
+// Substitui a "lista de espera" como chamada principal agora que o Hub opera.
+function HubBookCTA({ eyebrow = "Reserva", title, accent, body, whatsappLabel = "Reservar pelo WhatsApp", tabelaAnchor = "", source = "Hub" }) {
+  const onWhats = () => { try { trackAnalytics("generate_lead", { method: "whatsapp", lead_source: `Hub · ${source}` }); } catch (_) {} };
+  return (
+    <section className="section section--dark hub-cta hub-book-cta">
+      <div className="hub-cta__inner">
+        <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>{eyebrow}</p>
+        <h2 className="h1 hub-email-capture__title">{title} <span>{accent}</span></h2>
+        <p className="body-l hub-email-capture__body">{body}</p>
+        <div className="hub-book-cta__actions">
+          <a className="btn btn--primary" href={HUB_WHATSAPP} target="_blank" rel="noopener noreferrer" onClick={onWhats}>{whatsappLabel} <Arrow /></a>
+          <a className="btn btn--ghost-dark" href={`${HUB_TABELA}${tabelaAnchor}`}>Ver tabela de preços <Arrow /></a>
+        </div>
+        <p className="mono hub-email-capture__privacy">ALAMEDA SANTOS, 211 · REGIÃO DA PAULISTA · SÃO PAULO</p>
+      </div>
+    </section>
+  );
+}
+
+// FAQ nativa (<details>): a resposta fica no HTML mesmo fechada, que é o que o
+// Google lê. O FAQ da página /faq/ só renderiza a resposta aberta, por isso
+// não foi reaproveitado aqui.
+function HubFaq({ items, eyebrow = "Perguntas frequentes", title = "O que perguntam antes de reservar.", num = "04" }) {
+  return (
+    <section className="section hub-faq">
+      <SectionHead num={num} eyebrow={eyebrow} title={title} />
+      <div className="faq-list hub-faq__list">
+        {items.map((item, i) => (
+          <details key={i} className="faq-item hub-faq__item">
+            <summary className="faq-item__head hub-faq__head">
+              <span className="faq-item__num">{String(i + 1).padStart(2, "0")}</span>
+              <span className="faq-item__q">{item.q}</span>
+              <span className="faq-item__chev" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 6l5 5 5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+            </summary>
+            <div className="faq-item__body hub-faq__body"><p>{item.a}</p></div>
+          </details>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// Links cruzados entre as páginas do Hub, com âncora descritiva.
+function HubCrossLinks({ current, setCurrent }) {
+  const items = HUB_ACCESS.filter((i) => i.id !== current);
+  const go = (id) => (e) => { if (isModifiedClick(e)) return; e.preventDefault(); setCurrent(id); window.scrollTo({ top: 0, behavior: "instant" }); };
+  return (
+    <nav className="hub-crosslinks" aria-label="Outras áreas do MUV Hub">
+      <p className="mono hub-crosslinks__label">// TAMBÉM NO HUB</p>
+      <ul>
+        {items.map((i) => (
+          <li key={i.id}><a href={ROUTES[i.id]} onClick={go(i.id)}>{i.title} <ArrowDiag size={10} /></a></li>
+        ))}
+        <li><a href={HUB_TABELA}>Tabela de preços do Hub <ArrowDiag size={10} /></a></li>
+      </ul>
+    </nav>
+  );
+}
+
 function MuvHub({ setCurrent }) {
   return (
     <div className="page" data-screen-label="MuvHub">
       <section className="hero hub-overview-hero" style={{ borderBottom: "1px solid var(--line)" }}>
         <div className="hero__top">
-          <span className="pill pill--accent pill--dot">Em breve · 2026</span>
+          <span className="pill pill--accent pill--dot">Aberto · Alameda Santos, São Paulo</span>
           <p className="mono" style={{ color: "var(--ink-3)" }}>// HUB.OVERVIEW</p>
         </div>
         <h1 className="hero__display hub-overview-hero__title">
           MUV <span className="accent">Hub.</span>{" "}
-          <span className="italic hub-overview-hero__line">Onde a produção acontece.</span>
+          <span className="italic hub-overview-hero__line">Locadora, estúdio, cowork.</span>
         </h1>
         <p className="hero__sub" style={{ marginTop: 48 }}>
-          Locadora de equipamentos, reserva de studio e comunidade criativa
-          num só lugar. Plataforma exclusiva pra filmmakers, agências e marcas parceiras.
+          Onde a produção acontece. Locadora de equipamento audiovisual, estúdio com ciclorama,
+          coworking criativo e comunidade de filmmakers num só endereço, na região da Paulista,
+          em São Paulo. Tabela de preços aberta, reserva pelo WhatsApp.
         </p>
         <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
-          <a className="btn btn--primary" href="#hub-waitlist">Entrar na lista de espera <Arrow /></a>
-          <button className="btn btn--ghost" onClick={() => setCurrent("contato")}>Saber mais <Arrow /></button>
+          <a className="btn btn--primary" href={HUB_WHATSAPP} target="_blank" rel="noopener noreferrer">Reservar pelo WhatsApp <Arrow /></a>
+          <a className="btn btn--ghost" href={HUB_TABELA}>Ver tabela de preços <Arrow /></a>
         </div>
       </section>
 
@@ -1712,16 +1801,24 @@ function MuvHub({ setCurrent }) {
       </section>
 
       <section className="section hub-overview-access">
-        <SectionHead eyebrow="Quatro acessos" title="Escolha o que precisa." sub="Cada área tem uma página própria com contexto, estrutura e formas de acesso." />
+        <SectionHead eyebrow="Quatro acessos" title="Escolha o que precisa." sub="Cada área tem página própria com o que está incluso, preços avulsos e como reservar. Membro do Hub paga menos em tudo." />
         <HubAccessGrid setCurrent={setCurrent} />
       </section>
 
+      <HubBookCTA
+        eyebrow="Reserva"
+        title="Estúdio, equipamento ou mesa."
+        accent="Hoje, se precisar."
+        body="Manda data, formato e duração. A gente responde com disponibilidade e orçamento em até um dia útil. Retirada e gravação na Alameda Santos, 211."
+        source="Overview"
+      />
+
       <HubEmailCapture
         id="hub-waitlist"
-        eyebrow="Lançamento · 2026"
-        title="Lista de espera"
-        accent="prioritária."
-        body="Quem entra na lista agora tem acesso antecipado, condição de fundador e prioridade na agenda de studio."
+        eyebrow="Novidades do Hub"
+        title="Agenda, encontros"
+        accent="e condições de membro."
+        body="Deixe seu e-mail para receber os próximos encontros da comunidade, novidades do catálogo e as condições do plano de membro antes de todo mundo."
         source="MUV Hub"
       />
     </div>);
@@ -1834,10 +1931,10 @@ function HubLocadora({ setCurrent }) {
           <span style={{ transform: "rotate(180deg)", display: "inline-block" }}><Arrow /></span> Voltar pro Hub
         </button>
       </div>
-      <PageHead crumb="06.A · Hub Locadora" title={"Equipamento profissional\nsob demanda."} lead="Câmeras Sony cinema, lentes GMaster, drones DJI, iluminação Aputure, áudio Hollyland. Reserva online, contrato digital, retirada no estúdio em São Paulo." accent="profissional" meta="6 categorias · +60 itens · Reserva online" compact />
+      <PageHead crumb="06.A · Hub Locadora" title={"Locadora audiovisual\nem São Paulo."} tagline="Equipamento profissional sob demanda." lead="Locação de câmeras Sony cinema (FX6, FX3), lentes G Master, drones DJI com piloto, luz Aputure e áudio. Diárias a partir de R$ 230, contrato digital e retirada na Alameda Santos, região da Paulista. O mesmo parque que roda nos jobs da MUV." accent="audiovisual" meta="6 categorias · +60 itens · Retirada na Paulista" compact />
 
       <section className="section hub-locadora-cat">
-        <SectionHead num="01" eyebrow="Catálogo" title="O que tem na locadora." sub="Lista parcial — peça por WhatsApp o que não encontrar aqui que a gente confere disponibilidade." />
+        <SectionHead num="01" eyebrow="Catálogo" title="O que tem na locadora." sub="Lista parcial. Sony FX6 a R$ 650 e FX3 a R$ 450 a diária, kit de lentes G Master a R$ 550, kit de luz a R$ 400. Peça pelo WhatsApp o que não encontrar aqui que a gente confere disponibilidade." />
         <div className="hub-cat-grid">
           {LOCADORA_CATEGORIAS.map((c) =>
             <div key={c.code} className="hub-cat-card">
@@ -1857,9 +1954,9 @@ function HubLocadora({ setCurrent }) {
         <SectionHead num="02" eyebrow="Como funciona" title="Reservar é simples." />
         <div className="grid-3 hub-process">
           {[
-            { n: "01", t: "Confere disponibilidade", d: "Manda mensagem com data, equipamento e duração. A gente responde em ≤ 1 dia útil com orçamento + disponibilidade." },
-            { n: "02", t: "Confirma com contrato digital", d: "Contrato curto, transparente. Sinal de 50% via PIX confirma a reserva." },
-            { n: "03", t: "Retira no estúdio", d: "Alameda Santos 211, sala 1507. Checklist de saída assinado. Devolução no horário combinado." }
+            { n: "01", t: "Confere disponibilidade", d: "Manda mensagem no WhatsApp com data, equipamento e duração. A gente responde em até 1 dia útil com orçamento e disponibilidade." },
+            { n: "02", t: "Confirma com contrato digital", d: "Contrato curto, transparente. Sinal de 50% via PIX confirma a reserva. Caução pré-autorizada no cartão, sem cobrança se o kit voltar íntegro." },
+            { n: "03", t: "Retira no estúdio", d: "Alameda Santos, 211, sala 1507, região da Paulista. Checklist de saída assinado. Devolução no horário combinado." }
           ].map((s) =>
             <div key={s.n} className="hub-process__step">
               <p className="mono" style={{ color: "var(--accent)" }}>// {s.n}</p>
@@ -1870,11 +1967,23 @@ function HubLocadora({ setCurrent }) {
         </div>
       </section>
 
+      <HubBookCTA
+        title="Reserva pelo WhatsApp,"
+        accent="com preço na mesa."
+        body="Diária, 3 dias ou semana fechada: a tabela é pública e o desconto por duração também. Kit fechado com câmera, luz e áudio sai mais barato que a soma das linhas."
+        tabelaAnchor="#locadora"
+        source="Locadora"
+      />
+
+      <HubFaq items={HUB_FAQ.locadora} num="03" />
+
+      <HubCrossLinks current="hub-locadora" setCurrent={setCurrent} />
+
       <HubEmailCapture
-        eyebrow="Lista de interesse"
-        title="Catálogo e disponibilidade"
+        eyebrow="Novidades do catálogo"
+        title="Itens novos e condições"
         accent="direto no seu e-mail."
-        body="Cadastre seu e-mail para receber a abertura das reservas, novidades do catálogo e condições da locadora."
+        body="Cadastre seu e-mail para receber as entradas no catálogo, promoções por duração e as condições do plano de membro da locadora."
         source="Locadora"
       />
     </div>);
@@ -1902,7 +2011,7 @@ function HubStudio({ setCurrent }) {
           <span style={{ transform: "rotate(180deg)", display: "inline-block" }}><Arrow /></span> Voltar pro Hub
         </button>
       </div>
-      <PageHead crumb="06.B · Hub Studio" title={"Espaço pronto\npra produzir."} lead="60m² com ciclorama, iluminação profissional inclusa e equipamento básico de captação. Reserva por turno (4h) ou diária. Localização central em São Paulo." accent="produzir" meta="60 m² · Ciclorama L-shape · Reserva por turno" compact />
+      <PageHead crumb="06.B · Hub Studio" title={"Estúdio para gravação\nem São Paulo."} tagline="Espaço pronto pra produzir." lead="Estúdio de 60 m² com ciclorama L-shape, grid de luz montado, camarim e área de apoio, na Alameda Santos, região da Paulista. Hora avulsa a R$ 250, bloco de 4h a R$ 850 e diária a R$ 1.500. Câmera, lente e luz extra entram no mesmo contrato pela locadora." accent="gravação" meta="60 m² · Ciclorama L-shape · Hora, bloco ou diária" compact />
 
       <section className="section">
         <SectionHead num="01" eyebrow="Estúdio em fotos" title="Como é o espaço." />
@@ -1926,12 +2035,12 @@ function HubStudio({ setCurrent }) {
       </section>
 
       <section className="section">
-        <SectionHead num="03" eyebrow="Reserva" title="Por turno ou diária." sub="Turno de 4h, diária de 8h. Equipamento extra (drones, gimbals, áudio especial) pode ser somado da locadora no mesmo contrato." />
+        <SectionHead num="03" eyebrow="Reserva" title="Por hora, bloco ou diária." sub="Preços avulsos da tabela 2026. Membro do Hub paga cerca de 40% menos. Equipamento extra (câmera, lentes, drone, gimbal, áudio) entra no mesmo contrato pela locadora." />
         <div className="grid-3 hub-plans">
           {[
-            { n: "01", t: "Turno", d: "4 horas corridas. Inclui ciclorama, iluminação base, ar e internet.", price: "Sob consulta" },
-            { n: "02", t: "Diária", d: "8 horas + 1 turno de cortesia pra montagem/desmontagem.", price: "Desconto vs turno" },
-            { n: "03", t: "Pacote semanal", d: "5 diárias seguidas com desconto progressivo. Ideal pra séries.", price: "Sob proposta" }
+            { n: "01", t: "Hora avulsa", d: "Mínimo de 2 horas. Ciclorama, grid de luz montado, wi-fi, camarim e café inclusos.", price: "R$ 250 / hora · membro R$ 150" },
+            { n: "02", t: "Bloco de 4 horas", d: "Meio período, o formato mais pedido. Ideal pra entrevista, foto de produto e conteúdo social.", price: "R$ 850 · membro R$ 500" },
+            { n: "03", t: "Diária de 8 horas", d: "Dia inteiro de produção. Operador técnico opcional por R$ 600 e luz pronta na chegada por R$ 350.", price: "R$ 1.500 · membro R$ 900" }
           ].map((p) =>
             <div key={p.n} className="hub-plan-card">
               <p className="mono" style={{ color: "var(--accent)" }}>// {p.n}</p>
@@ -1943,11 +2052,23 @@ function HubStudio({ setCurrent }) {
         </div>
       </section>
 
+      <HubBookCTA
+        title="Reserve o estúdio"
+        accent="pelo WhatsApp."
+        body="Data confirmada com 50% de sinal, saldo até o dia da gravação. Fim de semana e fora do horário têm acréscimo de 35%. Manda data, formato e duração que a gente devolve a agenda."
+        tabelaAnchor="#studio"
+        source="Studio"
+      />
+
+      <HubFaq items={HUB_FAQ.studio} />
+
+      <HubCrossLinks current="hub-studio" setCurrent={setCurrent} />
+
       <HubEmailCapture
-        eyebrow="Agenda do studio"
-        title="Visitas e reservas"
-        accent="quando abrirem."
-        body="Cadastre seu e-mail para receber primeiro a agenda de visitas, turnos disponíveis e novidades do studio."
+        eyebrow="Agenda do estúdio"
+        title="Visitas, turnos livres"
+        accent="e novidades."
+        body="Cadastre seu e-mail para receber datas de visita, turnos que abrirem na agenda e as condições do plano de membro."
         source="Studio"
       />
     </div>);
@@ -1964,7 +2085,7 @@ function HubComunidade({ setCurrent }) {
           <span style={{ transform: "rotate(180deg)", display: "inline-block" }}><Arrow /></span> Voltar pro Hub
         </button>
       </div>
-      <PageHead crumb="06.C · Hub Comunidade" title={"Filmmakers, marcas\ne cultura."} lead="Hub criativo pra quem produz audiovisual e quem precisa contratar. Feed de oportunidades, agenda de eventos, conteúdo educativo e conexão direta entre criadores e marcas parceiras." accent="cultura" meta="Em construção · Lançamento 2026" compact />
+      <PageHead crumb="06.C · Hub Comunidade" title={"Comunidade de filmmakers\nem São Paulo."} tagline="Filmmakers, marcas e cultura." lead="Rede de quem produz audiovisual e de quem precisa contratar, com encontros presenciais no MUV Hub, na região da Paulista. Oportunidades de trabalho, agenda de eventos, conteúdo de quem entrega projeto de verdade e conexão direta entre criadores, agências e marcas." accent="filmmakers" meta="Encontros no Hub · São Paulo · Rede online" compact />
 
       <section className="section">
         <SectionHead num="01" eyebrow="O que tem na comunidade" title="Quatro camadas vivas." sub="Cresce com quem entra. Quanto mais gente certa, mais útil pra todo mundo." />
@@ -2008,20 +2129,33 @@ function HubComunidade({ setCurrent }) {
             { tag: "MARCAS", desc: "Marcas e produtoras que contratam recorrente. Conta pro acessa filtros avançados, posta vagas e mensagem direta." },
             { tag: "AGÊNCIAS", desc: "Casas de criação que distribuem briefings. Acesso intermediário com posting limitado e visibilidade pro time." }
           ].map((m, i) =>
-            <div key={i} style={{ padding: "32px 24px", borderTop: "1px solid rgba(245,240,235,0.1)" }}>
+            <div key={i} style={{ padding: "32px 24px", borderTop: "1px solid var(--line)" }}>
               <p className="mono" style={{ color: "var(--accent)" }}>// 0{i + 1}</p>
               <h3 className="h3" style={{ marginTop: 24 }}>{m.tag}</h3>
-              <p style={{ color: "var(--dark-ink-2)", marginTop: 12, fontSize: 14 }}>{m.desc}</p>
+              <p style={{ color: "var(--ink-2)", marginTop: 12, fontSize: 14 }}>{m.desc}</p>
             </div>
           )}
         </div>
       </section>
 
+      <HubBookCTA
+        eyebrow="Participar"
+        title="Quer entrar"
+        accent="na rede?"
+        body="Chama no WhatsApp e conta o que você faz. A gente te avisa do próximo encontro no Hub e te coloca em contato com quem está procurando exatamente isso."
+        whatsappLabel="Falar no WhatsApp"
+        source="Comunidade"
+      />
+
+      <HubFaq items={HUB_FAQ.comunidade} num="03" title="O que perguntam antes de entrar." />
+
+      <HubCrossLinks current="hub-comunidade" setCurrent={setCurrent} />
+
       <HubEmailCapture
-        eyebrow="Lista de espera"
-        title="Entre antes"
-        accent="do lançamento."
-        body="Cadastre seu e-mail para receber acesso antecipado, novidades da comunidade e oportunidades para membros fundadores."
+        eyebrow="Lista da comunidade"
+        title="Encontros, mostras"
+        accent="e oportunidades."
+        body="Cadastre seu e-mail para receber a agenda dos encontros, sessões de portfolio review e oportunidades de trabalho que circulam na rede."
         source="Comunidade"
       />
     </div>);
@@ -2032,10 +2166,10 @@ function HubComunidade({ setCurrent }) {
 // ═════════════════════════════════════════════════════════════════════════════
 const COWORK_BENEFITS = [
   { label: "Mesas compartilhadas", value: "12 estações ergonômicas + monitores externos por demanda" },
-  { label: "Salas de reunião", value: "2 salas privativas (4 e 8 pessoas) com TV + videoconferência" },
+  { label: "Sala de reunião", value: "Sala privativa para até 6 pessoas com TV e câmera para videoconferência" },
   { label: "Internet", value: "1 Gbps cabo · Wi-Fi 6 dedicado · backup 4G" },
   { label: "Café & impressão", value: "Café espresso, máquina de chá, impressora A3 colorida inclusa" },
-  { label: "Acesso", value: "24/7 com chave digital · sem horário de portaria" },
+  { label: "Acesso", value: "Das 9h às 19h, mediante reserva · mesmo endereço do estúdio e da locadora" },
   { label: "Lockers", value: "Armário individual com chave inteligente" }
 ];
 
@@ -2047,7 +2181,7 @@ function HubCowork({ setCurrent }) {
           <span style={{ transform: "rotate(180deg)", display: "inline-block" }}><Arrow /></span> Voltar pro Hub
         </button>
       </div>
-      <PageHead crumb="06.D · Hub Cowork" title={"Espaço pra editar,\nplanejar, trabalhar."} lead="Coworking criativo dentro do estúdio. Mesa, internet rápida, café decente e gente boa por perto. Diária, mensal ou pacote por turno." accent="trabalhar" meta="12 mesas · 2 salas · Acesso 24/7" compact />
+      <PageHead crumb="06.D · Hub Cowork" title={"Coworking criativo\nem São Paulo."} tagline="Espaço pra editar, planejar, trabalhar." lead="Coworking dentro do estúdio, na Alameda Santos, região da Paulista. Baia com internet que aguenta upload de material bruto, café decente e gente do mesmo ramo do lado. Day pass a R$ 90 ou plano flex de 8 dias por R$ 600, sem fidelidade." accent="criativo" meta="Day pass R$ 90 · Plano flex · Sala de reunião" compact />
 
       <section className="section">
         <SectionHead num="01" eyebrow="O espaço" title="Como é o cowork." />
@@ -2071,12 +2205,12 @@ function HubCowork({ setCurrent }) {
       </section>
 
       <section className="section">
-        <SectionHead num="03" eyebrow="Planos" title="Conforme você usa." />
+        <SectionHead num="03" eyebrow="Planos" title="Conforme você usa." sub="Preços avulsos da tabela 2026, sem plano e sem fidelidade. Membro do Hub tem 8 dias de cowork e 2h de sala inclusos por mês." />
         <div className="grid-3 hub-plans">
           {[
-            { n: "01", t: "Day pass", d: "Um dia, sem compromisso. Mesa, café, internet, acesso ao lounge.", price: "R$ 80 / dia" },
-            { n: "02", t: "Mensal flex", d: "10 diárias no mês pra usar quando precisar. Salas de reunião por demanda.", price: "R$ 580 / mês" },
-            { n: "03", t: "Mensal fixo", d: "Mesa garantida, acesso 24/7, locker individual, 8h grátis em salas.", price: "R$ 980 / mês" }
+            { n: "01", t: "Day pass", d: "Um dia de baia, das 9h às 19h. Internet dedicada, café e acesso ao lounge.", price: "R$ 90 / dia" },
+            { n: "02", t: "Flex 8 dias", d: "Oito presenças no mês, mediante reserva. Dia extra a R$ 90 (membro R$ 50).", price: "R$ 600 / mês" },
+            { n: "03", t: "Sala de reunião", d: "Até 6 pessoas, com TV e câmera pra videoconferência. Membro: 2h/mês inclusas e R$ 70/h depois.", price: "R$ 120 / hora" }
           ].map((p) =>
             <div key={p.n} className="hub-plan-card">
               <p className="mono" style={{ color: "var(--accent)" }}>// {p.n}</p>
@@ -2088,11 +2222,24 @@ function HubCowork({ setCurrent }) {
         </div>
       </section>
 
+      <HubBookCTA
+        title="Uma mesa,"
+        accent="quando precisar."
+        body="Day pass avulso ou plano flex. Manda o dia que você quer vir que a gente confirma a baia e deixa o café passando."
+        whatsappLabel="Reservar day pass"
+        tabelaAnchor="#cowork"
+        source="Cowork"
+      />
+
+      <HubFaq items={HUB_FAQ.cowork} />
+
+      <HubCrossLinks current="hub-cowork" setCurrent={setCurrent} />
+
       <HubEmailCapture
         eyebrow="Novidades do cowork"
-        title="Day pass e planos"
-        accent="assim que abrirem."
-        body="Cadastre seu e-mail para receber a abertura da agenda, condições dos planos e convites para conhecer o espaço."
+        title="Planos, eventos"
+        accent="e convites."
+        body="Cadastre seu e-mail para receber condições dos planos, convites para conhecer o espaço e os encontros que acontecem no Hub."
         source="Cowork"
       />
     </div>);

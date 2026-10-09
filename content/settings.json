@@ -2,7 +2,7 @@
   "accentColor": "#F04A24",
   "accent2Color": "#2457D6",
   "showMarcas": true,
-  "showHub": false,
+  "showHub": true,
   "showBlog": false,
   "showStats": true,
   "showMarquee": false,
