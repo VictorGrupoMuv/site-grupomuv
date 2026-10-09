@@ -5,6 +5,10 @@
 
 export const GA_MEASUREMENT_ID = "G-7R4ECZGR9S";
 
+// ID da tag do Google (combinada). É ESTE que carrega o gtag.js: o G- acima é
+// só um destino dentro dela e, pedido direto em gtag/js?id=G-..., responde 503.
+export const GOOGLE_TAG_ID = "GT-TQKZ48FK";
+
 // Duas contas do Google Ads estão declaradas de propósito. A primeira é a que
 // aparece no painel de instalação de tag; a segunda é a conta "Grupo Muv", onde
 // as ações de conversão abaixo foram criadas em 15/09/2026. Manter as duas
