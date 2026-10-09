@@ -4595,26 +4595,28 @@ a.home-cta__contact-item:hover { color: var(--accent); }
 }
 
 /* Specs (Studio + Cowork) */
+/* Specs vivem numa seção --ink que hoje é clara (override no fim do arquivo):
+   cores pensadas pro fundo escuro deixavam a tabela inteira invisível. */
 .hub-specs {
   max-width: 880px;
   margin: 0 auto;
-  border-top: 1px solid var(--dark-line);
+  border-top: 1px solid var(--line);
 }
 .hub-specs__row {
   display: grid;
   grid-template-columns: 220px 1fr;
   gap: 32px;
   padding: 18px 4px;
-  border-bottom: 1px solid var(--dark-line);
+  border-bottom: 1px solid var(--line);
   align-items: baseline;
 }
 .hub-specs__label {
   font-size: 12px;
   letter-spacing: 0.1em;
-  color: var(--dark-ink-2);
+  color: var(--ink-3);
 }
 .hub-specs__value {
-  color: var(--dark-ink);
+  color: var(--ink);
   font-size: 15px;
   line-height: 1.5;
 }
@@ -4648,11 +4650,13 @@ a.home-cta__contact-item:hover { color: var(--accent); }
 .hub-process { margin-top: 24px; }
 .hub-process__step {
   padding: 32px 24px;
-  border-top: 1px solid rgba(245,240,235,0.12);
+  border-top: 1px solid var(--line);
   min-height: 220px;
 }
-.hub-process__step h3 { color: var(--dark-ink); margin-top: 24px; }
-.hub-process__step p { color: var(--dark-ink-2); font-size: 14px; line-height: 1.55; margin-top: 12px; }
+/* As seções --ink passaram a ser claras (ver override mais abaixo); as cores
+   antigas, pensadas pro fundo escuro, deixavam título e texto invisíveis. */
+.hub-process__step h3 { color: var(--ink); margin-top: 24px; }
+.hub-process__step p { color: var(--ink-2); font-size: 14px; line-height: 1.55; margin-top: 12px; }
 
 /* Cards Comunidade */
 .hub-comm-card {
@@ -7849,3 +7853,122 @@ body {
     font-size: 9px;
   }
 }
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   SEO on-page do Hub (out/2026): tagline sob o H1, FAQ nativa, links cruzados
+   ═════════════════════════════════════════════════════════════════════════════ */
+.page-head__heading { min-width: 0; }
+.page-head__tagline {
+  margin: 18px 0 0;
+  font-size: clamp(20px, 2.1vw, 28px);
+  line-height: 1.2;
+  color: var(--ink-2);
+  max-width: 22ch;
+  text-wrap: balance;
+}
+@media (max-width: 600px) {
+  .page-head__tagline { margin-top: 12px; font-size: 18px; max-width: 100%; }
+}
+
+/* CTA de reserva (WhatsApp + tabela): mesmo cartão escuro da captura de e-mail */
+.hub-book-cta {
+  padding-top: clamp(40px, 5vw, 64px);
+  padding-bottom: clamp(40px, 5vw, 64px);
+  background: var(--bg);
+}
+.hub-book-cta .hub-cta__inner {
+  max-width: 1100px;
+  padding: clamp(32px, 4vw, 56px) clamp(24px, 3vw, 36px);
+  color: var(--dark-ink);
+  background: var(--ink);
+  border-radius: 20px 2px 2px 2px;
+}
+.hub-book-cta .eyebrow,
+.hub-book-cta .body-l { color: var(--dark-ink-2) !important; }
+.hub-book-cta .btn--ghost-dark { color: var(--dark-ink); border-color: var(--dark-line); }
+.hub-book-cta .btn--ghost-dark:hover { border-color: var(--dark-ink); }
+.hub-book-cta__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 40px;
+}
+.hub-book-cta .hub-email-capture__privacy { display: block; margin-top: 28px; color: var(--dark-ink-2); font-size: 11px; letter-spacing: .12em; }
+
+/* FAQ com <details>: a resposta existe no HTML mesmo fechada */
+.hub-faq { padding-top: 56px; padding-bottom: 72px; }
+.hub-faq .section-head { margin-bottom: 32px; }
+.hub-faq__item { border-bottom: 1px solid var(--line); }
+.hub-faq__head {
+  grid-template-columns: 56px 1fr 32px;
+  list-style: none;
+}
+.hub-faq__head::-webkit-details-marker { display: none; }
+.hub-faq__head::marker { content: ""; }
+.hub-faq__item[open] { background: rgba(222,78,43,0.025); }
+.hub-faq__item[open] .faq-item__chev { transform: rotate(180deg); color: var(--accent); }
+.hub-faq__body { padding: 4px 8px 32px 80px; }
+@media (max-width: 768px) {
+  .hub-faq__head { grid-template-columns: 36px 1fr 24px; }
+  .hub-faq__body { padding: 0 4px 24px 48px; }
+}
+
+/* "Também no Hub": links cruzados entre as páginas do Hub */
+.hub-crosslinks {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 5vw, 64px) 72px;
+}
+.hub-crosslinks__label { color: var(--ink-3); margin-bottom: 14px; }
+.hub-crosslinks ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+}
+.hub-crosslinks a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink);
+  font-size: 14px;
+  text-decoration: none;
+  transition: border-color .25s ease, color .25s ease;
+}
+.hub-crosslinks a:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Home · bloco do Hub: a seção --ink virou clara no redesign, mas título e
+   tagline ainda usavam a cor do fundo escuro (ficavam invisíveis). */
+.home-hub__title,
+.home-hub__tagline { color: var(--ink); }
+.home-hub__copy .eyebrow { color: var(--ink-3) !important; }
+
+/* Home · lista de links do Hub com âncora descritiva */
+.home-hub__links {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+  max-width: 480px;
+}
+.home-hub__links a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 15px;
+  transition: color .25s ease;
+}
+.home-hub__links li:last-child a { border-bottom: 1px solid var(--line); }
+.home-hub__links a .mono { color: var(--accent); font-size: 11px; }
+.home-hub__links a:hover { color: var(--accent); }
