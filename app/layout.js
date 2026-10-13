@@ -2,7 +2,7 @@ import "./globals.css";
 import WhatsappCookie from "./WhatsappCookie";
 import LeadPopup from "./LeadPopup";
 import GoogleAnalytics from "./GoogleAnalytics";
-import { GOOGLE_TAG_ID, GA_MEASUREMENT_ID, ADS_CONVERSION_ID, ADS_CONVERSION_ID_2, CONSENT_KEY } from "./gtag-config";
+import { GOOGLE_TAG_ID, GA_MEASUREMENT_ID, ADS_CONVERSION_ID, ADS_CONVERSION_ID_2, CONSENT_KEY, GTM_ID } from "./gtag-config";
 
 
 const LEGACY_HASH_REDIRECT = `(function(){try{var m={servicos:"/servicos/",processo:"/processo/",trabalhos:"/trabalhos/",sobre:"/sobre/",hub:"/hub/","hub-locadora":"/hub/locadora/","hub-studio":"/hub/studio/","hub-comunidade":"/hub/comunidade/","hub-cowork":"/hub/cowork/",blog:"/blog/",faq:"/faq/",contato:"/contato/"};var h=(location.hash||"").replace("#","");if(h&&m[h]&&location.pathname==="/"){location.replace(m[h]);}}catch(e){}})();`;
@@ -56,10 +56,12 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
         <script dangerouslySetInnerHTML={{ __html: GTAG_BOOTSTRAP }} />
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG_ID}`} />
+        {GTM_ID && <script dangerouslySetInnerHTML={{ __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');` }} />}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSONLD }} />
         <script dangerouslySetInnerHTML={{ __html: LEGACY_HASH_REDIRECT }} />
       </head>
       <body>
+        {GTM_ID && <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style={{ display: "none", visibility: "hidden" }} /></noscript>}
         {children}
         <GoogleAnalytics />
         <WhatsappCookie />

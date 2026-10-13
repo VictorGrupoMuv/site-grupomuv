@@ -6,6 +6,9 @@
 <!-- Google tag (gtag.js) - GA4 + Google Ads, Consent Mode v2 -->
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=window.gtag||gtag;gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});try{if(localStorage.getItem('muv-cookie-consent')==='accepted'){gtag('consent','update',{analytics_storage:'granted',ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});}}catch(e){}gtag('js',new Date());gtag('config','G-7R4ECZGR9S');gtag('config','AW-17425244543');</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=GT-TQKZ48FK"></script>
+<!-- Google Tag Manager (só pixels de terceiros; GA4/Ads ficam no gtag acima) -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W69K6R4F');</script>
+<!-- End Google Tag Manager -->
 <title>MUV Hub · Fundadores · 14 vagas | Grupo MUV</title>
 <meta name="description" content="14 vagas para a turma fundadora do MUV Hub: estúdio, locadora, baia de trabalho e comunidade criativa em São Paulo. Condição de fundador travada.">
 <meta name="robots" content="noindex,nofollow">
@@ -262,6 +265,9 @@ footer.f a:hover{color:var(--dark-ink)}
 </style>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W69K6R4F" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <div class="topbar">
   <div class="wrap">
@@ -588,6 +594,8 @@ var MUV_PAY = {
   // anuncios) — nunca pode quebrar o envio do formulario.
   function muvConv(sendTo){
     try{ if(typeof window.gtag==='function'){ window.gtag('event','conversion',{send_to:sendTo}); } }catch(e){}
+    // Mesmo evento pro GTM (pixels de terceiros ouvem generate_lead)
+    try{ window.dataLayer=window.dataLayer||[]; window.dataLayer.push({event:'generate_lead', form_name:'hub_'+location.pathname.split('/').filter(Boolean).pop(), method:'form'}); }catch(e){}
   }
 
   function post(form){

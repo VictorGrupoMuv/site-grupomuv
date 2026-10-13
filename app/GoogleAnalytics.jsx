@@ -25,8 +25,16 @@ const NEGADO = {
 };
 
 export function trackAnalytics(eventName, parameters = {}) {
-  if (typeof window === "undefined" || typeof window.gtag !== "function") return;
-  window.gtag("event", eventName, parameters);
+  if (typeof window === "undefined") return;
+  // gtag → GA4 e Ads (configurados no <head>).
+  if (typeof window.gtag === "function") window.gtag("event", eventName, parameters);
+  // dataLayer em formato de objeto → GTM (pixels de terceiros ouvem o mesmo
+  // evento, ex.: trigger "Custom Event: generate_lead" dispara o Meta Pixel).
+  // O gtag também escreve no dataLayer, mas como `arguments`, que o GTM ignora.
+  try {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: eventName, ...parameters });
+  } catch (_) {}
 }
 
 // Dispara uma conversão do Google Ads. Exige o rótulo gerado no painel do Ads

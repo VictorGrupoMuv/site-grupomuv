@@ -28,3 +28,10 @@ export const ADS_CONV = {
 };
 
 export const CONSENT_KEY = "muv-cookie-consent";
+
+// Google Tag Manager — modelo HÍBRIDO (decidido em 13/10/2026):
+// GA4 e Google Ads continuam no gtag acima; o GTM carrega SÓ pixels de
+// terceiros (Meta, TikTok, LinkedIn...). Nunca criar tag de GA4 ou Ads dentro
+// do container, senão duplica page views e conversões.
+// Vazio = snippet não é renderizado (app/layout.js).
+export const GTM_ID = "GTM-W69K6R4F";
