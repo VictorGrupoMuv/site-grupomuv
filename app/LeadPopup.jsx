@@ -138,7 +138,7 @@ export default function LeadPopup() {
     const digits = form.whatsapp.replace(/\D/g, "");
     if (!form.nome.trim())      { setError("Me diz seu nome pra gente te chamar direito."); return; }
     if (digits.length < 10)     { setError("Confere o WhatsApp: precisa do DDD + número."); return; }
-    if (!form.empresa.trim())   { setError("Qual a empresa ou marca? Ajuda a preparar o diagnóstico."); return; }
+    if (!form.empresa.trim())   { setError("Me passa o Instagram ou o site da marca, é o que a gente analisa."); return; }
     if (!consent)               { setError("Confirme o aceite da política de privacidade para enviar."); return; }
     setError("");
     setStatus("sending");
@@ -172,10 +172,10 @@ export default function LeadPopup() {
 
         {status !== "sent" ? (
           <>
-            <span className="muv-lead__eyebrow">Diagnóstico gratuito · 30 min</span>
-            <h2 id="muv-lead-title" className="muv-lead__title">Seu conteúdo está vendendo pela sua marca?</h2>
+            <span className="muv-lead__eyebrow">Gratuito</span>
+            <h2 id="muv-lead-title" className="muv-lead__title">Receba um diagnóstico da sua marca</h2>
             <p className="muv-lead__text">
-              A gente analisa a presença da sua marca e aponta, com franqueza, onde o audiovisual gera mais retorno e onde está só gastando verba. Sem apresentação de vendas.
+              A gente analisa seu conteúdo e te manda no WhatsApp o que está funcionando e o que está travando resultado.
             </p>
 
             <form className="muv-lead__form" onSubmit={submit} noValidate>
@@ -188,8 +188,8 @@ export default function LeadPopup() {
                 <input id="muv-lead-whatsapp" name="whatsapp" type="tel" inputMode="numeric" autoComplete="tel-national" placeholder="(11) 99999-9999" value={form.whatsapp} onChange={update("whatsapp")} required />
               </div>
               <div className="field">
-                <label htmlFor="muv-lead-empresa">Empresa ou marca</label>
-                <input id="muv-lead-empresa" name="empresa" type="text" autoComplete="organization" placeholder="Nome da empresa" value={form.empresa} onChange={update("empresa")} required />
+                <label htmlFor="muv-lead-empresa">Instagram ou site da marca</label>
+                <input id="muv-lead-empresa" name="empresa" type="text" autoComplete="off" placeholder="@suamarca ou site" value={form.empresa} onChange={update("empresa")} required />
               </div>
 
               <label className="quote-card__consent muv-lead__consent" htmlFor="muv-lead-consent">
@@ -201,7 +201,7 @@ export default function LeadPopup() {
 
               <div className="muv-lead__actions">
                 <button type="submit" className="btn btn--primary" disabled={status === "sending"}>
-                  {status === "sending" ? "Enviando…" : "Quero meu diagnóstico"}
+                  {status === "sending" ? "Enviando…" : "Receber diagnóstico"}
                 </button>
                 <button type="button" className="muv-lead__skip" onClick={dismiss}>Agora não</button>
               </div>
@@ -212,7 +212,7 @@ export default function LeadPopup() {
             <span className="muv-lead__eyebrow">Recebido</span>
             <h2 id="muv-lead-title" className="muv-lead__title">Fechado, {form.nome.trim().split(" ")[0] || "valeu"}.</h2>
             <p className="muv-lead__text">
-              A gente te chama no WhatsApp em até 1 dia útil pra marcar o diagnóstico. Se preferir adiantar, abre a conversa agora:
+              Seu diagnóstico chega no WhatsApp em até 2 dias úteis. Se quiser adiantar a conversa, chama a gente agora:
             </p>
             <div className="muv-lead__actions">
               <a className="btn btn--ink" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
