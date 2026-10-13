@@ -805,7 +805,11 @@ function ServiceRail({ items, onOpen }) {
 function Home({ setCurrent, density, content }) {
   const router = useRouter();
   const H = content?.home || _home;
-  const SRV = content?.services?.items || SERVICOS;
+  // O Tina só devolve campos declarados no schema. Se algum vier sem slug,
+  // completa pelo JSON local em vez de gerar href="/servicos/undefined/".
+  const SRV = (content?.services?.items || SERVICOS).map((item) => (
+    item.slug ? item : { ...item, slug: (SERVICOS.find((x) => x.num === item.num) || {}).slug }
+  ));
   const PRC = content?.process?.items || PROCESSO;
   const TRB = (content?.works?.items || TRABALHOS).filter((t) => !t.hidden);
   const PST = content?.posts?.items || POSTS;
@@ -963,9 +967,9 @@ function Home({ setCurrent, density, content }) {
           <a
             className="home-capability home-capability--link"
             key={s.num}
-            href={`/servicos/${s.slug}/`}
+            href={s.slug ? `/servicos/${s.slug}/` : ROUTES.servicos}
             aria-label={`${s.tag}: ver serviço`}
-            onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();router.push(`/servicos/${s.slug}/`);}}>
+            onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();router.push(s.slug ? `/servicos/${s.slug}/` : ROUTES.servicos);}}>
             <div className="home-capability__meta">
               <span className="mono">// {s.num}</span>
             </div>
