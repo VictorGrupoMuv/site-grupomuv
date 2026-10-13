@@ -6,6 +6,10 @@ import { trackAnalytics, trackAdsConversion } from "./GoogleAnalytics";
 import { ADS_CONV } from "./gtag-config";
 import _services from "../content/services.json";
 const SERVICOS = _services.items;
+// Nem todo servico tem pagina propria. "Estudio e equipamento" e a estrutura do
+// Hub vendida avulsa: o conteudo completo ja vive em /hub/, com preco e lista de
+// equipamento. Uma rota /servicos/estudio-e-equipamento/ so duplicaria aquilo.
+const servicoHref = (s) => (s && s.href) || (s && s.slug ? `/servicos/${s.slug}/` : ROUTES.servicos);
 
 // Escopos de lead. Fonte única: a home e o briefing da página Contato precisam
 // gravar o MESMO rótulo, senão o relatório por serviço no GA4 e no Ads conta a
@@ -778,15 +782,15 @@ function ServiceRail({ items, onOpen }) {
         {items.map((service, index) => (
           <li className="service-rail__card service-rail__card--link" key={service.slug || service.num}>
             <a
-              href={`/servicos/${service.slug}/`}
-              onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();onOpen(service.slug);}}>
+              href={servicoHref(service)}
+              onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();onOpen(service);}}>
               <h2 className="service-rail__heading">
                 <span className="mono">{String(index + 1).padStart(2, "0")}</span>
                 <span>{service.tag}</span>
               </h2>
               <p className="service-rail__promessa">{(service.title || "").replace(/\n/g, " ")}</p>
               <p className="service-rail__resumo">{service.resumo || service.desc}</p>
-              <span className="service-rail__ver">Ver serviço <Arrow /></span>
+              <span className="service-rail__ver">{service.href ? "Ver no Hub" : "Ver serviço"} <Arrow /></span>
             </a>
           </li>
         ))}
@@ -808,7 +812,10 @@ function Home({ setCurrent, density, content }) {
   // O Tina só devolve campos declarados no schema. Se algum vier sem slug,
   // completa pelo JSON local em vez de gerar href="/servicos/undefined/".
   const SRV = (content?.services?.items || SERVICOS).map((item) => (
-    item.slug ? item : { ...item, slug: (SERVICOS.find((x) => x.num === item.num) || {}).slug }
+    // Merge com o JSON local: o Tina so devolve campo declarado no schema, e
+    // campo ausente (ou null) virava href="/servicos/undefined/" na home.
+    { ...(SERVICOS.find((x) => x.slug === item.slug || x.num === item.num) || {}),
+      ...Object.fromEntries(Object.entries(item).filter(([, v]) => v !== null && v !== undefined)) }
   ));
   const PRC = content?.process?.items || PROCESSO;
   const TRB = (content?.works?.items || TRABALHOS).filter((t) => !t.hidden);
@@ -967,9 +974,9 @@ function Home({ setCurrent, density, content }) {
           <a
             className="home-capability home-capability--link"
             key={s.num}
-            href={s.slug ? `/servicos/${s.slug}/` : ROUTES.servicos}
+            href={servicoHref(s)}
             aria-label={`${s.tag}: ver serviço`}
-            onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();router.push(s.slug ? `/servicos/${s.slug}/` : ROUTES.servicos);}}>
+            onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();router.push(servicoHref(s));}}>
             <div className="home-capability__meta">
               <span className="mono">// {s.num}</span>
             </div>
@@ -1380,8 +1387,8 @@ function Servicos({ setCurrent }) {
   // O serviço viaja no hash para o briefing já abrir com o escopo marcado.
   // Hash e não estado: o link continua funcionando se for copiado ou virar
   // destino de anúncio.
-  const abrirServico = (slug) => {
-    router.push(slug ? `/servicos/${slug}/` : ROUTES.contato);
+  const abrirServico = (s) => {
+    router.push(s ? servicoHref(s) : ROUTES.contato);
   };
 
   return (
@@ -1418,7 +1425,7 @@ function Servicos({ setCurrent }) {
 // ═════════════════════════════════════════════════════════════════════════════
 function Servico({ setCurrent, slug }) {
   const router = useRouter();
-  const s = SERVICOS.find((x) => x.slug === slug);
+  const s = SERVICOS.find((x) => x.slug === slug && !x.href);
   const [aberta, setAberta] = useState(null);
   const [etapa, setEtapa] = useState(0);
   const [lead, setLead] = useState({ nome: "", empresa: "", email: "", whats: "", brief: "" });
@@ -1465,10 +1472,46 @@ function Servico({ setCurrent, slug }) {
         meta={s.prazo}
         compact />
 
+      {s.contexto && s.contexto.length ? (
+        <section className="section srv-page__contexto">
+          <div className="srv-contexto">
+            {s.contexto.map((p, i) => <p key={i}>{p}</p>)}
+          </div>
+        </section>
+      ) : null}
+
+      {(s.paraQuem && s.paraQuem.length) || (s.naoE && s.naoE.length) ? (
+        <section className="section srv-page__encaixe">
+          <div className="srv-encaixe">
+            {s.paraQuem && s.paraQuem.length ? (
+              <div className="srv-encaixe__col">
+                <p className="eyebrow eyebrow-dot">Para quem é</p>
+                <ul className="srv-encaixe__lista">
+                  {s.paraQuem.map((p) => <li key={p}>{p}</li>)}
+                </ul>
+              </div>
+            ) : null}
+            {s.naoE && s.naoE.length ? (
+              <div className="srv-encaixe__col srv-encaixe__col--nao">
+                <p className="eyebrow eyebrow-dot">O que não entra</p>
+                <ul className="srv-encaixe__lista srv-encaixe__lista--nao">
+                  {s.naoE.map((p) => <li key={p}>{p}</li>)}
+                </ul>
+              </div>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
+
       <section className="section srv-page__entrega">
-        <SectionHead eyebrow="O que você recebe" title="A entrega, item por item." />
-        <ul className="srv-page__lista">
-          {s.items.map((item) => <li key={item}>{item}</li>)}
+        <SectionHead eyebrow="O que você recebe" title="A entrega, item por item." sub="Escopo fechado no briefing. O que está aqui é o que sai." />
+        <ul className={`srv-page__lista ${s.entrega && s.entrega.length ? "srv-page__lista--rica" : ""}`}>
+          {(s.entrega && s.entrega.length ? s.entrega : s.items.map((t) => ({ t }))).map((item) => (
+            <li key={item.t}>
+              <span className="srv-item__t">{item.t}</span>
+              {item.d ? <span className="srv-item__d">{item.d}</span> : null}
+            </li>
+          ))}
         </ul>
         <div className="srv-page__acao">
           <button className="btn btn--primary" type="button" onClick={pedirOrcamento}>

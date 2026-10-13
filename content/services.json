@@ -12,8 +12,9 @@
       "items": [
         "Cortes verticais publicados durante o evento",
         "Aftermovie finalizado em até 48h",
-        "Stills selecionados e tratados",
+        "Palco, bastidor e público nas três camadas",
         "Versões por patrocinador e por ativação",
+        "Stills selecionados e tratados",
         "Brutos organizados e arquivados"
       ],
       "prazo": "Primeiro corte no mesmo dia · aftermovie em 48h",
@@ -62,9 +63,58 @@
         {
           "p": "O material bruto é meu?",
           "r": "Sim. Os brutos vão organizados, nomeados e arquivados — não é um HD jogado na sua mão no fim do evento."
+        },
+        {
+          "p": "Vocês cobrem evento fora de São Paulo?",
+          "r": "Cobrimos. A equipe viaja com câmera, luz e a ilha de edição. Deslocamento, hospedagem e diária de viagem entram destacados no orçamento, em vez de diluídos no valor da diária — você enxerga exatamente o que está pagando."
+        },
+        {
+          "p": "Como funciona a aprovação durante o evento?",
+          "r": "Grupo no WhatsApp com quem decide, fechado antes do evento começar. O corte sai, você aprova ou pede o ajuste, a peça vai ao ar. Fluxo de aprovação por e-mail não acompanha o ritmo de um evento ao vivo."
         }
       ],
-      "resumo": "Equipe com ilha de edição no local: o corte sai durante o evento."
+      "resumo": "Equipe com ilha de edição no local: o corte sai durante o evento.",
+      "contexto": [
+        "Evento tem uma janela de atenção que fecha junto com o portão. O público posta, a timeline ferve, o assunto dura algumas horas. Quando o aftermovie fica pronto na semana seguinte, a conversa já é outra — e a marca aparece como quem chegou atrasado no próprio evento que patrocinou.",
+        "Cobertura em tempo real existe para ocupar essa janela. E isso muda a estrutura da equipe, não só o prazo: tem um editor dedicado com ilha montada no local, cortando enquanto cinegrafista e assistente continuam captando. A aprovação roda em grupo de WhatsApp, em minutos. É o formato que a gente opera no GP de São Paulo com a Shell, nas casas do Numanice e nas ativações da Meta no Lollapalooza."
+      ],
+      "paraQuem": [
+        "Marca patrocinadora que precisa provar presença no mesmo dia",
+        "Festival, turnê e esportivo com público grande e janela curta",
+        "Ativação de marca que depende de prova social em tempo real",
+        "Evento corporativo e feira com palco, stand e agenda cheia"
+      ],
+      "naoE": [
+        "Não é um cinegrafista solto filmando o que aparecer",
+        "Não é aftermovie entregue na semana seguinte",
+        "Não é pacote fechado: a pauta sai do que a marca precisa provar"
+      ],
+      "entrega": [
+        {
+          "t": "Cortes verticais publicados durante o evento",
+          "d": "Peças de 15 a 60 segundos saindo ao longo do dia, no ritmo que a rede pede, com aprovação por WhatsApp entre um corte e outro."
+        },
+        {
+          "t": "Aftermovie finalizado em até 48h",
+          "d": "Filme principal com color grade, trilha e mix, pronto enquanto o assunto ainda rende — não três semanas depois."
+        },
+        {
+          "t": "Palco, bastidor e público nas três camadas",
+          "d": "É a combinação que faz o evento parecer cheio e vivo no vídeo, e não apenas bem iluminado."
+        },
+        {
+          "t": "Versões por patrocinador e por ativação",
+          "d": "Cada cota recebe o seu corte, com a assinatura certa, sem refazer a edição depois do evento."
+        },
+        {
+          "t": "Stills selecionados e tratados",
+          "d": "Seleção de fotos do dia com tratamento, prontas para post, release e aprovação de patrocinador."
+        },
+        {
+          "t": "Brutos organizados e arquivados",
+          "d": "Material nomeado e catalogado, entregue para o seu acervo. Não é um HD solto na sua mão no fim da noite."
+        }
+      ]
     },
     {
       "num": "02",
@@ -77,9 +127,10 @@
       "metaDesc": "Produção de conteúdo vertical para Instagram e TikTok: pacote de peças por diária, captação com influenciador e padrão visual entre as peças. São Paulo.",
       "items": [
         "Pacote de peças por diária, definido no briefing",
-        "Formatos verticais nativos, não horizontal cortado",
+        "Formatos verticais nativos",
         "Captação com influenciador e bastidor",
         "Variações por plataforma",
+        "Criativos pensados para mídia paga",
         "Biblioteca de assets organizada para reuso"
       ],
       "prazo": "Entregas semanais a partir da primeira diária",
@@ -124,9 +175,58 @@
         {
           "p": "Dá para manter um ritmo mensal?",
           "r": "É o formato que funciona melhor. Produção recorrente mantém a linguagem visual consistente e faz cada briefing começar com contexto acumulado, em vez de recomeçar toda vez."
+        },
+        {
+          "p": "Vocês escrevem a pauta ou recebem pronta?",
+          "r": "Os dois funcionam. Quando a marca tem social interno, a gente entra na pauta que já existe e produz dentro dela. Quando não tem, a gente estrutura a pauta do ciclo junto com você antes de marcar a diária — é essa etapa que faz um dia de captação render semanas."
+        },
+        {
+          "p": "Dá para gravar no meu espaço em vez de estúdio?",
+          "r": "Dá, e muitas vezes rende mais. Loja, escritório e operação têm textura que estúdio não entrega. O setup de luz e áudio é dimensionado para o lugar na visita técnica, antes da diária."
         }
       ],
-      "resumo": "Uma diária de captação que rende semanas de calendário."
+      "resumo": "Uma diária de captação que rende semanas de calendário.",
+      "contexto": [
+        "O problema de conteúdo para redes quase nunca é falta de ideia. É ritmo. A marca grava um dia, publica duas semanas, some por um mês e volta com outra linguagem visual — o feed acaba virando uma colagem de fases diferentes da mesma empresa, e cada post recomeça a construção do zero.",
+        "O formato aqui é o oposto disso: uma diária planejada que rende semanas de calendário, com padrão visual mantido entre as peças. Produto, ambiente, influenciador e bastidor saem no mesmo set. O material vai para uma biblioteca catalogada, e o ciclo seguinte começa com acervo em vez de começar em branco. É o que a gente roda com MAC, Kylie Cosmetics, Clear e Budweiser."
+      ],
+      "paraQuem": [
+        "Marca com calendário de conteúdo e equipe de social interna",
+        "Lançamento de produto que precisa de volume em janela curta",
+        "Negócio que roda mídia paga e queima criativo rápido",
+        "Empresa que trabalha com influenciador e quer o bastidor junto"
+      ],
+      "naoE": [
+        "Não é horizontal cortado na pós para fingir que é vertical",
+        "Não é pacote de peças soltas sem pauta por trás",
+        "Não é gestão de redes: a gente produz, quem publica é você ou sua agência"
+      ],
+      "entrega": [
+        {
+          "t": "Pacote de peças por diária, definido no briefing",
+          "d": "O número sai do que você precisa publicar no ciclo, e fica fechado antes de marcar a data — sem surpresa na entrega."
+        },
+        {
+          "t": "Formatos verticais nativos",
+          "d": "Enquadrado em 9:16 já na captação, com espaço real para legenda, interface e o corte de cada plataforma."
+        },
+        {
+          "t": "Captação com influenciador e bastidor",
+          "d": "Setup leve de luz e áudio, com registro do making of — que em muitos casos performa tanto quanto a peça principal."
+        },
+        {
+          "t": "Variações por plataforma",
+          "d": "Reels, Stories, TikTok e Shorts pedem durações e ganchos diferentes. Saem todos do mesmo material, no mesmo ciclo."
+        },
+        {
+          "t": "Criativos pensados para mídia paga",
+          "d": "Versões com gancho nos três primeiros segundos, para rodar em anúncio e não só no orgânico."
+        },
+        {
+          "t": "Biblioteca de assets organizada para reuso",
+          "d": "Material catalogado por tema, produto e formato, para o próximo ciclo começar com acervo em vez de começar do zero."
+        }
+      ]
     },
     {
       "num": "03",
@@ -139,10 +239,11 @@
       "metaDesc": "Produção de filme publicitário com direção de fotografia, drone e versões para cada canal. Cases para Itaú, Nissan e Budweiser. Produtora em São Paulo.",
       "items": [
         "Filme principal com versões 16:9, 9:16 e 1:1",
+        "Direção criativa e direção de fotografia no set",
+        "Pré-produção completa",
         "Captação aérea com drone quando o roteiro pede",
-        "Direção de fotografia cinematográfica",
-        "Banco de assets always-on para a marca",
-        "Color grade e mix finalizados"
+        "Color grade, sound design e mix finalizados",
+        "Banco de assets always-on para a marca"
       ],
       "prazo": "4 a 8 semanas, do briefing ao master",
       "prova": "Convocasso Itaú · Nissan · Carnaúba Wind House",
@@ -185,9 +286,58 @@
         {
           "p": "Vocês atendem agência ou só marca direta?",
           "r": "Os dois. Boa parte dos nossos projetos é feita com agências e produtoras parceiras, entrando como equipe de captação e pós dentro do fluxo delas."
+        },
+        {
+          "p": "Vocês cuidam de casting e locação?",
+          "r": "Cuidamos. Casting, locação, autorizações e plano de produção entram na pré-produção. É isso que faz a diária render — e o que impede a diária de virar uma reunião muito cara com a equipe toda parada."
+        },
+        {
+          "p": "Como ficam os direitos de uso?",
+          "r": "Definidos no contrato antes da captação: praça, mídia e período. Imagem de elenco e trilha seguem o mesmo escopo, para a campanha não travar na hora de estender a veiculação. Renovação é negociada, nunca descoberta no meio do voo."
         }
       ],
-      "resumo": "Campanha com direção de fotografia e plano de produção fechado."
+      "resumo": "Campanha com direção de fotografia e plano de produção fechado.",
+      "contexto": [
+        "Diária de filmagem é a parte mais cara de qualquer campanha. Set não é hora de decidir, é hora de executar o que já foi decidido — por isso nada entra em produção aqui sem roteiro aprovado, decupagem fechada e plano de produção assinado. A maior parte do que determina se um filme funciona acontece antes de alguém sair de casa.",
+        "O que a MUV coloca no set é direção: direção criativa e direção de fotografia, junto com a estrutura de captação. Trabalhamos direto com a marca e também dentro do fluxo de agências e produtoras parceiras, entrando como equipe de captação e pós. Na entrega sai o filme principal mais os cortes de cada canal — versionar dentro da edição custa uma fração de refazer a campanha depois."
+      ],
+      "paraQuem": [
+        "Marca com campanha aprovada e verba de mídia definida",
+        "Agência que precisa de produtora de captação e pós",
+        "Lançamento de produto que vai para TV, OOH ou mídia paga",
+        "Projeto que pede direção de fotografia, não só registro"
+      ],
+      "naoE": [
+        "Não é captação sem roteiro aprovado",
+        "Não é \"a gente resolve no set\"",
+        "Não é entrega de um master só, sem os cortes de canal"
+      ],
+      "entrega": [
+        {
+          "t": "Filme principal com versões 16:9, 9:16 e 1:1",
+          "d": "O master mais os cortes de cada canal, versionados dentro da mesma edição e com a mesma direção."
+        },
+        {
+          "t": "Direção criativa e direção de fotografia no set",
+          "d": "Cada decisão de luz, lente e movimento responde a um objetivo de comunicação definido no roteiro."
+        },
+        {
+          "t": "Pré-produção completa",
+          "d": "Casting, locação, autorizações, plano de produção e cronograma fechados e aprovados antes da diária."
+        },
+        {
+          "t": "Captação aérea com drone quando o roteiro pede",
+          "d": "Piloto dedicado e plano de voo. Aéreo entra como escolha narrativa, não como enfeite de abertura."
+        },
+        {
+          "t": "Color grade, sound design e mix finalizados",
+          "d": "Finalização completa, com masters nos formatos e especificações que cada veículo exige."
+        },
+        {
+          "t": "Banco de assets always-on para a marca",
+          "d": "O que sobra da captação vira acervo utilizável, em vez de bruto esquecido no HD depois da campanha."
+        }
+      ]
     },
     {
       "num": "04",
@@ -200,10 +350,11 @@
       "metaDesc": "Filme institucional, depoimentos e séries recorrentes para empresas e escritórios. Captação em fábrica, escritório e evento corporativo. São Paulo.",
       "items": [
         "Filme institucional e manifesto de marca",
-        "Entrevistas e depoimentos dirigidos",
+        "Entrevistas e depoimentos com pauta dirigida",
         "Captação em fábrica, escritório e operação",
-        "Séries recorrentes para escritórios e empresas B2B",
-        "Cortes curtos para LinkedIn e comunicação interna"
+        "Séries recorrentes para empresas B2B",
+        "Cortes curtos para LinkedIn e comunicação interna",
+        "Som direto, teleprompter e dupla câmera quando a fala é o centro"
       ],
       "prazo": "3 a 5 semanas · séries recorrentes em ciclo mensal",
       "prova": "XP Expert com Tom Brady · Diageo World Class — ambos evento corporativo",
@@ -245,9 +396,58 @@
         {
           "p": "Serve para escritório de advocacia e empresa B2B?",
           "r": "Serve. Esse tipo de cliente costuma precisar de uma combinação de institucional, série de conteúdo curto e material de comunicação interna, e a gente estrutura o pacote nesse formato."
+        },
+        {
+          "p": "Quanto tempo meu time precisa parar para gravar?",
+          "r": "Uma entrevista bem preparada ocupa de 40 a 90 minutos da pessoa. A gente monta, testa luz e som e deixa tudo pronto antes de ela entrar na sala — justamente para não queimar agenda de diretoria com ajuste técnico."
+        },
+        {
+          "p": "Dá para gravar com executivo que não tem jogo de câmera?",
+          "r": "Dá, e é o caso mais comum. Pauta no lugar de texto decorado, direção durante a gravação e recorte na edição. A pessoa responde perguntas numa conversa; o filme sai daí. Decorar script é o que costuma travar quem não é acostumado."
         }
       ],
-      "resumo": "Depoimento e filme institucional com direção de verdade."
+      "resumo": "Depoimento e filme institucional com direção de verdade.",
+      "contexto": [
+        "Vídeo institucional tem fama ruim por um motivo concreto: boa parte é feita sem direção. Câmera parada, executivo decorando texto, trilha de banco de áudio. O filme fica no rodapé do site, ninguém assiste até o fim, e a empresa conclui que vídeo não funciona para ela.",
+        "A diferença está na preparação. Pauta de entrevista escrita e aprovada antes, direção no set para a pessoa responder em vez de recitar, som direto quando a fala é o centro do filme, e montagem que encontra o recorte certo. E, cada vez mais, o formato que constrói autoridade não é um filme único: é uma série recorrente, com ciclo mensal, enquanto o institucional tradicional envelhece parado."
+      ],
+      "paraQuem": [
+        "Empresa B2B que precisa de material de credibilidade",
+        "Escritório de advocacia, consultoria e serviço profissional",
+        "Indústria que precisa mostrar operação, processo e segurança",
+        "RH e comunicação interna com agenda recorrente"
+      ],
+      "naoE": [
+        "Não é vídeo de treinamento com câmera parada",
+        "Não é entrevista sem pauta, resolvida na hora",
+        "Não é filme de oito minutos que ninguém termina"
+      ],
+      "entrega": [
+        {
+          "t": "Filme institucional e manifesto de marca",
+          "d": "O filme que apresenta a empresa, com roteiro construído a partir do que ela precisa comunicar e para quem."
+        },
+        {
+          "t": "Entrevistas e depoimentos com pauta dirigida",
+          "d": "Perguntas preparadas e aprovadas antes. A pessoa responde, não decora — e o recorte acontece na edição."
+        },
+        {
+          "t": "Captação em fábrica, escritório e operação",
+          "d": "Equipe acostumada a set com restrição de circulação, norma de segurança e operação rodando ao lado."
+        },
+        {
+          "t": "Séries recorrentes para empresas B2B",
+          "d": "Ciclo mensal de entrevistas curtas que constrói autoridade continuamente, em vez de um filme que envelhece sozinho."
+        },
+        {
+          "t": "Cortes curtos para LinkedIn e comunicação interna",
+          "d": "O mesmo material rende o filme longo e as peças de canal, com legenda e formato próprios."
+        },
+        {
+          "t": "Som direto, teleprompter e dupla câmera quando a fala é o centro",
+          "d": "Estrutura que deixa o entrevistado confortável e dá à edição o material para cortar sem emenda aparente."
+        }
+      ]
     },
     {
       "num": "05",
@@ -259,9 +459,10 @@
       "metaTitle": "Branded Content e Documentário de Marca — Produtora em SP | Grupo MUV",
       "metaDesc": "Filmes e séries com captação documental para marcas. Narrativa real com direção de fotografia. Cases para Dolce & Gabbana, Consul e Guaraná Antarctica.",
       "items": [
+        "Apuração e pesquisa antes da filmagem",
         "Filme ou série com captação documental",
         "Direção de fotografia e câmera B",
-        "Versões para o canal próprio da marca",
+        "Montagem como etapa principal",
         "Teaser e cortes de distribuição",
         "Making of, quando o bastidor conta parte da história"
       ],
@@ -305,9 +506,58 @@
         {
           "p": "Dá para aproveitar o material em outros formatos?",
           "r": "Dá, e é o padrão. Do mesmo material saem o filme principal, teaser, cortes verticais e, quando faz sentido, making of."
+        },
+        {
+          "p": "Quanto material vira quanto tempo de filme?",
+          "r": "Em documental a proporção é alta: muitas horas de bruto para poucos minutos finais. É por isso que o cronograma concentra o tempo na montagem, e não na filmagem — e por que apressar a edição costuma ser onde o filme se perde."
+        },
+        {
+          "p": "A marca aparece como, exatamente?",
+          "r": "Dentro da história, no papel que ela de fato tem: assinatura, produto em uso ou contexto. O que não funciona é tentar transformar o terceiro ato em comercial — é exatamente nesse ponto que o público abandona o vídeo."
         }
       ],
-      "resumo": "Narrativa real, com a marca dentro da história."
+      "resumo": "Narrativa real, com a marca dentro da história.",
+      "contexto": [
+        "Branded content só funciona quando a história existe antes da marca. Se a narrativa foi inventada para encaixar o produto, o público percebe nos primeiros segundos — e o conteúdo vira publicidade mais cara, sem o alcance que a publicidade teria.",
+        "Por isso o trabalho começa na apuração: conversa com as pessoas envolvidas, pesquisa e visita antes de montar equipe. A captação é documental, com direção de fotografia e câmera B, e com espaço para o que não estava no roteiro — documentário bom depende de estar pronto quando acontece. A montagem é onde o filme nasce de verdade, e a distribuição entra no projeto desde o começo, porque conteúdo que ninguém vê não é conteúdo, é arquivo."
+      ],
+      "paraQuem": [
+        "Marca que quer conteúdo assistido por vontade própria",
+        "Projeto com propósito, patrocínio cultural ou esportivo",
+        "Marca com canal próprio para alimentar",
+        "Lançamento que pede narrativa, não anúncio"
+      ],
+      "naoE": [
+        "Não é publicidade disfarçada de documentário",
+        "Não é roteiro inventado para encaixar o produto",
+        "Não é filme entregue sem plano de distribuição"
+      ],
+      "entrega": [
+        {
+          "t": "Apuração e pesquisa antes da filmagem",
+          "d": "Conversa com os envolvidos, pesquisa e visita. É a etapa menos visível e a que mais decide se o filme funciona."
+        },
+        {
+          "t": "Filme ou série com captação documental",
+          "d": "Formato definido pelo material e pelo objetivo: série para construir audiência, filme único para marcar um momento."
+        },
+        {
+          "t": "Direção de fotografia e câmera B",
+          "d": "Estética de cinema com estrutura de documentário: duas câmeras para não perder o que acontece uma vez só."
+        },
+        {
+          "t": "Montagem como etapa principal",
+          "d": "É na edição que o material vira narrativa. Por isso a montagem é a parte mais longa do cronograma, e não a filmagem."
+        },
+        {
+          "t": "Teaser e cortes de distribuição",
+          "d": "Peças curtas pensadas para levar público ao filme, planejadas junto com o filme e não depois dele."
+        },
+        {
+          "t": "Making of, quando o bastidor conta parte da história",
+          "d": "Camada extra de conteúdo que sai da mesma produção, sem custo de uma segunda captação."
+        }
+      ]
     },
     {
       "num": "06",
@@ -363,7 +613,8 @@
           "r": "Dá. Existe baia de trabalho e day pass de cowork para quem precisa só de um lugar para finalizar."
         }
       ],
-      "resumo": "Estúdio, câmera e ilha para quem já tem equipe própria."
+      "resumo": "Estúdio, câmera e ilha para quem já tem equipe própria.",
+      "href": "/hub/"
     }
   ]
 }

@@ -5,6 +5,12 @@
 /processo/*   /servicos/   301!
 /processo     /servicos/   301!
 
+# "Estúdio e equipamento" é a estrutura do Hub vendida avulsa. O conteúdo
+# completo (preço, lista de equipamento, endereço) já vive em /hub/ — a rota
+# de serviço duplicava aquilo e competia com ela na busca.
+/servicos/estudio-e-equipamento/*  /hub/   301!
+/servicos/estudio-e-equipamento    /hub/   301!
+
 https://main--zesty-lollipop-e19da1.netlify.app/*  https://grupomuv.com.br/:splat  301!
 https://zesty-lollipop-e19da1.netlify.app/*        https://grupomuv.com.br/:splat  301!
 

@@ -8635,3 +8635,189 @@ body.drawer-active #muv-lead { display: none !important; }
 .service-rail__card--link:focus-within .service-rail__ver {
   color: inherit;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VITRINE · retângulo pequeno que cresce no hover
+   Antes o card tinha altura fixa de ~270px e só o conteúdo aparecia no hover:
+   seis blocos altos com o nome no topo e vazio embaixo. Agora o repouso é só
+   o nome, numa faixa baixa, e o card cresce sobre a área reservada abaixo.
+   Cresce em overlay (absolute) e não empurrando a grade: hover em sequência
+   nos seis cards faria a página inteira pular.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.service-rail__track {
+  align-items: start;
+  overflow: visible;
+  /* o card aberto passa por cima do rodapé da seção em vez de reservar
+     espaço vazio: reservar deixava um buraco de ~170px na página parada */
+  margin-bottom: clamp(20px, 2.4vw, 34px);
+}
+.service-rail__card--link,
+.service-rail__card--link:nth-child(n) {
+  position: relative;
+  height: clamp(76px, 6.1vw, 90px);
+  min-height: 0;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
+}
+.service-rail__card--link:hover,
+.service-rail__card--link:focus-within {
+  transform: none;
+  box-shadow: none;
+  background: transparent;
+}
+.service-rail__card--link > a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  /* um bloco anterior deixou min-height: clamp(230px,19vw,275px) no <a>;
+     sem zerar aqui, o min-height ganha do height e o repouso volta a ser alto */
+  min-height: 0;
+  padding: 16px 15px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: hidden;
+  color: var(--card-fg);
+  background: var(--card-bg);
+  border-radius: 2px var(--radius-lg) 2px 2px;
+  z-index: 1;
+  transition:
+    height 360ms var(--ease-out, ease),
+    box-shadow 300ms ease,
+    padding 360ms var(--ease-out, ease);
+}
+.service-rail__card--link:hover > a,
+.service-rail__card--link:focus-within > a {
+  height: clamp(214px, 17.2vw, 246px);
+  padding-bottom: 18px;
+  z-index: 6;
+  box-shadow: 0 22px 54px rgba(0, 0, 0, .32);
+}
+.service-rail__card--link h2.service-rail__heading {
+  font-size: clamp(14px, 1.08vw, 17px);
+  line-height: 1.14;
+}
+/* o "Ver serviço" deixa de ser empurrado por margin-top:auto — no repouso
+   isso o jogava para o rodapé da faixa baixa e ele piscava na transição */
+.service-rail__card--link .service-rail__ver {
+  margin-top: auto;
+  padding-top: 13px;
+}
+.service-rail__card--link:hover .service-rail__promessa,
+.service-rail__card--link:focus-within .service-rail__promessa {
+  max-height: 110px;
+  margin: 12px 0 7px;
+}
+.service-rail__card--link:hover .service-rail__resumo,
+.service-rail__card--link:focus-within .service-rail__resumo {
+  max-height: 130px;
+  margin: 0;
+}
+@media (max-width: 1180px) {
+  .service-rail__card--link,
+  .service-rail__card--link:nth-child(n) { height: clamp(74px, 8.4vw, 88px); }
+  .service-rail__card--link:hover > a,
+  .service-rail__card--link:focus-within > a { height: clamp(222px, 27vw, 252px); }
+}
+/* Toque não tem hover: o card volta a ser estático, com o resumo visível.
+   Sem isso o dedo abriria um overlay que o próprio toque já navega. */
+@media (hover: none) {
+  .service-rail__track { margin-bottom: 0; }
+  .service-rail__card--link,
+  .service-rail__card--link:nth-child(n) { height: auto; }
+  .service-rail__card--link > a {
+    position: static;
+    height: auto;
+    min-height: 0;
+    padding: 16px 15px 16px;
+    box-shadow: none;
+  }
+  .service-rail__card--link .service-rail__promessa { max-height: 120px; margin: 11px 0 6px; opacity: .92; transform: none; }
+  .service-rail__card--link .service-rail__resumo { max-height: 140px; margin: 0 0 4px; opacity: .72; transform: none; }
+  .service-rail__card--link .service-rail__ver { margin-top: 12px; opacity: .8; transform: none; }
+}
+@media (max-width: 680px) {
+  .service-rail__card--link,
+  .service-rail__card--link:nth-child(n) { height: auto; }
+  .service-rail__card--link > a { position: static; height: auto; min-height: 0; }
+  .service-rail__card--link .service-rail__resumo { display: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PÁGINA DO SERVIÇO · contexto, entrega explicada, encaixe
+   O índice entrega uma linha; aqui vive o conteúdo completo. Era isso que
+   faltava: a página tinha lista de bullets e FAQ, e nenhum corpo de texto.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.srv-page__contexto { padding-top: clamp(30px, 3.4vw, 48px); padding-bottom: 0; }
+.srv-contexto {
+  max-width: 68ch;
+  display: grid;
+  gap: 20px;
+}
+.srv-contexto p {
+  margin: 0;
+  font-size: clamp(16px, 1.42vw, 19px);
+  line-height: 1.62;
+  letter-spacing: -.005em;
+}
+.srv-contexto p:first-child {
+  font-size: clamp(18px, 1.72vw, 23px);
+  line-height: 1.48;
+}
+.srv-contexto p:first-child::first-line { font-weight: 500; }
+
+.srv-page__lista--rica li {
+  display: grid;
+  gap: 5px;
+  padding: 18px 0 18px 28px;
+}
+.srv-page__lista--rica .srv-item__t {
+  font-size: clamp(15px, 1.45vw, 18px);
+  line-height: 1.35;
+  letter-spacing: -.01em;
+}
+.srv-page__lista--rica .srv-item__d {
+  max-width: 62ch;
+  font-size: 14px;
+  line-height: 1.58;
+  opacity: .66;
+}
+
+.srv-page__encaixe { padding-top: clamp(26px, 3vw, 44px); }
+.srv-encaixe {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(24px, 3vw, 56px);
+}
+.srv-encaixe__col .eyebrow { margin: 0 0 16px; }
+.srv-encaixe__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.srv-encaixe__lista li {
+  padding: 11px 0 11px 22px;
+  position: relative;
+  border-top: 1px solid color-mix(in srgb, currentColor 13%, transparent);
+  font-size: 15px;
+  line-height: 1.45;
+}
+.srv-encaixe__lista li::before {
+  content: "+";
+  position: absolute;
+  left: 0;
+  top: 11px;
+  color: var(--accent);
+  font: 400 14px/1.45 var(--font-mono);
+}
+.srv-encaixe__lista--nao li { opacity: .62; }
+.srv-encaixe__lista--nao li::before { content: "−"; color: inherit; }

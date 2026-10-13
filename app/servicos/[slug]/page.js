@@ -4,8 +4,12 @@ import _services from "../../../content/services.json";
 const SERVICOS = _services.items;
 const SITE = "https://grupomuv.com.br";
 
+// Serviço com `href` no JSON não tem página própria: o conteúdo dele já vive
+// em outra rota (hoje, "Estúdio e equipamento" → /hub/, que tem preço e lista
+// de equipamento). Gerar a rota aqui só criaria uma segunda página rasa
+// competindo com a do Hub na busca. O 301 fica em public/_redirects.
 export function generateStaticParams() {
-  return SERVICOS.map((s) => ({ slug: s.slug }));
+  return SERVICOS.filter((s) => !s.href).map((s) => ({ slug: s.slug }));
 }
 
 // Service + FAQPage: o Service descreve a oferta, o FAQPage é o que pode
@@ -29,9 +33,15 @@ function serviceSchema(s) {
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: `O que entra em ${s.tag.toLowerCase()}`,
-      itemListElement: (s.items || []).map((item) => ({
+      itemListElement: (s.entrega && s.entrega.length
+        ? s.entrega.map((e) => ({ name: e.t, description: e.d }))
+        : (s.items || []).map((item) => ({ name: item }))
+      ).map((o) => ({
         "@type": "Offer",
-        itemOffered: { "@type": "Service", name: item } })) },
+        itemOffered: {
+          "@type": "Service",
+          name: o.name,
+          ...(o.description ? { description: o.description } : {}) } })) },
     provider: {
       "@type": "Organization",
       name: "Grupo MUV",
@@ -68,7 +78,7 @@ function breadcrumbSchema(s) {
 }
 
 export function generateMetadata({ params }) {
-  const s = SERVICOS.find((x) => x.slug === params.slug);
+  const s = SERVICOS.find((x) => x.slug === params.slug && !x.href);
   if (!s) return {};
   const url = `${SITE}/servicos/${s.slug}/`;
   const title = s.metaTitle || `${s.tag} | Grupo MUV`;
@@ -81,7 +91,7 @@ export function generateMetadata({ params }) {
 }
 
 export default function Page({ params }) {
-  const s = SERVICOS.find((x) => x.slug === params.slug);
+  const s = SERVICOS.find((x) => x.slug === params.slug && !x.href);
   if (!s) return <MuvApp page="servicos" />;
   const blocos = [serviceSchema(s), faqSchema(s), breadcrumbSchema(s)].filter(Boolean);
   return (
