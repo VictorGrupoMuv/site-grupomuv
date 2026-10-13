@@ -2,51 +2,98 @@
   "items": [
     {
       "num": "01",
-      "tag": "Estratégia",
-      "title": "Pensamos antes de ligar a câmera.",
-      "desc": "Briefing, posicionamento, narrativa e distribuição fazem parte do escopo. Cada frame tem intenção.",
+      "tag": "Cobertura de evento",
+      "scope": "Cobertura de Evento",
+      "title": "Seu evento no ar\nantes de acabar.",
+      "desc": "Equipe com ilha de edição no local. O primeiro corte sai enquanto o público ainda está lá — não na semana seguinte, quando ninguém mais lembra.",
       "items": [
-        "Discovery & briefing",
-        "Posicionamento de conteúdo",
-        "Roteiro & narrativa",
-        "Estratégia de distribuição"
-      ]
+        "Cortes verticais publicados durante o evento",
+        "Aftermovie finalizado em até 48h",
+        "Stills selecionados e tratados",
+        "Versões por patrocinador e por ativação",
+        "Brutos organizados e arquivados"
+      ],
+      "prazo": "Primeiro corte no mesmo dia · aftermovie em 48h",
+      "prova": "Shell no GP de São Paulo · Numanice · Meta no Lollapalooza · Stock Car"
     },
     {
       "num": "02",
-      "tag": "Produção",
-      "title": "Captação\ncinematográfica.",
-      "desc": "Equipamento de cinema. Direção criativa. Workflow que não improvisa.",
+      "tag": "Conteúdo para redes",
+      "scope": "Conteúdo Social",
+      "title": "Volume com padrão,\nnão volume por volume.",
+      "desc": "Uma diária de captação que rende semanas de calendário. Linguagem visual consistente entre as peças — o feed parece da mesma marca.",
       "items": [
-        "Direção criativa",
-        "Captação multi-câmera",
-        "Drone & aéreo",
-        "Iluminação & som"
-      ]
+        "Pacote de peças por diária, definido no briefing",
+        "Formatos verticais nativos, não horizontal cortado",
+        "Captação com influenciador e bastidor",
+        "Variações por plataforma",
+        "Biblioteca de assets organizada para reuso"
+      ],
+      "prazo": "Entregas semanais a partir da primeira diária",
+      "prova": "MAC Cosmetics · Kylie Cosmetics · Dolce & Gabbana"
     },
     {
       "num": "03",
-      "tag": "Conteúdo",
-      "title": "Pronto pra plataforma certa.",
-      "desc": "Produção que não termina no master. Vai até o clipe certo, no canal certo, com a linguagem que a audiência espera.",
+      "tag": "Captação publicitária",
+      "scope": "Captação Publicitária",
+      "title": "Direção no set,\nnão só câmera.",
+      "desc": "Captação dirigida para campanha, com direção de fotografia e plano de produção aprovados antes de alguém sair de casa.",
       "items": [
-        "Edição & finalização",
-        "Color grading",
-        "Motion graphics",
-        "Adaptação multi-formato"
-      ]
+        "Filme principal com versões 16:9, 9:16 e 1:1",
+        "Captação aérea com drone quando o roteiro pede",
+        "Direção de fotografia cinematográfica",
+        "Banco de assets always-on para a marca",
+        "Color grade e mix finalizados"
+      ],
+      "prazo": "4 a 8 semanas, do briefing ao master",
+      "prova": "Convocasso Itaú · Nissan · Clear · Budweiser"
     },
     {
       "num": "04",
-      "tag": "Presença",
-      "title": "Conteúdo consistente\nconstrói marca.",
-      "desc": "Não produzimos pra preencher calendário. Construímos com as marcas uma presença audiovisual coerente — com linguagem definida, evolução de projeto a projeto e estratégia que atravessa as entregas.",
+      "tag": "Institucional e corporativo",
+      "scope": "Institucional",
+      "title": "Para quando a empresa\nprecisa ser levada a sério.",
+      "desc": "Depoimento, entrevista e filme institucional com direção de verdade. Sem cara de vídeo de treinamento.",
       "items": [
-        "Calendário editorial audiovisual",
-        "Consistência de linguagem visual",
-        "Produção recorrente",
-        "Briefings que acumulam contexto"
-      ]
+        "Filme institucional e manifesto de marca",
+        "Entrevistas e depoimentos dirigidos",
+        "Captação em fábrica, escritório e operação",
+        "Séries recorrentes para escritórios e empresas B2B",
+        "Cortes curtos para LinkedIn e comunicação interna"
+      ],
+      "prazo": "3 a 5 semanas · séries recorrentes em ciclo mensal",
+      "prova": "XP Expert com Tom Brady · Diageo World Class"
+    },
+    {
+      "num": "05",
+      "tag": "Documental e branded content",
+      "scope": "Documentário",
+      "title": "A marca dentro da história,\nnão em cima dela.",
+      "desc": "Conteúdo que o público assiste por vontade própria. A marca aparece porque faz sentido na narrativa, não porque pagou pelo espaço.",
+      "items": [
+        "Filme ou série com captação documental",
+        "Direção de fotografia e câmera B",
+        "Versões para o canal próprio da marca",
+        "Teaser e cortes de distribuição",
+        "Making of, quando o bastidor conta parte da história"
+      ],
+      "prazo": "3 a 6 semanas",
+      "prova": "Consul Pizza de Ontem · Guaraná no Carnaval · Brastemp Retrô no Martinelli"
+    },
+    {
+      "num": "06",
+      "tag": "Estúdio e equipamento",
+      "scope": "Estúdio & Locação",
+      "title": "A estrutura,\nsem a produtora junto.",
+      "desc": "Para quem tem equipe própria e precisa de set, câmera ou ilha. Estúdio na Alameda Santos e locação de equipamento profissional.",
+      "items": [
+        "Diária de estúdio",
+        "Locação de câmera, luz e som",
+        "Baia de trabalho e ilha de edição",
+        "Day pass de cowork"
+      ],
+      "prazo": "Reserva por diária",
+      "prova": "MUV Hub · Alameda Santos, 211"
     }
   ]
 }

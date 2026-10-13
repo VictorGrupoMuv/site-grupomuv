@@ -7182,7 +7182,7 @@ body {
 .service-rail__card:hover .service-rail__details,
 .service-rail__card:focus-within .service-rail__details,
 .service-rail__card.is-open .service-rail__details {
-  max-height: 420px;
+  max-height: 980px;
   padding: 0 20px 20px;
   opacity: 1;
   transform: none;
@@ -8029,4 +8029,36 @@ body.drawer-active #muv-lead { display: none !important; }
   #muv-lead { align-items: end; padding: 0; }
   .muv-lead__card { width: 100%; max-height: 92vh; max-height: 92dvh; border-radius: var(--radius-md) var(--radius-md) 0 0; padding: 28px 20px 32px; }
   .muv-lead__actions .btn { width: 100%; justify-content: center; }
+}
+
+
+/* ── Serviços · entregável, prazo, prova e CTA por serviço ───────────────── */
+.service-rail__label {
+  margin: 18px 0 0;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  opacity: .55;
+}
+.service-rail__meta {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  opacity: .78;
+}
+.service-rail__meta .mono {
+  display: inline-block;
+  min-width: 78px;
+  font-size: 9.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  opacity: .6;
+}
+.service-rail__cta {
+  margin-top: 22px;
+}
+@media (max-width: 720px) {
+  .service-rail__card.is-open .service-rail__details { max-height: 1400px; }
+  .service-rail__cta { width: 100%; justify-content: center; }
+  .service-rail__meta .mono { display: block; min-width: 0; margin-bottom: 2px; }
 }

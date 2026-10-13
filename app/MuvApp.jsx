@@ -6,6 +6,11 @@ import { trackAnalytics, trackAdsConversion } from "./GoogleAnalytics";
 import { ADS_CONV } from "./gtag-config";
 import _services from "../content/services.json";
 const SERVICOS = _services.items;
+
+// Escopos de lead. Fonte única: a home e o briefing da página Contato precisam
+// gravar o MESMO rótulo, senão o relatório por serviço no GA4 e no Ads conta a
+// mesma demanda duas vezes com nomes diferentes.
+const ESCOPOS = SERVICOS.map((s) => s.scope || s.tag);
 import _process from "../content/process.json";
 const PROCESSO = _process.items;
 import _works from "../content/works.json";
@@ -790,16 +795,25 @@ function ServiceRail({ items, onContact }) {
               aria-hidden={openIndex !== index}>
               <h3>{service.title}</h3>
               <p>{service.desc}</p>
+              <p className="service-rail__label mono">O que você recebe</p>
               <ul className="service-rail__scope">
                 {service.items.map((item) => <li key={item}>{item}</li>)}
               </ul>
+              {service.prazo ? <p className="service-rail__meta"><span className="mono">Prazo</span> {service.prazo}</p> : null}
+              {service.prova ? <p className="service-rail__meta"><span className="mono">Já fizemos</span> {service.prova}</p> : null}
+              <button
+                type="button"
+                className="btn btn--primary service-rail__cta"
+                onClick={() => onContact(service.scope || service.tag)}>
+                Pedir orçamento de {service.tag.toLowerCase()} <Arrow />
+              </button>
             </div>
           </li>
         ))}
       </ol>
       <div className="service-rail__footer">
-        <p>Estratégia, produção, conteúdo e presença sob a mesma direção.</p>
-        <button className="btn btn--primary" type="button" onClick={onContact}>Começar um projeto <Arrow /></button>
+        <p>Não sabe em qual encaixa? Manda o briefing que a gente aponta o caminho.</p>
+        <button className="btn btn--primary" type="button" onClick={() => onContact("")}>Começar um projeto <Arrow /></button>
       </div>
     </div>
   );
@@ -1066,7 +1080,7 @@ function HomeCTA({ setCurrent, brands = BRANDS, showBrands = true }) {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
   const [consent, setConsent] = useState(false);
-  const types = ["Brand Film", "Campanha publicitária", "Cobertura de evento", "Conteúdo social", "Documentário", "Showreel / institucional", "Outro"];
+  const types = [...ESCOPOS, "Outro"];
   const budgets = ["R$ 5–10k", "R$ 10–25k", "R$ 25–50k", "R$ 50–100k", "R$ 100k+", "A definir"];
   const submit = async (e) => {
     e.preventDefault();
@@ -1377,18 +1391,31 @@ function PostRow({ date, title, excerpt, read, slug, onClick }) {
 // SERVIÇOS
 // ═════════════════════════════════════════════════════════════════════════════
 function Servicos({ setCurrent }) {
+  const router = useRouter();
+  // O serviço viaja no hash para o briefing já abrir com o escopo marcado.
+  // Hash e não estado: o link continua funcionando se for copiado ou virar
+  // destino de anúncio.
+  const pedirOrcamento = (scope) => {
+    router.push(ROUTES.contato + (scope ? `#s=${encodeURIComponent(scope)}` : ""));
+  };
+
   return (
     <div className="page" data-screen-label="Servicos">
-      <PageHead crumb="01 · Serviços e Processo" title={"O que fazemos.\nComo entregamos."} lead="Estratégia, produção, conteúdo e presença conduzidos pela mesma equipe, do briefing ao master." accent="entregamos" meta="04 pilares · 06 etapas" compact />
+      <PageHead crumb="01 · Serviços" title={"Seis serviços.\nUm time só."} lead="Cada um com entregável definido, prazo e case que comprova. Escolha o que você precisa e peça orçamento direto." accent="Seis serviços." meta="06 serviços" compact />
 
-      <section className="section services-horizontal" id="pilares">
-        <SectionHead eyebrow="Quatro pilares" title={"Uma direção.\nQuatro frentes."} sub="Abra cada pilar para entender o que entra no escopo e como ele se conecta ao projeto." />
-        <ServiceRail items={SERVICOS} onContact={() => setCurrent("contato")} />
+      <section className="section services-horizontal" id="servicos">
+        <SectionHead eyebrow="O que entregamos" title={"Não é o como.\nÉ o que chega na sua mão."} sub="Abra um serviço para ver o que entra na entrega, em quanto tempo e para quem já fizemos." />
+        <ServiceRail items={SERVICOS} onContact={pedirOrcamento} />
       </section>
 
-      <section className="section process-horizontal" id="processo">
-        <SectionHead eyebrow="Como entregamos" title="Da ideia ao master." sub="Seis etapas com escopo, aprovação e entregável claros. Abra uma etapa para ver os detalhes." />
-        <ProcessRail items={PROCESSO} onOpen={() => setCurrent("contato")} actionLabel="Começar um projeto" headingLevel={2} />
+      <section className="section process-principles" id="processo">
+        <SectionHead eyebrow="Como entregamos" title="Seis etapas, do briefing ao master." sub="Diagnóstico, roteiro, direção, captação, pós e entrega — com escopo e aprovação claros em cada uma." />
+        <div style={{ display: "flex", justifyContent: "center", marginTop: 28 }}>
+          <a className="btn btn--ghost" href={ROUTES.processo}
+            onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("processo");}}>
+            Ver o processo completo <Arrow />
+          </a>
+        </div>
       </section>
 
       <section className="section process-principles">
@@ -2461,7 +2488,15 @@ function Blog({ setCurrent, slug = null }) {
 function Contato({ setCurrent }) {
   const [step, setStep] = useState(1);
   const [data, setData] = useState({ name: "", company: "", email: "", phone: "", scope: [], budget: "", deadline: "", brief: "" });
-  const SCOPES = ["Brand Film", "Campanha", "Cobertura de Evento", "Conteúdo Social", "Documentário", "Showreel"];
+  const SCOPES = ESCOPOS;
+
+  // Chegou da página de serviços: abre com o escopo já marcado.
+  useEffect(() => {
+    try {
+      const h = decodeURIComponent((window.location.hash || "").replace(/^#s=/, ""));
+      if (h && SCOPES.includes(h)) setData((d) => (d.scope.length ? d : { ...d, scope: [h] }));
+    } catch (_) {}
+  }, []);
   const BUDGETS = ["< R$30k", "R$30k – 80k", "R$80k – 200k", "+ R$200k"];
 
   const [sending, setSending] = useState(false);
@@ -2471,7 +2506,7 @@ function Contato({ setCurrent }) {
     if (!consent) {setError("Confirme o aceite da política de privacidade para enviar.");return;}
     setSending(true);setError("");
     try {
-      await postToNetlify("orcamento", { ...data, scope: data.scope.join(", "), origem: "Página Contato · briefing guiado", "aceite-privacidade": `sim · ${new Date().toISOString()}` });
+      await postToNetlify("orcamento", { ...data, scope: data.scope.join(", "), origem: `Página Contato · briefing guiado${data.scope.length ? " · " + data.scope.join(" + ") : ""}`, "aceite-privacidade": `sim · ${new Date().toISOString()}` });
       trackAnalytics("generate_lead", {
         form_name: "orcamento_contato",
         project_scope: data.scope.join("|") || "nao_informado",
