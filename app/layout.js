@@ -1,5 +1,6 @@
 import "./globals.css";
 import WhatsappCookie from "./WhatsappCookie";
+import LeadPopup from "./LeadPopup";
 import GoogleAnalytics from "./GoogleAnalytics";
 import { GOOGLE_TAG_ID, GA_MEASUREMENT_ID, ADS_CONVERSION_ID, ADS_CONVERSION_ID_2, CONSENT_KEY } from "./gtag-config";
 
@@ -62,6 +63,7 @@ export default function RootLayout({ children }) {
         {children}
         <GoogleAnalytics />
         <WhatsappCookie />
+        <LeadPopup />
       </body>
     </html>
   );
