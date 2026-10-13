@@ -769,51 +769,34 @@ function ProcessRail({ items, onOpen, actionLabel = "Ver processo completo", hea
   );
 }
 
-function ServiceRail({ items, onContact }) {
-  const [openIndex, setOpenIndex] = useState(null);
-
+function ServiceRail({ items, onOpen }) {
+  // Teaser clicavel, nao acordeao: o conteudo completo vive em
+  // /servicos/<slug>/, que e pagina indexavel e destino de anuncio.
   return (
     <div className="service-rail">
       <ol className="service-rail__track">
         {items.map((service, index) => (
-          <li className={`service-rail__card ${openIndex === index ? "is-open" : ""}`} key={service.num}>
-            <h2 className="service-rail__heading">
-              <button
-                type="button"
-                className="service-rail__toggle"
-                aria-expanded={openIndex === index}
-                aria-controls={`service-detail-${service.num}`}
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}>
+          <li className="service-rail__card service-rail__card--link" key={service.slug || service.num}>
+            <a
+              href={`/servicos/${service.slug}/`}
+              onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();onOpen(service.slug);}}>
+              <h2 className="service-rail__heading">
                 <span className="mono">{String(index + 1).padStart(2, "0")}</span>
                 <span>{service.tag}</span>
-                <span className="service-rail__toggle-mark" aria-hidden="true">+</span>
-              </button>
-            </h2>
-            <div
-              className="service-rail__details"
-              id={`service-detail-${service.num}`}
-              aria-hidden={openIndex !== index}>
-              <h3>{service.title}</h3>
-              <p>{service.desc}</p>
-              <p className="service-rail__label mono">O que você recebe</p>
+              </h2>
+              <p className="service-rail__promessa">{(service.title || "").replace(/\n/g, " ")}</p>
               <ul className="service-rail__scope">
-                {service.items.map((item) => <li key={item}>{item}</li>)}
+                {(service.items || []).slice(0, 3).map((item) => <li key={item}>{item}</li>)}
               </ul>
               {service.prazo ? <p className="service-rail__meta"><span className="mono">Prazo</span> {service.prazo}</p> : null}
-              {service.prova ? <p className="service-rail__meta"><span className="mono">Já fizemos</span> {service.prova}</p> : null}
-              <button
-                type="button"
-                className="btn btn--primary service-rail__cta"
-                onClick={() => onContact(service.scope || service.tag)}>
-                Pedir orçamento de {service.tag.toLowerCase()} <Arrow />
-              </button>
-            </div>
+              <span className="service-rail__ver">Ver serviço <Arrow /></span>
+            </a>
           </li>
         ))}
       </ol>
       <div className="service-rail__footer">
         <p>Não sabe em qual encaixa? Manda o briefing que a gente aponta o caminho.</p>
-        <button className="btn btn--primary" type="button" onClick={() => onContact("")}>Começar um projeto <Arrow /></button>
+        <button className="btn btn--primary" type="button" onClick={() => onOpen(null)}>Começar um projeto <Arrow /></button>
       </div>
     </div>
   );
@@ -1395,8 +1378,8 @@ function Servicos({ setCurrent }) {
   // O serviço viaja no hash para o briefing já abrir com o escopo marcado.
   // Hash e não estado: o link continua funcionando se for copiado ou virar
   // destino de anúncio.
-  const pedirOrcamento = (scope) => {
-    router.push(ROUTES.contato + (scope ? `#s=${encodeURIComponent(scope)}` : ""));
+  const abrirServico = (slug) => {
+    router.push(slug ? `/servicos/${slug}/` : ROUTES.contato);
   };
 
   return (
@@ -1405,7 +1388,7 @@ function Servicos({ setCurrent }) {
 
       <section className="section services-horizontal" id="servicos">
         <SectionHead eyebrow="O que entregamos" title={"Não é o como.\nÉ o que chega na sua mão."} sub="Abra um serviço para ver o que entra na entrega, em quanto tempo e para quem já fizemos." />
-        <ServiceRail items={SERVICOS} onContact={pedirOrcamento} />
+        <ServiceRail items={SERVICOS} onOpen={abrirServico} />
       </section>
 
       <section className="section process-principles" id="processo">
@@ -1428,6 +1411,113 @@ function Servicos({ setCurrent }) {
       </section>
     </div>);
 
+}
+
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SERVIÇO (página própria) — /servicos/[slug]/
+// Cada serviço tem rota própria para capturar busca de cauda longa e servir de
+// destino de anúncio. Página fina não indexa: por isso cada uma carrega etapas,
+// cases reais e FAQ, e não só a lista de entregáveis do acordeão.
+// ═════════════════════════════════════════════════════════════════════════════
+function Servico({ setCurrent, slug }) {
+  const router = useRouter();
+  const s = SERVICOS.find((x) => x.slug === slug);
+  const [aberta, setAberta] = useState(null);
+
+  if (!s) return <Servicos setCurrent={setCurrent} />;
+
+  const casos = (s.cases || [])
+    .map((c) => TRABALHOS.find((w) => w.slug === c))
+    .filter(Boolean);
+
+  const pedirOrcamento = () =>
+    router.push(ROUTES.contato + `#s=${encodeURIComponent(s.scope)}`);
+
+  return (
+    <div className="page" data-screen-label="Servico">
+      <PageHead
+        crumb={<a href={ROUTES.servicos} onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("servicos");}}>01 · Serviços</a>}
+        title={s.title}
+        lead={s.desc}
+        meta={s.prazo}
+        compact />
+
+      <section className="section srv-page__entrega">
+        <SectionHead eyebrow="O que você recebe" title="A entrega, item por item." />
+        <ul className="srv-page__lista">
+          {s.items.map((item) => <li key={item}>{item}</li>)}
+        </ul>
+        <div className="srv-page__acao">
+          <button className="btn btn--primary" type="button" onClick={pedirOrcamento}>
+            Pedir orçamento de {s.tag.toLowerCase()} <Arrow />
+          </button>
+        </div>
+      </section>
+
+      {s.comoFunciona && s.comoFunciona.length ? (
+        <section className="section section--dark srv-page__passos">
+          <SectionHead eyebrow="Como funciona" title="Do primeiro contato à entrega." />
+          <ol className="srv-page__passos-grid">
+            {s.comoFunciona.map((passo, i) => (
+              <li key={passo.t}>
+                <span className="mono">{String(i + 1).padStart(2, "0")}</span>
+                <h3>{passo.t}</h3>
+                <p>{passo.d}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ) : null}
+
+      {casos.length ? (
+        <section className="section srv-page__cases">
+          <SectionHead eyebrow="Quem já contratou" title="Feito, não proposto." sub="Cases reais desse serviço, com o vídeo que foi ao ar." />
+          <div className="grid-3">
+            {casos.map((w, i) => (
+              <CaseCard key={w.slug} {...w} idx={i} compactReveal
+                onClick={() => router.push(caseHref(w.slug))} />
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {s.faq && s.faq.length ? (
+        <section className="section srv-page__faq">
+          <SectionHead eyebrow="Perguntas frequentes" title="O que perguntam antes de fechar." />
+          <div className="srv-faq">
+            {s.faq.map((f, i) => (
+              <div className={`srv-faq__item ${aberta === i ? "is-open" : ""}`} key={f.p}>
+                <h3>
+                  <button type="button" aria-expanded={aberta === i}
+                    aria-controls={`srv-faq-${i}`}
+                    onClick={() => setAberta(aberta === i ? null : i)}>
+                    <span>{f.p}</span>
+                    <span className="srv-faq__mark" aria-hidden="true">+</span>
+                  </button>
+                </h3>
+                <div className="srv-faq__resposta" id={`srv-faq-${i}`} aria-hidden={aberta !== i}>
+                  <p>{f.r}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      <section className="section section--dark srv-page__fechamento">
+        <SectionHead title={"Conta o que você precisa.\nA gente volta com diagnóstico."} sub="Sem proposta genérica. A gente lê todo briefing." />
+        <div className="srv-page__acao">
+          <button className="btn btn--primary" type="button" onClick={pedirOrcamento}>
+            Pedir orçamento de {s.tag.toLowerCase()} <Arrow />
+          </button>
+          <a className="btn btn--ghost-dark" href={ROUTES.servicos}
+            onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("servicos");}}>
+            Ver os outros serviços <Arrow />
+          </a>
+        </div>
+      </section>
+    </div>);
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
@@ -2845,6 +2935,7 @@ function App({ page = "home", slug = null, tina = null }) {
   const _navKey = NAV_OFF[current] || (String(current).startsWith("hub") ? "navHub" : null);
   if (_navKey && SETTINGS[_navKey] === false) Page = Home;
   else if (current === "servicos")  Page = Servicos;
+  else if (current === "servico")   Page = Servico;
   else if (current === "processo")  Page = Processo;
   else if (current === "trabalhos") Page = Trabalhos;
   else if (current === "sobre")     Page = Sobre;

@@ -2,10 +2,13 @@
   "items": [
     {
       "num": "01",
+      "slug": "cobertura-de-evento",
       "tag": "Cobertura de evento",
       "scope": "Cobertura de Evento",
       "title": "Seu evento no ar\nantes de acabar.",
       "desc": "Equipe com ilha de edição no local. O primeiro corte sai enquanto o público ainda está lá — não na semana seguinte, quando ninguém mais lembra.",
+      "metaTitle": "Cobertura de Evento em Tempo Real — Vídeo no Ar Durante o Evento | Grupo MUV",
+      "metaDesc": "Produtora com ilha de edição no local: cortes publicados durante o evento e aftermovie em 48h. Shell no GP de São Paulo, Numanice, Lollapalooza. São Paulo.",
       "items": [
         "Cortes verticais publicados durante o evento",
         "Aftermovie finalizado em até 48h",
@@ -14,14 +17,63 @@
         "Brutos organizados e arquivados"
       ],
       "prazo": "Primeiro corte no mesmo dia · aftermovie em 48h",
-      "prova": "Shell no GP de São Paulo · Numanice · Meta no Lollapalooza · Stock Car"
+      "prova": "Shell no GP de São Paulo · Numanice · Meta no Lollapalooza · Stock Car",
+      "cases": [
+        "shell-gp-sao-paulo",
+        "numanice-ludmilla",
+        "guarana-monobloco",
+        "brastemp-retro-martinelli"
+      ],
+      "comoFunciona": [
+        {
+          "t": "Alinhamento de pauta",
+          "d": "Antes do evento a gente fecha o que precisa sair: quais momentos, quais patrocinadores, qual formato por canal. Sem isso a equipe filma tudo e entrega nada."
+        },
+        {
+          "t": "Equipe e ilha no local",
+          "d": "Cinegrafista, assistente e editor real-time trabalhando no evento. O editor corta enquanto o resto capta."
+        },
+        {
+          "t": "Publicação durante",
+          "d": "Os cortes verticais saem ao longo do evento, no ritmo que a rede pede, com aprovação rápida no WhatsApp."
+        },
+        {
+          "t": "Aftermovie e acervo",
+          "d": "Em até 48h o filme principal fica pronto. Os brutos vão organizados e nomeados, não num HD solto."
+        }
+      ],
+      "faq": [
+        {
+          "p": "Em quanto tempo sai o primeiro vídeo?",
+          "r": "No mesmo dia, durante o evento. A equipe leva ilha de edição e o editor trabalha no local — por isso o corte sai enquanto o assunto ainda está acontecendo, e não dias depois."
+        },
+        {
+          "p": "Qual a diferença entre cobertura comum e tempo real?",
+          "r": "Na cobertura comum a equipe filma e edita depois. No tempo real tem um editor dedicado no evento, cortando e entregando enquanto o resto da equipe ainda está captando. Muda a estrutura da equipe, não só a velocidade."
+        },
+        {
+          "p": "Quantas pessoas vão para o set?",
+          "r": "Depende do porte. Um evento de uma diária costuma ter cinegrafista mais assistente; com entrega em tempo real entra o editor; eventos de três ou quatro dias com captação de produto e ambiente pedem equipe maior. A gente dimensiona no briefing."
+        },
+        {
+          "p": "Vocês cobrem evento de quantos dias?",
+          "r": "De uma diária a eventos de múltiplos dias. Casa Cor, GP de São Paulo e festivais entram nesse formato, com equipe ampliada e pauta por dia."
+        },
+        {
+          "p": "O material bruto é meu?",
+          "r": "Sim. Os brutos vão organizados, nomeados e arquivados — não é um HD jogado na sua mão no fim do evento."
+        }
+      ]
     },
     {
       "num": "02",
+      "slug": "conteudo-para-redes",
       "tag": "Conteúdo para redes",
       "scope": "Conteúdo Social",
       "title": "Volume com padrão,\nnão volume por volume.",
       "desc": "Uma diária de captação que rende semanas de calendário. Linguagem visual consistente entre as peças — o feed parece da mesma marca.",
+      "metaTitle": "Conteúdo para Redes Sociais — Reels e Vertical para Marcas | Grupo MUV",
+      "metaDesc": "Produção de conteúdo vertical para Instagram e TikTok: pacote de peças por diária, captação com influenciador e padrão visual entre as peças. São Paulo.",
       "items": [
         "Pacote de peças por diária, definido no briefing",
         "Formatos verticais nativos, não horizontal cortado",
@@ -30,14 +82,59 @@
         "Biblioteca de assets organizada para reuso"
       ],
       "prazo": "Entregas semanais a partir da primeira diária",
-      "prova": "MAC Cosmetics · Kylie Cosmetics · Dolce & Gabbana"
+      "prova": "MAC Cosmetics · Kylie Cosmetics · Clear · Budweiser",
+      "cases": [
+        "mac-cosmetics-lancamento",
+        "kylie-cosmetics",
+        "clear-lancamento",
+        "budweiser-ativacao"
+      ],
+      "comoFunciona": [
+        {
+          "t": "Pauta do ciclo",
+          "d": "A gente define quantas peças, de que tipo e para qual canal antes de marcar a diária. É o que faz uma diária render semanas."
+        },
+        {
+          "t": "Captação concentrada",
+          "d": "Tudo o que for possível sai na mesma diária — produto, ambiente, influenciador, bastidor. Menos deslocamento, mais entrega."
+        },
+        {
+          "t": "Edição por plataforma",
+          "d": "Cada peça é montada no formato nativo do canal. Vertical é vertical, não horizontal cortado na pós."
+        },
+        {
+          "t": "Biblioteca organizada",
+          "d": "O material fica catalogado para reuso, então o próximo ciclo começa com acervo, não do zero."
+        }
+      ],
+      "faq": [
+        {
+          "p": "Quantas peças saem de uma diária?",
+          "r": "Depende do formato e da complexidade do set. Uma diária de captação rápida rende um volume; uma diária com influenciador, troca de look e setup de luz rende outro. A gente fecha o número no briefing, antes de marcar."
+        },
+        {
+          "p": "Vocês trabalham com influenciador?",
+          "r": "Sim. Tem formato específico para captação com influenciador, incluindo bastidor e setup leve de luz, que é diferente de uma captação de produto."
+        },
+        {
+          "p": "Pode ser gravado no celular?",
+          "r": "Pode, quando o conteúdo pede linguagem de creator. Existe setup mobile profissional com gimbal, áudio e LED — é uma escolha de linguagem, não de economia."
+        },
+        {
+          "p": "Dá para manter um ritmo mensal?",
+          "r": "É o formato que funciona melhor. Produção recorrente mantém a linguagem visual consistente e faz cada briefing começar com contexto acumulado, em vez de recomeçar toda vez."
+        }
+      ]
     },
     {
       "num": "03",
+      "slug": "captacao-publicitaria",
       "tag": "Captação publicitária",
       "scope": "Captação Publicitária",
       "title": "Direção no set,\nnão só câmera.",
       "desc": "Captação dirigida para campanha, com direção de fotografia e plano de produção aprovados antes de alguém sair de casa.",
+      "metaTitle": "Captação Publicitária e Filme de Campanha — Produtora em SP | Grupo MUV",
+      "metaDesc": "Produção de filme publicitário com direção de fotografia, drone e versões para cada canal. Cases para Itaú, Nissan e Budweiser. Produtora em São Paulo.",
       "items": [
         "Filme principal com versões 16:9, 9:16 e 1:1",
         "Captação aérea com drone quando o roteiro pede",
@@ -46,14 +143,58 @@
         "Color grade e mix finalizados"
       ],
       "prazo": "4 a 8 semanas, do briefing ao master",
-      "prova": "Convocasso Itaú · Nissan · Clear · Budweiser"
+      "prova": "Convocasso Itaú · Nissan · Carnaúba Wind House",
+      "cases": [
+        "convocasso-itau",
+        "nissan-suba",
+        "carnauba-wind-house"
+      ],
+      "comoFunciona": [
+        {
+          "t": "Roteiro e decupagem",
+          "d": "Nada vai para o set sem roteiro aprovado e decupagem fechada. É o que separa produção de improviso caro."
+        },
+        {
+          "t": "Pré-produção",
+          "d": "Casting, locação, plano de produção e cronograma. A diária de filmagem é a parte mais cara do projeto — ela não é hora de decidir."
+        },
+        {
+          "t": "Set com direção",
+          "d": "Direção criativa e direção de fotografia no local. Cada decisão estética responde ao objetivo de comunicação."
+        },
+        {
+          "t": "Pós e versões",
+          "d": "Color grade, sound design e mix. Sai o filme principal mais os cortes de cada canal, não só o master."
+        }
+      ],
+      "faq": [
+        {
+          "p": "Quanto tempo leva um filme de campanha?",
+          "r": "Entre quatro e oito semanas do briefing ao master, dependendo de casting, locação e número de diárias. A captação em si costuma ser a menor parte do calendário."
+        },
+        {
+          "p": "Vocês fazem drone?",
+          "r": "Sim, com piloto dedicado, quando o roteiro justifica. Aéreo entra como escolha narrativa, não como enfeite."
+        },
+        {
+          "p": "Já vem com as versões para redes?",
+          "r": "Vem. O filme sai em 16:9, 9:16 e 1:1, mais os cortes de mídia paga. Fazer isso na edição é mais barato que refazer depois."
+        },
+        {
+          "p": "Vocês atendem agência ou só marca direta?",
+          "r": "Os dois. Boa parte dos nossos projetos é feita com agências e produtoras parceiras, entrando como equipe de captação e pós dentro do fluxo delas."
+        }
+      ]
     },
     {
       "num": "04",
+      "slug": "institucional-e-corporativo",
       "tag": "Institucional e corporativo",
       "scope": "Institucional",
       "title": "Para quando a empresa\nprecisa ser levada a sério.",
       "desc": "Depoimento, entrevista e filme institucional com direção de verdade. Sem cara de vídeo de treinamento.",
+      "metaTitle": "Vídeo Institucional e Corporativo para Empresas — Produtora SP | Grupo MUV",
+      "metaDesc": "Filme institucional, depoimentos e séries recorrentes para empresas e escritórios. Captação em fábrica, escritório e evento corporativo. São Paulo.",
       "items": [
         "Filme institucional e manifesto de marca",
         "Entrevistas e depoimentos dirigidos",
@@ -62,14 +203,57 @@
         "Cortes curtos para LinkedIn e comunicação interna"
       ],
       "prazo": "3 a 5 semanas · séries recorrentes em ciclo mensal",
-      "prova": "XP Expert com Tom Brady · Diageo World Class"
+      "prova": "XP Expert com Tom Brady · Diageo World Class — ambos evento corporativo",
+      "cases": [
+        "xp-expert-tom-brady",
+        "diageo-world-class"
+      ],
+      "comoFunciona": [
+        {
+          "t": "Diagnóstico",
+          "d": "Antes do roteiro, entender o que a empresa precisa comunicar e para quem. Institucional que não responde a isso vira vídeo que ninguém assiste."
+        },
+        {
+          "t": "Roteiro e pauta de entrevista",
+          "d": "Perguntas preparadas e aprovadas. Depoimento bom não é sorte — é pauta e direção."
+        },
+        {
+          "t": "Captação em operação",
+          "d": "Fábrica, escritório ou evento. Equipe com som direto quando a fala é o centro do vídeo."
+        },
+        {
+          "t": "Versões por canal",
+          "d": "O filme longo mais os cortes de LinkedIn e comunicação interna. Formatos diferentes, mesma direção."
+        }
+      ],
+      "faq": [
+        {
+          "p": "Vocês gravam dentro de fábrica ou operação?",
+          "r": "Sim, é um dos formatos. Captação em ambiente industrial ou corporativo pede equipe acostumada a set com restrição de circulação e segurança."
+        },
+        {
+          "p": "Dá para fazer conteúdo recorrente em vez de um filme só?",
+          "r": "Dá, e costuma render mais. Séries mensais de entrevistas curtas constroem autoridade de forma contínua, enquanto um institucional único envelhece parado no site."
+        },
+        {
+          "p": "Como vocês fazem o entrevistado parecer natural?",
+          "r": "Pauta preparada, direção no set e tempo. A pessoa não decora texto — responde perguntas. O recorte acontece na edição."
+        },
+        {
+          "p": "Serve para escritório de advocacia e empresa B2B?",
+          "r": "Serve. Esse tipo de cliente costuma precisar de uma combinação de institucional, série de conteúdo curto e material de comunicação interna, e a gente estrutura o pacote nesse formato."
+        }
+      ]
     },
     {
       "num": "05",
+      "slug": "documental-e-branded-content",
       "tag": "Documental e branded content",
       "scope": "Documentário",
       "title": "A marca dentro da história,\nnão em cima dela.",
       "desc": "Conteúdo que o público assiste por vontade própria. A marca aparece porque faz sentido na narrativa, não porque pagou pelo espaço.",
+      "metaTitle": "Branded Content e Documentário de Marca — Produtora em SP | Grupo MUV",
+      "metaDesc": "Filmes e séries com captação documental para marcas. Narrativa real com direção de fotografia. Cases para Dolce & Gabbana, Consul e Guaraná Antarctica.",
       "items": [
         "Filme ou série com captação documental",
         "Direção de fotografia e câmera B",
@@ -78,14 +262,57 @@
         "Making of, quando o bastidor conta parte da história"
       ],
       "prazo": "3 a 6 semanas",
-      "prova": "Consul Pizza de Ontem · Guaraná no Carnaval · Brastemp Retrô no Martinelli"
+      "prova": "Dolce & Gabbana · Consul Pizza de Ontem · Guaraná no Carnaval",
+      "cases": [
+        "dolce-gabbana",
+        "consul-pizza-de-ontem"
+      ],
+      "comoFunciona": [
+        {
+          "t": "Apuração",
+          "d": "Antes de filmar, encontrar a história que existe de verdade. Branded content que inventa a narrativa o público reconhece na hora."
+        },
+        {
+          "t": "Direção documental",
+          "d": "Captação com DOP e câmera B, com espaço para o que não estava no roteiro. Documentário bom depende de estar pronto quando acontece."
+        },
+        {
+          "t": "Montagem",
+          "d": "A edição define o filme nesse formato. É onde o material vira narrativa."
+        },
+        {
+          "t": "Distribuição",
+          "d": "Filme principal, teaser e cortes. Conteúdo que ninguém vê não é conteúdo, é arquivo."
+        }
+      ],
+      "faq": [
+        {
+          "p": "Qual a diferença entre branded content e publicidade?",
+          "r": "Publicidade interrompe para falar da marca. Branded content é assistido por vontade própria — a marca está dentro da história porque faz sentido ali. Muda o roteiro, a duração e a forma de distribuir."
+        },
+        {
+          "p": "Vocês fazem série ou só filme único?",
+          "r": "Os dois. Série costuma funcionar melhor para construir audiência; o filme único serve quando existe um momento específico para marcar."
+        },
+        {
+          "p": "Como vocês acham a história?",
+          "r": "Apuração antes da filmagem — conversa com as pessoas envolvidas, pesquisa e visita. É a parte menos visível do trabalho e a que mais decide se o filme funciona."
+        },
+        {
+          "p": "Dá para aproveitar o material em outros formatos?",
+          "r": "Dá, e é o padrão. Do mesmo material saem o filme principal, teaser, cortes verticais e, quando faz sentido, making of."
+        }
+      ]
     },
     {
       "num": "06",
+      "slug": "estudio-e-equipamento",
       "tag": "Estúdio e equipamento",
       "scope": "Estúdio & Locação",
       "title": "A estrutura,\nsem a produtora junto.",
       "desc": "Para quem tem equipe própria e precisa de set, câmera ou ilha. Estúdio na Alameda Santos e locação de equipamento profissional.",
+      "metaTitle": "Estúdio e Locação de Equipamento Audiovisual em São Paulo | MUV Hub",
+      "metaDesc": "Diária de estúdio, locação de câmera, luz e som, ilha de edição e cowork na Alameda Santos, São Paulo. Para equipes que precisam só da estrutura.",
       "items": [
         "Diária de estúdio",
         "Locação de câmera, luz e som",
@@ -93,7 +320,44 @@
         "Day pass de cowork"
       ],
       "prazo": "Reserva por diária",
-      "prova": "MUV Hub · Alameda Santos, 211"
+      "prova": "MUV Hub · Alameda Santos, 211",
+      "cases": [],
+      "comoFunciona": [
+        {
+          "t": "Reserva",
+          "d": "Você diz a data e o que precisa. A gente confirma disponibilidade de sala e equipamento."
+        },
+        {
+          "t": "Checagem",
+          "d": "O equipamento sai testado e conferido. Set parado por bateria descarregada é prejuízo de todo mundo."
+        },
+        {
+          "t": "Uso",
+          "d": "A estrutura é sua pela diária. Se precisar de operador, dá para contratar à parte."
+        },
+        {
+          "t": "Devolução",
+          "d": "Conferência na volta e pronto. Sem burocracia de locadora grande."
+        }
+      ],
+      "faq": [
+        {
+          "p": "Preciso contratar a produtora junto?",
+          "r": "Não. Esse serviço existe justamente para quem tem equipe própria e precisa só da estrutura — estúdio, equipamento ou ilha."
+        },
+        {
+          "p": "Que equipamento vocês têm?",
+          "r": "Corpo de câmera Sony, lentes, iluminação, áudio, gimbal e drone. A lista completa e os valores ficam na página do Hub."
+        },
+        {
+          "p": "Onde fica o estúdio?",
+          "r": "Alameda Santos, 211, no Edifício Paulista Boulevard, São Paulo."
+        },
+        {
+          "p": "Dá para alugar só a ilha de edição?",
+          "r": "Dá. Existe baia de trabalho e day pass de cowork para quem precisa só de um lugar para finalizar."
+        }
+      ]
     }
   ]
 }

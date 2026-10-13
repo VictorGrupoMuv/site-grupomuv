@@ -8062,3 +8062,156 @@ body.drawer-active #muv-lead { display: none !important; }
   .service-rail__cta { width: 100%; justify-content: center; }
   .service-rail__meta .mono { display: block; min-width: 0; margin-bottom: 2px; }
 }
+
+/* ── Página de serviço · /servicos/[slug]/ ───────────────────────────────── */
+.srv-page__lista {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line, color-mix(in srgb, currentColor 18%, transparent));
+  max-width: 760px;
+}
+.srv-page__lista li {
+  padding: 16px 0 16px 28px;
+  position: relative;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.5;
+}
+.srv-page__lista li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 25px;
+  width: 10px;
+  height: 1px;
+  background: var(--accent);
+}
+.srv-page__acao {
+  margin-top: 34px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.srv-page__passos-grid {
+  list-style: none;
+  margin: 34px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  background: color-mix(in srgb, currentColor 16%, transparent);
+  border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+}
+.srv-page__passos-grid li {
+  background: var(--bg, #0d0d0d);
+  padding: 26px 24px 30px;
+}
+.srv-page__passos-grid .mono {
+  font-size: 10px;
+  letter-spacing: .14em;
+  color: var(--accent);
+}
+.srv-page__passos-grid h3 {
+  margin: 12px 0 10px;
+  font-size: clamp(17px, 1.7vw, 21px);
+  letter-spacing: -.01em;
+}
+.srv-page__passos-grid p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: .78;
+}
+.srv-faq {
+  margin-top: 30px;
+  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  max-width: 820px;
+}
+.srv-faq__item {
+  border-bottom: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+}
+.srv-faq__item h3 { margin: 0; font-size: inherit; font-weight: inherit; }
+.srv-faq__item button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: clamp(15px, 1.5vw, 19px);
+  line-height: 1.4;
+  letter-spacing: -.01em;
+}
+.srv-faq__mark {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  transition: transform 260ms var(--ease-out, ease);
+}
+.srv-faq__item.is-open .srv-faq__mark { transform: rotate(45deg); }
+.srv-faq__resposta {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 360ms var(--ease-out, ease), opacity 200ms ease, padding 360ms var(--ease-out, ease);
+}
+.srv-faq__item.is-open .srv-faq__resposta {
+  max-height: 460px;
+  opacity: 1;
+  padding-bottom: 24px;
+}
+.srv-faq__resposta p {
+  margin: 0;
+  max-width: 68ch;
+  font-size: 15px;
+  line-height: 1.65;
+  opacity: .82;
+}
+.page-head__crumb a { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; }
+.page-head__crumb a:hover { color: var(--accent); }
+@media (max-width: 720px) {
+  .srv-page__acao .btn { width: 100%; justify-content: center; }
+  .srv-faq__item.is-open .srv-faq__resposta { max-height: 760px; }
+}
+
+/* ── Card de serviço vira link para a página do serviço ──────────────────── */
+.service-rail__card--link { display: flex; }
+.service-rail__card--link > a {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px;
+  color: inherit;
+  text-decoration: none;
+}
+.service-rail__card--link .service-rail__heading {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0;
+}
+.service-rail__promessa {
+  margin: 16px 0 20px;
+  font-size: clamp(16px, 1.5vw, 21px);
+  line-height: 1.3;
+  letter-spacing: -.01em;
+}
+.service-rail__card--link .service-rail__scope { align-self: stretch; margin-top: auto; }
+.service-rail__ver {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  font: 10px/1 var(--font-mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.service-rail__card--link:hover .service-rail__ver,
+.service-rail__card--link:focus-within .service-rail__ver { color: var(--accent); }
