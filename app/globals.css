@@ -8274,3 +8274,364 @@ body.drawer-active #muv-lead { display: none !important; }
 @media (max-width: 640px) {
   .srv-abas__tab { flex: 1 1 100%; }
 }
+
+/* ── Vitrine de serviços · correção de escala ─────────────────────────────
+   O card foi desenhado para nomes de UMA palavra ("Estratégia", "Produção"):
+   h2 com max-width 12ch, até 64px e hyphens:auto. Com "Institucional e
+   corporativo" isso hifenizava no meio da palavra — "Instituci-onal".
+   Aqui o título volta a caber e o card inteiro vira alvo de clique. */
+.service-rail__card--link h2.service-rail__heading {
+  max-width: none;
+  font-family: var(--font-display);
+  font-size: clamp(21px, 1.9vw, 29px);
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  hyphens: none;
+  -webkit-hyphens: none;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+.service-rail__card--link {
+  min-height: 0;
+  padding: 0;
+  display: block;
+  border-radius: 3px var(--radius-lg) 3px 3px;
+  transition: transform 260ms var(--ease-out, ease), box-shadow 260ms var(--ease-out, ease);
+}
+.service-rail__card--link > a {
+  padding: clamp(22px, 2.2vw, 30px);
+  min-height: clamp(300px, 34vw, 380px);
+  gap: 0;
+}
+.service-rail__card--link .service-rail__heading .mono {
+  font-size: 11px;
+  letter-spacing: .14em;
+  opacity: .55;
+}
+.service-rail__card--link .service-rail__promessa {
+  margin: 14px 0 10px;
+  font-size: clamp(15px, 1.25vw, 18px);
+  line-height: 1.32;
+  letter-spacing: -.01em;
+  opacity: .92;
+}
+.service-rail__card--link .service-rail__resumo {
+  margin: 0 0 auto;
+  max-width: 42ch;
+  font-size: 13.5px;
+  line-height: 1.55;
+  opacity: .72;
+}
+/* hover: o card inteiro é clicável, e isso precisa ficar óbvio */
+.service-rail__card--link:hover,
+.service-rail__card--link:focus-within {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .28);
+}
+.service-rail__card--link .service-rail__ver {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid currentColor;
+  width: 100%;
+  justify-content: space-between;
+  opacity: .72;
+  transition: opacity 200ms ease, gap 200ms ease;
+}
+.service-rail__card--link:hover .service-rail__ver,
+.service-rail__card--link:focus-within .service-rail__ver {
+  opacity: 1;
+  gap: 14px;
+}
+.service-rail__card--link > a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+@media (max-width: 900px) {
+  .service-rail__card--link h2.service-rail__heading { font-size: clamp(20px, 4.4vw, 26px); }
+  .service-rail__card--link > a { min-height: 0; }
+}
+
+/* ── Home · serviços em uma linha, card clicável ──────────────────────────
+   O h3 herdava escala de display e quebrava em 2-3 linhas, ocupando a tela.
+   Aqui cabe em uma linha e o hover revela o caminho para a página. */
+.home-capability--link {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 18px 20px 16px;
+  color: inherit;
+  text-decoration: none;
+  transition: background 220ms ease, transform 220ms var(--ease-out, ease);
+}
+.home-capability--link h3 {
+  margin: 10px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(15px, 1.25vw, 19px);
+  line-height: 1.12;
+  letter-spacing: -.015em;
+  hyphens: none;
+  -webkit-hyphens: none;
+  text-wrap: balance;
+}
+.home-capability--link .home-capability__meta .mono { font-size: 10px; letter-spacing: .14em; }
+.home-capability__ver {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  font: 9.5px/1 var(--font-mono);
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 200ms ease, transform 200ms var(--ease-out, ease);
+}
+.home-capability--link:hover,
+.home-capability--link:focus-visible {
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
+  transform: translateY(-2px);
+}
+.home-capability--link:hover .home-capability__ver,
+.home-capability--link:focus-visible .home-capability__ver {
+  opacity: 1;
+  transform: none;
+  color: var(--accent);
+}
+.home-capability--link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* toque: sem hover, o caminho fica sempre visível */
+@media (hover: none) {
+  .home-capability__ver { opacity: .6; transform: none; }
+}
+@media (max-width: 900px) {
+  .home-capability--link h3 { font-size: clamp(15px, 3.4vw, 18px); }
+}
+
+/* O card antigo era acordeão: expandia para min-height 330px no hover para
+   revelar o painel de detalhes. Agora o detalhe vive na página do serviço,
+   então a altura fica fixa e o grid para de saltar. */
+.home-capability--link,
+.home-capability--link:hover,
+.home-capability--link:focus,
+.home-capability--link:focus-visible {
+  min-height: 118px;
+  height: 100%;
+  overflow: visible;
+}
+.home-capabilities__grid { align-items: stretch; }
+/* a seta ↗ do canto some: o "Ver serviço" já diz para onde vai */
+.home-capability--link::after { content: none; }
+.home-capability--link:hover,
+.home-capability--link:focus-visible {
+  color: var(--paper);
+  background: var(--ink);
+}
+.home-capability--link:hover .home-capability__ver,
+.home-capability--link:focus-visible .home-capability__ver { color: var(--accent); }
+
+/* Home · os 6 serviços numa linha só. O grid era de 4 colunas (os 4 pilares
+   antigos), o que deixava 05 e 06 órfãos numa segunda fileira. */
+.home-capabilities__grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.home-capability--link { padding: 16px 14px 14px; }
+.home-capability--link h3 {
+  font-size: clamp(13px, 1.05vw, 16px);
+  line-height: 1.16;
+  letter-spacing: -.01em;
+}
+.home-capability--link .home-capability__ver { font-size: 8.5px; letter-spacing: .1em; gap: 5px; }
+@media (max-width: 1180px) {
+  .home-capabilities__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 680px) {
+  .home-capabilities__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-capability--link h3 { font-size: clamp(13px, 3.4vw, 16px); }
+}
+
+/* Vitrine · os 6 numa linha só. O track era de 4 colunas (os 4 pilares),
+   o que deixava 05 e 06 órfãos numa segunda fileira. Com 6 colunas o card
+   fica estreito, então título, promessa e resumo encolhem junto. */
+.service-rail__track { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+.service-rail__card--link > a {
+  padding: 18px 16px 16px;
+  min-height: clamp(260px, 22vw, 300px);
+}
+.service-rail__card--link h2.service-rail__heading {
+  font-size: clamp(15px, 1.15vw, 18px);
+  line-height: 1.14;
+}
+.service-rail__card--link .service-rail__heading .mono { font-size: 9.5px; }
+.service-rail__card--link .service-rail__promessa {
+  margin: 11px 0 8px;
+  font-size: clamp(12.5px, 0.95vw, 14.5px);
+  line-height: 1.3;
+}
+.service-rail__card--link .service-rail__resumo {
+  font-size: 11.5px;
+  line-height: 1.5;
+  max-width: none;
+}
+.service-rail__card--link .service-rail__ver {
+  margin-top: 16px;
+  padding-top: 12px;
+  font-size: 8.5px;
+  letter-spacing: .1em;
+}
+@media (max-width: 1180px) {
+  .service-rail__track { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .service-rail__card--link h2.service-rail__heading { font-size: clamp(17px, 2.2vw, 22px); }
+}
+@media (max-width: 680px) {
+  .service-rail__track { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .service-rail__card--link > a { min-height: 0; padding: 16px 14px; }
+  .service-rail__card--link .service-rail__resumo { display: none; }
+}
+
+/* Formulário no fim da página de serviço: converte sem levar para outra URL */
+.srv-form { margin-top: 30px; max-width: 720px; }
+.srv-form__card { width: 100%; }
+.srv-form__ok { padding: 26px 0; }
+.srv-form .field--solid textarea {
+  width: 100%;
+  font: inherit;
+  resize: vertical;
+}
+.quote-card__disclaimer a { color: inherit; border-bottom: 1px solid currentColor; }
+
+/* Fechamento do serviço · texto à esquerda, formulário à direita.
+   O card sozinho ocupava 560px de 1440 e deixava o resto vazio. */
+.srv-page__fechamento {
+  background: var(--ink);
+  color: var(--paper);
+}
+.srv-page__fechamento .section-head { max-width: 460px; }
+.srv-page__fechamento .section-head__sub { color: rgba(242, 240, 233, .72); }
+.srv-form {
+  margin-top: 0;
+  max-width: none;
+  width: 100%;
+}
+.srv-page__fechamento > .wrap,
+.srv-page__fechamento {
+  --srv-gap: clamp(32px, 4vw, 72px);
+}
+.srv-page__fechamento .section-head + .srv-form { margin-top: 36px; }
+@media (min-width: 981px) {
+  .srv-page__fechamento {
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+    gap: var(--srv-gap);
+    align-items: start;
+  }
+  .srv-page__fechamento .section-head { margin-bottom: 0; }
+  .srv-page__fechamento .section-head + .srv-form { margin-top: 0; }
+}
+.srv-form__card {
+  width: 100%;
+  max-width: 640px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.srv-form__ok { color: var(--paper); }
+.srv-form__ok .body { color: rgba(242, 240, 233, .76) !important; }
+
+/* Vitrine · só o nome; o resto abre no hover.
+   Mesma lógica do índice: entrega pouco, leva ao completo no clique. */
+.service-rail__card--link > a {
+  min-height: clamp(150px, 13vw, 190px);
+  justify-content: flex-start;
+}
+.service-rail__card--link .service-rail__promessa,
+.service-rail__card--link .service-rail__resumo {
+  max-height: 0;
+  margin: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(6px);
+  transition:
+    max-height 340ms var(--ease-out, ease),
+    opacity 200ms ease,
+    margin 340ms var(--ease-out, ease),
+    transform 340ms var(--ease-out, ease);
+}
+.service-rail__card--link:hover .service-rail__promessa,
+.service-rail__card--link:focus-within .service-rail__promessa {
+  max-height: 120px;
+  margin: 12px 0 6px;
+  opacity: .94;
+  transform: none;
+}
+.service-rail__card--link:hover .service-rail__resumo,
+.service-rail__card--link:focus-within .service-rail__resumo {
+  max-height: 140px;
+  margin: 0 0 auto;
+  opacity: .72;
+  transform: none;
+}
+/* o "Ver serviço" é o que o hover entrega para clicar */
+.service-rail__card--link .service-rail__ver {
+  margin-top: auto;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 200ms ease, transform 240ms var(--ease-out, ease), gap 200ms ease;
+}
+.service-rail__card--link:hover .service-rail__ver,
+.service-rail__card--link:focus-within .service-rail__ver {
+  opacity: 1;
+  transform: none;
+}
+/* toque não tem hover: o caminho fica sempre visível */
+@media (hover: none) {
+  .service-rail__card--link .service-rail__promessa { max-height: 120px; margin: 12px 0 6px; opacity: .9; transform: none; }
+  .service-rail__card--link .service-rail__ver { opacity: .75; transform: none; }
+}
+
+/* O "Ver serviço" tinha margin-top:auto e era empurrado para fora do card,
+   que não tem altura para o estado aberto. Altura fixa comporta o hover
+   inteiro; no repouso sobra espaço, que é justamente o efeito desejado. */
+.service-rail__card--link > a {
+  min-height: clamp(230px, 19vw, 275px);
+  justify-content: flex-start;
+  overflow: hidden;
+}
+.service-rail__card--link .service-rail__ver {
+  margin-top: 16px;
+  padding-top: 13px;
+}
+.service-rail__card--link:hover .service-rail__resumo,
+.service-rail__card--link:focus-within .service-rail__resumo { margin: 0; }
+@media (max-width: 1180px) {
+  .service-rail__card--link > a { min-height: clamp(210px, 26vw, 250px); }
+}
+@media (max-width: 680px) {
+  .service-rail__card--link > a { min-height: 150px; }
+}
+
+/* Cores intercaladas · as regras antigas iam só até nth-child(4) (os quatro
+   pilares), então 05 e 06 caíam no padrão escuro e quebravam o ritmo.
+   Ímpar laranja, par preto — vale para qualquer quantidade de serviços. */
+.service-rail__card--link:nth-child(odd) {
+  --card-bg: var(--accent);
+  --card-fg: var(--ink);
+  --card-muted: rgba(16, 16, 15, .68);
+  --card-line: rgba(16, 16, 15, .22);
+  color: var(--ink);
+  background: var(--accent);
+}
+.service-rail__card--link:nth-child(even) {
+  --card-bg: var(--ink);
+  --card-fg: var(--paper);
+  --card-muted: rgba(242, 240, 233, .68);
+  --card-line: rgba(242, 240, 233, .22);
+  color: var(--paper);
+  background: var(--ink);
+}
+.service-rail__card--link .service-rail__resumo { color: inherit; }
+.service-rail__card--link .service-rail__ver { border-top-color: var(--card-line); }
+
+/* O "Ver serviço" era pintado de accent no hover. Com os cards ímpares
+   agora em accent, o texto ficava laranja sobre laranja — invisível.
+   Herda a cor do card, que já contrasta com o próprio fundo. */
+.service-rail__card--link .service-rail__ver,
+.service-rail__card--link:hover .service-rail__ver,
+.service-rail__card--link:focus-within .service-rail__ver {
+  color: inherit;
+}

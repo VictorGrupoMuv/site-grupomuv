@@ -960,15 +960,18 @@ function Home({ setCurrent, density, content }) {
 
         <div className="home-capabilities__grid">
           {SRV.map((s) =>
-          <article className="home-capability" key={s.num} tabIndex={0} aria-label={`${s.tag}: ${s.title}`}>
+          <a
+            className="home-capability home-capability--link"
+            key={s.num}
+            href={`/servicos/${s.slug}/`}
+            aria-label={`${s.tag}: ver serviço`}
+            onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();router.push(`/servicos/${s.slug}/`);}}>
             <div className="home-capability__meta">
               <span className="mono">// {s.num}</span>
             </div>
             <h3>{s.tag}</h3>
-            <div className="home-capability__details">
-              <h4>{(s.title || "").replace(/\n/g, " ")}</h4>
-            </div>
-          </article>
+            <span className="home-capability__ver">Ver serviço <Arrow /></span>
+          </a>
           )}
         </div>
         <div className="home-capabilities__footer">
@@ -1414,6 +1417,31 @@ function Servico({ setCurrent, slug }) {
   const s = SERVICOS.find((x) => x.slug === slug);
   const [aberta, setAberta] = useState(null);
   const [etapa, setEtapa] = useState(0);
+  const [lead, setLead] = useState({ nome: "", empresa: "", email: "", whats: "", brief: "" });
+  const [aceite, setAceite] = useState(false);
+  const [enviando, setEnviando] = useState(false);
+  const [enviado, setEnviado] = useState(false);
+  const [erro, setErro] = useState("");
+
+  const enviarLead = async (ev) => {
+    ev.preventDefault();
+    if (!aceite) { setErro("Confirme o aceite da política de privacidade para enviar."); return; }
+    setEnviando(true); setErro("");
+    try {
+      await postToNetlify("orcamento", {
+        name: lead.nome, company: lead.empresa, email: lead.email, phone: lead.whats,
+        brief: lead.brief, scope: s.scope,
+        origem: `Serviço · ${s.tag}`,
+        "aceite-privacidade": `sim · ${new Date().toISOString()}` });
+      trackAnalytics("generate_lead", { form_name: "orcamento_servico", project_type: s.scope });
+      trackAdsConversion(ADS_CONV.orcamento);
+      setEnviado(true);
+    } catch (_) {
+      setErro("Não conseguimos enviar agora. Tenta de novo ou chama no WhatsApp: wa.me/message/D6LG7EUSTIR7C1");
+    } finally {
+      setEnviando(false);
+    }
+  };
 
   if (!s) return <Servicos setCurrent={setCurrent} />;
 
@@ -1526,16 +1554,74 @@ function Servico({ setCurrent, slug }) {
         </section>
       ) : null}
 
-      <section className="section section--dark srv-page__fechamento">
+      <section className="section section--ink srv-page__fechamento">
         <SectionHead title={"Conta o que você precisa.\nA gente volta com diagnóstico."} sub="Sem proposta genérica. A gente lê todo briefing." />
-        <div className="srv-page__acao">
-          <button className="btn btn--primary" type="button" onClick={pedirOrcamento}>
-            Pedir orçamento de {s.tag.toLowerCase()} <Arrow />
-          </button>
-          <a className="btn btn--ghost-dark" href={ROUTES.servicos}
-            onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("servicos");}}>
-            Ver os outros serviços <Arrow />
-          </a>
+        <div className="srv-form">
+          {enviado ? (
+            <div className="srv-form__ok">
+              <p className="eyebrow eyebrow-dot" style={{ color: "var(--accent)" }}>Recebido ✓</p>
+              <h3 className="h3" style={{ marginTop: 14 }}>Obrigado, {lead.nome.split(" ")[0] || "parceiro"}.</h3>
+              <p className="body" style={{ color: "var(--ink-2)", marginTop: 12, lineHeight: 1.55 }}>
+                A gente volta com diagnóstico e próximo passo. Enquanto isso, dá uma olhada nos trabalhos.
+              </p>
+              <div style={{ display: "flex", gap: 12, marginTop: 22, flexWrap: "wrap" }}>
+                <button className="btn btn--primary" type="button" onClick={() => setCurrent("trabalhos")}>Ver trabalhos <Arrow /></button>
+                <a className="btn btn--ghost-dark" href={ROUTES.servicos}
+                  onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("servicos");}}>Outros serviços <Arrow /></a>
+              </div>
+            </div>
+          ) : (
+            <form className="quote-card srv-form__card" onSubmit={enviarLead}>
+              <h3 className="quote-card__title">Orçamento de {s.tag.toLowerCase()}</h3>
+              <p className="quote-card__sub">Resposta em até 1 dia útil. Campos com <span style={{ color: "var(--accent)" }}>*</span> são obrigatórios.</p>
+
+              <div className="quote-card__row">
+                <div className="field field--solid">
+                  <label htmlFor="srv-nome">Nome <span style={{ color: "var(--accent)" }}>*</span></label>
+                  <input id="srv-nome" name="name" autoComplete="name" placeholder="Seu nome" required
+                    value={lead.nome} onChange={(e) => setLead({ ...lead, nome: e.target.value })} />
+                </div>
+                <div className="field field--solid">
+                  <label htmlFor="srv-empresa">Marca / Empresa</label>
+                  <input id="srv-empresa" name="company" autoComplete="organization" placeholder="Nome da marca"
+                    value={lead.empresa} onChange={(e) => setLead({ ...lead, empresa: e.target.value })} />
+                </div>
+              </div>
+
+              <div className="quote-card__row">
+                <div className="field field--solid">
+                  <label htmlFor="srv-email">E-mail <span style={{ color: "var(--accent)" }}>*</span></label>
+                  <input id="srv-email" name="email" type="email" autoComplete="email" placeholder="voce@empresa.com" required
+                    value={lead.email} onChange={(e) => setLead({ ...lead, email: e.target.value })} />
+                </div>
+                <div className="field field--solid">
+                  <label htmlFor="srv-whats">WhatsApp</label>
+                  <input id="srv-whats" name="phone" type="tel" inputMode="numeric" autoComplete="tel" placeholder="(11) 99999-9999"
+                    value={lead.whats} onChange={(e) => setLead({ ...lead, whats: e.target.value })} />
+                </div>
+              </div>
+
+              <div className="field field--solid">
+                <label htmlFor="srv-brief">O que você precisa</label>
+                <textarea id="srv-brief" name="brief" rows={3} placeholder="Data, lugar, formato — o que já estiver definido ajuda."
+                  value={lead.brief} onChange={(e) => setLead({ ...lead, brief: e.target.value })} />
+              </div>
+
+              <label className="quote-card__consent" htmlFor="srv-consent">
+                <input id="srv-consent" name="privacy-consent" type="checkbox" checked={aceite} onChange={(e) => setAceite(e.target.checked)} />
+                <span>Autorizo o Grupo MUV a usar meus dados para responder este briefing, conforme a <a href="/politica-privacidade.html" target="_blank" rel="noopener noreferrer">política de privacidade</a>.</span>
+              </label>
+
+              <button type="submit" className="btn btn--primary quote-submit" disabled={enviando}>
+                {enviando ? "ENVIANDO…" : "PEDIR ORÇAMENTO"} {!enviando && <Arrow />}
+              </button>
+              {erro && <p className="quote-card__error" role="alert">{erro}</p>}
+              <p className="quote-card__disclaimer">
+                Precisa detalhar mais? <a href={ROUTES.contato}
+                  onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();pedirOrcamento();}}>Briefing completo</a>.
+              </p>
+            </form>
+          )}
         </div>
       </section>
     </div>);
