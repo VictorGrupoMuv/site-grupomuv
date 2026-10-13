@@ -1,5 +1,10 @@
 # Domínio canônico: o subdomínio da Netlify servia o site inteiro em paralelo
 # (200 com o mesmo conteúdo), o que gera sinal de conteúdo duplicado no Google.
+# /processo/ servia a home (navProcesso:false curto-circuitava o roteamento).
+# O processo agora vive em abas dentro de cada servico.
+/processo/*   /servicos/   301!
+/processo     /servicos/   301!
+
 https://main--zesty-lollipop-e19da1.netlify.app/*  https://grupomuv.com.br/:splat  301!
 https://zesty-lollipop-e19da1.netlify.app/*        https://grupomuv.com.br/:splat  301!
 

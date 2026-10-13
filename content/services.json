@@ -63,7 +63,8 @@
           "p": "O material bruto é meu?",
           "r": "Sim. Os brutos vão organizados, nomeados e arquivados — não é um HD jogado na sua mão no fim do evento."
         }
-      ]
+      ],
+      "resumo": "Equipe com ilha de edição no local: o corte sai durante o evento."
     },
     {
       "num": "02",
@@ -124,7 +125,8 @@
           "p": "Dá para manter um ritmo mensal?",
           "r": "É o formato que funciona melhor. Produção recorrente mantém a linguagem visual consistente e faz cada briefing começar com contexto acumulado, em vez de recomeçar toda vez."
         }
-      ]
+      ],
+      "resumo": "Uma diária de captação que rende semanas de calendário."
     },
     {
       "num": "03",
@@ -184,7 +186,8 @@
           "p": "Vocês atendem agência ou só marca direta?",
           "r": "Os dois. Boa parte dos nossos projetos é feita com agências e produtoras parceiras, entrando como equipe de captação e pós dentro do fluxo delas."
         }
-      ]
+      ],
+      "resumo": "Campanha com direção de fotografia e plano de produção fechado."
     },
     {
       "num": "04",
@@ -243,7 +246,8 @@
           "p": "Serve para escritório de advocacia e empresa B2B?",
           "r": "Serve. Esse tipo de cliente costuma precisar de uma combinação de institucional, série de conteúdo curto e material de comunicação interna, e a gente estrutura o pacote nesse formato."
         }
-      ]
+      ],
+      "resumo": "Depoimento e filme institucional com direção de verdade."
     },
     {
       "num": "05",
@@ -302,7 +306,8 @@
           "p": "Dá para aproveitar o material em outros formatos?",
           "r": "Dá, e é o padrão. Do mesmo material saem o filme principal, teaser, cortes verticais e, quando faz sentido, making of."
         }
-      ]
+      ],
+      "resumo": "Narrativa real, com a marca dentro da história."
     },
     {
       "num": "06",
@@ -357,7 +362,8 @@
           "p": "Dá para alugar só a ilha de edição?",
           "r": "Dá. Existe baia de trabalho e day pass de cowork para quem precisa só de um lugar para finalizar."
         }
-      ]
+      ],
+      "resumo": "Estúdio, câmera e ilha para quem já tem equipe própria."
     }
   ]
 }

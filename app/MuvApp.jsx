@@ -785,10 +785,7 @@ function ServiceRail({ items, onOpen }) {
                 <span>{service.tag}</span>
               </h2>
               <p className="service-rail__promessa">{(service.title || "").replace(/\n/g, " ")}</p>
-              <ul className="service-rail__scope">
-                {(service.items || []).slice(0, 3).map((item) => <li key={item}>{item}</li>)}
-              </ul>
-              {service.prazo ? <p className="service-rail__meta"><span className="mono">Prazo</span> {service.prazo}</p> : null}
+              <p className="service-rail__resumo">{service.resumo || service.desc}</p>
               <span className="service-rail__ver">Ver serviço <Arrow /></span>
             </a>
           </li>
@@ -969,9 +966,7 @@ function Home({ setCurrent, density, content }) {
             </div>
             <h3>{s.tag}</h3>
             <div className="home-capability__details">
-              <h4>{s.title}</h4>
-              <p>{s.desc}</p>
-              <p className="mono home-capability__items">{s.items.join(" · ")}</p>
+              <h4>{(s.title || "").replace(/\n/g, " ")}</h4>
             </div>
           </article>
           )}
@@ -1391,14 +1386,8 @@ function Servicos({ setCurrent }) {
         <ServiceRail items={SERVICOS} onOpen={abrirServico} />
       </section>
 
-      <section className="section process-principles" id="processo">
-        <SectionHead eyebrow="Como entregamos" title="Seis etapas, do briefing ao master." sub="Diagnóstico, roteiro, direção, captação, pós e entrega — com escopo e aprovação claros em cada uma." />
-        <div style={{ display: "flex", justifyContent: "center", marginTop: 28 }}>
-          <a className="btn btn--ghost" href={ROUTES.processo}
-            onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("processo");}}>
-            Ver o processo completo <Arrow />
-          </a>
-        </div>
+      <section className="section process-principles">
+        <SectionHead eyebrow="Como entregamos" title="Cada serviço tem seu processo." sub="As etapas mudam conforme a entrega — abra o serviço para ver as dele." />
       </section>
 
       <section className="section process-principles">
@@ -1424,6 +1413,7 @@ function Servico({ setCurrent, slug }) {
   const router = useRouter();
   const s = SERVICOS.find((x) => x.slug === slug);
   const [aberta, setAberta] = useState(null);
+  const [etapa, setEtapa] = useState(0);
 
   if (!s) return <Servicos setCurrent={setCurrent} />;
 
@@ -1457,16 +1447,47 @@ function Servico({ setCurrent, slug }) {
 
       {s.comoFunciona && s.comoFunciona.length ? (
         <section className="section section--dark srv-page__passos">
-          <SectionHead eyebrow="Como funciona" title="Do primeiro contato à entrega." />
-          <ol className="srv-page__passos-grid">
+          <SectionHead eyebrow="Como funciona" title="Do primeiro contato à entrega." sub="O processo desse serviço, etapa por etapa." />
+          <div className="srv-abas">
+            <div className="srv-abas__tabs" role="tablist" aria-label="Etapas do processo">
+              {s.comoFunciona.map((passo, i) => (
+                <button
+                  key={passo.t}
+                  role="tab"
+                  id={`srv-aba-${i}`}
+                  type="button"
+                  aria-selected={etapa === i}
+                  aria-controls={`srv-painel-${i}`}
+                  tabIndex={etapa === i ? 0 : -1}
+                  className={`srv-abas__tab ${etapa === i ? "is-active" : ""}`}
+                  onKeyDown={(e) => {
+                    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+                    e.preventDefault();
+                    const n = s.comoFunciona.length;
+                    const prox = e.key === "ArrowRight" ? (i + 1) % n : (i - 1 + n) % n;
+                    setEtapa(prox);
+                    const el = document.getElementById(`srv-aba-${prox}`);
+                    if (el) el.focus();
+                  }}
+                  onClick={() => setEtapa(i)}>
+                  <span className="mono">{String(i + 1).padStart(2, "0")}</span>
+                  <span>{passo.t}</span>
+                </button>
+              ))}
+            </div>
             {s.comoFunciona.map((passo, i) => (
-              <li key={passo.t}>
-                <span className="mono">{String(i + 1).padStart(2, "0")}</span>
+              <div
+                key={passo.t}
+                role="tabpanel"
+                id={`srv-painel-${i}`}
+                aria-labelledby={`srv-aba-${i}`}
+                className="srv-abas__painel"
+                hidden={etapa !== i}>
                 <h3>{passo.t}</h3>
                 <p>{passo.d}</p>
-              </li>
+              </div>
             ))}
-          </ol>
+          </div>
         </section>
       ) : null}
 
