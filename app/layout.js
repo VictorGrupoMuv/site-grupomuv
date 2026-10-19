@@ -2,16 +2,24 @@ import "./globals.css";
 import WhatsappCookie from "./WhatsappCookie";
 import LeadPopup from "./LeadPopup";
 import GoogleAnalytics from "./GoogleAnalytics";
-import { GOOGLE_TAG_ID, GA_MEASUREMENT_ID, ADS_CONVERSION_ID, ADS_CONVERSION_ID_2, CONSENT_KEY, GTM_ID } from "./gtag-config";
+import { GOOGLE_TAG_ID, GA_MEASUREMENT_ID, ADS_CONVERSION_ID, ADS_CONVERSION_ID_2, CONSENT_KEY, GTM_ID, PROD_HOSTNAMES, INTERNAL_KEY } from "./gtag-config";
 
 
 const LEGACY_HASH_REDIRECT = `(function(){try{var m={servicos:"/servicos/",processo:"/processo/",trabalhos:"/trabalhos/",sobre:"/sobre/",hub:"/hub/","hub-locadora":"/hub/locadora/","hub-studio":"/hub/studio/","hub-comunidade":"/hub/comunidade/","hub-cowork":"/hub/cowork/",blog:"/blog/",faq:"/faq/",contato:"/contato/"};var h=(location.hash||"").replace("#","");if(h&&m[h]&&location.pathname==="/"){location.replace(m[h]);}}catch(e){}})();`;
 
-// Tag do Google no <head>, como o proprio Google instrui. Consent Mode v2:
-// a tag carrega para todos, mas nenhum armazenamento e ligado antes do aceite.
-// Se o visitante ja aceitou numa visita anterior, o consentimento e concedido
-// ANTES do primeiro config - senao a primeira pagina da sessao sairia sem cookie.
-const GTAG_BOOTSTRAP = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=window.gtag||gtag;gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});try{if(localStorage.getItem('${CONSENT_KEY}')==='accepted'){gtag('consent','update',{analytics_storage:'granted',ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});}}catch(e){}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');gtag('config','${ADS_CONVERSION_ID}');gtag('config','${ADS_CONVERSION_ID_2}');`;
+// Snippet do GTM (so pixels de terceiros, ver gtag-config.js). Vazio = nao carrega.
+const GTM_SNIPPET = GTM_ID
+  ? `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`
+  : "";
+
+// Tag do Google no <head>. Consent Mode v2: a tag carrega para todos, mas nenhum
+// armazenamento e ligado antes do aceite; se o visitante ja aceitou, o consentimento
+// e concedido ANTES do primeiro config. Duas regras extras:
+// 1) so carrega em producao (PROD_HOSTNAMES): deploy preview e localhost nao
+//    mandam dado para GA/Ads;
+// 2) ?internal=1 marca o navegador como equipe e todo evento do GA sai com
+//    traffic_type=internal (filtro da propriedade exclui). ?internal=0 desmarca.
+const GTAG_BOOTSTRAP = `(function(){var PROD=${JSON.stringify(PROD_HOSTNAMES)};var isProd=PROD.indexOf(location.hostname)!==-1;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=window.gtag||gtag;try{var q=new URLSearchParams(location.search);if(q.get('internal')==='1'){localStorage.setItem('${INTERNAL_KEY}','1');}else if(q.get('internal')==='0'){localStorage.removeItem('${INTERNAL_KEY}');}}catch(e){}var internal=false;try{internal=localStorage.getItem('${INTERNAL_KEY}')==='1';}catch(e){}window.__muvTag={prod:isProd,internal:internal};if(!isProd){return;}gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});try{if(localStorage.getItem('${CONSENT_KEY}')==='accepted'){gtag('consent','update',{analytics_storage:'granted',ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});}}catch(e){}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}',internal?{traffic_type:'internal'}:{});gtag('config','${ADS_CONVERSION_ID}');gtag('config','${ADS_CONVERSION_ID_2}');var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG_ID}';document.head.appendChild(s);${GTM_SNIPPET}})();`;
 
 export const viewport = {
   themeColor: "#0D0D0D",
@@ -55,8 +63,6 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
         <script dangerouslySetInnerHTML={{ __html: GTAG_BOOTSTRAP }} />
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG_ID}`} />
-        {GTM_ID && <script dangerouslySetInnerHTML={{ __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');` }} />}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSONLD }} />
         <script dangerouslySetInnerHTML={{ __html: LEGACY_HASH_REDIRECT }} />
       </head>

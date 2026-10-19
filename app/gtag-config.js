@@ -35,3 +35,12 @@ export const CONSENT_KEY = "muv-cookie-consent";
 // do container, senão duplica page views e conversões.
 // Vazio = snippet não é renderizado (app/layout.js).
 export const GTM_ID = "GTM-W69K6R4F";
+
+// Hostnames de producao. Fora deles (deploy preview do Netlify, localhost) a
+// tag do Google nao carrega e nada e enviado ao GA/Ads (ver app/layout.js).
+export const PROD_HOSTNAMES = ["grupomuv.com.br", "www.grupomuv.com.br"];
+
+// Marca o navegador como equipe MUV (localStorage). Liga com ?internal=1 na
+// URL, desliga com ?internal=0. Marcado, todo evento do GA sai com
+// traffic_type=internal, que o filtro "Internal Traffic" da propriedade exclui.
+export const INTERNAL_KEY = "muv-internal";
