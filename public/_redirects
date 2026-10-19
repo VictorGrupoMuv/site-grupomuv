@@ -11,6 +11,8 @@
 /servicos/estudio-e-equipamento/*  /hub/   301!
 /servicos/estudio-e-equipamento    /hub/   301!
 
+https://mudafilms.com.br/*      https://grupomuv.com.br/:splat  301!
+https://www.mudafilms.com.br/*  https://grupomuv.com.br/:splat  301!
 https://main--zesty-lollipop-e19da1.netlify.app/*  https://grupomuv.com.br/:splat  301!
 https://zesty-lollipop-e19da1.netlify.app/*        https://grupomuv.com.br/:splat  301!
 
