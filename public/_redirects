@@ -54,3 +54,6 @@ https://zesty-lollipop-e19da1.netlify.app/*        https://grupomuv.com.br/:spla
 
 # Case retirado do portfolio em 18/08/2026
 /trabalhos/too-faced-lancamento/   /trabalhos/   301
+
+/propostas/nonreplica  /propostas/nonreplica/  301
+/propostas/*  https://muv-propostas.netlify.app/:splat  200
