@@ -18,7 +18,12 @@ export const metadata = {
     description: DESC,
     url: `${SITE}${PATH}`,
     type: "website",
-    images: [{ url: "/assets/eventos/hero-1920.jpg", width: 1920, height: 1080, alt: TITLE }] } };
+    images: [{ url: "/assets/eventos/hero-1920.jpg", width: 1920, height: 1080, alt: TITLE }] },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESC,
+    images: ["/assets/eventos/hero-1920.jpg"] } };
 
 const SCHEMAS = [
   {

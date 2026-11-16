@@ -47,7 +47,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Grupo MUV — Produtora Audiovisual em São Paulo | Conteúdo que move",
+    title: "Grupo MUV: Produtora Audiovisual em São Paulo | Conteúdo que move",
     description: "Produtora audiovisual e hub criativo em São Paulo. Estratégia, produção e conteúdo. Cinematográfico, no prazo, impossível de ignorar.",
     images: ["/og-image.png"],
   },

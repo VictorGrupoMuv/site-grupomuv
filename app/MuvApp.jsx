@@ -226,7 +226,7 @@ function Nav({ current, setCurrent, isDark }) {
   return (
     <React.Fragment>
       <nav className={`nav ${isDark ? "nav--dark" : ""} ${menuOpen ? "nav--open" : ""}`}>
-        <a className="nav__logo" onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("home");}} href="/" aria-label="Grupo MUV — ir para home">
+        <a className="nav__logo" onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("home");}} href="/" aria-label="Grupo MUV, ir para home">
           <img
             src={isDark ? "/brand-assets/vectors/muv-horizontal-white.svg" : "/brand-assets/vectors/muv-horizontal-black.svg"}
             alt="Grupo MUV"
