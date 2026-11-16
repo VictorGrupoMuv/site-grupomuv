@@ -1703,6 +1703,8 @@ function capturarAtribuicao() {
 }
 
 const EVENTOS_WHATSAPP = "https://wa.me/message/D6LG7EUSTIR7C1";
+// Vídeo do case Guaraná no Carnaval (mesmo vimeoId de content/works.json).
+const EVENTOS_VIDEO_VIMEO = "1219351172";
 const EVENTOS_TIPOS = ["Corporativo", "Ativação de marca", "Festival ou show", "Outro"];
 const EVENTOS_HERO = "/assets/eventos/hero";
 const EVENTOS_HERO_LARGURAS = [640, 1080, 1920];
@@ -1715,6 +1717,8 @@ function Eventos({ setCurrent }) {
   const [enviando, setEnviando] = useState(false);
   const [enviado, setEnviado] = useState(false);
   const [erro, setErro] = useState("");
+  // O vídeo do case só carrega no clique: a foto continua sendo o LCP da página.
+  const [tocando, setTocando] = useState(false);
 
   useEffect(() => { capturarAtribuicao(); }, []);
 
@@ -1768,13 +1772,26 @@ function Eventos({ setCurrent }) {
           <a className="btn btn--primary" href={EVENTOS_WHATSAPP} target="_blank" rel="noopener noreferrer">Chamar no WhatsApp <Arrow /></a>
           <a className="btn btn--ghost" href="#orcamento">Pedir orçamento <Arrow /></a>
         </div>
+        {tocando ?
+        <div className="cine cine--media cine--video-slot evt-hero__quadro evt-hero__quadro--video">
+          <iframe className="cine__img cine__video" src={`${vimeoEmbed(EVENTOS_VIDEO_VIMEO)}&autoplay=1`}
+            title="Guaraná Antarctica no Carnaval, cobertura em tempo real" frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
+        </div> :
         <div className="cine cine--media evt-hero__quadro">
           <picture>
             <source type="image/avif" srcSet={heroSrcSet("avif")} sizes="100vw" />
             <img {...heroImg} srcSet={heroSrcSet("jpg")} className="cine__img" />
           </picture>
           <span className="cine__scrim" aria-hidden="true" />
-        </div>
+          <button type="button" className="evt-hero__play" onClick={() => setTocando(true)}
+            aria-label="Assistir ao vídeo: Guaraná Antarctica no Carnaval">
+            <span className="cine__play" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+            </span>
+            <span className="evt-hero__play-rotulo mono">Assistir ao vídeo · 0:24</span>
+          </button>
+        </div>}
       </section>
 
       <section className="section evt-prova">

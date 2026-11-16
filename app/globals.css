@@ -8825,6 +8825,10 @@ body.drawer-active #muv-lead { display: none !important; }
 /* ───── /eventos/ · landing de tráfego pago ───── */
 .evt-hero { padding-top: 0; }
 .evt-hero__quadro { aspect-ratio: 16 / 9; width: 100%; max-height: 72vh; }
+.evt-hero__quadro--video { aspect-ratio: 16 / 9; max-height: none; background: #0d0d12; }
+.evt-hero__play { position: absolute; inset: 0; z-index: 2; width: 100%; padding: 0; border: 0; background: transparent; color: inherit; cursor: pointer; }
+.evt-hero__play:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+.evt-hero__play-rotulo { position: absolute; left: 16px; bottom: 16px; color: #F2F0E9; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; }
 .evt-hero__acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
 .evt-prova { padding-top: 0; }
 .evt-prova__marcas { margin-top: 20px; }
@@ -8842,6 +8846,7 @@ body.drawer-active #muv-lead { display: none !important; }
 }
 @media (max-width: 600px) {
   .evt-hero__quadro { aspect-ratio: 4 / 3; }
+  .evt-hero__quadro--video { aspect-ratio: 16 / 9; }
   .evt-hero__acoes .btn { flex: 1 1 100%; justify-content: center; }
   .evt-prova__marcas .brands { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .evt-prova__marcas .brand-cell { padding: 14px; }
