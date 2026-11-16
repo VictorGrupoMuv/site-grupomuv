@@ -74,7 +74,9 @@ export default function GoogleAnalytics() {
 
       if (href.includes("wa.me") || href.includes("whatsapp")) {
         trackAnalytics("click_whatsapp", { link_location: pathname });
-        trackAdsConversion(ADS_CONV.whatsapp);
+        // Nas rotas do Hub o clique no WhatsApp fica só no GA4: a conversão
+        // do Google Ads (se.whatsapp) não dispara em /hub.
+        if (!pathname.startsWith("/hub")) trackAdsConversion(ADS_CONV.whatsapp);
       } else if (href.startsWith("tel:")) {
         trackAnalytics("click_phone", { link_location: pathname });
       } else if (href.startsWith("mailto:")) {
