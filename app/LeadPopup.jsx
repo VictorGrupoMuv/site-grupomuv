@@ -24,7 +24,9 @@ const SCROLL_RATIO  = 0.4;
 const SNOOZE_DAYS   = 7;
 const FORM_NAME     = "lead-diagnostico";
 const WHATSAPP_URL  = "https://wa.me/message/D6LG7EUSTIR7C1";
-const SKIP_PATHS    = ["/contato"];
+// /eventos é landing de tráfego pago com formulário próprio: o pop-up
+// cobriria a página no celular e disputaria o mesmo lead.
+const SKIP_PATHS    = ["/contato", "/eventos"];
 
 function readState() {
   try {

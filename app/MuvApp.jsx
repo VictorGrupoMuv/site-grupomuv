@@ -1,9 +1,11 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { getImageProps } from "next/image";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { trackAnalytics, trackAdsConversion } from "./GoogleAnalytics";
 import { ADS_CONV } from "./gtag-config";
+import { EVENTOS_MARCAS, EVENTOS_PALCOS, EVENTOS_FORMATOS, EVENTOS_PASSOS, EVENTOS_CASES, EVENTOS_PARA_QUEM, EVENTOS_NAO_E, EVENTOS_FAQ } from "./eventos/conteudo";
 import _services from "../content/services.json";
 const SERVICOS = _services.items;
 // Nem todo servico tem pagina propria. "Estudio e equipamento" e a estrutura do
@@ -25,7 +27,7 @@ import _posts from "../content/posts.json";
 const POSTS = _posts.items;
 import _brands from "../content/brands.json";
 const BRANDS = _brands.items;
-const BRAND_LOGOS = {"Meta": "/assets/brands/meta.png", "Corona": "/assets/brands/corona-extra.png", "Ambev": "/assets/brands/ambev.png", "Adidas": "/assets/brands/adidas.png", "Volvo": "/assets/brands/volvo.png", "Heinz": "/assets/brands/heinz.png", "Burger King": "/assets/brands/burger-king.png", "Nissan": "/assets/brands/nissan.png", "Spotify": "/assets/brands/spotify.png", "Too Faced": "/assets/brands/too-faced.png", "Brastemp": "/assets/brands/brastemp.png", "Consul": "/assets/brands/consul.png", "Itaú": "/assets/brands/itau.png", "Lollapalooza": "/assets/brands/lollapalooza.png", "Primavera Sound": "/assets/brands/primavera-sound.png", "Numanice": "/assets/brands/numanice.png", "Stock Car": "/assets/brands/stock-car.png", "Kings League": "/assets/brands/kings-league.png"};
+const BRAND_LOGOS = {"Meta": "/assets/brands/meta.png", "Corona": "/assets/brands/corona-extra.png", "Ambev": "/assets/brands/ambev.png", "Adidas": "/assets/brands/adidas.png", "Volvo": "/assets/brands/volvo.png", "Heinz": "/assets/brands/heinz.png", "Burger King": "/assets/brands/burger-king.png", "Nissan": "/assets/brands/nissan.png", "Spotify": "/assets/brands/spotify.png", "Too Faced": "/assets/brands/too-faced.png", "Brastemp": "/assets/brands/brastemp.png", "Consul": "/assets/brands/consul.png", "Itaú": "/assets/brands/itau.png", "Lollapalooza": "/assets/brands/lollapalooza.png", "Primavera Sound": "/assets/brands/primavera-sound.png", "Numanice": "/assets/brands/numanice.png", "Stock Car": "/assets/brands/stock-car.png", "Kings League": "/assets/brands/kings-league.png", "Shell": "/assets/brands/shell.png"};
 import _marquee from "../content/marquee.json";
 import _settings from "../content/settings.json";
 import _home from "../content/home.json";
@@ -119,6 +121,7 @@ const ROUTES = {
   "hub-cowork": "/hub/cowork/",
   blog: "/blog/",
   faq: "/faq/",
+  eventos: "/eventos/",
   contato: "/contato/" };
 
 // Cmd/Ctrl/Shift+clique deve abrir em nova aba: nesse caso NÃO chamamos
@@ -392,7 +395,7 @@ function BrandStrip({ brands }) {
   return (
     <div className="brands">
       {brands.map((b, i) =>
-      <div key={i} className="brand-cell">{BRAND_LOGOS[b] ? <img src={BRAND_LOGOS[b]} alt={b} /> : b}</div>
+      <div key={i} className="brand-cell">{BRAND_LOGOS[b] ? <img src={BRAND_LOGOS[b]} alt={b} loading="lazy" decoding="async" /> : b}</div>
       )}
     </div>);
 
@@ -1669,6 +1672,263 @@ function Servico({ setCurrent, slug }) {
               </p>
             </form>
           )}
+        </div>
+      </section>
+    </div>);
+}
+
+
+// ═══════════════════════════════════════════════════════════════════════════
+// EVENTOS · landing de tráfego pago (Google Ads), MUV Live
+// ═══════════════════════════════════════════════════════════════════════════
+// Parâmetros de campanha: lidos da URL na chegada e guardados em
+// sessionStorage, para o lead sair com a origem mesmo que a pessoa navegue
+// pelo site antes de preencher o formulário.
+const ATTR_KEY = "muv-attr";
+const ATTR_PARAMS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "gclid"];
+
+function lerAtribuicao() {
+  try { return JSON.parse(window.sessionStorage.getItem(ATTR_KEY) || "{}") || {}; } catch (_) { return {}; }
+}
+
+function capturarAtribuicao() {
+  if (typeof window === "undefined") return;
+  try {
+    const q = new URLSearchParams(window.location.search);
+    const novos = {};
+    ATTR_PARAMS.forEach((k) => { const v = q.get(k); if (v) novos[k] = v.slice(0, 200); });
+    if (!Object.keys(novos).length) return;
+    window.sessionStorage.setItem(ATTR_KEY, JSON.stringify({ ...lerAtribuicao(), ...novos }));
+  } catch (_) {}
+}
+
+const EVENTOS_WHATSAPP = "https://wa.me/message/D6LG7EUSTIR7C1";
+const EVENTOS_TIPOS = ["Corporativo", "Ativação de marca", "Festival ou show", "Outro"];
+const EVENTOS_HERO = "/assets/eventos/hero";
+const EVENTOS_HERO_LARGURAS = [640, 1080, 1920];
+const heroSrcSet = (ext) => EVENTOS_HERO_LARGURAS.map((w) => `${EVENTOS_HERO}-${w}.${ext} ${w}w`).join(", ");
+
+function Eventos({ setCurrent }) {
+  const router = useRouter();
+  const [lead, setLead] = useState({ nome: "", empresa: "", email: "", whats: "", data: "", cidade: "", tipo: "" });
+  const [aceite, setAceite] = useState(false);
+  const [enviando, setEnviando] = useState(false);
+  const [enviado, setEnviado] = useState(false);
+  const [erro, setErro] = useState("");
+
+  useEffect(() => { capturarAtribuicao(); }, []);
+
+  const campo = (k) => (e) => setLead({ ...lead, [k]: e.target.value });
+
+  const enviarLead = async (ev) => {
+    ev.preventDefault();
+    if (!aceite) { setErro("Confirme o aceite da política de privacidade para enviar."); return; }
+    setEnviando(true); setErro("");
+    const attr = lerAtribuicao();
+    try {
+      await postToNetlify("orcamento", {
+        name: lead.nome, company: lead.empresa, email: lead.email, phone: lead.whats,
+        type: "Cobertura de evento", scope: "Cobertura de Evento",
+        "data-evento": lead.data, cidade: lead.cidade, "tipo-evento": lead.tipo,
+        utm_source: attr.utm_source || "", utm_medium: attr.utm_medium || "",
+        utm_campaign: attr.utm_campaign || "", utm_term: attr.utm_term || "",
+        gclid: attr.gclid || "",
+        origem: "Landing · Eventos",
+        "aceite-privacidade": `sim · ${new Date().toISOString()}` });
+      trackAnalytics("generate_lead", { form_name: "orcamento_eventos", project_type: "Cobertura de evento" });
+      trackAdsConversion(ADS_CONV.orcamento);
+      setEnviado(true);
+    } catch (_) {
+      setErro("Não conseguimos enviar agora. Tenta de novo ou chama no WhatsApp: wa.me/message/D6LG7EUSTIR7C1");
+    } finally {
+      setEnviando(false);
+    }
+  };
+
+  // next/image no modo export não converte formato: as versões AVIF e JPEG
+  // são geradas antes e servidas por <picture>. O preload fica em
+  // app/eventos/page.js.
+  const { props: heroImg } = getImageProps({
+    src: `${EVENTOS_HERO}-1080.jpg`,
+    width: 1920, height: 1080, priority: true, sizes: "100vw",
+    alt: "Público em bloco de Carnaval durante cobertura em tempo real do Grupo MUV" });
+  const req = <span style={{ color: "var(--accent-text)" }}>*</span>;
+
+  return (
+    <div className="page" data-screen-label="Eventos">
+      <PageHead
+        crumb="MUV Live · Cobertura de eventos"
+        title="Seu evento no feed enquanto ainda está acontecendo."
+        lead="Captação, edição e entrega no local para marcas, agências e eventos corporativos. Reels, stories e fotos prontos no mesmo dia, com direção de quem opera em festival grande."
+        meta="São Paulo · SP"
+        compact />
+
+      <section className="section evt-hero">
+        <div className="evt-hero__acoes">
+          <a className="btn btn--primary" href={EVENTOS_WHATSAPP} target="_blank" rel="noopener noreferrer">Chamar no WhatsApp <Arrow /></a>
+          <a className="btn btn--ghost" href="#orcamento">Pedir orçamento <Arrow /></a>
+        </div>
+        <div className="cine cine--media evt-hero__quadro">
+          <picture>
+            <source type="image/avif" srcSet={heroSrcSet("avif")} sizes="100vw" />
+            <img {...heroImg} srcSet={heroSrcSet("jpg")} className="cine__img" />
+          </picture>
+          <span className="cine__scrim" aria-hidden="true" />
+        </div>
+      </section>
+
+      <section className="section evt-prova">
+        <p className="eyebrow eyebrow-dot">Marcas que já atendemos</p>
+        <div className="evt-prova__marcas">
+          <BrandStrip brands={EVENTOS_MARCAS} />
+        </div>
+        <p className="evt-prova__palcos">
+          <span className="mono">Onde já operamos</span>
+          {EVENTOS_PALCOS.join(" · ")}
+        </p>
+      </section>
+
+      <section className="section section--ink">
+        <SectionHead eyebrow="Formatos" title="Três formatos de cobertura." />
+        <div className="grid-3 hub-process">
+          {EVENTOS_FORMATOS.map((f, i) => (
+            <div key={f.t} className="hub-process__step">
+              <p className="mono" style={{ color: "var(--accent-text)" }}>// {String(i + 1).padStart(2, "0")}</p>
+              <h3 className="h3">{f.t}</h3>
+              <p>{f.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="section">
+        <SectionHead eyebrow="Como funciona" title="Do briefing à entrega." />
+        <div className="grid-4 hub-process evt-passos">
+          {EVENTOS_PASSOS.map((p, i) => (
+            <div key={p.t} className="hub-process__step">
+              <p className="mono" style={{ color: "var(--accent-text)" }}>// {String(i + 1).padStart(2, "0")}</p>
+              <h3 className="h3">{p.t}</h3>
+              <p>{p.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="section section--ink">
+        <SectionHead eyebrow="Cases" title="Onde isso já rodou." />
+        <div className="grid-3 evt-cases">
+          {EVENTOS_CASES.map((c, i) => (
+            <article key={c.t} className="evt-case">
+              <Cine src={c.still || null} alt={c.t} label={c.label} code={`CASE.${String(i + 1).padStart(2, "0")}`}
+                variant="dark" hideLabel={Boolean(c.still)} />
+              <h3 className="h3">{c.t}</h3>
+              <p>{c.d}</p>
+              {c.slug ? (
+                <a className="link-arrow" href={caseHref(c.slug)}
+                  onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();router.push(caseHref(c.slug));}}>Ver case <Arrow /></a>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section srv-page__encaixe">
+        <div className="srv-encaixe">
+          <div className="srv-encaixe__col">
+            <p className="eyebrow eyebrow-dot">Para quem é</p>
+            <ul className="srv-encaixe__lista">
+              {EVENTOS_PARA_QUEM.map((p) => <li key={p}>{p}</li>)}
+            </ul>
+          </div>
+          <div className="srv-encaixe__col srv-encaixe__col--nao">
+            <p className="eyebrow eyebrow-dot">Para quem não é</p>
+            <p className="evt-nao">{EVENTOS_NAO_E}</p>
+          </div>
+        </div>
+      </section>
+
+      <HubFaq items={EVENTOS_FAQ} num={null} title="O que perguntam antes de fechar." />
+
+      <section className="section section--ink srv-page__fechamento" id="orcamento">
+        <SectionHead title="Conta do seu evento" />
+        <div className="srv-form">
+          {enviado ? (
+            <div className="srv-form__ok" role="status">
+              <p className="eyebrow eyebrow-dot" style={{ color: "var(--accent-text)" }}>Recebido ✓</p>
+              <h3 className="h3" style={{ marginTop: 14 }}>Recebemos. Alguém da equipe vai te chamar no WhatsApp para entender o evento.</h3>
+            </div>
+          ) : (
+            <form className="quote-card srv-form__card" onSubmit={enviarLead}>
+              <h3 className="quote-card__title">Orçamento de cobertura de evento</h3>
+              <p className="quote-card__sub">Campos com {req} são obrigatórios.</p>
+
+              <div className="quote-card__row">
+                <div className="field field--solid">
+                  <label htmlFor="evt-nome">Nome {req}</label>
+                  <input id="evt-nome" name="name" autoComplete="name" placeholder="Seu nome" required
+                    value={lead.nome} onChange={campo("nome")} />
+                </div>
+                <div className="field field--solid">
+                  <label htmlFor="evt-empresa">Empresa</label>
+                  <input id="evt-empresa" name="company" autoComplete="organization" placeholder="Nome da empresa"
+                    value={lead.empresa} onChange={campo("empresa")} />
+                </div>
+              </div>
+
+              <div className="quote-card__row">
+                <div className="field field--solid">
+                  <label htmlFor="evt-email">E-mail {req}</label>
+                  <input id="evt-email" name="email" type="email" autoComplete="email" placeholder="voce@empresa.com" required
+                    value={lead.email} onChange={campo("email")} />
+                </div>
+                <div className="field field--solid">
+                  <label htmlFor="evt-whats">WhatsApp {req}</label>
+                  <input id="evt-whats" name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="(11) 99999-9999" required
+                    value={lead.whats} onChange={campo("whats")} />
+                </div>
+              </div>
+
+              <div className="quote-card__row">
+                <div className="field field--solid">
+                  <label htmlFor="evt-data">Data do evento</label>
+                  <input id="evt-data" name="data-evento" type="date"
+                    value={lead.data} onChange={campo("data")} />
+                </div>
+                <div className="field field--solid">
+                  <label htmlFor="evt-cidade">Cidade</label>
+                  <input id="evt-cidade" name="cidade" autoComplete="address-level2" placeholder="São Paulo"
+                    value={lead.cidade} onChange={campo("cidade")} />
+                </div>
+              </div>
+
+              <div className="field field--solid">
+                <label htmlFor="evt-tipo">Tipo de evento</label>
+                <select id="evt-tipo" name="tipo-evento" value={lead.tipo} onChange={campo("tipo")}>
+                  <option value="">Selecione</option>
+                  {EVENTOS_TIPOS.map((t) => <option key={t} value={t}>{t}</option>)}
+                </select>
+              </div>
+
+              <label className="quote-card__consent" htmlFor="evt-consent">
+                <input id="evt-consent" name="privacy-consent" type="checkbox" checked={aceite} onChange={(e) => setAceite(e.target.checked)} />
+                <span>Autorizo o Grupo MUV a usar meus dados para responder este pedido, conforme a <a href="/politica-privacidade.html" target="_blank" rel="noopener noreferrer">política de privacidade</a>.</span>
+              </label>
+
+              <button type="submit" className="btn btn--primary quote-submit" disabled={enviando}>
+                {enviando ? "Enviando…" : "Pedir orçamento"} {!enviando && <Arrow />}
+              </button>
+              {erro && <p className="quote-card__error" role="alert">{erro}</p>}
+            </form>
+          )}
+        </div>
+      </section>
+
+      <section className="section section--dark hub-cta hub-book-cta">
+        <div className="hub-cta__inner">
+          <h2 className="h1 hub-email-capture__title">Data marcada? Vamos conversar antes da agenda fechar.</h2>
+          <div className="hub-book-cta__actions">
+            <a className="btn btn--primary" href={EVENTOS_WHATSAPP} target="_blank" rel="noopener noreferrer">Chamar no WhatsApp <Arrow /></a>
+          </div>
         </div>
       </section>
     </div>);
@@ -3100,6 +3360,7 @@ function App({ page = "home", slug = null, tina = null }) {
   else if (current === "hub-cowork")      Page = HubCowork;
   else if (current === "blog")            Page = Blog;
   else if (current === "faq")             Page = Faq;
+  else if (current === "eventos")         Page = Eventos;
   else if (current === "contato")         Page = Contato;
 
   return (
