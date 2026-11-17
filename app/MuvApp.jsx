@@ -1867,22 +1867,22 @@ function Trabalhos({ setCurrent, slug = null }) {
           </div>
 
           <section className="case-detail__specs">
-            <div className="case-detail__spec">
+            {t.format ? <div className="case-detail__spec">
               <p className="mono case-detail__spec-label">FORMATO</p>
               <p>{t.format}</p>
-            </div>
-            <div className="case-detail__spec">
+            </div> : null}
+            {t.team ? <div className="case-detail__spec">
               <p className="mono case-detail__spec-label">EQUIPE</p>
               <p>{t.team}</p>
-            </div>
-            <div className="case-detail__spec">
+            </div> : null}
+            {t.gear ? <div className="case-detail__spec">
               <p className="mono case-detail__spec-label">EQUIPAMENTO</p>
               <p>{t.gear}</p>
-            </div>
+            </div> : null}
           </section>
 
           <div className="case-detail__body">
-            {t.body.map((b, i) =>
+            {(t.body || []).map((b, i) =>
               <div key={i} className={`case-detail__block ${b.h.toLowerCase().includes("resultado") ? "case-detail__block--result" : ""}`}>
                 <h2 className="case-detail__h2">{b.h}</h2>
                 <p className="case-detail__p">{b.p}</p>
@@ -1927,22 +1927,25 @@ function Trabalhos({ setCurrent, slug = null }) {
         </div>
       </div>
 
-      <section className="section works-grid-section">
-        <div className="works-grid">
-          {filtered.map((t, i) => {
-            const realIdx = TRABALHOS.indexOf(t);
-            return (
-              <CaseCard
-                key={t.slug}
-                {...t}
-                idx={realIdx}
-                compactReveal
-                headingLevel={2}
-                onClick={() => openCase(t)}
-              />);
-          })}
-        </div>
-      </section>
+      {/* Horizontais na grade de sempre; verticais (9:16) inteiros em grade própria. */}
+      {[["works-grid", filtered.filter((t) => t.cardRatio !== "9/16"), null],
+        ["works-grid works-grid--vertical", filtered.filter((t) => t.cardRatio === "9/16"), "Feito para o feed"]].map(([cls, lista, rotulo]) =>
+        lista.length ? (
+          <section key={cls} className="section works-grid-section">
+            {rotulo ? <p className="eyebrow eyebrow-dot works-grid__rotulo">{rotulo}</p> : null}
+            <div className={cls}>
+              {lista.map((t) => (
+                <CaseCard
+                  key={t.slug}
+                  {...t}
+                  idx={TRABALHOS.indexOf(t)}
+                  compactReveal
+                  headingLevel={2}
+                  onClick={() => openCase(t)}
+                />))}
+            </div>
+          </section>
+        ) : null)}
 
       <section className="section section--ink works-reel">
         <div className="works-reel__head">

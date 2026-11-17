@@ -136,11 +136,14 @@
           "p": "Seis verticais entregues, 12 fotos editadas, banco de backstage usado como conteúdo orgânico pra alimentar o canal nas semanas seguintes ao lançamento. Mais relevante: o trabalho gerou base pra renovação dos direitos de uso com a Nissan, num segundo aditivo que estendeu a presença das peças além da janela inicial."
         }
       ],
-      "still": "https://i.vimeocdn.com/video/2188681968-beaece3fa9b87fe77fc4a203e35fb6d347c78ffe0b8edc50f4261ac497644f64-d_1280?region=us",
+      "still": "/assets/cases/nissan-suba-still.jpg",
       "vimeoId": "1213671189",
-      "ratio": "16/9",
+      "ratio": "9/16",
       "videoDuration": "PT19S",
-      "videoDate": "2026-07-28"
+      "videoDate": "2026-07-28",
+      "video": "/assets/cases/nissan-suba.mp4",
+      "poster": "/assets/cases/nissan-suba-poster.jpg",
+      "cardRatio": "9/16"
     },
     {
       "slug": "consul-pizza-de-ontem",
@@ -154,7 +157,7 @@
       "gear": "Sony FX3 · Sony A7III · lentes GMaster · áudio wireless",
       "summary": "A Consul montou uma pizzaria onde os fornos eram micro-ondas e as pizzas eram do dia anterior. A MUV captou e editou a ativação inteira.",
       "vimeoId": "1107572366/6b1814d2de",
-      "still": "https://i.vimeocdn.com/video/2044605896-cd64ecdfddc72bdaf07ae109127f269e42e392116b017f9d1c8550a464df66bf-d_1280?region=us",
+      "still": "/assets/cases/consul-pizza-de-ontem-still.jpg",
       "body": [
         {
           "h": "Contexto",
@@ -174,7 +177,11 @@
         }
       ],
       "videoDuration": "PT16S",
-      "videoDate": "2025-08-05"
+      "videoDate": "2025-08-05",
+      "video": "/assets/cases/consul-pizza-de-ontem.mp4",
+      "poster": "/assets/cases/consul-pizza-de-ontem-poster.jpg",
+      "ratio": "9/16",
+      "cardRatio": "9/16"
     },
     {
       "slug": "shell-gp-sao-paulo",
@@ -188,7 +195,7 @@
       "gear": "Sony FX3 · Sony A7III · lentes GMaster · estação de edição no local",
       "summary": "Três dias de Grande Prêmio, um camarote cheio de convidados da marca e quinze vídeos entregues em tempo real, sem sair do evento.",
       "vimeoId": "1107572132/25b198558a",
-      "still": "https://i.vimeocdn.com/video/2044605610-15e055a2d266db1bd6f11a4d831c7c234a1ab1c5e93216890d61a89c7a92f227-d_1280?region=us",
+      "still": "/assets/cases/shell-gp-sao-paulo-still.jpg",
       "body": [
         {
           "h": "Contexto",
@@ -208,7 +215,11 @@
         }
       ],
       "videoDuration": "PT1M53S",
-      "videoDate": "2025-08-05"
+      "videoDate": "2025-08-05",
+      "video": "/assets/cases/shell-gp-sao-paulo.mp4",
+      "poster": "/assets/cases/shell-gp-sao-paulo-poster.jpg",
+      "ratio": "9/16",
+      "cardRatio": "9/16"
     },
     {
       "slug": "brastemp-retro-martinelli",
@@ -222,7 +233,7 @@
       "gear": "Sony FX3 · Sony A7III · lentes GMaster · áudio wireless",
       "summary": "Lançamento da linha de frigobares retrô da Brastemp no Edifício Martinelli, com criadores e imprensa. Conteúdo produzido e entregue durante o evento.",
       "vimeoId": "1107572230/10a4a52137",
-      "still": "https://i.vimeocdn.com/video/2044605868-077086123880a190318090e6d58c3b95c8d7715bc8270d6be684d1d1355df47d-d_1280?region=us",
+      "still": "/assets/cases/brastemp-retro-martinelli-still.jpg",
       "body": [
         {
           "h": "Contexto",
@@ -242,7 +253,11 @@
         }
       ],
       "videoDuration": "PT1M7S",
-      "videoDate": "2025-08-05"
+      "videoDate": "2025-08-05",
+      "video": "/assets/cases/brastemp-retro-martinelli.mp4",
+      "poster": "/assets/cases/brastemp-retro-martinelli-poster.jpg",
+      "ratio": "9/16",
+      "cardRatio": "9/16"
     },
     {
       "slug": "xp-expert-tom-brady",
@@ -516,6 +531,213 @@
       ],
       "videoDuration": "PT30S",
       "videoDate": "2024-01-17"
+    },
+    {
+      "slug": "guarana-trem",
+      "title": "Guaraná\nno trem",
+      "client": "Guaraná Antarctica · com ECD Videos",
+      "tag": "BRAND FILM · TREM",
+      "year": "2025",
+      "category": "Brand film",
+      "format": "Filme horizontal em 4K, com versão vertical",
+      "summary": "Um trem inteiro vestido de Guaraná Antarctica cruzando São Paulo, filmado do chão e do ar.",
+      "still": "/assets/cases/guarana-trem-still.jpg",
+      "video": "/assets/cases/guarana-trem.mp4",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "Ação de marca do Guaraná Antarctica em um trem envelopado em São Paulo. A MUV captou a composição em movimento, com câmera no chão e drone acompanhando a linha."
+        }
+      ]
+    },
+    {
+      "slug": "brastemp-casa-cor",
+      "title": "Brastemp\nna Casa Cor",
+      "client": "Brastemp × Snack",
+      "tag": "CASA COR · REDES",
+      "year": "2025",
+      "category": "Cobertura",
+      "format": "Vídeo vertical para redes",
+      "summary": "O espaço da Brastemp na Casa Cor em detalhe: arquitetura, materiais e produto.",
+      "still": "/assets/cases/brastemp-casa-cor-still.jpg",
+      "video": "/assets/cases/brastemp-casa-cor.mp4",
+      "poster": "/assets/cases/brastemp-casa-cor-poster.jpg",
+      "ratio": "9/16",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "Conteúdo do espaço da Brastemp na Casa Cor, com foco em detalhe de ambiente e produto para as redes da marca."
+        }
+      ],
+      "cardRatio": "9/16"
+    },
+    {
+      "slug": "brastemp-camila-pitanga",
+      "title": "Brastemp com\nCamila Pitanga",
+      "client": "Brastemp × Snack",
+      "tag": "TALENTO · REELS",
+      "year": "2025",
+      "category": "Social",
+      "format": "Reels e stories verticais",
+      "summary": "Camila Pitanga apresenta a Brastemp em vídeo vertical, com versões para reels e stories.",
+      "still": "/assets/cases/brastemp-camila-pitanga-still.jpg",
+      "video": "/assets/cases/brastemp-camila-pitanga.mp4",
+      "poster": "/assets/cases/brastemp-camila-pitanga-poster.jpg",
+      "ratio": "9/16",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "Conteúdo com Camila Pitanga para a Brastemp, entregue em reels e stories."
+        }
+      ],
+      "cardRatio": "9/16"
+    },
+    {
+      "slug": "shell-convencao-bahia",
+      "title": "Shell\nConvenção Bahia",
+      "client": "Shell × Snack",
+      "tag": "CONVENÇÃO · REAL TIME",
+      "year": "2025",
+      "category": "Cobertura",
+      "format": "Vídeos verticais entregues durante o evento",
+      "summary": "Três dias de convenção da Shell na Bahia, com vídeos saindo a cada dia de evento.",
+      "still": "/assets/cases/shell-convencao-bahia-still.jpg",
+      "video": "/assets/cases/shell-convencao-bahia.mp4",
+      "poster": "/assets/cases/shell-convencao-bahia-poster.jpg",
+      "ratio": "9/16",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "Cobertura da convenção da Shell na Bahia em 2025. A MUV captou e editou no local, com entregas diárias ao longo dos três dias."
+        }
+      ],
+      "cardRatio": "9/16"
+    },
+    {
+      "slug": "shell-stock-car",
+      "title": "Shell\nna Stock Car",
+      "client": "Shell × Snack",
+      "tag": "STOCK CAR · REAL TIME",
+      "year": "2024",
+      "category": "Social",
+      "format": "Reels e stories verticais por etapa",
+      "summary": "Conteúdo de pista com os pilotos da Shell na Stock Car, publicado durante o fim de semana de corrida.",
+      "still": "/assets/cases/shell-stock-car-still.jpg",
+      "video": "/assets/cases/shell-stock-car.mp4",
+      "poster": "/assets/cases/shell-stock-car-poster.jpg",
+      "ratio": "9/16",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "Conteúdo para as redes da Shell nas etapas da Stock Car, com pilotos, pista e bastidor de box, captado e editado durante o fim de semana de prova."
+        }
+      ],
+      "cardRatio": "9/16"
+    },
+    {
+      "slug": "elseve",
+      "title": "Elseve",
+      "client": "Elseve",
+      "tag": "BEAUTY · FILME",
+      "year": "2024",
+      "category": "Brand film",
+      "format": "Filme vertical",
+      "summary": "Filme vertical para Elseve, com direção de fotografia voltada para cabelo e textura.",
+      "still": "/assets/cases/elseve-still.jpg",
+      "video": "/assets/cases/elseve.mp4",
+      "poster": "/assets/cases/elseve-poster.jpg",
+      "ratio": "9/16",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "Filme para Elseve captado em 2024, pensado para o formato vertical."
+        }
+      ],
+      "cardRatio": "9/16"
+    },
+    {
+      "slug": "aperol",
+      "title": "Aperol",
+      "client": "Aperol · com ECD Videos",
+      "tag": "ATIVAÇÃO · STORIES",
+      "year": "2023",
+      "category": "Social",
+      "format": "Stories e fotos de ativação",
+      "summary": "Stories e fotos da ativação da Aperol, feitos durante o evento.",
+      "still": "/assets/cases/aperol-still.jpg",
+      "video": "/assets/cases/aperol.mp4",
+      "poster": "/assets/cases/aperol-poster.jpg",
+      "ratio": "9/16",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "Conteúdo da ativação da Aperol em dezembro de 2023, com stories e fotos tratadas. A MUV integrou a equipe da ECD Videos."
+        }
+      ],
+      "cardRatio": "9/16"
+    },
+    {
+      "slug": "el-prat-galpao-357",
+      "title": "El Prat\nGalpão 357",
+      "client": "El Prat",
+      "tag": "ESPAÇO · APRESENTAÇÃO",
+      "year": "2025",
+      "category": "Brand film",
+      "format": "Vídeo vertical de apresentação, com drone",
+      "summary": "Apresentação do Galpão 357, da El Prat, ambiente por ambiente.",
+      "still": "/assets/cases/el-prat-galpao-357-still.jpg",
+      "video": "/assets/cases/el-prat-galpao-357.mp4",
+      "poster": "/assets/cases/el-prat-galpao-357-poster.jpg",
+      "ratio": "9/16",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "Vídeo de apresentação do Galpão 357 para a El Prat, percorrendo os ambientes do espaço com câmera e drone."
+        }
+      ],
+      "cardRatio": "9/16"
+    },
+    {
+      "slug": "elo-salve-rosa",
+      "title": "ELO\nSalve Rosa",
+      "client": "ELO Studios",
+      "tag": "EVENTO · AFTERMOVIE",
+      "year": "2025",
+      "category": "Cobertura",
+      "format": "Aftermovie, stories e cortes do debate",
+      "summary": "Três dias de evento do filme Salve Rosa, com aftermovie, stories e cortes do debate.",
+      "still": "/assets/cases/elo-salve-rosa-still.jpg",
+      "video": "/assets/cases/elo-salve-rosa.mp4",
+      "poster": "/assets/cases/elo-salve-rosa-poster.jpg",
+      "ratio": "9/16",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "Cobertura do evento de Salve Rosa para a ELO Studios, com entregas por dia: stories, cortes do debate e aftermovie."
+        }
+      ],
+      "cardRatio": "9/16"
+    },
+    {
+      "slug": "lollapalooza",
+      "title": "Lollapalooza",
+      "client": "Cobertura de festival",
+      "tag": "FESTIVAL · REELS",
+      "year": "2024",
+      "category": "Cobertura",
+      "format": "Reels vertical",
+      "summary": "Um dia de Lollapalooza em vídeo vertical, do portão às ativações de marca.",
+      "still": "/assets/cases/lollapalooza-still.jpg",
+      "video": "/assets/cases/lollapalooza.mp4",
+      "poster": "/assets/cases/lollapalooza-poster.jpg",
+      "ratio": "9/16",
+      "body": [
+        {
+          "h": "Contexto",
+          "p": "Reels captado no Lollapalooza, com público e ativações de marca no festival."
+        }
+      ],
+      "cardRatio": "9/16"
     }
   ]
 }

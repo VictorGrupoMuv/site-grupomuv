@@ -149,3 +149,17 @@ body:has(.muv-lead__card) #muv-whatsapp, body:has(#muv-cookie:not([hidden])) #mu
 /* Pop-up de lead · 10% na primeira produção */
 .muv-lead__title em { font-style: normal; color: var(--accent); }
 .muv-lead__fine { margin: 0; font-size: 12px; line-height: 1.45; color: var(--ink-3); }
+
+/* ---------------------------------------------------------------
+   Trabalhos · cartão vertical (9:16) para vídeo feito para o feed.
+   Só vale na grade própria: em outros lugares o case segue em 4:3.
+   --------------------------------------------------------------- */
+.works-grid__rotulo { margin: 0 0 clamp(20px, 2.4vw, 32px); }
+.works-grid.works-grid--vertical { grid-template-columns: repeat(4, 1fr); gap: clamp(20px, 2.2vw, 30px) clamp(14px, 1.6vw, 22px); }
+.works-grid--vertical .case--preview .case__media { aspect-ratio: 9 / 16; }
+.works-grid--vertical .case__preview-cta { display: none; }
+.works-grid--vertical .case--preview .case__meta .case__title { font-size: clamp(15px, 1.25vw, 19px); }
+.case__still { object-position: 50% 30%; }
+@media (min-width: 1600px) { .works-grid.works-grid--vertical { grid-template-columns: repeat(5, 1fr); } }
+@media (max-width: 1024px) { .works-grid.works-grid--vertical { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px) { .works-grid.works-grid--vertical { grid-template-columns: repeat(2, 1fr); gap: 22px 12px; } }
