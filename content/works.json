@@ -271,7 +271,7 @@
       "gear": "Captação móvel Sony · lentes rápidas · áudio embarcado",
       "summary": "Um dos maiores eventos corporativos do mercado financeiro brasileiro, com Tom Brady no palco. A MUV integrou a equipe de captação para entrega real-time.",
       "vimeoId": "903808449/4faaae5691",
-      "still": "https://i.vimeocdn.com/video/2188687352-882c1bae9e061c6f92fa0bce8d13482e074cabbe74156611ebbd07130dcad1db-d_1280?region=us",
+      "still": "/assets/cases/xp-expert-tom-brady-still.jpg",
       "body": [
         {
           "h": "Contexto",
@@ -291,7 +291,9 @@
         }
       ],
       "videoDuration": "PT1M25S",
-      "videoDate": "2024-01-17"
+      "videoDate": "2024-01-17",
+      "ratio": "9/16",
+      "cardRatio": "9/16"
     },
     {
       "slug": "numanice-ludmilla",
@@ -305,7 +307,7 @@
       "gear": "Captação móvel Sony · lentes rápidas · áudio embarcado",
       "summary": "Cobertura do Numanice, da Ludmilla: show, pista, bastidor e entrevistas com criadores, tudo captado e entregue enquanto a festa acontecia.",
       "vimeoId": "903920202/25fa2520e0",
-      "still": "https://i.vimeocdn.com/video/1784259732-b0b8c4b8524764c1a5f7a4533e716aa95ff88ad1cbc92804b6152776878c4f06-d_1280?region=us",
+      "still": "/assets/cases/numanice-ludmilla-still.jpg",
       "body": [
         {
           "h": "Contexto",
@@ -325,7 +327,9 @@
         }
       ],
       "videoDuration": "PT1M1S",
-      "videoDate": "2024-01-18"
+      "videoDate": "2024-01-18",
+      "ratio": "9/16",
+      "cardRatio": "9/16"
     },
     {
       "slug": "diageo-world-class",
@@ -339,7 +343,7 @@
       "gear": "Captação móvel Sony · lentes rápidas · foco em macro de produto",
       "summary": "A rota World Class de coquetelaria da Diageo, captada bar a bar e entregue em tempo real para as redes da marca.",
       "vimeoId": "903829468/515d6b8793",
-      "still": "https://i.vimeocdn.com/video/1784117795-2fef40b9092c23bb56d3dcec9294969b226cd1273ef7a4fe8153e288e221200f-d_1280?region=us",
+      "still": "/assets/cases/diageo-world-class-still.jpg",
       "body": [
         {
           "h": "Contexto",
@@ -359,7 +363,9 @@
         }
       ],
       "videoDuration": "PT17S",
-      "videoDate": "2024-01-17"
+      "videoDate": "2024-01-17",
+      "ratio": "9/16",
+      "cardRatio": "9/16"
     },
     {
       "slug": "carnauba-wind-house",
@@ -373,7 +379,7 @@
       "gear": "Sony FX3 · Sony A7III · lentes GMaster · drone DJI",
       "summary": "Lançamento do Carnaúba Wind House: um filme que precisava vender arquitetura, paisagem e a sensação de estar lá.",
       "vimeoId": "903829172/bad4541db5",
-      "still": "https://i.vimeocdn.com/video/1784131904-c94b32fa02e4c1898b85b71b004374192ae7b4a16ccbcf1cfc5c83d81dab1dec-d_1280?region=us",
+      "still": "/assets/cases/carnauba-wind-house-still.jpg",
       "body": [
         {
           "h": "Contexto",
@@ -394,7 +400,9 @@
       ],
       "hidden": true,
       "videoDuration": "PT1M",
-      "videoDate": "2024-01-17"
+      "videoDate": "2024-01-17",
+      "ratio": "9/16",
+      "cardRatio": "9/16"
     },
     {
       "slug": "mac-cosmetics-lancamento",
@@ -408,7 +416,7 @@
       "gear": "Captação móvel Sony · lentes rápidas · estação de edição no local",
       "summary": "Lançamento de produto da MAC com captação e edição feitas dentro do evento, o vídeo saía enquanto os convidados ainda estavam na sala.",
       "vimeoId": "903808591/07a3ee8402",
-      "still": "https://i.vimeocdn.com/video/1784087180-3e179cb3ff473e7826bf63c9385e7657d0b842135ec42b8e534a13122855f153-d_1280?region=us",
+      "still": "/assets/cases/mac-cosmetics-lancamento-still.jpg",
       "body": [
         {
           "h": "Contexto",
@@ -428,7 +436,9 @@
         }
       ],
       "videoDuration": "PT1M29S",
-      "videoDate": "2024-01-17"
+      "videoDate": "2024-01-17",
+      "ratio": "9/16",
+      "cardRatio": "9/16"
     },
     {
       "slug": "kylie-cosmetics",
@@ -442,7 +452,7 @@
       "gear": "Captação móvel Sony · lentes rápidas · foco em macro de produto",
       "summary": "Conteúdo de produto para a Kylie Cosmetics: textura, cor e acabamento resolvidos na captação, não na pós.",
       "vimeoId": "832661564/45a0337829",
-      "still": "https://i.vimeocdn.com/video/1678629774-db9ddc40ee3926542a881364863f8e52b15bf5c3dafeaf53218e1046e66af839-d_1280?region=us",
+      "still": "/assets/cases/kylie-cosmetics-still.jpg",
       "body": [
         {
           "h": "Contexto",
@@ -462,7 +472,9 @@
         }
       ],
       "videoDuration": "PT33S",
-      "videoDate": "2023-06-02"
+      "videoDate": "2023-06-02",
+      "ratio": "9/16",
+      "cardRatio": "9/16"
     },
     {
       "slug": "clear-lancamento",
@@ -476,7 +488,7 @@
       "gear": "Captação móvel Sony · lentes rápidas · áudio embarcado",
       "summary": "Evento de lançamento da Clear com celebridade e imprensa. Captação dentro do escopo de entrega em tempo real.",
       "vimeoId": "903828073/d807c4f87d",
-      "still": "https://i.vimeocdn.com/video/1784115751-35ccf99ffa2b9d03ad42d7d799dad2f9e495117da24ddb988691f169bdfe0d54-d_1280?region=us",
+      "still": "/assets/cases/clear-lancamento-still.jpg",
       "body": [
         {
           "h": "Contexto",
@@ -496,7 +508,9 @@
         }
       ],
       "videoDuration": "PT50S",
-      "videoDate": "2024-01-17"
+      "videoDate": "2024-01-17",
+      "ratio": "9/16",
+      "cardRatio": "9/16"
     },
     {
       "slug": "budweiser-ativacao",
@@ -510,7 +524,7 @@
       "gear": "Captação móvel Sony · lentes rápidas · áudio embarcado",
       "summary": "Ativação de marca da Budweiser em evento de entretenimento, com conteúdo captado e entregue enquanto a ação acontecia.",
       "vimeoId": "903829402/5cd15b776c",
-      "still": "https://i.vimeocdn.com/video/1784117629-4c99e709bbed900ffafbd7db0964f6855e9dee63b40d525bcf641f893bddc016-d_1280?region=us",
+      "still": "/assets/cases/budweiser-ativacao-still.jpg",
       "body": [
         {
           "h": "Contexto",
@@ -530,7 +544,9 @@
         }
       ],
       "videoDuration": "PT30S",
-      "videoDate": "2024-01-17"
+      "videoDate": "2024-01-17",
+      "ratio": "9/16",
+      "cardRatio": "9/16"
     },
     {
       "slug": "guarana-trem",
