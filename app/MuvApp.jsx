@@ -1743,56 +1743,8 @@ function Eventos({ setCurrent }) {
         </div>
       </section>
 
-      <section className="section">
-        <SectionHead eyebrow="Como funciona" title="Do briefing à entrega." />
-        <div className="grid-4 hub-process evt-passos">
-          {EVENTOS_PASSOS.map((p, i) => (
-            <div key={p.t} className="hub-process__step">
-              <p className="mono" style={{ color: "var(--accent-text)" }}>{String(i + 1).padStart(2, "0")}</p>
-              <h3 className="h3">{p.t}</h3>
-              <p>{p.d}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="section section--ink">
-        <SectionHead eyebrow="Cases" title="Onde isso já rodou." />
-        <div className="grid-3 evt-cases">
-          {EVENTOS_CASES.map((c, i) => (
-            <article key={c.t} className="evt-case">
-              <Cine src={c.still || null} alt={c.t} label={c.label} code={`CASE.${String(i + 1).padStart(2, "0")}`}
-                variant="dark" hideLabel={Boolean(c.still)} />
-              <h3 className="h3">{c.t}</h3>
-              <p>{c.d}</p>
-              {c.slug ? (
-                <a className="link-arrow" href={caseHref(c.slug)}
-                  onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();router.push(caseHref(c.slug));}}>Ver case <Arrow /></a>
-              ) : null}
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section srv-page__encaixe">
-        <div className="srv-encaixe">
-          <div className="srv-encaixe__col">
-            <p className="eyebrow eyebrow-dot">Para quem é</p>
-            <ul className="srv-encaixe__lista">
-              {EVENTOS_PARA_QUEM.map((p) => <li key={p}>{p}</li>)}
-            </ul>
-          </div>
-          <div className="srv-encaixe__col srv-encaixe__col--nao">
-            <p className="eyebrow eyebrow-dot">Para quem não é</p>
-            <p className="evt-nao">{EVENTOS_NAO_E}</p>
-          </div>
-        </div>
-      </section>
-
-      <HubFaq items={EVENTOS_FAQ} num={null} title="O que perguntam antes de fechar." />
-
       <section className="section section--ink srv-page__fechamento" id="orcamento">
-        <SectionHead title="Conta do seu evento" />
+        <SectionHead title="Conta do seu evento." />
         <div className="srv-form">
           {enviado ? (
             <div className="srv-form__ok" role="status">
@@ -1802,26 +1754,13 @@ function Eventos({ setCurrent }) {
           ) : (
             <form className="quote-card srv-form__card" onSubmit={enviarLead}>
               <h3 className="quote-card__title">Orçamento de cobertura de evento</h3>
-              <p className="quote-card__sub">Campos com {req} são obrigatórios.</p>
+              <p className="quote-card__sub">Leva um minuto. A gente te chama no WhatsApp.</p>
 
               <div className="quote-card__row">
                 <div className="field field--solid">
                   <label htmlFor="evt-nome">Nome {req}</label>
                   <input id="evt-nome" name="name" autoComplete="name" placeholder="Seu nome" required
                     value={lead.nome} onChange={campo("nome")} />
-                </div>
-                <div className="field field--solid">
-                  <label htmlFor="evt-empresa">Empresa</label>
-                  <input id="evt-empresa" name="company" autoComplete="organization" placeholder="Nome da empresa"
-                    value={lead.empresa} onChange={campo("empresa")} />
-                </div>
-              </div>
-
-              <div className="quote-card__row">
-                <div className="field field--solid">
-                  <label htmlFor="evt-email">E-mail {req}</label>
-                  <input id="evt-email" name="email" type="email" autoComplete="email" placeholder="voce@empresa.com" required
-                    value={lead.email} onChange={campo("email")} />
                 </div>
                 <div className="field field--solid">
                   <label htmlFor="evt-whats">WhatsApp {req}</label>
@@ -1832,14 +1771,14 @@ function Eventos({ setCurrent }) {
 
               <div className="quote-card__row">
                 <div className="field field--solid">
+                  <label htmlFor="evt-email">E-mail</label>
+                  <input id="evt-email" name="email" type="email" autoComplete="email" placeholder="voce@empresa.com"
+                    value={lead.email} onChange={campo("email")} />
+                </div>
+                <div className="field field--solid">
                   <label htmlFor="evt-data">Data do evento</label>
                   <input id="evt-data" name="data-evento" type="date"
                     value={lead.data} onChange={campo("data")} />
-                </div>
-                <div className="field field--solid">
-                  <label htmlFor="evt-cidade">Cidade</label>
-                  <input id="evt-cidade" name="cidade" autoComplete="address-level2" placeholder="São Paulo"
-                    value={lead.cidade} onChange={campo("cidade")} />
                 </div>
               </div>
 
@@ -1865,14 +1804,7 @@ function Eventos({ setCurrent }) {
         </div>
       </section>
 
-      <section className="section section--dark hub-cta hub-book-cta">
-        <div className="hub-cta__inner">
-          <h2 className="h1 hub-email-capture__title">Data marcada? Vamos conversar antes da agenda fechar.</h2>
-          <div className="hub-book-cta__actions">
-            <a className="btn btn--primary" href={EVENTOS_WHATSAPP} target="_blank" rel="noopener noreferrer">Chamar no WhatsApp <Arrow /></a>
-          </div>
-        </div>
-      </section>
+      <HubFaq items={EVENTOS_FAQ.slice(0, 3)} num={null} title="O que perguntam antes de fechar." />
     </div>);
 }
 

@@ -82,6 +82,8 @@
       "gear": "[CONFIRMAR] setup de captação em movimento",
       "summary": "Carnaval de rua com a marca dentro da cena, não colada por cima dela.",
       "still": "/assets/cases/case-03-still.jpg",
+      "video": "/assets/cases/case-03.mp4",
+      "poster": "/assets/cases/case-03-poster.jpg",
       "body": [
         {
           "h": "Contexto",

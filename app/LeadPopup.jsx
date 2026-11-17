@@ -28,9 +28,9 @@ const SNOOZE_DAYS   = 7;
 const FORM_NAME     = "lead-primeira-producao";
 const OFERTA        = "10% na primeira produção";
 const WHATSAPP_URL  = "https://wa.me/message/D6LG7EUSTIR7C1";
-// /eventos é landing de tráfego pago com formulário próprio: o pop-up
-// cobriria a página no celular e disputaria o mesmo lead.
-const SKIP_PATHS    = ["/contato", "/eventos"];
+// /eventos voltou a mostrar o pop-up em 17/11/2026, a pedido do Victor,
+// junto com a versão curta da landing.
+const SKIP_PATHS    = ["/contato"];
 
 function readState() {
   try {
