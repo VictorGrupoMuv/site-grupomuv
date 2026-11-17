@@ -5,6 +5,7 @@ import { getImageProps } from "next/image";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { trackAnalytics, trackAdsConversion } from "./GoogleAnalytics";
 import { ADS_CONV } from "./gtag-config";
+import * as DS from "./ds/MuvDS";
 import { EVENTOS_MARCAS, EVENTOS_PALCOS, EVENTOS_FORMATOS, EVENTOS_PASSOS, EVENTOS_CASES, EVENTOS_PARA_QUEM, EVENTOS_NAO_E, EVENTOS_FAQ } from "./eventos/conteudo";
 import _services from "../content/services.json";
 const SERVICOS = _services.items;
@@ -16,6 +17,15 @@ const servicoHref = (s) => (s && s.href) || (s && s.slug ? `/servicos/${s.slug}/
 // Escopos de lead. Fonte única: a home e o briefing da página Contato precisam
 // gravar o MESMO rótulo, senão o relatório por serviço no GA4 e no Ads conta a
 // mesma demanda duas vezes com nomes diferentes.
+// Foto de cada serviço no trilho da home (frames reais, grupo Fotos do Design System).
+const SERVICE_IMAGES = {
+  "cobertura-de-evento": "/assets/servicos/cobertura-evento.jpg",
+  "conteudo-para-redes": "/assets/cases/case-03-still.jpg",
+  "captacao-publicitaria": "/assets/servicos/captacao-publicitaria.jpg",
+  "institucional-e-corporativo": "/assets/servicos/institucional.jpg",
+  "documental-e-branded-content": "/assets/cases/case-02-still.jpg",
+  "estudio-e-equipamento": "/assets/servicos/estudio.jpg",
+};
 const ESCOPOS = SERVICOS.map((s) => s.scope || s.tag);
 import _process from "../content/process.json";
 const PROCESSO = _process.items;
@@ -90,8 +100,6 @@ function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = 
       <img className="cine__img" src={src} alt={alt || label} loading="lazy" decoding="async" /> :
       null}
       {hasMedia ? <span className="cine__scrim" aria-hidden="true" /> : null}
-      <span className="cine__corner" style={{ position: "absolute", top: 16, left: 16 }}>// {code}</span>
-      <span className="cine__corner" style={{ position: "absolute", top: 16, right: 16 }}>{aspect.replace("/", ":")}</span>
       {play && !hasMedia ?
       <div className="cine__play">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
@@ -99,8 +107,7 @@ function Cine({ label = "PLACEHOLDER", aspect = "16/9", code = "001", variant = 
       center ?
       <span className="cine__center">{center}</span> :
       null}
-      {video || vimeoId || hideLabel ? null : <span className="cine__label">{label}</span>}
-      {video || vimeoId || hideLabel ? null : <span className="cine__corner">REC ●</span>}
+      {hasMedia || hideLabel ? null : <span className="cine__label">{label}</span>}
     </div>);
 
 }
@@ -320,12 +327,18 @@ function Nav({ current, setCurrent, isDark }) {
 // ───── Footer ────────────────────────────────────────────────────────────────
 function Footer({ setCurrent }) {
   const go = (id) => (e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent(id);};
+  // Colunas abertas no desktop (e no HTML pré-renderizado); acordeão só no celular.
+  const accRef = useRef(null);
+  useEffect(() => {
+    if (!accRef.current || window.matchMedia("(min-width: 769px)").matches) return;
+    accRef.current.querySelectorAll("details").forEach((d) => d.removeAttribute("open"));
+  }, []);
   return (
     <footer className="footer">
       <div className="footer__giant">GRUPO MUV.</div>
       <div className="footer__grid">
         <div className="footer__intro">
-          <p className="footer__col-title">/ ECOSSISTEMA</p>
+          <p className="footer__col-title">Ecossistema</p>
           <p style={{ maxWidth: 440, color: "var(--dark-ink-2)", lineHeight: 1.5, marginBottom: 24 }}>
             Produtora audiovisual e hub criativo. Estratégia, produção e conteúdo. <span style={{ color: "var(--dark-ink)" }}>São Paulo, Brasil.</span>
           </p>
@@ -333,8 +346,8 @@ function Footer({ setCurrent }) {
             Começar um projeto <Arrow />
           </a>
         </div>
-        <div className="footer__accordions">
-          <details className="footer__group">
+        <div className="footer__accordions" ref={accRef}>
+          <details className="footer__group" open>
             <summary>Navegação <span aria-hidden="true">+</span></summary>
             <ul>
               {NAV_ITEMS.slice(1).filter((n) => !n.hideFromFooter).map((n) =>
@@ -342,7 +355,7 @@ function Footer({ setCurrent }) {
               )}
             </ul>
           </details>
-          <details className="footer__group">
+          <details className="footer__group" open>
             <summary>MUV Hub <span aria-hidden="true">+</span></summary>
             <ul>
               <li><a href={ROUTES["hub"]} onClick={go("hub")}>MUV Hub em São Paulo <ArrowDiag size={10} /></a></li>
@@ -353,7 +366,7 @@ function Footer({ setCurrent }) {
               <li><a href={HUB_TABELA}>Tabela de preços <ArrowDiag size={10} /></a></li>
             </ul>
           </details>
-          <details className="footer__group">
+          <details className="footer__group" open>
             <summary>Contato e social <span aria-hidden="true">+</span></summary>
             <ul>
               <li><a href="https://instagram.com/grupomuv" target="_blank" rel="noopener noreferrer">Instagram <ArrowDiag size={10} /></a></li>
@@ -369,7 +382,7 @@ function Footer({ setCurrent }) {
         <div>© {new Date().getFullYear()} Grupo MUV. Conteúdo que move.</div>
         <div style={{ display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap" }}>
           <span>contato@grupomuv.com.br</span>
-          <span>+55 11 99108-7786</span>
+          <span>+55 11 99108 7786</span>
           <span>São Paulo · SP</span>
         </div>
       </div>
@@ -463,7 +476,6 @@ function SectionHead({ eyebrow, title, sub, num, ef, tfld, sf }) {
   return (
     <div className="section-head">
       <div>
-        {num && <p className="mono" style={{ color: "var(--ink-3)", marginBottom: 12 }}>// {num}</p>}
         {eyebrow && <p className="eyebrow eyebrow-dot" data-tina-field={ef}>{eyebrow}</p>}
       </div>
       <div>
@@ -833,241 +845,156 @@ function Home({ setCurrent, density, content }) {
     placeholder: true
   });
   const tf = (o, f) => (content && o) ? tinaField(o, f) : undefined;
-  const heroRef = useRef(null);
-  const [intro, setIntro] = useState("boot"); // boot → open → title → done
-
-  // Letterbox intro timeline
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setIntro("done");
-      return;
-    }
-    if (window.sessionStorage.getItem("muv-intro-seen")) {
-      setIntro("done");
-      return;
-    }
-    window.sessionStorage.setItem("muv-intro-seen", "1");
-    const t1 = setTimeout(() => setIntro("open"), 120);
-    const t2 = setTimeout(() => setIntro("title"), 480);
-    const t3 = setTimeout(() => setIntro("done"), 950);
-    return () => {clearTimeout(t1);clearTimeout(t2);clearTimeout(t3);};
-  }, []);
-
-  // Hero responde ao SCROLL apenas. (O auto-fade por tempo foi removido:
-  // apagava a headline e os CTAs 8s depois do load, mesmo sem o usuário rolar.)
-  useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) {
-      if (heroRef.current) {
-        heroRef.current.style.opacity = "1";
-        heroRef.current.style.transform = "none";
-      }
-      return;
-    }
-    const apply = (t) => {
-      if (!heroRef.current) return;
-      heroRef.current.style.opacity = String(Math.max(0.35, 1 - t));
-      heroRef.current.style.transform = `translateY(${-t * 32}px)`;
-    };
-
-    const onScroll = () => {
-      const h = window.innerHeight;
-      apply(Math.max(0, Math.min(1, window.scrollY / (h * 0.55))));
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  // Home na composição HomeV2 do Design System (rodada 03): papel no topo,
+  // título em caixa normal, loop do logo como respiro, serviços em trilho,
+  // cases inclinados, frase revelada no scroll. Seções sobem uma sobre a outra.
+  const nav = (e, href) => { if (isModifiedClick(e)) return; e.preventDefault(); router.push(href); };
+  const oneLine = (s) => String(s || "").replace(/\s*\n\s*/g, " ");
+  const REEL = SRV.map((s) => ({
+    num: s.num,
+    name: s.tag,
+    desc: s.resumo || s.desc,
+    image: SERVICE_IMAGES[s.slug],
+    alt: `${s.tag}: bastidor de produção do Grupo MUV`,
+    href: servicoHref(s),
+  }));
+  const STACK = TRB.slice(0, 3).map((t) => ({
+    title: oneLine(t.title),
+    client: t.client,
+    image: t.still || t.poster,
+    alt: `Frame do case ${oneLine(t.title)}`,
+    video: t.video || null,
+    href: caseHref(t.slug),
+  }));
 
   return (
-    <div className="page page--no-top" data-screen-label="Home">
-      {/* HERO CINEMÁTICO, letterbox intro + showreel + headline reveal */}
-      <section className={`hero-cine intro-${intro}`}>
-        <div className="hero-cine__media">
-          <ShowreelBG />
-        </div>
-        <div className="hero-cine__scrim" />
+    <div className="page page--no-top hv2" data-screen-label="Home">
+      <DS.FlowStack>
+        {/* TOPO: papel, um título, um CTA laranja */}
+        <DS.FlowSection className="hv2-hero">
+          <div className="hv2-inner">
+            <DS.Eyebrow dot data-tina-field={tf(H,'heroEyebrow')}>{H.heroEyebrow}</DS.Eyebrow>
+            <div className="hv2-hero__title">
+              <h1 className="muv-h1s">
+                <span data-tina-field={tf(H,'heroTitle1')}>{H.heroTitle1}</span>{" "}
+                <span data-tina-field={tf(H,'heroTitle2')}>{H.heroTitle2}</span>{" "}
+                <em data-tina-field={tf(H,'heroAccent')}>{H.heroAccent}</em>
+              </h1>
+              <span className="hv2-hero__pill hv2-hero__pill--a" aria-hidden="true"><DS.Pill tone="solid" tilt={-7}>+30 marcas</DS.Pill></span>
+              <span className="hv2-hero__pill hv2-hero__pill--b" aria-hidden="true"><DS.Pill tilt={5}>Do set ao feed</DS.Pill></span>
+            </div>
+            <p className="hv2-hero__sub" data-tina-field={tf(H,'heroSub')}>{H.heroSub}</p>
+            <div className="hv2-actions">
+              <DS.Button variant="primary" arrow href={ROUTES.contato} onClick={(e) => nav(e, ROUTES.contato)}>Pedir orçamento</DS.Button>
+              <DS.Button variant="ghost" href={ROUTES.trabalhos} onClick={(e) => nav(e, ROUTES.trabalhos)}>Ver cases</DS.Button>
+            </div>
+            {SETTINGS.showStats !== false && (
+              <div className="hv2-stats">
+                <StatCounter prefix="+" target={120} label="Produções entregues" />
+                <StatCounter prefix="+" target={30} label="Marcas parceiras" />
+                <StatCounter target={7} suffix=" dias" label="Ciclo médio, da captação à entrega" />
+                <StatCounter target={1} pad={2} label="Hub criativo, quatro frentes" />
+              </div>
+            )}
+          </div>
+        </DS.FlowSection>
 
-        {/* Title card que aparece durante o boot */}
-        <div className="hero-cine__bootcard">
-          <p className="mono">GRUPO MUV</p>
-          <p className="mono hero-cine__bootcard-meta">EDIÇÃO 01 · 2026 · PRODUTORA & HUB CRIATIVO</p>
-        </div>
+        {/* RESPIRO: loop oficial do logo, uma faixa por página */}
+        <DS.FlowSection tone="ink" className="hv2-band" minHeight="0px">
+          <DS.MuvLoop label="Loop do logo Grupo MUV" />
+        </DS.FlowSection>
 
-        {/* Letterbox bars */}
-        <div className="hero-cine__bar hero-cine__bar--top" aria-hidden="true" />
-        <div className="hero-cine__bar hero-cine__bar--bot" aria-hidden="true" />
+        {/* SERVIÇOS */}
+        {SETTINGS.showServicos !== false && (
+        <DS.FlowSection tone="warm" className="hv2-services">
+          <div className="hv2-inner">
+            <div className="hv2-head">
+              <DS.Eyebrow number="01 /" data-tina-field={tf(H,'srvEyebrow')}>{H.srvEyebrow}</DS.Eyebrow>
+              <DS.HeadlineSentence level={2} data-tina-field={tf(H,'srvTitle')}>{oneLine(H.srvTitle)}</DS.HeadlineSentence>
+            </div>
+            <DS.ServiceReel items={REEL} interval={4500} onNavigate={nav} />
+            <div className="hv2-foot">
+              <DS.Button variant="ghost" arrow href={ROUTES.servicos} onClick={(e) => nav(e, ROUTES.servicos)}>Detalhar serviços</DS.Button>
+            </div>
+          </div>
+        </DS.FlowSection>
+        )}
 
-        <div className="hero-cine__content" ref={heroRef}>
-          <div className="hero-cine__top">
+        {/* CASES */}
+        {SETTINGS.showTrabalhos !== false && (
+        <DS.FlowSection className="hv2-cases">
+          <div className="hv2-inner">
+            <div className="hv2-head">
+              <DS.Eyebrow number="02 /" data-tina-field={tf(H,'trbEyebrow')}>{H.trbEyebrow}</DS.Eyebrow>
+              <DS.HeadlineSentence level={2} data-tina-field={tf(H,'trbTitle')}>{oneLine(H.trbTitle)}</DS.HeadlineSentence>
+            </div>
+            <DS.CaseStack items={STACK} onNavigate={nav} />
+            <div className="hv2-foot">
+              <DS.Button variant="ghost" arrow href={ROUTES.trabalhos} onClick={(e) => nav(e, ROUTES.trabalhos)}>Ver todos os trabalhos</DS.Button>
+            </div>
+          </div>
+        </DS.FlowSection>
+        )}
+
+        {/* FRASE REVELADA NO SCROLL */}
+        <DS.FlowSection tone="surface" className="hv2-reveal" minHeight="min(70vh, 560px)">
+          <DS.RevealText
+            text="A gente filma, edita e publica enquanto o evento ainda acontece. Seu público vê antes de ir embora."
+            highlight="antes de ir embora."
+            tag="Tempo real"
+            tagAfter={4} />
+        </DS.FlowSection>
+
+        {/* ORÇAMENTO: o caminho de conversão segue igual */}
+        {SETTINGS.showCTA !== false && (
+        <DS.FlowSection className="hv2-cta">
+          <HomeCTA
+            setCurrent={setCurrent}
+            brands={BRN}
+            showBrands={SETTINGS.showMarcas !== false}
+          />
+        </DS.FlowSection>
+        )}
+
+        {/* MUV HUB: claro, para não empilhar bloco escuro com o rodapé */}
+        {SETTINGS.showHub !== false && (
+        <DS.FlowSection tone="warm" className="hv2-hub">
+          <div className="hv2-inner hv2-hub__grid">
             <div>
-              <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }} data-tina-field={tf(H,'heroEyebrow')}>{H.heroEyebrow}</p>
-              <p className="mono" style={{ color: "var(--dark-ink-2)", marginTop: 12 }}>SP · BR · 23.5505° S · 46.6333° W</p>
+              <DS.Eyebrow number="03 /" data-tina-field={tf(H,'hubEyebrow')}>{H.hubEyebrow}</DS.Eyebrow>
+              <h2 className="muv-h1s hv2-hub__title">MUV <em data-tina-field={tf(H,'hubAccent')}>{H.hubAccent}</em></h2>
+              <p className="hv2-hub__tagline" data-tina-field={tf(H,'hubTagline')}>{H.hubTagline}</p>
+              <p className="hv2-hub__body" data-tina-field={tf(H,'hubBody')}>{H.hubBody}</p>
+              {/* Âncoras descritivas da home para as 4 páginas do Hub: é o link
+                  interno de maior peso do site, então o texto diz o que a página é. */}
+              <ul className="hv2-hub__links">
+                {HUB_ACCESS.map((i, k) => (
+                  <li key={i.id}>
+                    <a href={ROUTES[i.id]} onClick={(e) => nav(e, ROUTES[i.id])}>
+                      <span>{String(k + 1).padStart(2, "0")}</span> {i.title} <DS.Arrow />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <div className="hv2-actions" style={{ marginTop: 28 }}>
+                <DS.Button variant="ghost" arrow href={ROUTES.hub} onClick={(e) => nav(e, ROUTES.hub)}>Conhecer o Hub</DS.Button>
+                <DS.LinkArrow href={HUB_TABELA} style={{ alignSelf: "center" }}>Ver tabela de preços</DS.LinkArrow>
+              </div>
             </div>
-            <p className="mono hero-cine__rec" style={{ color: "var(--dark-ink-2)" }}>REEL 2026, V01 · LIVE</p>
-          </div>
-
-          <div className="hero-cine__mid">
-            <h1 className="hero-cine__display">
-              <span className="reveal-word"><span data-tina-field={tf(H,'heroTitle1')}>{H.heroTitle1}</span></span><br />
-              <span className="reveal-word"><span style={{ fontFamily: "var(--font-display)", fontStyle: "normal", marginRight: "0.3em" }} data-tina-field={tf(H,'heroTitle2')}>{H.heroTitle2}</span></span>{" "}
-              <span className="reveal-word"><span className="accent" data-tina-field={tf(H,'heroAccent')}>{H.heroAccent}</span></span>
-            </h1>
-          </div>
-
-          <div className="hero-cine__bottom">
-            <p className="hero-cine__sub" data-tina-field={tf(H,'heroSub')}>{H.heroSub}</p>
-            <div className="hero-cine__actions">
-              <button className="btn btn--primary" onClick={() => setCurrent("contato")}>Começar um projeto <Arrow /></button>
-              <button className="btn btn--ghost-dark" onClick={() => setCurrent("trabalhos")}>Ver portfolio <Arrow /></button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* STATS */}
-      {SETTINGS.showStats !== false && (
-      <section className="hero-stats">
-        <div className="hero-stats__inner">
-          <StatCounter prefix="+" target={120} label="Produções entregues" />
-          <StatCounter prefix="+" target={30} label="Marcas parceiras" />
-          <StatCounter target={7} suffix=" dias" label="Ciclo médio captação, entrega" />
-          <StatCounter target={1} pad={2} label="Hub criativo, quatro frentes" accent />
-        </div>
-      </section>
-      )}
-
-      {/* MARQUEE */}
-      {SETTINGS.showMarquee !== false && <Marquee items={MQ} />}
-
-      {/* MANIFESTO */}
-      {SETTINGS.showManifesto !== false && (
-      <ManifestoReader />
-      )}
-
-      {/* TRABALHOS · prova antes da lista de capacidades */}
-      {SETTINGS.showTrabalhos !== false && (
-      <section className="section home-cases" style={{ paddingTop: 64, paddingBottom: 64 }}>
-        <SectionHead num="02" eyebrow={H.trbEyebrow} title={H.trbTitle} sub={H.trbSub} ef={tf(H,'trbEyebrow')} tfld={tf(H,'trbTitle')} sf={tf(H,'trbSub')} />
-        <div className="grid-3">
-          {CASE_SLOTS.map((t, i) => (
-            <CaseCard
-              key={t.slug || `case-slot-${i}`}
-              {...t}
-              idx={i}
-              compactReveal
-              onClick={t.slug ? () => router.push(caseHref(t.slug)) : undefined}
-            />
-          ))}
-        </div>
-        <div style={{ marginTop: 48, display: "flex", justifyContent: "flex-end" }}>
-          <button className="btn btn--ghost" onClick={() => setCurrent("trabalhos")}>Ver todos os trabalhos <Arrow /></button>
-        </div>
-      </section>
-      )}
-
-      {/* SERVIÇOS */}
-      {SETTINGS.showServicos !== false && (
-      <section className="section home-capabilities">
-        <SectionHead num="03" eyebrow={H.srvEyebrow} title={H.srvTitle} sub={H.srvSub} ef={tf(H,'srvEyebrow')} tfld={tf(H,'srvTitle')} sf={tf(H,'srvSub')} />
-
-        <div className="home-capabilities__grid">
-          {SRV.map((s) =>
-          <a
-            className="home-capability home-capability--link"
-            key={s.num}
-            href={servicoHref(s)}
-            aria-label={`${s.tag}: ver serviço`}
-            onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();router.push(servicoHref(s));}}>
-            <div className="home-capability__meta">
-              <span className="mono">// {s.num}</span>
-            </div>
-            <h3>{s.tag}</h3>
-            <span className="home-capability__ver">Ver serviço <Arrow /></span>
-          </a>
-          )}
-        </div>
-        <div className="home-capabilities__footer">
-          <a className="btn btn--ghost" href={ROUTES.servicos} onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("servicos");}}>Detalhar serviços <Arrow /></a>
-        </div>
-      </section>
-      )}
-
-      {/* PROCESSO (preview clicável) */}
-      {SETTINGS.showProcesso !== false && (
-      <section className="section home-process" style={{ paddingTop: 64, paddingBottom: 64 }}>
-        <SectionHead num="04" eyebrow={H.prcEyebrow} title={H.prcTitle} sub={H.prcSub} ef={tf(H,'prcEyebrow')} tfld={tf(H,'prcTitle')} sf={tf(H,'prcSub')} />
-        <ProcessRail items={PRC} onOpen={() => setCurrent("processo")} />
-      </section>
-      )}
-
-      {/* BLOG PREVIEW */}
-      {SETTINGS.showBlog !== false && (
-      <section className="section home-blog-preview" style={{ paddingTop: 48, paddingBottom: 48 }}>
-        <SectionHead num="07" eyebrow={H.blgEyebrow} title={H.blgTitle} sub={H.blgSub} ef={tf(H,'blgEyebrow')} tfld={tf(H,'blgTitle')} sf={tf(H,'blgSub')} />
-        <div>
-          {PST.slice(0, 3).map((p, i) => <PostRow key={i} {...p} onClick={() => router.push(postHref(p.slug))} />)}
-        </div>
-        <div style={{ marginTop: 16, display: "flex", justifyContent: "flex-end" }}>
-          <button className="btn btn--ghost" onClick={() => setCurrent("blog")}>Ver todos os posts <Arrow /></button>
-        </div>
-      </section>
-      )}
-
-      {/* CTA FINAL */}
-      {SETTINGS.showCTA !== false && (
-        <HomeCTA
-          setCurrent={setCurrent}
-          brands={BRN}
-          showBrands={SETTINGS.showMarcas !== false}
-        />
-      )}
-
-      {/* MUV HUB TEASER */}
-      {SETTINGS.showHub !== false && (
-      <section className="section section--ink home-hub">
-        <div className="home-hub__bridge">
-          <span className="mono">Do briefing para a produção</span>
-          <span aria-hidden="true">↓</span>
-          <span className="mono">e da produção para a comunidade</span>
-        </div>
-        <div className="home-hub__layout">
-          <div className="home-hub__copy">
-            <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }} data-tina-field={tf(H,'hubEyebrow')}>{H.hubEyebrow}</p>
-            <h2 className="display home-hub__title">
-              MUV <span style={{ color: "var(--accent)" }} data-tina-field={tf(H,'hubAccent')}>{H.hubAccent}</span>
-            </h2>
-            <p className="home-hub__tagline" data-tina-field={tf(H,'hubTagline')}>{H.hubTagline}</p>
-            <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 24, maxWidth: 480 }} data-tina-field={tf(H,'hubBody')}>{H.hubBody}</p>
-            {/* Âncoras descritivas da home para as 4 páginas do Hub: é o link
-                interno de maior peso do site, então o texto diz o que a página é. */}
-            <ul className="home-hub__links">
-              {HUB_ACCESS.map((i) => (
-                <li key={i.id}>
-                  <a href={ROUTES[i.id]} onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent(i.id);}}>
-                    <span className="mono">{i.code}</span> {i.title} <ArrowDiag size={10} />
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <a className="btn btn--primary" href={ROUTES.hub} onClick={(e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent("hub");}}>Conhecer o Hub <Arrow /></a>
-              <a className="btn btn--ghost-dark" href={HUB_TABELA}>Ver tabela de preços <Arrow /></a>
+            <div className="hv2-hub__mosaic">
+              <img src="/assets/hub/hub-a.jpg" alt="Equipamento de produção organizado: câmeras, lentes, drone e acessórios" loading="lazy" decoding="async" />
+              <img src="/assets/hub/hub-b.jpg" alt="Ciclorama do estúdio MUV com softbox montado" loading="lazy" decoding="async" />
+              <img src="/assets/hub/hub-c.jpg" alt="Espaço de trabalho da MUV em uso, com pessoas circulando" loading="lazy" decoding="async" />
+              <img src="/assets/hub/hub-d.jpg" alt="Área de cowork da MUV com estações de trabalho e TV de parede" loading="lazy" decoding="async" />
             </div>
           </div>
-          <div className="hub-grid">
-            <Cine src="/assets/hub/hub-a.jpg" alt="Equipamento de produção organizado: câmeras, lentes, drone e acessórios" label="LOCADORA · CATÁLOGO" code="HUB.A" variant="dark" aspect="1/1" />
-            <Cine src="/assets/hub/hub-b.jpg" alt="Ciclorama do estúdio MUV com softbox montado" label="STUDIO · CICLORAMA" code="HUB.B" variant="accent" aspect="1/1" />
-            <Cine src="/assets/hub/hub-c.jpg" alt="Espaço de trabalho da MUV em uso, com pessoas circulando" label="COMUNIDADE" code="HUB.C" variant="dark" aspect="1/1" />
-            <Cine src="/assets/hub/hub-d.jpg" alt="Área de cowork da MUV com estações de trabalho e TV de parede" label="COWORK · ESPAÇO" code="HUB.D" variant="accent" aspect="1/1" />
-          </div>
-        </div>
-      </section>
-      )}
+        </DS.FlowSection>
+        )}
+      </DS.FlowStack>
     </div>);
 
 }
+
 
 function HomeCTA({ setCurrent, brands = BRANDS, showBrands = true }) {
   const [form, setForm] = useState({ name: "", company: "", email: "", phone: "", type: "", budget: "", brief: "" });
@@ -1076,7 +1003,7 @@ function HomeCTA({ setCurrent, brands = BRANDS, showBrands = true }) {
   const [error, setError] = useState("");
   const [consent, setConsent] = useState(false);
   const types = [...ESCOPOS, "Outro"];
-  const budgets = ["R$ 5–10k", "R$ 10–25k", "R$ 25–50k", "R$ 50–100k", "R$ 100k+", "A definir"];
+  const budgets = ["R$ 5 a 10k", "R$ 10 a 25k", "R$ 25 a 50k", "R$ 50 a 100k", "R$ 100k+", "A definir"];
   const submit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.phone) return;
@@ -1237,7 +1164,7 @@ function HomeCTA({ setCurrent, brands = BRANDS, showBrands = true }) {
             </a>
             <a href="tel:+5511991087786" className="home-cta__contact-item">
               <span className="mono" style={{ color: "var(--dark-ink-2)" }}>Telefone</span>
-              <span>+55 11 99108-7786</span>
+              <span>+55 11 99108 7786</span>
             </a>
             <div className="home-cta__contact-item">
               <span className="mono" style={{ color: "var(--dark-ink-2)" }}>Estúdio</span>
@@ -1249,7 +1176,7 @@ function HomeCTA({ setCurrent, brands = BRANDS, showBrands = true }) {
       {showBrands && (
         <div className="home-cta__proof" aria-label="Marcas que já trabalharam com o Grupo MUV">
           <BrandMarquee brands={brands} />
-          <p className="mono">// +30 marcas · 2019—2026</p>
+          <p className="mono">+30 marcas · 2019 a 2026</p>
         </div>
       )}
     </section>);
@@ -1260,7 +1187,7 @@ function ServiceCardDark({ num, tag, title, desc, items }) {
   return (
     <div className="svc" style={{ background: "rgba(255,255,255,0.02)", borderColor: "var(--dark-line)", color: "var(--dark-ink)" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-        <span className="svc__num" style={{ color: "var(--accent)" }}>// {num}</span>
+        <span className="svc__num" style={{ color: "var(--accent-text)" }}>{num}</span>
         <span className="pill pill--accent">{tag}</span>
       </div>
       <p style={{ fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--dark-ink-2)" }}>
@@ -1332,7 +1259,7 @@ function CaseCard({ title, client, tag, year, idx, variant, onClick, still, vide
       onFocus={playPreview}
       onBlur={() => { stopPreview(); setIsTouched(false); }}>
       <div className={`case__media case__media--${v}`} style={{ fontSize: "10px", width: "100%" }}>
-        {still ? <img className="case__still" src={still} alt={`${title.replace(/\n/g, " ")} — ${client}`} loading="lazy" decoding="async" /> : null}
+        {still ? <img className="case__still" src={still} alt={`${title.replace(/\n/g, " ")}, ${client}`} loading="lazy" decoding="async" /> : null}
         {video ? (
           <video
             ref={videoRef}
@@ -1347,8 +1274,6 @@ function CaseCard({ title, client, tag, year, idx, variant, onClick, still, vide
             tabIndex={-1}
           />
         ) : null}
-        <span className="case__frame-code mono">// CASE.{String(idx + 1).padStart(2, "0")}</span>
-        <span className="case__frame-state mono">{placeholder ? "SLOT · ABERTO" : video ? "HOVER · FILM" : "STILL · FRAME"}</span>
         <span className="case__preview-cta">{placeholder ? "Case em preparação" : "Ver mais"} {!placeholder && <Arrow />}</span>
       </div>
       <div className="case__meta">
@@ -1399,12 +1324,12 @@ function Servicos({ setCurrent }) {
       <PageHead crumb="01 · Serviços" title={"Seis serviços.\nUm time só."} lead="Cada um com entregável definido, prazo e case que comprova. Escolha o que você precisa e peça orçamento direto." accent="Seis serviços." meta="06 serviços" compact />
 
       <section className="section services-horizontal" id="servicos">
-        <SectionHead eyebrow="O que entregamos" title={"Não é o como.\nÉ o que chega na sua mão."} sub="Abra um serviço para ver o que entra na entrega, em quanto tempo e para quem já fizemos." />
+        <SectionHead eyebrow="O que entregamos" title={"O que chega\nna sua mão."} sub="Abra um serviço para ver o que entra na entrega, em quanto tempo e para quem já fizemos." />
         <ServiceRail items={SERVICOS} onOpen={abrirServico} />
       </section>
 
       <section className="section process-principles">
-        <SectionHead eyebrow="Como entregamos" title="Cada serviço tem seu processo." sub="As etapas mudam conforme a entrega — abra o serviço para ver as dele." />
+        <SectionHead eyebrow="Como entregamos" title="Cada serviço tem seu processo." sub="As etapas mudam conforme a entrega: abra o serviço para ver as dele." />
       </section>
 
       <section className="section process-principles">
@@ -1653,7 +1578,7 @@ function Servico({ setCurrent, slug }) {
 
               <div className="field field--solid">
                 <label htmlFor="srv-brief">O que você precisa</label>
-                <textarea id="srv-brief" name="brief" rows={3} placeholder="Data, lugar, formato — o que já estiver definido ajuda."
+                <textarea id="srv-brief" name="brief" rows={3} placeholder="Data, lugar, formato: o que já estiver definido ajuda."
                   value={lead.brief} onChange={(e) => setLead({ ...lead, brief: e.target.value })} />
               </div>
 
@@ -1810,7 +1735,7 @@ function Eventos({ setCurrent }) {
         <div className="grid-3 hub-process">
           {EVENTOS_FORMATOS.map((f, i) => (
             <div key={f.t} className="hub-process__step">
-              <p className="mono" style={{ color: "var(--accent-text)" }}>// {String(i + 1).padStart(2, "0")}</p>
+              <p className="mono" style={{ color: "var(--accent-text)" }}>{String(i + 1).padStart(2, "0")}</p>
               <h3 className="h3">{f.t}</h3>
               <p>{f.d}</p>
             </div>
@@ -1823,7 +1748,7 @@ function Eventos({ setCurrent }) {
         <div className="grid-4 hub-process evt-passos">
           {EVENTOS_PASSOS.map((p, i) => (
             <div key={p.t} className="hub-process__step">
-              <p className="mono" style={{ color: "var(--accent-text)" }}>// {String(i + 1).padStart(2, "0")}</p>
+              <p className="mono" style={{ color: "var(--accent-text)" }}>{String(i + 1).padStart(2, "0")}</p>
               <h3 className="h3">{p.t}</h3>
               <p>{p.d}</p>
             </div>
@@ -1962,7 +1887,7 @@ function Processo({ setCurrent }) {
 function Metric({ num, label, desc }) {
   return (
     <div className="process-principle">
-      <p className="mono">// {num}</p>
+      <p className="mono">{num}</p>
       <h3 className="h3">{label}</h3>
       <p>{desc}</p>
     </div>);
@@ -2005,21 +1930,21 @@ function Trabalhos({ setCurrent, slug = null }) {
           </header>
           <div className="case-detail__hero">
             <div style={heroVertical ? { maxWidth: 440, margin: "0 auto" } : undefined}>
-              <Cine vimeoId={t.vimeoId} video={t.vimeoId ? null : t.video} poster={t.poster} src={t.still} alt={`${t.title.replace(/\n/g, " ")} — ${t.client}`} label={t.title.toUpperCase().replace(/\n/g, " ")} code={`CASE.${String(selected + 1).padStart(2, "0")}`} aspect={heroVertical ? "9/16" : "16/9"} variant="accent" play />
+              <Cine vimeoId={t.vimeoId} video={t.vimeoId ? null : t.video} poster={t.poster} src={t.still} alt={`${t.title.replace(/\n/g, " ")}, ${t.client}`} label={t.title.toUpperCase().replace(/\n/g, " ")} code={`CASE.${String(selected + 1).padStart(2, "0")}`} aspect={heroVertical ? "9/16" : "16/9"} variant="accent" play />
             </div>
           </div>
 
           <section className="case-detail__specs">
             <div className="case-detail__spec">
-              <p className="mono case-detail__spec-label">// FORMATO</p>
+              <p className="mono case-detail__spec-label">FORMATO</p>
               <p>{t.format}</p>
             </div>
             <div className="case-detail__spec">
-              <p className="mono case-detail__spec-label">// EQUIPE</p>
+              <p className="mono case-detail__spec-label">EQUIPE</p>
               <p>{t.team}</p>
             </div>
             <div className="case-detail__spec">
-              <p className="mono case-detail__spec-label">// EQUIPAMENTO</p>
+              <p className="mono case-detail__spec-label">EQUIPAMENTO</p>
               <p>{t.gear}</p>
             </div>
           </section>
@@ -2049,7 +1974,7 @@ function Trabalhos({ setCurrent, slug = null }) {
 
   return (
     <div className="page" data-screen-label="Trabalhos">
-      <PageHead crumb="03 · Trabalhos" title="Cases selecionados." lead="Produções de 2023 a 2026. Cada case tem uma marca, um contexto e uma decisão criativa que a gente pode explicar." accent="Cases" meta={`${TRABALHOS.length} projetos · 2023–2026`} />
+      <PageHead crumb="03 · Trabalhos" title="Cases selecionados." lead="Produções de 2023 a 2026. Cada case tem uma marca, um contexto e uma decisão criativa que a gente pode explicar." accent="Cases" meta={`${TRABALHOS.length} projetos · 2023 a 2026`} />
 
       <div className="works-filter">
         <div className="works-filter__inner">
@@ -2133,12 +2058,11 @@ function Sobre({ setCurrent }) {
       <section className="section about-manifesto">
         <div className="about-manifesto__inner">
           <div className="about-manifesto__label">
-            <p className="mono" style={{ color: "var(--ink-3)" }}>// MANIFESTO</p>
-            <p className="eyebrow eyebrow-dot" style={{ marginTop: 12 }}>O que define a gente</p>
+            <p className="eyebrow eyebrow-dot">O que define a gente</p>
           </div>
           <p className="manifesto-text" style={{ fontFamily: "var(--font-display)" }}>
-            Criatividade com <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>direção.</span><br />
-            Estética com <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>propósito.</span><br />
+            Criatividade com direção.<br />
+            Estética com propósito.<br />
             <span className="blue">Conteúdo</span> que <span style={{ color: "var(--accent)", fontStyle: "normal", fontWeight: 400 }}>move.</span>
           </p>
         </div>
@@ -2172,7 +2096,7 @@ function Sobre({ setCurrent }) {
           { tag: "Precisão", desc: "Entrega no formato certo, no prazo acordado, sem revisão desnecessária. O processo existe pra isso não depender de sorte." }].
           map((p, i) =>
           <article key={i} className="pilar-card" tabIndex={0}>
-              <p className="mono pilar-card__num">// 0{i + 1}</p>
+              <p className="mono pilar-card__num">0{i + 1}</p>
               <h3 className="pilar-card__title">{p.tag}.</h3>
               <p className="pilar-card__desc">{p.desc}</p>
             </article>
@@ -2305,7 +2229,7 @@ function HubCrossLinks({ current, setCurrent }) {
   const go = (id) => (e) => { if (isModifiedClick(e)) return; e.preventDefault(); setCurrent(id); window.scrollTo({ top: 0, behavior: "instant" }); };
   return (
     <nav className="hub-crosslinks" aria-label="Outras áreas do MUV Hub">
-      <p className="mono hub-crosslinks__label">// TAMBÉM NO HUB</p>
+      <p className="mono hub-crosslinks__label">Também no Hub</p>
       <ul>
         {items.map((i) => (
           <li key={i.id}><a href={ROUTES[i.id]} onClick={go(i.id)}>{i.title} <ArrowDiag size={10} /></a></li>
@@ -2322,7 +2246,7 @@ function MuvHub({ setCurrent }) {
       <section className="hero hub-overview-hero" style={{ borderBottom: "1px solid var(--line)" }}>
         <div className="hero__top">
           <span className="pill pill--accent pill--dot">Aberto · Alameda Santos, São Paulo</span>
-          <p className="mono" style={{ color: "var(--ink-3)" }}>// HUB.OVERVIEW</p>
+          
         </div>
         <h1 className="hero__display hub-overview-hero__title">
           MUV <span className="accent">Hub.</span>{" "}
@@ -2341,10 +2265,10 @@ function MuvHub({ setCurrent }) {
 
       {/* REEL DO ENCONTRO — aftermovie da comunidade */}
       <section className="section section--dark" style={{ paddingTop: 56, paddingBottom: 56 }}>
-        <SectionHead num="*" eyebrow="O Hub na prática" title={"Não é render.\nÉ o lugar."} sub="Aftermovie do primeiro encontro da comunidade MUV." />
+        <SectionHead num="*" eyebrow="O Hub na prática" title={"O lugar,\nsem render."} sub="Aftermovie do primeiro encontro da comunidade MUV." />
         <div style={{ marginTop: 28, maxWidth: 720, marginInline: "auto" }}>
           <Cine vimeoId="1219340230" aspect="16/9" variant="dark" code="REEL" hideLabel
-            alt="Encontro da comunidade MUV — aftermovie" />
+            alt="Encontro da comunidade MUV: aftermovie" />
         </div>
       </section>
 
@@ -2442,7 +2366,7 @@ const LOCADORA_CATEGORIAS = [
   {
     cat: "Câmeras",
     code: "CAM",
-    items: ["Sony FX6 — cinema 4K", "Sony FX3 — full-frame 4K", "Sony A7CII — compacta full-frame", "Sony A7 IV — híbrida foto/vídeo", "Sony A73 — segunda câmera"]
+    items: ["Sony FX6: cinema 4K", "Sony FX3: full-frame 4K", "Sony A7CII: compacta full-frame", "Sony A7 IV: híbrida foto/vídeo", "Sony A73: segunda câmera"]
   },
   {
     cat: "Lentes",
@@ -2452,17 +2376,17 @@ const LOCADORA_CATEGORIAS = [
   {
     cat: "Drones & FPV",
     code: "DRONE",
-    items: ["DJI Mini 4 Pro — aéreo urbano", "DJI Avata — FPV cinemático", "DJI Mavic 3 Pro — pacote completo", "Avata Goggles 2 + RC Motion 2"]
+    items: ["DJI Mini 4 Pro: aéreo urbano", "DJI Avata: FPV cinemático", "DJI Mavic 3 Pro: pacote completo", "Avata Goggles 2 + RC Motion 2"]
   },
   {
     cat: "Iluminação",
     code: "LIGHT",
-    items: ["Aputure Amaran F22c — painel flexível", "Aputure Amaran F21c", "Aputure T2C tube light", "Aputure 600D — chave principal", "Flash Godox AD200/AD400"]
+    items: ["Aputure Amaran F22c: painel flexível", "Aputure Amaran F21c", "Aputure T2C tube light", "Aputure 600D: chave principal", "Flash Godox AD200/AD400"]
   },
   {
     cat: "Áudio",
     code: "SOUND",
-    items: ["Rode VideoMic NTG", "Rode Wireless Pro", "Hollyland Lark150 — lapela", "Mixer Zoom F3", "Boom pole + cabos XLR"]
+    items: ["Rode VideoMic NTG", "Rode Wireless Pro", "Hollyland Lark150: lapela", "Mixer Zoom F3", "Boom pole + cabos XLR"]
   },
   {
     cat: "Estabilização & rigging",
@@ -2487,7 +2411,7 @@ function HubLocadora({ setCurrent }) {
           {LOCADORA_CATEGORIAS.map((c) =>
             <div key={c.code} className="hub-cat-card">
               <div className="hub-cat-card__head">
-                <span className="mono" style={{ color: "var(--accent)" }}>// {c.code}</span>
+                <span className="mono" style={{ color: "var(--accent-text)" }}>{c.code}</span>
                 <h3 className="hub-cat-card__title">{c.cat}</h3>
               </div>
               <ul className="hub-cat-card__list">
@@ -2507,7 +2431,7 @@ function HubLocadora({ setCurrent }) {
             { n: "03", t: "Retira no estúdio", d: "Alameda Santos, 211, sala 1507, região da Paulista. Checklist de saída assinado. Devolução no horário combinado." }
           ].map((s) =>
             <div key={s.n} className="hub-process__step">
-              <p className="mono" style={{ color: "var(--accent)" }}>// {s.n}</p>
+              <p className="mono" style={{ color: "var(--accent-text)" }}>{s.n}</p>
               <h3 className="h3">{s.t}</h3>
               <p>{s.d}</p>
             </div>
@@ -2566,7 +2490,6 @@ function HubStudio({ setCurrent }) {
         <div className="hub-studio-gallery">
           <Cine src="/assets/hub/studio-01.jpg" alt="Ciclorama L-shape do estúdio MUV, com softbox montado" label="CICLORAMA · L-SHAPE" code="STUDIO.01" aspect="16/9" variant="dark" />
           <Cine src="/assets/hub/studio-02.jpg" alt="Equipamento de produção organizado: câmeras, lentes, drone e iluminação" label="EQUIPAMENTO EM BANCADA" code="STUDIO.02" aspect="16/9" variant="accent" />
-          <Cine label="ILUMINAÇÃO MONTADA" code="STUDIO.03" aspect="4/3" />
         </div>
       </section>
 
@@ -2575,7 +2498,7 @@ function HubStudio({ setCurrent }) {
         <div className="hub-specs">
           {STUDIO_SPECS.map((s, i) =>
             <div key={i} className="hub-specs__row">
-              <span className="mono hub-specs__label">// {s.label}</span>
+              <span className="mono hub-specs__label">{s.label}</span>
               <span className="hub-specs__value">{s.value}</span>
             </div>
           )}
@@ -2591,7 +2514,7 @@ function HubStudio({ setCurrent }) {
             { n: "03", t: "Diária de 8 horas", d: "Dia inteiro de produção. Operador técnico opcional por R$ 600 e luz pronta na chegada por R$ 350.", price: "R$ 1.500 · membro R$ 900" }
           ].map((p) =>
             <div key={p.n} className="hub-plan-card">
-              <p className="mono" style={{ color: "var(--accent)" }}>// {p.n}</p>
+              <p className="mono" style={{ color: "var(--accent-text)" }}>{p.n}</p>
               <h3 className="h3" style={{ marginTop: 16 }}>{p.t}</h3>
               <p style={{ color: "var(--ink-2)", marginTop: 8 }}>{p.d}</p>
               <p className="hub-plan-card__price">{p.price}</p>
@@ -2639,28 +2562,28 @@ function HubComunidade({ setCurrent }) {
         <SectionHead num="01" eyebrow="O que tem na comunidade" title="Quatro camadas vivas." sub="Cresce com quem entra. Quanto mais gente certa, mais útil pra todo mundo." />
         <div className="grid-2-2">
           <div className="hub-comm-card">
-            <p className="mono" style={{ color: "var(--accent)" }}>// FEED</p>
+            <p className="mono" style={{ color: "var(--accent-text)" }}>FEED</p>
             <h3 className="h3" style={{ marginTop: 12 }}>Oportunidades & vagas</h3>
             <p style={{ color: "var(--ink-2)", marginTop: 8 }}>
               Marcas e produtoras parceiras postam projetos abertos, vagas pontuais e captações com data marcada. Filmmakers respondem com portfolio.
             </p>
           </div>
           <div className="hub-comm-card">
-            <p className="mono" style={{ color: "var(--accent)" }}>// AGENDA</p>
+            <p className="mono" style={{ color: "var(--accent-text)" }}>AGENDA</p>
             <h3 className="h3" style={{ marginTop: 12 }}>Eventos & encontros</h3>
             <p style={{ color: "var(--ink-2)", marginTop: 8 }}>
               Mostras, screenings, painéis de discussão, sessões de portfolio review. Presencial em SP e online pro Brasil inteiro.
             </p>
           </div>
           <div className="hub-comm-card">
-            <p className="mono" style={{ color: "var(--accent)" }}>// CONTEÚDO</p>
+            <p className="mono" style={{ color: "var(--accent-text)" }}>CONTEÚDO</p>
             <h3 className="h3" style={{ marginTop: 12 }}>Cursos & ensaios</h3>
             <p style={{ color: "var(--ink-2)", marginTop: 8 }}>
               Conteúdo educativo curto e denso. Direção, fotografia, edição, color, produção. Quem ensina é quem entrega projeto de verdade.
             </p>
           </div>
           <div className="hub-comm-card">
-            <p className="mono" style={{ color: "var(--accent)" }}>// REDE</p>
+            <p className="mono" style={{ color: "var(--accent-text)" }}>REDE</p>
             <h3 className="h3" style={{ marginTop: 12 }}>Networking direto</h3>
             <p style={{ color: "var(--ink-2)", marginTop: 8 }}>
               Perfil curado, portfolio visível, mensagem direta. Sem intermediário, sem agência cobrando 30% no meio.
@@ -2678,7 +2601,7 @@ function HubComunidade({ setCurrent }) {
             { tag: "AGÊNCIAS", desc: "Casas de criação que distribuem briefings. Acesso intermediário com posting limitado e visibilidade pro time." }
           ].map((m, i) =>
             <div key={i} style={{ padding: "32px 24px", borderTop: "1px solid var(--line)" }}>
-              <p className="mono" style={{ color: "var(--accent)" }}>// 0{i + 1}</p>
+              <p className="mono" style={{ color: "var(--accent-text)" }}>0{i + 1}</p>
               <h3 className="h3" style={{ marginTop: 24 }}>{m.tag}</h3>
               <p style={{ color: "var(--ink-2)", marginTop: 12, fontSize: 14 }}>{m.desc}</p>
             </div>
@@ -2745,7 +2668,7 @@ function HubCowork({ setCurrent }) {
         <div className="hub-specs">
           {COWORK_BENEFITS.map((b, i) =>
             <div key={i} className="hub-specs__row">
-              <span className="mono hub-specs__label">// {b.label}</span>
+              <span className="mono hub-specs__label">{b.label}</span>
               <span className="hub-specs__value">{b.value}</span>
             </div>
           )}
@@ -2761,7 +2684,7 @@ function HubCowork({ setCurrent }) {
             { n: "03", t: "Sala de reunião", d: "Até 6 pessoas, com TV e câmera pra videoconferência. Membro: 2h/mês inclusas e R$ 70/h depois.", price: "R$ 120 / hora" }
           ].map((p) =>
             <div key={p.n} className="hub-plan-card">
-              <p className="mono" style={{ color: "var(--accent)" }}>// {p.n}</p>
+              <p className="mono" style={{ color: "var(--accent-text)" }}>{p.n}</p>
               <h3 className="h3" style={{ marginTop: 16 }}>{p.t}</h3>
               <p style={{ color: "var(--ink-2)", marginTop: 8 }}>{p.d}</p>
               <p className="hub-plan-card__price">{p.price}</p>
@@ -2932,7 +2855,6 @@ function Blog({ setCurrent, slug = null }) {
       <section className="section blog-feature">
         <div className="blog-feature__head">
           <p className="eyebrow eyebrow-dot">Em destaque</p>
-          <p className="mono" style={{ color: "var(--ink-3)" }}>// FEAT.01</p>
         </div>
         <div className="blog-feature__grid">
           <div className="blog-feature__media">
@@ -3018,7 +2940,7 @@ function Contato({ setCurrent }) {
       if (h && SCOPES.includes(h)) setData((d) => (d.scope.length ? d : { ...d, scope: [h] }));
     } catch (_) {}
   }, []);
-  const BUDGETS = ["< R$30k", "R$30k – 80k", "R$80k – 200k", "+ R$200k"];
+  const BUDGETS = ["< R$30k", "R$30k a 80k", "R$80k a 200k", "+ R$200k"];
 
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
@@ -3053,7 +2975,7 @@ function Contato({ setCurrent }) {
             <p className="eyebrow eyebrow-dot">Direto</p>
             <ul style={{ listStyle: "none", padding: 0, marginTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
               <li><a className="link-arrow" href="mailto:contato@grupomuv.com.br">contato@grupomuv.com.br <Arrow /></a></li>
-              <li><a className="link-arrow" href="tel:+5511991087786">+55 11 99108-7786 <Arrow /></a></li>
+              <li><a className="link-arrow" href="tel:+5511991087786">+55 11 99108 7786 <Arrow /></a></li>
               <li><a className="link-arrow" href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer">WhatsApp <ArrowDiag /></a></li>
             </ul>
 
@@ -3065,7 +2987,7 @@ function Contato({ setCurrent }) {
             </p>
 
             <p className="eyebrow eyebrow-dot" style={{ marginTop: 48 }}>Horário</p>
-            <p style={{ marginTop: 16, color: "var(--ink-2)" }}>Seg–Sex · 10h–19h<br />Em dia de set: agenda 24/7</p>
+            <p style={{ marginTop: 16, color: "var(--ink-2)" }}>Seg a Sex · 10h às 19h<br />Em dia de set: agenda 24/7</p>
 
             <p className="eyebrow eyebrow-dot" style={{ marginTop: 48 }}>Social</p>
             <ul style={{ listStyle: "none", padding: 0, marginTop: 16, display: "flex", flexDirection: "column", gap: 8 }}>
@@ -3226,16 +3148,16 @@ function Faq({ setCurrent }) {
 
       <section className="section section--ink faq-cta">
         <div className="faq-cta__inner">
-          <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>Não achou sua dúvida?</p>
-          <h2 className="h1" style={{ marginTop: 24, color: "var(--dark-ink)" }}>
-            A gente responde<br />no <span style={{ color: "var(--accent)", fontStyle: "italic", fontWeight: 400 }}>mesmo dia útil.</span>
+          <p className="eyebrow eyebrow-dot" style={{ color: "var(--ink-3)" }}>Não achou sua dúvida?</p>
+          <h2 className="h1" style={{ marginTop: 24, color: "var(--ink)" }}>
+            A gente responde<br />no <span style={{ color: "var(--accent)" }}>mesmo dia útil.</span>
           </h2>
-          <p className="body-l" style={{ color: "var(--dark-ink-2)", marginTop: 24, maxWidth: 540 }}>
+          <p className="body-l" style={{ color: "var(--ink-2)", marginTop: 24, maxWidth: 540 }}>
             Provavelmente sua dúvida tá no nível mais específico, orçamento de um projeto real, equipamento pra uma necessidade exata, alinhamento de prazo apertado. Esse tipo de coisa a gente resolve em conversa.
           </p>
           <div style={{ marginTop: 40, display: "flex", gap: 12, flexWrap: "wrap" }}>
             <a className="btn btn--primary" href="https://wa.me/message/D6LG7EUSTIR7C1" target="_blank" rel="noopener noreferrer">WhatsApp <Arrow /></a>
-            <button className="btn btn--ghost-dark" onClick={() => setCurrent("contato")}>Briefing completo <Arrow /></button>
+            <button className="btn btn--ghost" onClick={() => setCurrent("contato")}>Briefing completo <Arrow /></button>
           </div>
         </div>
       </section>
@@ -3254,7 +3176,7 @@ function Faq({ setCurrent }) {
 const DISPLAY_FONT = `"Archivo Black", "Arial Black", sans-serif`;
 const BODY_FONT    = `"Inter", Arial, sans-serif`;
 
-const DARK_NAV_PAGES = new Set(["hub"]);
+const DARK_NAV_PAGES = new Set([]);
 
 function HomeLive({ tina, setCurrent }) {
   const home     = useTina(tina.home).data.home;
@@ -3360,7 +3282,8 @@ function App({ page = "home", slug = null, tina = null }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, [current]);
 
-  const isDark = DARK_NAV_PAGES.has(current) || (current === "home" && !scrolledPastHero);
+  // A home abre em papel (Design System rodada 03): a nav não escurece mais sobre o topo.
+  const isDark = DARK_NAV_PAGES.has(current);
 
   let Page = Home;
   const _navKey = NAV_OFF[current] || (String(current).startsWith("hub") ? "navHub" : null);

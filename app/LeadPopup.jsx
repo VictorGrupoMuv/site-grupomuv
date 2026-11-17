@@ -4,25 +4,29 @@ import { trackAnalytics, trackAdsConversion } from "./GoogleAnalytics";
 import { ADS_CONV } from "./gtag-config";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Pop-up de captação de leads · Diagnóstico gratuito
+// Pop-up de captação de leads · 10% na primeira produção
 //
-// Regras de exibição (decididas em 13/10/2026):
-//  · aparece UMA vez por visitante: após 8s na página OU 40% de rolagem,
-//    o que vier primeiro;
+// Oferta trocada em 17/11/2026 (antes: diagnóstico gratuito). Capta nome,
+// e-mail e WhatsApp. A chave do localStorage mudou junto, para quem fechou
+// o pop-up antigo ver a oferta nova.
+//
+// Regras de exibição:
+//  · aparece UMA vez por visitante, depois da decisão de cookies e de 50%
+//    de rolagem (Design System rodada 03, "um aviso por vez");
 //  · quem fecha só volta a ver depois de 7 dias; quem envia nunca mais vê;
 //  · não aparece em /contato/ (já tem formulário) nem com o drawer aberto;
 //  · fica ABAIXO do banner de cookies (z-index 9990 < 9999) pra nunca
 //    bloquear a decisão de consentimento.
 //
-// Envio: Netlify Forms, form "lead-diagnostico" declarado em public/__forms.html.
+// Envio: Netlify Forms, form "lead-primeira-producao" declarado em public/__forms.html.
 // Leads: painel Netlify > Forms (ativar notificação por e-mail).
 // ─────────────────────────────────────────────────────────────────────────────
 
-const STORAGE_KEY   = "muv-lead-popup";
-const DELAY_MS      = 8000;
-const SCROLL_RATIO  = 0.4;
+const STORAGE_KEY   = "muv-lead-popup-10";
+const SCROLL_RATIO  = 0.5;
 const SNOOZE_DAYS   = 7;
-const FORM_NAME     = "lead-diagnostico";
+const FORM_NAME     = "lead-primeira-producao";
+const OFERTA        = "10% na primeira produção";
 const WHATSAPP_URL  = "https://wa.me/message/D6LG7EUSTIR7C1";
 // /eventos é landing de tráfego pago com formulário próprio: o pop-up
 // cobriria a página no celular e disputaria o mesmo lead.
@@ -71,17 +75,18 @@ function formatPhone(value) {
 
 export default function LeadPopup() {
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ nome: "", whatsapp: "", empresa: "" });
+  const [form, setForm] = useState({ nome: "", email: "", whatsapp: "" });
   const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState("idle"); // idle | sending | sent
   const [error, setError] = useState("");
   const firstFieldRef = useRef(null);
   const triggeredRef = useRef(false);
 
-  // Gatilho: 8s OU 40% de rolagem, uma única vez
+  // Gatilho (Design System rodada 03, "um aviso por vez"): só depois que a
+  // pessoa decidiu sobre cookies e leu metade da página. Sem disparo por tempo.
   useEffect(() => {
     if (!shouldShow()) return;
-    let timer = null;
+    const cookieDecided = () => { try { return Boolean(localStorage.getItem("muv-cookie-consent")); } catch (_) { return true; } };
     const fire = (how) => {
       if (triggeredRef.current) return;
       triggeredRef.current = true;
@@ -90,15 +95,14 @@ export default function LeadPopup() {
       try { trackAnalytics("lead_popup_view", { trigger: how, page_path: window.location.pathname }); } catch (_) {}
     };
     const onScroll = () => {
+      if (!cookieDecided()) return;
       const max = document.documentElement.scrollHeight - window.innerHeight;
       if (max <= 0) return;
       if (window.scrollY / max >= SCROLL_RATIO) fire("scroll");
     };
     const cleanup = () => {
-      if (timer) clearTimeout(timer);
       window.removeEventListener("scroll", onScroll);
     };
-    timer = setTimeout(() => fire("timer"), DELAY_MS);
     window.addEventListener("scroll", onScroll, { passive: true });
     return cleanup;
   }, []);
@@ -139,22 +143,23 @@ export default function LeadPopup() {
     if (status === "sending") return;
     const digits = form.whatsapp.replace(/\D/g, "");
     if (!form.nome.trim())      { setError("Me diz seu nome pra gente te chamar direito."); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) { setError("Confere o e-mail: parece incompleto."); return; }
     if (digits.length < 10)     { setError("Confere o WhatsApp: precisa do DDD + número."); return; }
-    if (!form.empresa.trim())   { setError("Me passa o Instagram ou o site da marca, é o que a gente analisa."); return; }
     if (!consent)               { setError("Confirme o aceite da política de privacidade para enviar."); return; }
     setError("");
     setStatus("sending");
     try {
       await postToNetlify(FORM_NAME, {
         nome: form.nome.trim(),
+        email: form.email.trim(),
         whatsapp: form.whatsapp,
-        empresa: form.empresa.trim(),
-        origem: `Pop-up diagnóstico · ${window.location.pathname}`,
+        oferta: OFERTA,
+        origem: `Pop-up 10% primeira produção · ${window.location.pathname}`,
         "aceite-privacidade": `sim · ${new Date().toISOString()}`,
       });
       writeState("sent");
       try {
-        trackAnalytics("generate_lead", { form_name: "lead_popup_diagnostico", method: "popup" });
+        trackAnalytics("generate_lead", { form_name: "lead_popup_primeira_producao", method: "popup" });
         trackAdsConversion(ADS_CONV.orcamento);
       } catch (_) {}
       setStatus("sent");
@@ -174,10 +179,10 @@ export default function LeadPopup() {
 
         {status !== "sent" ? (
           <>
-            <span className="muv-lead__eyebrow">Gratuito</span>
-            <h2 id="muv-lead-title" className="muv-lead__title">Receba um diagnóstico da sua marca</h2>
+            <span className="muv-lead__eyebrow">Primeira produção</span>
+            <h2 id="muv-lead-title" className="muv-lead__title"><em>10%</em> na sua primeira produção com a MUV</h2>
             <p className="muv-lead__text">
-              A gente analisa seu conteúdo e te manda no WhatsApp o que está funcionando e o que está travando resultado.
+              Deixa seu contato e a gente te chama no WhatsApp para entender o projeto. O desconto entra no seu primeiro orçamento.
             </p>
 
             <form className="muv-lead__form" onSubmit={submit} noValidate>
@@ -186,12 +191,12 @@ export default function LeadPopup() {
                 <input ref={firstFieldRef} id="muv-lead-nome" name="nome" type="text" autoComplete="name" placeholder="Como te chamar" value={form.nome} onChange={update("nome")} required />
               </div>
               <div className="field">
-                <label htmlFor="muv-lead-whatsapp">WhatsApp</label>
-                <input id="muv-lead-whatsapp" name="whatsapp" type="tel" inputMode="numeric" autoComplete="tel-national" placeholder="(11) 99999-9999" value={form.whatsapp} onChange={update("whatsapp")} required />
+                <label htmlFor="muv-lead-email">E-mail</label>
+                <input id="muv-lead-email" name="email" type="email" inputMode="email" autoComplete="email" placeholder="voce@empresa.com" value={form.email} onChange={update("email")} required />
               </div>
               <div className="field">
-                <label htmlFor="muv-lead-empresa">Instagram ou site da marca</label>
-                <input id="muv-lead-empresa" name="empresa" type="text" autoComplete="off" placeholder="@suamarca ou site" value={form.empresa} onChange={update("empresa")} required />
+                <label htmlFor="muv-lead-whatsapp">WhatsApp</label>
+                <input id="muv-lead-whatsapp" name="whatsapp" type="tel" inputMode="numeric" autoComplete="tel-national" placeholder="(11) 99999-9999" value={form.whatsapp} onChange={update("whatsapp")} required />
               </div>
 
               <label className="quote-card__consent muv-lead__consent" htmlFor="muv-lead-consent">
@@ -203,18 +208,19 @@ export default function LeadPopup() {
 
               <div className="muv-lead__actions">
                 <button type="submit" className="btn btn--primary" disabled={status === "sending"}>
-                  {status === "sending" ? "Enviando…" : "Receber diagnóstico"}
+                  {status === "sending" ? "Enviando…" : "Quero meus 10%"}
                 </button>
                 <button type="button" className="muv-lead__skip" onClick={dismiss}>Agora não</button>
               </div>
+              <p className="muv-lead__fine">Válido para novos clientes, no primeiro projeto fechado.</p>
             </form>
           </>
         ) : (
           <div className="muv-lead__done">
-            <span className="muv-lead__eyebrow">Recebido</span>
+            <span className="muv-lead__eyebrow">Reservado</span>
             <h2 id="muv-lead-title" className="muv-lead__title">Fechado, {form.nome.trim().split(" ")[0] || "valeu"}.</h2>
             <p className="muv-lead__text">
-              Seu diagnóstico chega no WhatsApp em até 2 dias úteis. Se quiser adiantar a conversa, chama a gente agora:
+              Seus 10% estão reservados. A gente te chama no WhatsApp em até 1 dia útil. Se quiser adiantar a conversa, chama agora:
             </p>
             <div className="muv-lead__actions">
               <a className="btn btn--ink" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"

@@ -22,13 +22,13 @@ const GTM_SNIPPET = GTM_ID
 const GTAG_BOOTSTRAP = `(function(){var PROD=${JSON.stringify(PROD_HOSTNAMES)};var isProd=PROD.indexOf(location.hostname)!==-1;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=window.gtag||gtag;try{var q=new URLSearchParams(location.search);if(q.get('internal')==='1'){localStorage.setItem('${INTERNAL_KEY}','1');}else if(q.get('internal')==='0'){localStorage.removeItem('${INTERNAL_KEY}');}}catch(e){}var internal=false;try{internal=localStorage.getItem('${INTERNAL_KEY}')==='1';}catch(e){}window.__muvTag={prod:isProd,internal:internal};if(!isProd){return;}gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});try{if(localStorage.getItem('${CONSENT_KEY}')==='accepted'){gtag('consent','update',{analytics_storage:'granted',ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});}}catch(e){}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}',internal?{traffic_type:'internal'}:{});gtag('config','${ADS_CONVERSION_ID_2}');var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG_ID}';document.head.appendChild(s);${GTM_SNIPPET}})();`;
 
 export const viewport = {
-  themeColor: "#0D0D0D",
+  themeColor: "#F2F0E9",
   width: "device-width",
   initialScale: 1 };
 
 export const metadata = {
   metadataBase: new URL("https://grupomuv.com.br"),
-  title: "Grupo MUV — Produtora Audiovisual em São Paulo",
+  title: "Grupo MUV: Produtora Audiovisual em São Paulo",
   description: "Produtora audiovisual e hub criativo em São Paulo. Estratégia, produção e conteúdo. Cinematográfico, no prazo, impossível de ignorar.",
   authors: [{ name: "Grupo MUV" }],
   alternates: { canonical: "https://grupomuv.com.br/" },
@@ -40,10 +40,10 @@ export const metadata = {
   },
   openGraph: {
     type: "website", siteName: "Grupo MUV",
-    title: "Grupo MUV — Produtora Audiovisual em São Paulo | Conteúdo que move",
+    title: "Grupo MUV: Produtora Audiovisual em São Paulo | Conteúdo que move",
     description: "Produtora audiovisual e hub criativo em São Paulo. Estratégia, produção e conteúdo. Cinematográfico, no prazo, impossível de ignorar.",
     url: "https://grupomuv.com.br/", locale: "pt_BR",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Grupo MUV — Produtora Audiovisual em São Paulo | Conteúdo que move" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Grupo MUV: Produtora Audiovisual em São Paulo | Conteúdo que move" }],
   },
   twitter: {
     card: "summary_large_image",

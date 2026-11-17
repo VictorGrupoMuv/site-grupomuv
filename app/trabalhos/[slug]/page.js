@@ -28,7 +28,7 @@ function videoSchema(w) {
   return {
     "@context": "https://schema.org",
     "@type": "VideoObject",
-    name: `${nome} — ${w.client}`,
+    name: `${nome}: ${w.client}`,
     description: w.summary,
     ...(thumb ? { thumbnailUrl: [thumb] } : {}),
     ...(w.videoDate ? { uploadDate: `${w.videoDate}T12:00:00-03:00` } : {}),
@@ -52,7 +52,7 @@ export function generateMetadata({ params }) {
   const w = WORKS.find((x) => x.slug === params.slug);
   if (!w) return {};
   const clean = (w.title || "").replace(/\n/g, " ").trim();
-  const title = `${clean} — ${w.client} | Case Grupo MUV`;
+  const title = `${clean}: ${w.client} | Case Grupo MUV`;
   const url = `${SITE}/trabalhos/${w.slug}/`;
   return {
     title,
