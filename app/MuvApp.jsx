@@ -1755,6 +1755,7 @@ function Eventos({ setCurrent }) {
             <form className="quote-card srv-form__card" onSubmit={enviarLead}>
               <h3 className="quote-card__title">Orçamento de cobertura de evento</h3>
               <p className="quote-card__sub">Leva um minuto. A gente te chama no WhatsApp.</p>
+              <p className="quote-card__sub">Atendemos marcas, agências e eventos corporativos. Não fazemos casamento nem eventos sociais.</p>
 
               <div className="quote-card__row">
                 <div className="field field--solid">
