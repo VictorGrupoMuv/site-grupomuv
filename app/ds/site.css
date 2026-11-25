@@ -163,3 +163,7 @@ body:has(.muv-lead__card) #muv-whatsapp, body:has(#muv-cookie:not([hidden])) #mu
 @media (min-width: 1600px) { .works-grid.works-grid--vertical { grid-template-columns: repeat(5, 1fr); } }
 @media (max-width: 1024px) { .works-grid.works-grid--vertical { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 768px) { .works-grid.works-grid--vertical { grid-template-columns: repeat(2, 1fr); gap: 22px 12px; } }
+
+/* /eventos · aftermovie Só Track Boa × BuyTicket */
+.evt-after .evt-hero__quadro { max-height: none; aspect-ratio: 16 / 9; }
+.evt-after__legenda { margin: 16px 0 0; max-width: 62ch; color: var(--ink-2); font-size: 15px; line-height: 1.55; }

@@ -1644,6 +1644,7 @@ function Eventos({ setCurrent }) {
   const [erro, setErro] = useState("");
   // O vídeo do case só carrega no clique: a foto continua sendo o LCP da página.
   const [tocando, setTocando] = useState(false);
+  const [tocandoStb, setTocandoStb] = useState(false);
 
   useEffect(() => { capturarAtribuicao(); }, []);
 
@@ -1741,6 +1742,29 @@ function Eventos({ setCurrent }) {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Aftermovie Só Track Boa × BuyTicket: arquivo local, só carrega no clique. */}
+      <section className="section evt-after">
+        <SectionHead eyebrow="Aftermovie" title="Só Track Boa, com a BuyTicket." />
+        {tocandoStb ?
+        <div className="cine cine--media cine--video-slot evt-hero__quadro evt-hero__quadro--video">
+          <video className="cine__img cine__video" src="/assets/eventos/so-track-boa-buyticket.mp4"
+            poster="/assets/eventos/so-track-boa-buyticket-poster.jpg" controls autoPlay playsInline />
+        </div> :
+        <div className="cine cine--media evt-hero__quadro">
+          <img className="cine__img" src="/assets/eventos/so-track-boa-buyticket-poster.jpg" width="1600" height="900" loading="lazy" decoding="async"
+            alt="DJ no palco do festival Só Track Boa, com o público ao fundo" />
+          <span className="cine__scrim" aria-hidden="true" />
+          <button type="button" className="evt-hero__play" onClick={() => setTocandoStb(true)}
+            aria-label="Assistir ao aftermovie: Só Track Boa com a BuyTicket">
+            <span className="cine__play" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+            </span>
+            <span className="evt-hero__play-rotulo mono">Assistir ao aftermovie · 1:03</span>
+          </button>
+        </div>}
+        <p className="evt-after__legenda">Festival coberto pela MUV para a BuyTicket: filme de um minuto com direção, trilha e cor, entregue depois do evento.</p>
       </section>
 
       <section className="section section--ink srv-page__fechamento" id="orcamento">
