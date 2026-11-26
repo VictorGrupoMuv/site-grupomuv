@@ -8836,6 +8836,12 @@ body.drawer-active #muv-lead { display: none !important; }
 .evt-prova__marcas .brand-cell img { max-width: 100%; }
 .evt-prova__palcos { margin-top: 24px; color: var(--ink-2); font-size: 15px; line-height: 1.6; }
 .evt-prova__palcos .mono { display: block; margin-bottom: 6px; color: var(--ink-3); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; }
+/* /lp/<slug>/: a faixa tem de 2 a 4 marcas, então a grade encolhe com a
+   contagem em vez de sobrar célula vazia na grade de 6 da /eventos/. */
+.evt-prova__marcas.evt-prova__marcas--lp .brands { grid-template-columns: repeat(var(--lp-marcas), minmax(0, 1fr)); width: calc(100% * var(--lp-marcas) / 6); }
+@media (max-width: 900px) {
+  .evt-prova__marcas.evt-prova__marcas--lp .brands { grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+}
 .evt-case { display: flex; flex-direction: column; gap: 12px; }
 .evt-case .h3 { margin: 8px 0 0; }
 .evt-case p { margin: 0; color: var(--ink-2); font-size: 15px; line-height: 1.55; }

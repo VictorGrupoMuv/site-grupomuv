@@ -8,7 +8,7 @@ export default function WhatsappCookie() {
   // Na landing de tráfego pago o botão já nasce visível: quem chega do
   // anúncio no celular não precisa rolar para achar o WhatsApp.
   const pathname = usePathname() || "";
-  const sempreVisivel = pathname.startsWith("/eventos");
+  const sempreVisivel = pathname.startsWith("/eventos") || pathname.startsWith("/lp/");
   // /loopingmuv é a peça em tela cheia: nada flutua por cima dela.
   const semFlutuante = pathname.startsWith("/loopingmuv");
   useEffect(() => {
