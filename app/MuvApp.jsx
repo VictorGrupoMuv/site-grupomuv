@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { getImageProps } from "next/image";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { trackAnalytics, trackAdsConversion } from "./GoogleAnalytics";
@@ -327,6 +327,7 @@ function Nav({ current, setCurrent, isDark }) {
 
 // ───── Footer ────────────────────────────────────────────────────────────────
 function Footer({ setCurrent }) {
+  const pathname = usePathname() || "";
   const go = (id) => (e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent(id);};
   // Colunas abertas no desktop (e no HTML pré-renderizado); acordeão só no celular.
   const accRef = useRef(null);
@@ -387,6 +388,12 @@ function Footer({ setCurrent }) {
           <span>São Paulo · SP</span>
         </div>
       </div>
+      {pathname.startsWith("/lp/") && (
+        <p className="footer__legal">
+          Alameda Santos, 211, sala 1507, Edif. Paulista Boulevard, São Paulo/SP, CEP 01419-000
+          {" · "}CNPJ 46.941.289/0001-44 · Mudafilms LTDA
+        </p>
+      )}
     </footer>);
 
 }
@@ -1898,8 +1905,7 @@ function LandingServico({ slug }) {
 
       <section className="section evt-hero">
         <div className="evt-hero__acoes">
-          <a className="btn btn--primary" href={EVENTOS_WHATSAPP} target="_blank" rel="noopener noreferrer">Chamar no WhatsApp <Arrow /></a>
-          <a className="btn btn--ghost" href="#orcamento">Pedir orçamento <Arrow /></a>
+          <a className="btn btn--primary" href="#orcamento">Pedir orçamento <Arrow /></a>
         </div>
         <div className="cine cine--media evt-hero__quadro">
           <picture>
