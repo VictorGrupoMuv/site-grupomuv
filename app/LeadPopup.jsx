@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { trackAnalytics, trackAdsConversion } from "./GoogleAnalytics";
 import { ADS_CONV } from "./gtag-config";
+import { capturarAtribuicao, enviarFormulario, useHoneypot } from "./leads";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Pop-up de captação de leads · 10% na primeira produção
@@ -54,16 +55,6 @@ function shouldShow() {
   return true;
 }
 
-async function postToNetlify(formName, data) {
-  const body = new URLSearchParams({ "form-name": formName, ...data }).toString();
-  const res = await fetch("/__forms.html", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body });
-  if (!res.ok) throw new Error("Falha no envio (" + res.status + ")");
-  return true;
-}
-
 // Mantém só dígitos e formata como (11) 99999-9999 enquanto digita.
 function formatPhone(value) {
   const d = String(value || "").replace(/\D/g, "").slice(0, 11);
@@ -81,6 +72,7 @@ export default function LeadPopup() {
   const [error, setError] = useState("");
   const firstFieldRef = useRef(null);
   const triggeredRef = useRef(false);
+  const bot = useHoneypot();
 
   // Gatilho (Design System rodada 03, "um aviso por vez"): só depois que a
   // pessoa decidiu sobre cookies e leu metade da página. Sem disparo por tempo.
@@ -104,6 +96,7 @@ export default function LeadPopup() {
       window.removeEventListener("scroll", onScroll);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
+    capturarAtribuicao();
     return cleanup;
   }, []);
 
@@ -149,13 +142,23 @@ export default function LeadPopup() {
     setError("");
     setStatus("sending");
     try {
-      await postToNetlify(FORM_NAME, {
+      const origem = `Pop-up 10% primeira produção · ${window.location.pathname}`;
+      await enviarFormulario(FORM_NAME, {
         nome: form.nome.trim(),
         email: form.email.trim(),
         whatsapp: form.whatsapp,
         oferta: OFERTA,
-        origem: `Pop-up 10% primeira produção · ${window.location.pathname}`,
+        origem,
         "aceite-privacidade": `sim · ${new Date().toISOString()}`,
+      }, {
+        nome: form.nome.trim(),
+        email: form.email.trim(),
+        fone: form.whatsapp,
+        mensagem: OFERTA,
+        formulario: FORM_NAME,
+        origem,
+        pagina: window.location.pathname,
+        botField: bot.valor(),
       });
       writeState("sent");
       try {
@@ -186,6 +189,7 @@ export default function LeadPopup() {
             </p>
 
             <form className="muv-lead__form" onSubmit={submit} noValidate>
+              {bot.campo}
               <div className="field">
                 <label htmlFor="muv-lead-nome">Nome</label>
                 <input ref={firstFieldRef} id="muv-lead-nome" name="nome" type="text" autoComplete="name" placeholder="Como te chamar" value={form.nome} onChange={update("nome")} required />

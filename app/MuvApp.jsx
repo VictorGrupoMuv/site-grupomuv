@@ -48,6 +48,7 @@ const FAQ_ITEMS = _faq.items;
 // FAQ e constantes do Hub vivem em app/hub/hubSeo.js: o mesmo texto que a
 // página mostra é o que vai no JSON-LD (FAQPage) emitido pelo page.js.
 import { HUB_FAQ, WHATSAPP as HUB_WHATSAPP, TABELA as HUB_TABELA } from "./hub/hubSeo";
+import { capturarAtribuicao, enviarFormulario, useHoneypot } from "./leads";
 
 // ===== components =====
 // components.jsx
@@ -139,20 +140,10 @@ const isModifiedClick = (e) =>
 const caseHref = (slug) => `/trabalhos/${slug}/`;
 const postHref = (slug) => `/blog/${slug}/`;
 
-// ───── Envio de formulários (Netlify Forms) ──────────────────────────────────
-// Os forms são declarados estaticamente em /public/__forms.html para que o
-// Netlify os detecte no build (o app é client-side e não expõe o markup).
-// Os leads ficam no painel Netlify > Forms, com notificação por e-mail e CSV.
-async function postToNetlify(formName, data) {
-  const body = new URLSearchParams({ "form-name": formName, ...data }).toString();
-  const res = await fetch("/__forms.html", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body });
-
-  if (!res.ok) throw new Error("Falha no envio (" + res.status + ")");
-  return true;
-}
+// ───── Envio de formulários ──────────────────────────────────────────────────
+// O markup estático continua em /public/__forms.html (Netlify Forms, e-mail).
+// O mesmo envio grava o lead em public.prospeccao pela função salvar-lead.
+// Ver app/leads.js.
 
 // ───── Nav ───────────────────────────────────────────────────────────────────
 const NAV_ITEMS = [
@@ -1002,6 +993,7 @@ function HomeCTA({ setCurrent, brands = BRANDS, showBrands = true }) {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
   const [consent, setConsent] = useState(false);
+  const bot = useHoneypot();
   const types = [...ESCOPOS, "Outro"];
   const budgets = ["R$ 5 a 10k", "R$ 10 a 25k", "R$ 25 a 50k", "R$ 50 a 100k", "R$ 100k+", "A definir"];
   const submit = async (e) => {
@@ -1010,7 +1002,20 @@ function HomeCTA({ setCurrent, brands = BRANDS, showBrands = true }) {
     if (!consent) {setError("Confirme o aceite da política de privacidade para enviar.");return;}
     setSending(true);setError("");
     try {
-      await postToNetlify("orcamento", { ...form, origem: "Home · CTA final", "aceite-privacidade": `sim · ${new Date().toISOString()}` });
+      await enviarFormulario("orcamento", {
+        ...form,
+        origem: "Home · CTA final",
+        "aceite-privacidade": `sim · ${new Date().toISOString()}`,
+      }, {
+        nome: form.name,
+        empresa: form.company,
+        email: form.email,
+        fone: form.phone,
+        mensagem: [form.type, form.budget, form.brief].filter(Boolean).join("\n"),
+        formulario: "orcamento",
+        origem: "Home · CTA final",
+        botField: bot.valor(),
+      });
       trackAnalytics("generate_lead", {
         form_name: "orcamento_home",
         project_type: form.type || "nao_informado",
@@ -1045,6 +1050,7 @@ function HomeCTA({ setCurrent, brands = BRANDS, showBrands = true }) {
               </div> :
 
             <form onSubmit={submit}>
+                {bot.campo}
                 <h3 className="quote-card__title">Solicite um orçamento</h3>
                 <p className="quote-card__sub">Campos com <span style={{ color: "var(--accent)" }}>*</span> são obrigatórios</p>
 
@@ -1361,17 +1367,28 @@ function Servico({ setCurrent, slug }) {
   const [enviando, setEnviando] = useState(false);
   const [enviado, setEnviado] = useState(false);
   const [erro, setErro] = useState("");
+  const bot = useHoneypot();
 
   const enviarLead = async (ev) => {
     ev.preventDefault();
     if (!aceite) { setErro("Confirme o aceite da política de privacidade para enviar."); return; }
     setEnviando(true); setErro("");
     try {
-      await postToNetlify("orcamento", {
+      await enviarFormulario("orcamento", {
         name: lead.nome, company: lead.empresa, email: lead.email, phone: lead.whats,
         brief: lead.brief, scope: s.scope,
         origem: `Serviço · ${s.tag}`,
-        "aceite-privacidade": `sim · ${new Date().toISOString()}` });
+        "aceite-privacidade": `sim · ${new Date().toISOString()}`,
+      }, {
+        nome: lead.nome,
+        empresa: lead.empresa,
+        email: lead.email,
+        fone: lead.whats,
+        mensagem: [s.scope, lead.brief].filter(Boolean).join("\n"),
+        formulario: "orcamento",
+        origem: `Serviço · ${s.tag}`,
+        botField: bot.valor(),
+      });
       trackAnalytics("generate_lead", { form_name: "orcamento_servico", project_type: s.scope });
       trackAdsConversion(ADS_CONV.orcamento);
       setEnviado(true);
@@ -1547,6 +1564,7 @@ function Servico({ setCurrent, slug }) {
             </div>
           ) : (
             <form className="quote-card srv-form__card" onSubmit={enviarLead}>
+              {bot.campo}
               <h3 className="quote-card__title">Orçamento de {s.tag.toLowerCase()}</h3>
               <p className="quote-card__sub">Resposta em até 1 dia útil. Campos com <span style={{ color: "var(--accent)" }}>*</span> são obrigatórios.</p>
 
@@ -1607,26 +1625,8 @@ function Servico({ setCurrent, slug }) {
 // EVENTOS · landing de tráfego pago (Google Ads), MUV Live
 // ═══════════════════════════════════════════════════════════════════════════
 // Parâmetros de campanha: lidos da URL na chegada e guardados em
-// sessionStorage, para o lead sair com a origem mesmo que a pessoa navegue
-// pelo site antes de preencher o formulário.
-const ATTR_KEY = "muv-attr";
-const ATTR_PARAMS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "gclid"];
-
-function lerAtribuicao() {
-  try { return JSON.parse(window.sessionStorage.getItem(ATTR_KEY) || "{}") || {}; } catch (_) { return {}; }
-}
-
-function capturarAtribuicao() {
-  if (typeof window === "undefined") return;
-  try {
-    const q = new URLSearchParams(window.location.search);
-    const novos = {};
-    ATTR_PARAMS.forEach((k) => { const v = q.get(k); if (v) novos[k] = v.slice(0, 200); });
-    if (!Object.keys(novos).length) return;
-    window.sessionStorage.setItem(ATTR_KEY, JSON.stringify({ ...lerAtribuicao(), ...novos }));
-  } catch (_) {}
-}
-
+// sessionStorage (app/leads.js), para o lead sair com a origem mesmo que
+// a pessoa navegue pelo site antes de preencher o formulário.
 const EVENTOS_WHATSAPP = "https://wa.me/message/D6LG7EUSTIR7C1";
 // Vídeo do case Guaraná no Carnaval (mesmo vimeoId de content/works.json).
 const EVENTOS_VIDEO_VIMEO = "1219351172";
@@ -1642,11 +1642,10 @@ function Eventos({ setCurrent }) {
   const [enviando, setEnviando] = useState(false);
   const [enviado, setEnviado] = useState(false);
   const [erro, setErro] = useState("");
+  const bot = useHoneypot();
   // O vídeo do case só carrega no clique: a foto continua sendo o LCP da página.
   const [tocando, setTocando] = useState(false);
   const [tocandoStb, setTocandoStb] = useState(false);
-
-  useEffect(() => { capturarAtribuicao(); }, []);
 
   const campo = (k) => (e) => setLead({ ...lead, [k]: e.target.value });
 
@@ -1654,17 +1653,23 @@ function Eventos({ setCurrent }) {
     ev.preventDefault();
     if (!aceite) { setErro("Confirme o aceite da política de privacidade para enviar."); return; }
     setEnviando(true); setErro("");
-    const attr = lerAtribuicao();
     try {
-      await postToNetlify("orcamento", {
+      await enviarFormulario("orcamento", {
         name: lead.nome, company: lead.empresa, email: lead.email, phone: lead.whats,
         type: "Cobertura de evento", scope: "Cobertura de Evento",
         "data-evento": lead.data, cidade: lead.cidade, "tipo-evento": lead.tipo,
-        utm_source: attr.utm_source || "", utm_medium: attr.utm_medium || "",
-        utm_campaign: attr.utm_campaign || "", utm_term: attr.utm_term || "",
-        gclid: attr.gclid || "",
         origem: "Landing · Eventos",
-        "aceite-privacidade": `sim · ${new Date().toISOString()}` });
+        "aceite-privacidade": `sim · ${new Date().toISOString()}`,
+      }, {
+        nome: lead.nome,
+        empresa: lead.empresa,
+        email: lead.email,
+        fone: lead.whats,
+        mensagem: [lead.tipo, lead.data, lead.cidade].filter(Boolean).join(" · "),
+        formulario: "orcamento",
+        origem: "Landing · Eventos",
+        botField: bot.valor(),
+      });
       trackAnalytics("generate_lead", { form_name: "orcamento_eventos", project_type: "Cobertura de evento" });
       trackAdsConversion(ADS_CONV.orcamento);
       setEnviado(true);
@@ -1777,6 +1782,7 @@ function Eventos({ setCurrent }) {
             </div>
           ) : (
             <form className="quote-card srv-form__card" onSubmit={enviarLead}>
+              {bot.campo}
               <h3 className="quote-card__title">Orçamento de cobertura de evento</h3>
               <p className="quote-card__sub">Leva um minuto. A gente te chama no WhatsApp.</p>
               <p className="quote-card__sub">Atendemos marcas, agências e eventos corporativos. Não fazemos casamento nem eventos sociais.</p>
@@ -2263,6 +2269,7 @@ function MuvHub({ setCurrent }) {
 function HubEmailCapture({ eyebrow, title, accent, body, source, id }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");
+  const bot = useHoneypot();
   const inputId = `hub-email-${source.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-")}`;
 
   const submit = async (event) => {
@@ -2270,7 +2277,12 @@ function HubEmailCapture({ eyebrow, title, accent, body, source, id }) {
     if (!email || status === "sending") return;
     setStatus("sending");
     try {
-      await postToNetlify("hub-waitlist", { email, origem: `Hub · ${source}` });
+      await enviarFormulario("hub-waitlist", { email, origem: `Hub · ${source}` }, {
+        email,
+        formulario: "hub-waitlist",
+        origem: `Hub · ${source}`,
+        botField: bot.valor(),
+      });
       trackAnalytics("sign_up", {
         method: "hub_waitlist",
         signup_source: source,
@@ -2299,6 +2311,7 @@ function HubEmailCapture({ eyebrow, title, accent, body, source, id }) {
           </div>
         ) : (
           <form className="hub-email-capture__form" onSubmit={submit}>
+            {bot.campo}
             <label className="sr-only" htmlFor={inputId}>Seu e-mail</label>
             <input
               id={inputId}
@@ -2704,13 +2717,19 @@ function Module({ tag, title, items, icon, onClick }) {
 function BlogNewsletterForm() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");
+  const bot = useHoneypot();
 
   const submit = async (event) => {
     event.preventDefault();
     if (!email || status === "sending") return;
     setStatus("sending");
     try {
-      await postToNetlify("newsletter", { email });
+      await enviarFormulario("newsletter", { email }, {
+        email,
+        formulario: "newsletter",
+        origem: "Blog · newsletter",
+        botField: bot.valor(),
+      });
       trackAnalytics("sign_up", {
         method: "newsletter",
         signup_source: "blog",
@@ -2725,6 +2744,7 @@ function BlogNewsletterForm() {
   return (
     <div className="blog-newsletter__capture">
       <form className="blog-newsletter__form" onSubmit={submit}>
+        {bot.campo}
         <label className="sr-only" htmlFor="blog-newsletter-email">Seu e-mail</label>
         <input
           id="blog-newsletter-email"
@@ -2905,11 +2925,27 @@ function Contato({ setCurrent }) {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
   const [consent, setConsent] = useState(false);
+  const bot = useHoneypot();
   const submit = async () => {
     if (!consent) {setError("Confirme o aceite da política de privacidade para enviar.");return;}
     setSending(true);setError("");
+    const origem = `Página Contato · briefing guiado${data.scope.length ? " · " + data.scope.join(" + ") : ""}`;
     try {
-      await postToNetlify("orcamento", { ...data, scope: data.scope.join(", "), origem: `Página Contato · briefing guiado${data.scope.length ? " · " + data.scope.join(" + ") : ""}`, "aceite-privacidade": `sim · ${new Date().toISOString()}` });
+      await enviarFormulario("orcamento", {
+        ...data,
+        scope: data.scope.join(", "),
+        origem,
+        "aceite-privacidade": `sim · ${new Date().toISOString()}`,
+      }, {
+        nome: data.name,
+        empresa: data.company,
+        email: data.email,
+        fone: data.phone,
+        mensagem: [data.scope.join(", "), data.budget, data.deadline, data.brief].filter(Boolean).join("\n"),
+        formulario: "orcamento",
+        origem,
+        botField: bot.valor(),
+      });
       trackAnalytics("generate_lead", {
         form_name: "orcamento_contato",
         project_scope: data.scope.join("|") || "nao_informado",
@@ -2958,6 +2994,7 @@ function Contato({ setCurrent }) {
 
           {/* Form */}
           <div className="contact-form">
+            {bot.campo}
             <div className="contact-progress">
               {[1, 2, 3].map((n) =>
               <div key={n} style={{ display: "flex", alignItems: "center", gap: 10, opacity: step >= n ? 1 : 0.4 }}>
@@ -3229,6 +3266,7 @@ function App({ page = "home", slug = null, tina = null }) {
     root.style.setProperty("--font-body",    BODY_FONT);
     root.style.setProperty("--accent",       SETTINGS.accentColor  || "#F04A24");
     root.style.setProperty("--accent-2",     SETTINGS.accent2Color || "#2457D6");
+    capturarAtribuicao();
   }, []);
 
   // Detect scroll past hero on Home for dynamic nav theming

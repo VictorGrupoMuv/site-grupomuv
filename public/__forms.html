@@ -5,8 +5,9 @@
   <!--
     Este arquivo existe só para o Netlify detectar os formulários no build.
     O site é client-side, então o markup real não aparece no HTML exportado.
-    O app envia via fetch POST para /__forms.html (ver postToNetlify em app/MuvApp.jsx).
-    Leads: painel Netlify > Forms (notificação por e-mail + export CSV).
+    O app envia via fetch POST para /__forms.html (ver enviarFormulario em app/leads.js).
+    O e-mail do Netlify Forms continua. A função salvar-lead também grava o lead
+    em public.prospeccao. O campo utm_content faz parte do formulário de orçamento.
   -->
   <form name="orcamento" data-netlify="true" netlify-honeypot="bot-field" hidden>
     <input type="hidden" name="form-name" value="orcamento" />
@@ -27,6 +28,7 @@
     <input type="text" name="utm_medium" />
     <input type="text" name="utm_campaign" />
     <input type="text" name="utm_term" />
+    <input type="text" name="utm_content" />
     <input type="text" name="gclid" />
     <input type="text" name="origem" />
     <input type="text" name="aceite-privacidade" />
