@@ -8836,6 +8836,12 @@ body.drawer-active #muv-lead { display: none !important; }
 .evt-prova__marcas .brand-cell img { max-width: 100%; }
 .evt-prova__palcos { margin-top: 24px; color: var(--ink-2); font-size: 15px; line-height: 1.6; }
 .evt-prova__palcos .mono { display: block; margin-bottom: 6px; color: var(--ink-3); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; }
+/* /lp/<slug>/: a faixa tem de 2 a 4 marcas, então a grade encolhe com a
+   contagem em vez de sobrar célula vazia na grade de 6 da /eventos/. */
+.evt-prova__marcas.evt-prova__marcas--lp .brands { grid-template-columns: repeat(var(--lp-marcas), minmax(0, 1fr)); width: calc(100% * var(--lp-marcas) / 6); }
+@media (max-width: 900px) {
+  .evt-prova__marcas.evt-prova__marcas--lp .brands { grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+}
 .evt-case { display: flex; flex-direction: column; gap: 12px; }
 .evt-case .h3 { margin: 8px 0 0; }
 .evt-case p { margin: 0; color: var(--ink-2); font-size: 15px; line-height: 1.55; }
@@ -8851,4 +8857,52 @@ body.drawer-active #muv-lead { display: none !important; }
   .evt-prova__marcas .brands { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .evt-prova__marcas .brand-cell { padding: 14px; }
   .evt-passos { grid-template-columns: 1fr; }
+}
+
+
+/* LPs de tráfego pago: aviso de cookies mais discreto, encostado embaixo,
+   para não cobrir o still do hero. Nas outras rotas o cartão continua igual. */
+#muv-cookie.muv-cookie--lp {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: none;
+  transform: none;
+  border-radius: 0;
+  padding: 10px 20px;
+  gap: 12px;
+  box-shadow: 0 -4px 18px rgba(0, 0, 0, .28);
+  animation: muvCookieInLp .45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#muv-cookie.muv-cookie--lp .muv-cookie__text {
+  font-size: 12px;
+  line-height: 1.4;
+  min-width: 0;
+}
+#muv-cookie.muv-cookie--lp .muv-cookie__btn {
+  padding: 8px 14px;
+  font-size: 12px;
+}
+@keyframes muvCookieInLp {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: none; }
+}
+@media (max-width: 520px) {
+  #muv-cookie.muv-cookie--lp { padding: 10px 14px; bottom: 0; }
+}
+body:has(#muv-cookie.muv-cookie--lp:not([hidden])) #muv-whatsapp {
+  bottom: 64px;
+}
+
+/* Rodapé extra só nas landings /lp/ (endereço e CNPJ já usados no site). */
+.footer__legal {
+  margin: 0;
+  padding: 12px 0 4px;
+  border-top: 1px solid var(--dark-line, rgba(242,240,233,0.12));
+  color: var(--dark-ink-2, #B8B6AF);
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
 }

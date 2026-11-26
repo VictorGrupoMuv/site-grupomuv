@@ -1,12 +1,13 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { getImageProps } from "next/image";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { trackAnalytics, trackAdsConversion } from "./GoogleAnalytics";
 import { ADS_CONV } from "./gtag-config";
 import * as DS from "./ds/MuvDS";
 import { EVENTOS_MARCAS, EVENTOS_PALCOS, EVENTOS_FORMATOS, EVENTOS_PASSOS, EVENTOS_CASES, EVENTOS_PARA_QUEM, EVENTOS_NAO_E, EVENTOS_FAQ } from "./eventos/conteudo";
+import { LANDINGS, LP_PRAZOS } from "./lp/conteudo";
 import _services from "../content/services.json";
 const SERVICOS = _services.items;
 // Nem todo servico tem pagina propria. "Estudio e equipamento" e a estrutura do
@@ -326,6 +327,7 @@ function Nav({ current, setCurrent, isDark }) {
 
 // ───── Footer ────────────────────────────────────────────────────────────────
 function Footer({ setCurrent }) {
+  const pathname = usePathname() || "";
   const go = (id) => (e) => {if (isModifiedClick(e)) return;e.preventDefault();setCurrent(id);};
   // Colunas abertas no desktop (e no HTML pré-renderizado); acordeão só no celular.
   const accRef = useRef(null);
@@ -386,6 +388,12 @@ function Footer({ setCurrent }) {
           <span>São Paulo · SP</span>
         </div>
       </div>
+      {pathname.startsWith("/lp/") && (
+        <p className="footer__legal">
+          Alameda Santos, 211, sala 1507, Edif. Paulista Boulevard, São Paulo/SP, CEP 01419-000
+          {" · "}CNPJ 46.941.289/0001-44 · Mudafilms LTDA
+        </p>
+      )}
     </footer>);
 
 }
@@ -1833,6 +1841,187 @@ function Eventos({ setCurrent }) {
     </div>);
 }
 
+// ═══════════════════════════════════════════════════════════════════════════
+// LANDINGS POR SERVIÇO · /lp/<slug>/, tráfego pago (Google Ads)
+// ═══════════════════════════════════════════════════════════════════════════
+// Mesmo molde da /eventos/: hero, marcas, três formatos, formulário curto e
+// FAQ. O que muda de uma para outra vive em app/lp/conteudo.js.
+function LandingServico({ slug }) {
+  const lp = LANDINGS[slug];
+  const [lead, setLead] = useState({ nome: "", empresa: "", email: "", whats: "", tipo: "", prazo: "" });
+  const [aceite, setAceite] = useState(false);
+  const [enviando, setEnviando] = useState(false);
+  const [enviado, setEnviado] = useState(false);
+  const [erro, setErro] = useState("");
+
+  useEffect(() => { capturarAtribuicao(); }, []);
+
+  const campo = (k) => (e) => setLead({ ...lead, [k]: e.target.value });
+
+  const enviarLead = async (ev) => {
+    ev.preventDefault();
+    if (!aceite) { setErro("Confirme o aceite da política de privacidade para enviar."); return; }
+    setEnviando(true); setErro("");
+    const attr = lerAtribuicao();
+    try {
+      await postToNetlify("orcamento", {
+        name: lead.nome, company: lead.empresa, email: lead.email, phone: lead.whats,
+        type: lp.projectType, scope: lp.scope,
+        "tipo-projeto": lead.tipo, deadline: lead.prazo,
+        utm_source: attr.utm_source || "", utm_medium: attr.utm_medium || "",
+        utm_campaign: attr.utm_campaign || "", utm_term: attr.utm_term || "",
+        gclid: attr.gclid || "",
+        origem: lp.origem,
+        "aceite-privacidade": `sim · ${new Date().toISOString()}` });
+      trackAnalytics("generate_lead", { form_name: lp.formName, project_type: lp.projectType });
+      trackAdsConversion(ADS_CONV.orcamento);
+      setEnviado(true);
+    } catch (_) {
+      setErro("Não conseguimos enviar agora. Tenta de novo ou chama no WhatsApp: wa.me/message/D6LG7EUSTIR7C1");
+    } finally {
+      setEnviando(false);
+    }
+  };
+
+  // Versões AVIF e JPEG geradas antes e servidas por <picture>, como na
+  // /eventos/. O preload fica em app/lp/[slug]/page.js.
+  const larguras = lp.hero.larguras;
+  const maior = larguras[larguras.length - 1];
+  const srcSet = (ext) => larguras.map((w) => `${lp.hero.base}-${w}.${ext} ${w}w`).join(", ");
+  const { props: heroImg } = getImageProps({
+    src: `${lp.hero.base}-${larguras.includes(1080) ? 1080 : maior}.jpg`,
+    width: maior, height: Math.round(maior * 9 / 16), priority: true, sizes: "100vw",
+    alt: lp.hero.alt });
+  const req = <span style={{ color: "var(--accent-text)" }}>*</span>;
+
+  return (
+    <div className="page" data-screen-label="LandingServico">
+      <PageHead
+        crumb={lp.eyebrow}
+        title={lp.h1}
+        lead={lp.sub}
+        meta="São Paulo · SP"
+        compact />
+
+      <section className="section evt-hero">
+        <div className="evt-hero__acoes">
+          <a className="btn btn--primary" href="#orcamento">Pedir orçamento <Arrow /></a>
+        </div>
+        <div className="cine cine--media evt-hero__quadro">
+          <picture>
+            <source type="image/avif" srcSet={srcSet("avif")} sizes="100vw" />
+            <img {...heroImg} srcSet={srcSet("jpg")} className="cine__img" />
+          </picture>
+          <span className="cine__scrim" aria-hidden="true" />
+        </div>
+      </section>
+
+      <section className="section evt-prova">
+        <p className="eyebrow eyebrow-dot">Marcas que já atendemos</p>
+        <div className="evt-prova__marcas evt-prova__marcas--lp" style={{ "--lp-marcas": lp.marcas.length }}>
+          <BrandStrip brands={lp.marcas} />
+        </div>
+      </section>
+
+      <section className="section section--ink">
+        <SectionHead eyebrow="Formatos" title="Três formatos de entrega." />
+        <div className="grid-3 hub-process">
+          {lp.formatos.map((f, i) => (
+            <div key={f.t} className="hub-process__step">
+              <p className="mono" style={{ color: "var(--accent-text)" }}>{String(i + 1).padStart(2, "0")}</p>
+              <h3 className="h3">{f.t}</h3>
+              <p>{f.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="section section--ink srv-page__fechamento" id="orcamento">
+        <SectionHead title="Conta do seu projeto." />
+        <div className="srv-form">
+          {enviado ? (
+            <div className="srv-form__ok" role="status">
+              <p className="eyebrow eyebrow-dot" style={{ color: "var(--accent-text)" }}>Recebido ✓</p>
+              <h3 className="h3" style={{ marginTop: 14 }}>Recebemos. Alguém da equipe vai te chamar no WhatsApp para entender o projeto.</h3>
+            </div>
+          ) : (
+            <form className="quote-card srv-form__card" onSubmit={enviarLead}>
+              <h3 className="quote-card__title">{lp.formTitulo}</h3>
+              <p className="quote-card__sub">Leva um minuto. A gente te chama no WhatsApp.</p>
+              <p className="quote-card__sub">{lp.filtro}</p>
+
+              <div className="quote-card__row">
+                <div className="field field--solid">
+                  <label htmlFor="lp-nome">Nome {req}</label>
+                  <input id="lp-nome" name="name" autoComplete="name" placeholder="Seu nome" required
+                    value={lead.nome} onChange={campo("nome")} />
+                </div>
+                <div className="field field--solid">
+                  <label htmlFor="lp-whats">WhatsApp {req}</label>
+                  <input id="lp-whats" name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="(11) 99999-9999" required
+                    value={lead.whats} onChange={campo("whats")} />
+                </div>
+              </div>
+
+              <div className="quote-card__row">
+                <div className="field field--solid">
+                  <label htmlFor="lp-email">E-mail</label>
+                  <input id="lp-email" name="email" type="email" autoComplete="email" placeholder="voce@empresa.com"
+                    value={lead.email} onChange={campo("email")} />
+                </div>
+                <div className="field field--solid">
+                  <label htmlFor="lp-empresa">Empresa {req}</label>
+                  <input id="lp-empresa" name="company" autoComplete="organization" placeholder="Nome da empresa" required
+                    value={lead.empresa} onChange={campo("empresa")} />
+                </div>
+              </div>
+
+              <div className="quote-card__row">
+                <div className="field field--solid">
+                  <label htmlFor="lp-tipo">Tipo de projeto</label>
+                  <select id="lp-tipo" name="tipo-projeto" value={lead.tipo} onChange={campo("tipo")}>
+                    <option value="">Selecione</option>
+                    {lp.tipos.map((t) => <option key={t} value={t}>{t}</option>)}
+                  </select>
+                </div>
+                <div className="field field--solid">
+                  <label htmlFor="lp-prazo">Prazo desejado</label>
+                  <select id="lp-prazo" name="deadline" value={lead.prazo} onChange={campo("prazo")}>
+                    <option value="">Selecione</option>
+                    {LP_PRAZOS.map((t) => <option key={t} value={t}>{t}</option>)}
+                  </select>
+                </div>
+              </div>
+
+              <label className="quote-card__consent" htmlFor="lp-consent">
+                <input id="lp-consent" name="privacy-consent" type="checkbox" checked={aceite} onChange={(e) => setAceite(e.target.checked)} />
+                <span>Autorizo o Grupo MUV a usar meus dados para responder este pedido, conforme a <a href="/politica-privacidade.html" target="_blank" rel="noopener noreferrer">política de privacidade</a>.</span>
+              </label>
+
+              <button type="submit" className="btn btn--primary quote-submit" disabled={enviando}>
+                {enviando ? "Enviando…" : "Pedir orçamento"} {!enviando && <Arrow />}
+              </button>
+              {erro && <p className="quote-card__error" role="alert">{erro}</p>}
+            </form>
+          )}
+        </div>
+      </section>
+
+      <HubFaq items={lp.faq} num={null} title="O que perguntam antes de fechar." />
+
+      <section className="section section--dark hub-cta hub-book-cta">
+        <div className="hub-cta__inner">
+          <p className="eyebrow eyebrow-dot" style={{ color: "var(--dark-ink-2)" }}>Próximo passo</p>
+          <h2 className="h1 hub-email-capture__title">Conta o que você precisa. <span>A gente volta com diagnóstico.</span></h2>
+          <div className="hub-book-cta__actions">
+            <a className="btn btn--primary" href={EVENTOS_WHATSAPP} target="_blank" rel="noopener noreferrer">Chamar no WhatsApp <Arrow /></a>
+            <a className="btn btn--ghost-dark" href="#orcamento">Pedir orçamento <Arrow /></a>
+          </div>
+        </div>
+      </section>
+    </div>);
+}
+
 // ═════════════════════════════════════════════════════════════════════════════
 // PROCESSO
 // ═════════════════════════════════════════════════════════════════════════════
@@ -3261,6 +3450,7 @@ function App({ page = "home", slug = null, tina = null }) {
   else if (current === "blog")            Page = Blog;
   else if (current === "faq")             Page = Faq;
   else if (current === "eventos")         Page = Eventos;
+  else if (current === "lp" && LANDINGS[slug]) Page = LandingServico;
   else if (current === "contato")         Page = Contato;
 
   return (

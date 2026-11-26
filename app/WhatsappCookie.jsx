@@ -8,14 +8,16 @@ export default function WhatsappCookie() {
   // Na landing de tráfego pago o botão já nasce visível: quem chega do
   // anúncio no celular não precisa rolar para achar o WhatsApp.
   const pathname = usePathname() || "";
-  const sempreVisivel = pathname.startsWith("/eventos");
+  const sempreVisivel = pathname.startsWith("/eventos") || pathname.startsWith("/lp/");
+  const isLp = pathname.startsWith("/lp/");
   // /loopingmuv é a peça em tela cheia: nada flutua por cima dela.
   const semFlutuante = pathname.startsWith("/loopingmuv");
   useEffect(() => {
     let consent = null;
     try { consent = localStorage.getItem("muv-cookie-consent"); } catch (_) {}
     let t;
-    if (!consent) t = setTimeout(() => setShowCookie(true), 4200);
+    // Nas LPs o aviso aparece mais tarde, para não cobrir o hero na chegada do anúncio.
+    if (!consent) t = setTimeout(() => setShowCookie(true), isLp ? 12000 : 4200);
     const onScroll = () => setShowWA(window.scrollY > 200);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -23,7 +25,7 @@ export default function WhatsappCookie() {
     const onPrefs = () => setShowCookie(true);
     window.addEventListener("muv:cookie-prefs", onPrefs);
     return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("muv:cookie-prefs", onPrefs); if (t) clearTimeout(t); };
-  }, []);
+  }, [isLp]);
   const decide = (v) => {
     try { localStorage.setItem("muv-cookie-consent", v); localStorage.setItem("muv-cookie-consent-at", new Date().toISOString()); } catch (_) {}
     window.dispatchEvent(new CustomEvent("muv:cookie-consent", { detail: { value: v } }));
@@ -37,7 +39,7 @@ export default function WhatsappCookie() {
         </svg>
         <span className="muv-whatsapp__tooltip">Fale com a gente</span>
       </a>
-      <div id="muv-cookie" hidden={!showCookie} role="dialog" aria-live="polite" aria-label="Aviso de cookies">
+      <div id="muv-cookie" className={isLp ? "muv-cookie--lp" : undefined} hidden={!showCookie} role="dialog" aria-live="polite" aria-label="Aviso de cookies">
         <div className="muv-cookie__text">
           Usamos cookies pra entender o que funciona e melhorar a experiência. <a href="/politica-privacidade.html">Saiba mais →</a>
         </div>
