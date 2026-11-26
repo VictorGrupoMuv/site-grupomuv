@@ -30,7 +30,9 @@ const OFERTA        = "10% na primeira produção";
 const WHATSAPP_URL  = "https://wa.me/message/D6LG7EUSTIR7C1";
 // /eventos voltou a mostrar o pop-up em 17/11/2026, a pedido do Victor,
 // junto com a versão curta da landing.
-const SKIP_PATHS    = ["/contato"];
+// Nas landings de tráfego pago o formulário já está na página; o pop-up
+// de 10% compete com ele e fica de fora.
+const SKIP_PATHS    = ["/contato", "/lp"];
 
 function readState() {
   try {
