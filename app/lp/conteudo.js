@@ -18,7 +18,7 @@ export const LANDINGS = {
     title: "Vídeo Institucional para Empresas em SP | Grupo MUV",
     desc: "Filme institucional, manifesto e depoimentos com direção de cinema, captados na sua operação. Produtora audiovisual em São Paulo.",
     eyebrow: "MUV Studio · Institucional e corporativo",
-    h1: "Vídeo institucional com cara de empresa que se leva a sério.",
+    h1: "Vídeo institucional para empresas em São Paulo.",
     sub: "Filme institucional, manifesto e depoimentos com direção de cinema, captados na sua operação. Sem cara de vídeo de treinamento.",
     hero: {
       base: "/assets/lp/institucional-hero",
@@ -46,7 +46,7 @@ export const LANDINGS = {
     title: "Conteúdo em Vídeo para Redes Sociais em SP | Grupo MUV",
     desc: "Reels, vídeos verticais e criativos para mídia paga com a mesma linguagem visual do começo ao fim. Produtora audiovisual em São Paulo.",
     eyebrow: "MUV Studio · Conteúdo para redes",
-    h1: "Uma diária de filmagem, semanas de feed.",
+    h1: "Vídeo para redes sociais: uma diária, semanas de feed.",
     sub: "Reels, verticais e criativos para mídia paga com a mesma linguagem visual do começo ao fim. O feed parece de uma marca só.",
     hero: {
       base: "/assets/lp/redes-hero",
@@ -77,7 +77,7 @@ export const LANDINGS = {
     title: "Produtora de Filme Publicitário em SP | Grupo MUV",
     desc: "Filme de campanha com pré-produção completa, direção de fotografia e finalização em 16:9, 9:16 e 1:1. Produtora audiovisual em São Paulo.",
     eyebrow: "MUV Studio · Captação publicitária",
-    h1: "Filme de campanha com direção no set, não só câmera.",
+    h1: "Filme publicitário com direção no set, em São Paulo.",
     sub: "Pré-produção completa, direção de fotografia e finalização com versões 16:9, 9:16 e 1:1 prontas para veicular.",
     hero: {
       base: "/assets/lp/publicidade-hero",
@@ -105,7 +105,7 @@ export const LANDINGS = {
     title: "Branded Content e Documentário de Marca em SP | Grupo MUV",
     desc: "Documentário, websérie e branded content que o público assiste por vontade própria. Produtora audiovisual em São Paulo.",
     eyebrow: "MUV Studio · Documental e branded content",
-    h1: "A marca dentro da história, não em cima dela.",
+    h1: "Branded content e documentário com a marca dentro da história.",
     sub: "Documentário, websérie e branded content que o público assiste por vontade própria.",
     hero: {
       base: "/assets/lp/branded-content-hero",
