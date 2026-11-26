@@ -603,6 +603,36 @@ var MUV_PAY = {
     muvConv('AW-18360678358/uzfSCNSv7_gcENbvhrNE');
     return fetch('/__forms.html',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body});
   }
+  function utmGuardado(){
+    try { return JSON.parse(window.sessionStorage.getItem('muv-attr') || '{}') || {}; }
+    catch (e) { return {}; }
+  }
+  (function capturarUtm(){
+    try {
+      var q = new URLSearchParams(location.search), novos = {}, chaves = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid'];
+      chaves.forEach(function(k){ var v = q.get(k); if(v) novos[k] = v.slice(0,200); });
+      if(!Object.keys(novos).length) return;
+      window.sessionStorage.setItem('muv-attr', JSON.stringify(Object.assign(utmGuardado(), novos)));
+    } catch (e) {}
+  })();
+  function salvarNoHub(formEl, formulario, origem){
+    var dados = new FormData(formEl);
+    var bot = formEl.querySelector('[name="bot-field"], [name="bot-field-2"]');
+    return fetch('/.netlify/functions/salvar-lead', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        nome: dados.get('nome') || '',
+        email: dados.get('email') || '',
+        fone: dados.get('telefone') || '',
+        mensagem: [dados.get('atuacao') || '', dados.get('mensagem') || '', dados.get('opcao') ? ('opção ' + dados.get('opcao')) : ''].filter(Boolean).join('\n'),
+        formulario: formulario,
+        origem: origem,
+        pagina: location.pathname + location.search,
+        utm: utmGuardado(),
+        botField: bot ? bot.value : ''
+      })
+    }).then(function(r){ return r.json().then(function(d){ if(!r.ok || d.ok === false) throw new Error((d && d.erro) || 'Não conseguimos registrar.'); }); });
+  }
   var WPP = "https://wa.me/message/D6LG7EUSTIR7C1";
   function irPara(op){
     var url = MUV_PAY[op];
@@ -643,14 +673,26 @@ var MUV_PAY = {
   fp.addEventListener('submit',function(ev){
     ev.preventDefault();
     var b=document.getElementById('mbtn'); b.textContent='Redirecionando...'; b.disabled=true;
-    post(fp).then(function(){ irPara(atual); }).catch(function(){ irPara(atual); });
+    salvarNoHub(fp, 'hub-checkout', 'Hub · fundadores · pagamento · ' + atual)
+      .catch(function(){})
+      .then(function(){ return post(fp); })
+      .then(function(){ irPara(atual); })
+      .catch(function(){ irPara(atual); });
   });
 
   fh.addEventListener('submit',function(ev){
     ev.preventDefault();
     var btn=fh.querySelector('button'); btn.textContent='Enviando...'; btn.disabled=true;
-    post(fh).then(function(){ fh.style.display='none'; ok.style.display='block'; })
-            .catch(function(){ btn.textContent='Erro. Tente pelo WhatsApp'; btn.disabled=false; });
+    var falhaLead = null;
+    var origemCampo = document.getElementById('origem');
+    salvarNoHub(fh, 'hub-fundadores', 'Hub · fundadores · ' + (origemCampo ? origemCampo.value : 'conversar'))
+      .catch(function(e){ falhaLead = e; })
+      .then(function(){ return post(fh); })
+      .then(function(){
+        if(falhaLead) throw falhaLead;
+        fh.style.display='none'; ok.style.display='block';
+      })
+      .catch(function(){ btn.textContent='Erro. Tente pelo WhatsApp'; btn.disabled=false; });
   });
 
   document.querySelector('[data-back]').addEventListener('click',function(){
