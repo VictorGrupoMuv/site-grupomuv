@@ -14,6 +14,10 @@
 https://mudafilms.com.br/*      https://grupomuv.com.br/:splat  301!
 https://www.mudafilms.com.br/*  https://grupomuv.com.br/:splat  301!
 https://main--zesty-lollipop-e19da1.netlify.app/*  https://grupomuv.com.br/:splat  301!
+
+# Link curto da bio do Instagram (UTM fica escondida)
+/ig    /?utm_source=instagram&utm_medium=bio&utm_campaign=perfil    301
+/ig/   /?utm_source=instagram&utm_medium=bio&utm_campaign=perfil    301
 https://zesty-lollipop-e19da1.netlify.app/*        https://grupomuv.com.br/:splat  301!
 
 # Rotas são arquivos estáticos reais (Next output: export).
